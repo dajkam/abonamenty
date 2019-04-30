@@ -1,4 +1,4 @@
-package com.filip.machaj.demo.model
+package com.filip.machaj.demo.model.dane
 
 import java.util.*
 
