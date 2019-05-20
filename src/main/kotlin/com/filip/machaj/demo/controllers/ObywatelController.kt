@@ -24,7 +24,7 @@ class ObywatelController {
     @GetMapping(value = ["/download"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
-    fun getObywatel() = service.getObywatel()
+    fun getObywatel(): Iterable<Obywatel> = service.getObywatel()
     @PutMapping(
             value = ["/insert"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE),
@@ -38,11 +38,11 @@ class ObywatelController {
             value = ["/delete/{id}"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
-    fun deleteObywatel(@PathVariable(name = "id")id:Long): Boolean = service.deleteObywatel(id)
+    fun deleteObywatel(@PathVariable(name = "id")id:Long): Unit = service.deleteObywatel(id)
     @PostMapping(
             value = ["/update"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE),
             consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
-    fun updateObywatel(@RequestBody obywatel: Obywatel):Boolean = service.updateObywatel(obywatel )
+    fun updateObywatel(@RequestBody obywatel: Obywatel): Obywatel = service.updateObywatel(obywatel )
 }

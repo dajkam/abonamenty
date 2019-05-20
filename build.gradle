@@ -76,6 +76,13 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-web"
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
+    // https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa
+    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.1.8.RELEASE'
+
+    // https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
+    compile group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+
+
     constraints{
         compile group: 'org.springframework', name: 'spring-web', version: '5.+'
         compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.+'
