@@ -7,7 +7,7 @@ import javax.persistence.*
 @Entity
 @Table(name = "obywatel")
 data class Obywatel(
-          @Id @GeneratedValue(strategy = GenerationType.AUTO)
+          @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id : Long,
           @Column(columnDefinition = "varchar(36)")
         var PESEL:String,
