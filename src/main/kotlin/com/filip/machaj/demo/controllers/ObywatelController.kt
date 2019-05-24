@@ -13,6 +13,8 @@ import java.awt.PageAttributes
 import javax.websocket.server.PathParam
 import kotlin.random.Random
 
+
+
 @RestController
 @RequestMapping("/obywatel")
 
@@ -45,4 +47,15 @@ class ObywatelController {
             consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun updateObywatel(@RequestBody obywatel: Obywatel): Obywatel = service.updateObywatel(obywatel )
+
+    @GetMapping(
+            value = ["test"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+
+    private fun testBazy(){
+
+
+
+    }
 }
