@@ -20,7 +20,7 @@ data class Obywatel(
           @Column(columnDefinition = "boolean")
           var czy_zarchiwizowany : Boolean = false,
           @Column(columnDefinition = "date")
-          var data_urodzenia:Date
+          var data_urodzenia:Date?
 
         ) {
 

@@ -19,6 +19,7 @@ class AppKill {
     )
     @ResponseStatus(value = HttpStatus.OK)
     fun exitProcess(){
+        print("Zamykam program \n")
         exitProcess(1)
 
     }
