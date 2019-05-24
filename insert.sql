@@ -18,6 +18,25 @@ INSERT INTO obywatel (id,pesel,nr_dowodu, imie, nazwisko,adres,data_urodzenia)
 
 
 
+// poprawny insert z auto inkrementacją
+
+
+INSERT INTO obywatel (pesel,nr_dowodu, imie, nazwisko,adres,data_urodzenia)
+       VALUES ('12345678901','xr-9876','Janusz','Korwin-mikke','rozy lukseburg 1','1987-02-19');
+
+
+
+select * from obywatel;
+
+
+// inny poprawny insert
+
+
+INSERT INTO obywatel (pesel,nr_dowodu, imie, nazwisko,adres,data_urodzenia)
+       VALUES ('12345678901','xr-9876','Jerzy','Urban','rozy lukseburg 1','1987-02-19');
+
+
+
 
 
 
