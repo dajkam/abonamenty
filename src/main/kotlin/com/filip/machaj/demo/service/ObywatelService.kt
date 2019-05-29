@@ -1,9 +1,11 @@
 package com.filip.machaj.demo.service
 
+import com.filip.machaj.demo.dto.ObywatelDTO
 import com.filip.machaj.demo.model.dane.Obywatel
 import com.filip.machaj.demo.repo.ObywatelRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.util.*
 
 
 @Service("Obywatel Service")
@@ -17,11 +19,45 @@ class ObywatelService {
 
 
 
-    fun getObywatel(): Iterable<Obywatel> = repo.findAll()
+   // fun getObywatel(): Iterable<Obywatel> = repo.findAll()
 
-    fun insertObywatel(obywatel: Obywatel):Obywatel = repo.save(obywatel)
+    fun  getObywatel(): Iterable<ObywatelDTO> = repo.findAll().map { it -> ObywatelDTO(it) } // do zrozumienia działania z kotlin z akcji
+
+    //fun insertObywatel(obywatel: Obywatel):Obywatel = repo.save(obywatel)
+
+    fun insertObywatel(obywatel: ObywatelDTO) = ObywatelDTO(
+            repo.save(
+                    Obywatel(
+                             obywatel.id,
+                             obywatel.PESEL,
+                             obywatel.nr_dowodu,
+                             obywatel.imie,
+                             obywatel.nazwisko,
+                             obywatel.adres,
+                             obywatel.czy_zarchiwizowany,
+                             obywatel.data_urodzenia
+                    )
+            )
+    )
 
     fun deleteObywatel(id:Long) = repo.deleteById(id)
 
-    fun updateObywatel(obywatel: Obywatel) : Obywatel = repo.save(obywatel)
+   // fun updateObywatel(obywatel: Obywatel) : Obywatel = repo.save(obywatel)
+
+    fun updateObywatel(obywatelDTO: Obywatel): Obywatel {
+        var obywatel : Obywatel = repo.findById(obywatelDTO.id).get()
+
+        obywatel.PESEL = obywatelDTO.PESEL
+        obywatel.nr_dowodu = obywatelDTO.nr_dowodu
+        obywatel.imie = obywatelDTO.imie
+        obywatel.nazwisko = obywatelDTO.nazwisko
+        obywatel.adres = obywatelDTO.adres
+        obywatel.czy_zarchiwizowany = obywatelDTO.czy_zarchiwizowany
+        obywatel.data_urodzenia = obywatelDTO.data_urodzenia
+        obywatel.kiedy_zmodyfikowano = Date()
+        obywatel = repo.save(obywatel)
+        return obywatelDTO(obywatel)
+
+
+    }
 }

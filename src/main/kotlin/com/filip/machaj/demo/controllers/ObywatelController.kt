@@ -1,18 +1,11 @@
 package com.filip.machaj.demo.controllers
 
+import com.filip.machaj.demo.dto.ObywatelDTO
 import com.filip.machaj.demo.model.dane.Obywatel
 import com.filip.machaj.demo.service.ObywatelService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
-import java.util.*
-import java.awt.PageAttributes
-import javax.websocket.server.PathParam
-import kotlin.random.Random
-
 
 
 @RestController
@@ -26,14 +19,19 @@ class ObywatelController {
     @GetMapping(value = ["/download"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
-    fun getObywatel(): Iterable<Obywatel> = service.getObywatel()
+  //  fun getObywatel(): Iterable<Obywatel> = service.getObywatel()
+
+    fun getObywatel() = service.getObywatel()
+
     @PutMapping(
             value = ["/insert"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE),
             consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE)
 
     )
-    fun insertObywatel(@RequestBody obywatel: Obywatel) = service.insertObywatel(obywatel)
+   // fun insertObywatel(@RequestBody obywatel: Obywatel) = service.insertObywatel(obywatel)
+
+    fun insertObywatel(@RequestBody obywatel: ObywatelDTO) = service.insertObywatel(obywatel)
 
 
     @DeleteMapping(
@@ -46,7 +44,7 @@ class ObywatelController {
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE),
             consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
-    fun updateObywatel(@RequestBody obywatel: Obywatel): Obywatel = service.updateObywatel(obywatel )
+    fun updateObywatel(@RequestBody obywatel: Obywatel): Obywatel = service.updateObywatel(obywatel)
 
     @GetMapping(
             value = ["test"],
