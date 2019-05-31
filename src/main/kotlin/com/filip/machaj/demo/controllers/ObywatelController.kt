@@ -1,7 +1,6 @@
 package com.filip.machaj.demo.controllers
 
 import com.filip.machaj.demo.dto.ObywatelDTO
-import com.filip.machaj.demo.model.dane.Obywatel
 import com.filip.machaj.demo.service.ObywatelService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -44,7 +43,7 @@ class ObywatelController {
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE),
             consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
-    fun updateObywatel(@RequestBody obywatel: Obywatel): Obywatel = service.updateObywatel(obywatel)
+    fun updateObywatel(@RequestBody obywatel: ObywatelDTO): ObywatelDTO = service.updateObywatel(obywatel)
 
     @GetMapping(
             value = ["test"],

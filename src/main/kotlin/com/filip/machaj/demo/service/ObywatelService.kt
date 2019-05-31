@@ -44,7 +44,7 @@ class ObywatelService {
 
    // fun updateObywatel(obywatel: Obywatel) : Obywatel = repo.save(obywatel)
 
-    fun updateObywatel(obywatelDTO: Obywatel): Obywatel {
+    fun updateObywatel(obywatelDTO: ObywatelDTO): ObywatelDTO {
         var obywatel : Obywatel = repo.findById(obywatelDTO.id).get()
 
         obywatel.PESEL = obywatelDTO.PESEL
@@ -56,8 +56,10 @@ class ObywatelService {
         obywatel.data_urodzenia = obywatelDTO.data_urodzenia
         obywatel.kiedy_zmodyfikowano = Date()
         obywatel = repo.save(obywatel)
-        return obywatelDTO(obywatel)
+        return obywatelDTO(obywatel) // patrz ObywatelDTO invoke
 
 
     }
 }
+
+
