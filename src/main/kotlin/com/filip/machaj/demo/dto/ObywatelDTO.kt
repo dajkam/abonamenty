@@ -14,8 +14,9 @@ data class ObywatelDTO(
         var czy_zarchiwizowany : Boolean = false,
         var data_urodzenia: Date
         ) {
-    operator fun invoke(obywatel: Obywatel): ObywatelDTO {
-        return this
+   operator fun invoke(obywatel: Obywatel): ObywatelDTO { // return obywatelDTO(obywatel) z funcji upDateObywatel w ObywatelService nie działa bez funkcji invoke
+
+       return this
 
     }
 
