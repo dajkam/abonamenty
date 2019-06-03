@@ -67,6 +67,10 @@ class ObywatelService {
         println(imie)
         return repo.findByImie(imie).map{it -> ObywatelDTO(it) }
     }
+
+    fun findByNazwisko(nazwisko:String): Iterable<ObywatelDTO>{
+        return  repo.findByNazwisko(nazwisko).map { it -> ObywatelDTO(it)}
+    }
 }
 
 
