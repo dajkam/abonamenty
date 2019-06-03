@@ -59,6 +59,13 @@ class ObywatelService {
         return obywatelDTO(obywatel) // patrz ObywatelDTO invoke
 
 
+
+    }
+    // metody z poza crud repository
+
+    fun getObywatelByImie(imie:String): Iterable<ObywatelDTO>{
+        println(imie)
+        return repo.findByImie(imie).map{it -> ObywatelDTO(it) }
     }
 }
 

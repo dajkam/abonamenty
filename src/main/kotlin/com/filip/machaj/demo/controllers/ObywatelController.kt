@@ -45,14 +45,16 @@ class ObywatelController {
     )
     fun updateObywatel(@RequestBody obywatel: ObywatelDTO): ObywatelDTO = service.updateObywatel(obywatel)
 
-    @GetMapping(
-            value = ["test"],
-            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(
+            value = ["/imie"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE),
+            consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+
+
+
     )
+    fun getObywatelByImie(
+            @RequestBody payload:ObywatelByImie
+    ):Iterable<ObywatelDTO> = service.getObywatelByImie(payload.imie)
 
-    private fun testBazy(){
-
-
-
-    }
 }
