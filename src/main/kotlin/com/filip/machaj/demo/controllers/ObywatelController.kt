@@ -1,5 +1,6 @@
 package com.filip.machaj.demo.controllers
 
+import com.filip.machaj.demo.controllers.queryobjests.ObywatelByImie
 import com.filip.machaj.demo.dto.ObywatelDTO
 import com.filip.machaj.demo.service.ObywatelService
 import org.springframework.beans.factory.annotation.Autowired
@@ -45,6 +46,8 @@ class ObywatelController {
     )
     fun updateObywatel(@RequestBody obywatel: ObywatelDTO): ObywatelDTO = service.updateObywatel(obywatel)
 
+    // metody dodane przezemnie
+
     @PostMapping(
             value = ["/imie"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE),
@@ -54,7 +57,7 @@ class ObywatelController {
 
     )
     fun getObywatelByImie(
-            @RequestBody payload:ObywatelByImie
+            @RequestBody payload: ObywatelByImie
     ):Iterable<ObywatelDTO> = service.getObywatelByImie(payload.imie)
 
     @PostMapping(

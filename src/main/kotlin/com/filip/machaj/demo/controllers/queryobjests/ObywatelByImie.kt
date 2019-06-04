@@ -1,4 +1,4 @@
-package com.filip.machaj.demo.controllers
+package com.filip.machaj.demo.controllers.queryobjests
 
 data class ObywatelByImie(var imie:String) {
 
