@@ -9,7 +9,7 @@ data class PojazdDTO(
         var uwagi:String?,
         var nr_rejstracyjny_pojazdu:String,
         var rok_produkcji:Date,
-        var czy_zarchiwizowany:Boolean = false
+        var czy_zarchiwizowany:Boolean
 ) {
     operator fun invoke(pojazd: Pojazd):PojazdDTO {
         return this
