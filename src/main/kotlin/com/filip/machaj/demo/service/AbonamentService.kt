@@ -30,10 +30,10 @@ class AbonamentService {
             )
     )
 
-    fun deleteAbonament(id:Long) = repo.deleteById(id.toString())
+    fun deleteAbonament(id:Long) = repo.deleteById(id)
 
     fun updateAbonament(abonamentDTO: AbonamentDTO):AbonamentDTO{
-        var abonament:Abonament = repo.findById(abonamentDTO.id.toString()).get()
+        var abonament:Abonament = repo.findById(abonamentDTO.id).get()
 
         abonament.data_rozpoczecia = abonamentDTO.data_rozpoczecia
         abonament.data_zakonczenia = abonamentDTO.data_zakonczenia
