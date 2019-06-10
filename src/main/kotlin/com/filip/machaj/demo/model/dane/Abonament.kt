@@ -1,12 +1,44 @@
 package com.filip.machaj.demo.model.dane
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
 import java.util.*
+import javax.persistence.*
+
+@Entity
+@Table(name = "abonament")
+@JsonInclude(JsonInclude.Include.NON_NULL)// tutaj skonczyłem 5 VI 2019 16:18
 
 data class Abonament(
-                        val id : Long,
-                        var data_rozpoczecia :Date,
-                        var data_zakonczenia : Date,
-                        var sektor : Char, /// zmienić na enum
-                        var uwagi : String,
-                        var czy_zarchiwizowany : Boolean = false) {
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+        val id: Long,
+        @Column(columnDefinition = "date")
+        var data_rozpoczecia:Date,
+        var data_zakonczenia: Date,
+        @Column(columnDefinition = "varchar(1)")
+        var sektor: String, /// zmienić na enum
+        @Column(columnDefinition = "varchar(36)")
+        var uwagi: String,
+        @Column(columnDefinition = "boolean")
+        var czy_zarchiwizowany: Boolean = false,
+        @CreationTimestamp
+        var kiedy_utworzono: Date = Date(),
+        @UpdateTimestamp
+        var kiedy_zmodyfikowano: Date = Date()) {
+    constructor():this(
+            -1,
+            Date(),
+            Date(),
+            "",
+            "",
+            false,
+            Date(),
+            Date()
+    )
+
+    operator fun invoke(abonament: Abonament):Abonament{
+        return this
+    }
+
 }
