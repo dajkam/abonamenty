@@ -26,9 +26,23 @@ data class Obywatel(
         @CreationTimestamp
         var kiedy_utworzono : Date = Date(),
         @UpdateTimestamp
-        var kiedy_zmodyfikowano : Date = Date()
+        var kiedy_zmodyfikowano : Date = Date(),
 
-        ) {
+        // klucze obce
+        /*@ManyToMany(cascade = [CascadeType.ALL])
+        @JoinTable(
+                name = "obywatel_pojazd",
+                joinColumns = [JoinColumn(name = "obywatel_id", referencedColumnName = "id")],
+                inverseJoinColumns = [JoinColumn(name = "pojazd_id", referencedColumnName = "id")]
+
+        )
+        var pojazdy: Set<Pojazd> = mutableSetOf<Pojazd>() /// spróbować stwożyc qquery testujące klucze obce*/
+
+        @OneToOne(mappedBy = "obywatel")
+        var abonament: Abonament ? = null
+
+
+) {
 
         constructor() : this(
                 -1 ,"", "",
@@ -40,10 +54,13 @@ data class Obywatel(
                 Date()
 
 
+
+
+
+
         )
 
-
-
+        constructor(id: Long, pesel: String, nr_dowodu: String, imie: String, nazwisko: String, adres: String, czy_zarchiwizowany: Boolean, data_urodzenia: Date) : this()
 
 
         fun wieksza():Boolean{

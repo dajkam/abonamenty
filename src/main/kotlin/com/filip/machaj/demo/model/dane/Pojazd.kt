@@ -25,7 +25,21 @@ data class Pojazd (
         @CreationTimestamp
         var kiedy_utworzono : Date = Date(),
         @UpdateTimestamp
-        var kiedy_zmodyfikowano : Date = Date())
+        var kiedy_zmodyfikowano : Date = Date(),
+        //@ManyToMany(cascade = [CascadeType.ALL])
+       /* @JoinTable(
+                name = "pojazd_obywatel",
+                joinColumns = [JoinColumn(name = "pojazd_id",referencedColumnName = "id")],
+                inverseJoinColumns = [JoinColumn(name = "obywatel_id", referencedColumnName = "id")]
+        )*/
+       /* @ManyToMany(mappedBy = "pojazdy")
+        val obywatel: Set<Obywatel> = mutableSetOf<Obywatel>()*/
+
+        @OneToOne(mappedBy = "pojazd")
+        var abonament: Abonament ? = null
+
+)
+
         {
 
     constructor():this(
@@ -34,9 +48,12 @@ data class Pojazd (
             false,
             Date(),
             Date()
+
     )
 
-    operator fun invoke(pojazd:Pojazd):Pojazd{
+            constructor(id: Long, model: String, kolor: String?, uwagi: String?, nr_rejstracyjny_pojazdu: String, rok_produkcji: Date, czy_zarchiwizowany: Boolean) : this()
+
+            operator fun invoke(pojazd:Pojazd):Pojazd{
         return this
     }
 }
