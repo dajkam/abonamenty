@@ -25,7 +25,21 @@ data class Abonament(
         @CreationTimestamp
         var kiedy_utworzono: Date = Date(),
         @UpdateTimestamp
-        var kiedy_zmodyfikowano: Date = Date()) {
+        var kiedy_zmodyfikowano: Date = Date(),
+
+        @OneToOne(cascade = arrayOf(CascadeType.ALL))
+            @JoinColumn(name = "obywatel_id")
+        var obywatel: Obywatel ? = null,
+
+        @OneToOne(cascade = arrayOf(CascadeType.ALL))
+            @JoinColumn(name = "pojazd_id")
+        var pojazd: Pojazd ? = null
+
+
+
+
+
+        ) {
     constructor():this(
             -1,
             Date(),

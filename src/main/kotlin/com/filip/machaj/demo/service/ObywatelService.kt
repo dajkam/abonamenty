@@ -36,6 +36,7 @@ class ObywatelService {
                              obywatel.adres,
                              obywatel.czy_zarchiwizowany,
                              obywatel.data_urodzenia
+
                     )
             )
     )

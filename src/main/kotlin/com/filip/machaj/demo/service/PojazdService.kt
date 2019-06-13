@@ -27,6 +27,7 @@ class PojazdService {
                             pojazd.nr_rejstracyjny_pojazdu,
                             pojazd.rok_produkcji,
                             pojazd.czy_zarchiwizowany
+
                     )
             )
     )
