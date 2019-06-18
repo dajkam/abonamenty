@@ -51,6 +51,8 @@ data class Abonament(
             Date()
     )
 
+  //  constructor(id: Long, data_rozpoczecia: Date, data_zakonczenia: Date, sektor: String, uwagi: String, czy_zarchiwizowany: Boolean, kiedy_utworzono: Obywatel?, kiedy_zmodyfikowano: Pojazd?) : this()
+
     operator fun invoke(abonament: Abonament):Abonament{
         return this
     }

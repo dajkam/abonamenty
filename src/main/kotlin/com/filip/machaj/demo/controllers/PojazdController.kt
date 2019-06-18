@@ -2,6 +2,7 @@ package com.filip.machaj.demo.controllers
 
 import com.filip.machaj.demo.controllers.queryobjests.PojazdByModel
 import com.filip.machaj.demo.dto.PojazdDTO
+import com.filip.machaj.demo.model.dane.Pojazd
 import com.filip.machaj.demo.service.PojazdService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -51,4 +52,10 @@ class PojazdController {
     fun getPojazdByModel(
             @RequestBody payload: PojazdByModel
     ):Iterable<PojazdDTO> = service.getPojazdByModel(payload.model)
+
+    @GetMapping(
+            value = ["/last"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun getLastObywatel(): Pojazd = service.findLastPojazd()
 }

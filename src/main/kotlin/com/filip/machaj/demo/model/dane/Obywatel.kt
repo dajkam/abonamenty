@@ -50,8 +50,8 @@ data class Obywatel(
                 "",
                 false,
                 Date(),
-                Date(),
                 Date()
+
 
 
 
@@ -60,7 +60,7 @@ data class Obywatel(
 
         )
 
-        constructor(id: Long, pesel: String, nr_dowodu: String, imie: String, nazwisko: String, adres: String, czy_zarchiwizowany: Boolean, data_urodzenia: Date) : this()
+     //   constructor(id: Long, pesel: String, nr_dowodu: String, imie: String, nazwisko: String, adres: String, czy_zarchiwizowany: Boolean, data_urodzenia: Date) : this()
 
 
         fun wieksza():Boolean{
