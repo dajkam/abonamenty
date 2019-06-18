@@ -61,10 +61,19 @@ class ObywatelController {
             @RequestBody payload: ObywatelByImie
     ):Iterable<ObywatelDTO> = service.getObywatelByImie(payload.imie)
 
+
     @GetMapping(
             value = ["/last"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun getLastObywatel():Obywatel = service.findLastObywatel()
+  
+    @PostMapping(
+            value = ["/nazwisko"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE),
+            consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun getObywatelByNazwisko(@RequestBody payload: OBywatelFindByNazwisko): Iterable<ObywatelDTO> = service.findByNazwisko(payload.nazwisko)
+
 
 }
