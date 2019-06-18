@@ -68,6 +68,10 @@ class ObywatelService {
         println(imie)
         return repo.findByImie(imie).map{it -> ObywatelDTO(it) }
     }
+
+    fun findLastObywatel():Obywatel{
+        return repo.findLast()
+    }
 }
 
 

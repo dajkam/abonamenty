@@ -54,4 +54,8 @@ class PojazdService {
     fun getPojazdByModel(model:String): Iterable<PojazdDTO>{
         return repo.findPojazdByModel(model).map{it -> PojazdDTO(it)}
     }
+
+    fun findLastPojazd():Pojazd{
+        return repo.findLast()
+    }
 }

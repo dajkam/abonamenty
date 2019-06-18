@@ -2,6 +2,7 @@ package com.filip.machaj.demo.controllers
 
 import com.filip.machaj.demo.controllers.queryobjests.ObywatelByImie
 import com.filip.machaj.demo.dto.ObywatelDTO
+import com.filip.machaj.demo.model.dane.Obywatel
 import com.filip.machaj.demo.service.ObywatelService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -59,5 +60,11 @@ class ObywatelController {
     fun getObywatelByImie(
             @RequestBody payload: ObywatelByImie
     ):Iterable<ObywatelDTO> = service.getObywatelByImie(payload.imie)
+
+    @GetMapping(
+            value = ["/last"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun getLastObywatel():Obywatel = service.findLastObywatel()
 
 }

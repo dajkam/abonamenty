@@ -1,6 +1,8 @@
 package com.filip.machaj.demo.dto
 
 import com.filip.machaj.demo.model.dane.Abonament
+import com.filip.machaj.demo.model.dane.Obywatel
+import com.filip.machaj.demo.model.dane.Pojazd
 import java.util.*
 
 class AbonamentDTO(
@@ -8,7 +10,9 @@ class AbonamentDTO(
         var data_zakonczenia:Date,
         var sektor:String,
         var uwagi:String,
-        var czy_zarchiwizowany:Boolean
+        var czy_zarchiwizowany:Boolean,
+        var obywatel: Obywatel?,
+        var pojazd:  Pojazd?
 
 ) {
     operator fun invoke(abonament:Abonament):AbonamentDTO{
@@ -23,7 +27,10 @@ class AbonamentDTO(
             abonament.data_zakonczenia,
             abonament.sektor,
             abonament.uwagi,
-            abonament.czy_zarchiwizowany
+            abonament.czy_zarchiwizowany,
+            abonament.obywatel,
+            abonament.pojazd
+
 
     ){
         id = abonament.id

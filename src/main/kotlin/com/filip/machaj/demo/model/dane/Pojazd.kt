@@ -51,7 +51,7 @@ data class Pojazd (
 
     )
 
-            constructor(id: Long, model: String, kolor: String?, uwagi: String?, nr_rejstracyjny_pojazdu: String, rok_produkcji: Date, czy_zarchiwizowany: Boolean) : this()
+          //  constructor(id: Long, model: String, kolor: String?, uwagi: String?, nr_rejstracyjny_pojazdu: String, rok_produkcji: Date, czy_zarchiwizowany: Boolean) : this()
 
             operator fun invoke(pojazd:Pojazd):Pojazd{
         return this

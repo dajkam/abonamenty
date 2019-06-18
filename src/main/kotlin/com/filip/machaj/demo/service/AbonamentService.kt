@@ -3,6 +3,8 @@ package com.filip.machaj.demo.service
 import com.filip.machaj.demo.dto.AbonamentDTO
 import com.filip.machaj.demo.model.dane.Abonament
 import com.filip.machaj.demo.repo.AbonamentRepo
+import com.filip.machaj.demo.repo.ObywatelRepo
+import com.filip.machaj.demo.repo.PojazdRepo
 import org.springframework.beans.factory.annotation.Autowired
 
 import org.springframework.stereotype.Service
@@ -13,6 +15,13 @@ import java.util.*
 class AbonamentService {
     @Autowired
     lateinit var repo : AbonamentRepo
+
+    @Autowired
+    lateinit var repoO: ObywatelRepo
+
+    @Autowired
+    lateinit var repoP : PojazdRepo
+
 
     fun getAbonament():Iterable<AbonamentDTO> = repo.findAll().map{it -> AbonamentDTO(it) }
 
@@ -25,6 +34,8 @@ class AbonamentService {
                         abonament.sektor,
                         abonament.uwagi,
                         abonament.czy_zarchiwizowany
+                       // abonament.obywatel,
+                       // abonament.pojazd
 
                     )
             )
@@ -40,7 +51,11 @@ class AbonamentService {
         abonament.sektor = abonamentDTO.sektor
         abonament.uwagi = abonamentDTO.uwagi
         abonament.czy_zarchiwizowany = abonamentDTO.czy_zarchiwizowany
+        abonament.obywatel = abonamentDTO.obywatel
+        abonament.pojazd = abonamentDTO.pojazd
         abonament.kiedy_zmodyfikowano = Date()
+        abonament.obywatel = repoO.findLast()// nowe obywatel  // te dwie linijki trzeba przeniesc do add abonament
+        abonament.pojazd = repoP.findLast()//nowe pojazd
         abonament = repo.save(abonament)
         return AbonamentDTO(abonament)
 
