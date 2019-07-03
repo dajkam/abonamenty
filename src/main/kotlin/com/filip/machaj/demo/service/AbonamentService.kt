@@ -33,9 +33,11 @@ class AbonamentService {
                         abonament.data_zakonczenia,
                         abonament.sektor,
                         abonament.uwagi,
-                        abonament.czy_zarchiwizowany
-                       // abonament.obywatel,
-                       // abonament.pojazd
+                        abonament.czy_zarchiwizowany,
+                            Date(),
+                            Date(),
+                         repoO.findLast(),
+                         repoP.findLast()
 
                     )
             )
@@ -54,10 +56,13 @@ class AbonamentService {
         abonament.obywatel = abonamentDTO.obywatel
         abonament.pojazd = abonamentDTO.pojazd
         abonament.kiedy_zmodyfikowano = Date()
-        abonament.obywatel = repoO.findLast()// nowe obywatel  // te dwie linijki trzeba przeniesc do add abonament
-        abonament.pojazd = repoP.findLast()//nowe pojazd
-        abonament = repo.save(abonament)
-        return AbonamentDTO(abonament)
+       // abonament.obywatel = repoO.findLast()// nowe obywatel  // te dwie linijki trzeba przeniesc do add abonament
+       // abonament.pojazd = repoP.findLast()//nowe pojazd
+        abonament.obywatel = abonamentDTO.obywatel
+        abonament.pojazd = abonamentDTO.pojazd
+        abonament = repo.save(abonament) /// errory przy abonament update
+        return AbonamentDTO(abonament) /// trzeba poprawić update dla abonamentu
+
 
 
     }
