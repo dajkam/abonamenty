@@ -21,12 +21,12 @@ class PojazdService {
             repo.save(
                     Pojazd(
                             pojazd.id,
-                            pojazd.model,
                             pojazd.kolor,
                             pojazd.uwagi,
                             pojazd.nr_rejstracyjny_pojazdu,
                             pojazd.rok_produkcji,
                             pojazd.czy_zarchiwizowany
+
 
                     )
             )
@@ -37,7 +37,7 @@ class PojazdService {
     fun updatePojazd(pojazdDTO: PojazdDTO):PojazdDTO{
         var pojazd:Pojazd = repo.findById(pojazdDTO.id).get()
 
-        pojazd.model = pojazdDTO.model
+
         pojazd.kolor = pojazdDTO.kolor
         pojazd.uwagi = pojazdDTO.uwagi
         pojazd.nr_rejstracyjny_pojazdu = pojazdDTO.nr_rejstracyjny_pojazdu

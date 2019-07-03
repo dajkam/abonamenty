@@ -4,7 +4,7 @@ import com.filip.machaj.demo.model.dane.Pojazd
 import java.util.*
 
 data class PojazdDTO(
-        var model:String,
+
         var kolor:String?,
         var uwagi:String?,
         var nr_rejstracyjny_pojazdu:String,
@@ -20,7 +20,7 @@ data class PojazdDTO(
     var kiedy_zmodyfikowano:Date = Date()
 
     constructor(pojazd: Pojazd):this(
-            pojazd.model,
+
             pojazd.kolor,
             pojazd.uwagi,
             pojazd.nr_rejstracyjny_pojazdu,

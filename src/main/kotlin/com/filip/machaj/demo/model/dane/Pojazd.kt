@@ -14,7 +14,6 @@ data class Pojazd (
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id : Long,
         @Column(columnDefinition = "varchar(36)")
-        var model : String,  /// dodać markę dla samochodu
         var kolor : String?,
         var uwagi : String?,
         var nr_rejstracyjny_pojazdu : String,
@@ -36,14 +35,23 @@ data class Pojazd (
         val obywatel: Set<Obywatel> = mutableSetOf<Obywatel>()*/
 
         @OneToOne(mappedBy = "pojazd")
-        var abonament: Abonament ? = null
+        var abonament: Abonament ? = null,
+
+        @ManyToOne(fetch = FetchType.EAGER)
+            @JoinColumn(name = "model_id")
+             var model : Model ? = null
+
+
 
 )
 
         {
 
     constructor():this(
-            -1,"","","","",
+            -1,
+            "",
+            "",
+            "",
             Date(),
             false,
             Date(),
