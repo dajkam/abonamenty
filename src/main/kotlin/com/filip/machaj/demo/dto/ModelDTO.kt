@@ -5,7 +5,7 @@ import com.filip.machaj.demo.model.dane.Pojazd
 
 class ModelDTO(
         var nazwa:String,
-        var pojazdy:Set<Pojazd> = emptySet()
+        var pojazdy:MutableList<Pojazd>
 ) {
     var id : Long = 0
 

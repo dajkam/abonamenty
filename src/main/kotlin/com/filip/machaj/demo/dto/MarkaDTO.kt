@@ -5,7 +5,7 @@ import com.filip.machaj.demo.model.dane.Model
 
 data class MarkaDTO(
         var nazwa:String,
-        var modele: Set<Model> = emptySet()
+        var modele: MutableList<Model>
 
 ) {
     var id: Long = 0

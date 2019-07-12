@@ -8,13 +8,15 @@ import com.filip.machaj.demo.repo.ModelRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+
 @Service("Marka Service")
 class MarkaService {
 
     @Autowired
     lateinit var repo:MarkaRepo
 
-    lateinit var repoM:ModelRepo
+    @Autowired
+     lateinit var repoM:ModelRepo
 
     fun getMarka():Iterable<MarkaDTO> = repo.findAll().map{it -> MarkaDTO(it) }
 
@@ -23,7 +25,7 @@ class MarkaService {
                     Marka(
                             marka.id,
                             marka.nazwa,
-                            repoM.findAll() as Set<Model>
+                            repoM.findAll() as MutableList<Model>
 
 
                     )

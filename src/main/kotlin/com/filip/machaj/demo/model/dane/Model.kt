@@ -17,7 +17,7 @@ data class Model(
 
 
         @OneToMany(mappedBy = "model", cascade =  arrayOf(CascadeType.ALL))
-        var pojazdy:Set<Pojazd> = emptySet(),
+        var pojazdy:MutableList<Pojazd> = mutableListOf(),
 
         @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "marka_id")
