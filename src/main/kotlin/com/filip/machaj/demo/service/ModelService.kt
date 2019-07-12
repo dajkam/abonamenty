@@ -15,6 +15,7 @@ class ModelService {
     @Autowired
     lateinit var repo : ModelRepo
 
+    @Autowired
     lateinit var repoP : PojazdRepo
 
     fun getModel():Iterable<ModelDTO> = repo.findAll().map{ it -> ModelDTO(it)}
@@ -24,7 +25,7 @@ class ModelService {
                     Model(
                             model.id,
                             model.nazwa,
-                            repoP.findAll() as Set<Pojazd>
+                            repoP.findAll() as MutableList<Pojazd>
                     )
             )
     )

@@ -15,7 +15,7 @@ data class Marka(
 
 
         @OneToMany(mappedBy = "marka", cascade =  arrayOf(CascadeType.ALL))
-        var modele :Set<Model> = emptySet()
+        var modele :MutableList<Model> =  mutableListOf()
         ) {
 
     constructor():this(
