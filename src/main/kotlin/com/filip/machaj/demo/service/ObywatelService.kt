@@ -71,7 +71,7 @@ class ObywatelService {
 
 
     fun findLastObywatel():Obywatel{
-        return repo.findLast()
+        return repo.findLast()}
 
     fun findByNazwisko(nazwisko:String): Iterable<ObywatelDTO>{
         return  repo.findByNazwisko(nazwisko).map { it -> ObywatelDTO(it)}
