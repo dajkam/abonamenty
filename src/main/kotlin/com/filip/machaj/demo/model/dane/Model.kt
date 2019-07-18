@@ -10,7 +10,7 @@ import javax.persistence.*
 
 data class Model(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long,
+        var id: Long,
         @Column(columnDefinition = "varchar(36)")
         var nazwa: String,
 
