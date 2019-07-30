@@ -1,11 +1,12 @@
 package com.filip.machaj.demo.model.dane
 
-import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.util.*
 import javax.persistence.*
 
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class)
 @Entity
 @Table(name = "pojazd")
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -21,8 +22,12 @@ data class Pojazd (
         var rok_producji : Date,
         @Column(columnDefinition = "boolean")
         var czy_zarchiwizowany : Boolean = false,
+
         @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "model_id")
+        @JsonBackReference
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
         var model : Model ? = null,
         @CreationTimestamp
         var kiedy_utworzono : Date = Date(),

@@ -1,5 +1,8 @@
 package com.filip.machaj.demo.dto
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo
+import com.fasterxml.jackson.annotation.JsonIdentityReference
+import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import com.filip.machaj.demo.model.dane.Model
 import com.filip.machaj.demo.model.dane.Pojazd
 import java.util.*
@@ -11,6 +14,8 @@ data class PojazdDTO(
         var nr_rejstracyjny_pojazdu:String,
         var rok_produkcji:Date,
         var czy_zarchiwizowany:Boolean,
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
         var model:Model?
 ) {
     operator fun invoke(pojazd: Pojazd):PojazdDTO {
