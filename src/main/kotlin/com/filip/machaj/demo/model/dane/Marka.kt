@@ -1,8 +1,6 @@
 package com.filip.machaj.demo.model.dane
 
-import com.fasterxml.jackson.annotation.JsonBackReference
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.annotation.JsonManagedReference
+import com.fasterxml.jackson.annotation.*
 import javax.persistence.*
 
 
@@ -18,6 +16,8 @@ data class Marka(
 
         @OneToMany(mappedBy = "marka", cascade =  arrayOf(CascadeType.ALL))
         @JsonBackReference
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
         var modele :MutableList<Model> =  mutableListOf()
         ) {
 

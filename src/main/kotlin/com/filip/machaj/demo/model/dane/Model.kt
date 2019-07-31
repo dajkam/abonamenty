@@ -1,8 +1,6 @@
 package com.filip.machaj.demo.model.dane
 
-import com.fasterxml.jackson.annotation.JsonBackReference
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.annotation.JsonManagedReference
+import com.fasterxml.jackson.annotation.*
 import javax.persistence.*
 
 
@@ -20,11 +18,15 @@ data class Model(
 
         @OneToMany(mappedBy = "model", cascade =  arrayOf(CascadeType.ALL))
         @JsonManagedReference
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
         var pojazdy:MutableList<Pojazd> = mutableListOf(),
 
         @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "marka_id")
         @JsonBackReference
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
         var marka:Marka ? = null
         ) {
 

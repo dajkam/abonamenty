@@ -1,5 +1,8 @@
 package com.filip.machaj.demo.dto
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo
+import com.fasterxml.jackson.annotation.JsonIdentityReference
+import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import com.filip.machaj.demo.model.dane.Abonament
 import com.filip.machaj.demo.model.dane.Obywatel
 import com.filip.machaj.demo.model.dane.Pojazd
@@ -11,7 +14,11 @@ class AbonamentDTO(
         var sektor:String,
         var uwagi:String,
         var czy_zarchiwizowany:Boolean,
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
         var obywatel: Obywatel?,
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
         var pojazd:  Pojazd?
 
 ) {
