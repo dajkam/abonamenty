@@ -47,6 +47,9 @@ data class Pojazd (
 
 
         @OneToOne(mappedBy = "pojazd")
+        @JsonManagedReference(value = "ab-po")
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
         var abonament: Abonament ? = null
 
 

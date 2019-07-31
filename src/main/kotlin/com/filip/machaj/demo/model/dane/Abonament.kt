@@ -1,6 +1,6 @@
 package com.filip.machaj.demo.model.dane
 
-import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.util.*
@@ -29,10 +29,16 @@ data class Abonament(
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
             @JoinColumn(name = "obywatel_id")
+        @JsonBackReference(value = "ab-ob")
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
         var obywatel: Obywatel ? = null,
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
             @JoinColumn(name = "pojazd_id")
+        @JsonBackReference(value = "ab-po")
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
         var pojazd: Pojazd ? = null
 
 

@@ -1,7 +1,7 @@
 package com.filip.machaj.demo.model.dane
 
 
-import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.util.*
@@ -39,6 +39,9 @@ data class Obywatel(
         var pojazdy: Set<Pojazd> = mutableSetOf<Pojazd>() /// spróbować stwożyc qquery testujące klucze obce*/
 
         @OneToOne(mappedBy = "obywatel")
+        @JsonManagedReference(value = "ab-ob")
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
         var abonament: Abonament ? = null
 
 
