@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Zmień</title>
+
+  <script src="static/js/handlebars-v4.1.2.js"></script>
+  <script src="static/js/jquery-3.4.1.js"></script>
+
+
+</head>
+<body>
+
+<div id = "obywatel"></div>
+<div id = "obywatel2"></div>
+<!--<form id = "formularz">
+  nr dowodu: <br>
+  <input type = "text " name = "nr_dowodu" ><br>
+  imie: <br>
+  <input type = "text " name = "imie" ><br>
+  nazwisko: <br>
+  <input type = "text " name = "nazwisko" ><br>
+  adres: <br>
+  <input type = "text " name = "adres" ><br>
+  data urodzenia: <br>
+  <input type = "date " name = "data_urodzenia" ><br>
+  pesel:<br>
+  <input type = "text " name = "pesel" ><br><br>
+  <input type = "submit" value = "Zatwierdź">
+
+
+</form>-->
+<div id = "formularz"></div>
+
+
+
+
+<script type="text/javascript">
+
+
+
+
+
+  var obywatelDane = "<p>identyfikator to: {{id}}   data utworzenia to:   {{kiedy_utworzono}}   " +
+    "data ostatniej modyfikacji to   {{kiedy_zmodyfikowano}}   numer dowodu    {{nr_dowodu}}   imie to   {{imie}}   " +
+    "nazwisko to   {{nazwisko}}   adres to   {{adres}}   aktualny to    {{czy_zarchiwizowany}}   " +
+    "data urodzenia to    {{data_urodzenia}}   pesel to   {{pesel}}    </p>";
+
+  template = Handlebars.compile(obywatelDane);
+
+
+  var son = {
+    id: 1,
+    kiedy_utworzono: "2019-08-09T16:19:41.571+0000",
+    kiedy_zmodyfikowano: "2019-08-09T16:19:41.571+0000",
+    nr_dowodu: "CCH864397",
+    imie: "Janusz",
+    nazwisko: "Korwin-Mikke",
+    adres: "Woronicza 16 Warszawa ",
+    czy_zarchiwizowany: false,
+    data_urodzenia: "1933-02-25",
+    pesel: "95101303798"
+  };
+
+
+
+
+  var formularz = "<form id = 'ff' >\n" +
+    "    nr dowodu: <br>\n" +
+    "    <input id =\"in1\" type = \"text \" name = \"nr_dowodu\" value =  {{nr_dowodu}} ><br>\n" +
+    "    imie: <br>\n" +
+    "    <input id =\"in2\" type = \"text \" name = \"imie\"  value={{imie}}><br>\n" +
+    "    nazwisko: <br>\n" +
+    "    <input id =\"in3\" type = \"text \" name = \"nazwisko\" value={{nazwisko}} ><br>\n" +
+    "    adres: <br>\n" +
+    "    <input id =\"in4\" type = \"text \" name = \"adres\" value = {{adres}} ><br>\n" +
+    "    data urodzenia: <br>\n" +
+    "    <input id =\"in5\" type = \"date \" name = \"data_urodzenia\" value = {{data_urodzenia}}  ><br>\n" +
+    "    pesel:<br>\n" +
+    "    <input id =\"in6\"type = \"text \" name = \"pesel\" value = {{pesel}}><br><br>\n" +
+    "    <input type = \"button\" value = \"Zatwierdź\" onclick='f3(obywatelDane, son)'>\n" +
+    "\n" +
+    "\n" +
+    "  </form>";
+
+
+
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+
+function getModificationTime() {
+
+
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' '+time;
+
+  //alert(dateTime)
+
+  return dateTime;
+  
+}
+function walidacjaPesela(pesel) {
+  if (pesel.length !=11){
+    alert("PESEL musi mieć 11 cyfr")
+    return false
+  }
+
+  if(!(/^[0-9]*$/.test(pesel))){
+    alert("PESEL może zawierać tylko cyfry")
+    return false
+  }
+
+  var p = []
+
+  for (var i =0; i<pesel.length; i++){
+    p[i] = pesel.charCodeAt(i) - 48
+
+  }
+  if ((9*p[0]+7*p[1]+3*p[2]+1*p[3]+9*p[4]+7*p[5]+3*p[6]+1*p[7]+9*p[8]+7*p[9])%10===p[10])
+    return true
+  else
+    alert("PESEL nie jest prawidłowy")
+    return false
+  
+}
+
+function walidacjaNumeruDowodu(nr_dowodu_s) {
+
+  var nr_dowodu = nr_dowodu_s.toUpperCase()
+
+
+
+ // nr_dowodu.replace(/\s/g,'')
+
+  if((/^[A-Z]{3}[0-9]{6}$/.test(nr_dowodu))){
+    var nrint = []
+
+    nrint[0] = nr_dowodu.charCodeAt(0) - 55
+    nrint[1] = nr_dowodu.charCodeAt(1) - 55
+    nrint[2] = nr_dowodu.charCodeAt(2) - 55
+
+    for (var i = 3; i<nr_dowodu.length; i++) {
+      nrint[i] = nr_dowodu.charCodeAt(i) - 48
+    }
+    nrint[0]*=7
+    nrint[1]*=3
+    nrint[2]*=1
+    nrint[4]*=7
+    nrint[5]*=3
+    nrint[6]*=1
+    nrint[7]*=7
+    nrint[8]*=3
+
+    var suma = 0
+
+    for(var i = 0; i<nrint.length;i++){
+      if (i!==3)
+        suma+=nrint[i]
+    }
+
+    suma%=10
+
+    if (suma === nrint[3])
+      return true
+    else{
+
+      alert("Numer dowodu jest nie prawidłowy")
+      return false
+    }
+
+
+  }
+  else{
+    alert("Numer dowodu musi się składać z 3 wielkich liter i 6 cyfr i nie zawierać spacji")
+    return false
+  }
+
+
+}
+
+
+
+
+
+  function f3(obywatelDane, son){
+  if (walidacjaNumeruDowodu(document.getElementById("in1").value)) {
+    son.nr_dowodu = document.getElementById("in1").value; // przetestować walidację dla numeru dowodu
+  }
+
+   son.imie = document.getElementById("in2").value;
+   son.nazwisko = document.getElementById("in3").value;
+   son.adres = document.getElementById("in4").value;
+   son.data_urodzenia = document.getElementById("in5").value;
+   if (walidacjaPesela(document.getElementById("in6").value)){
+      son.pesel = document.getElementById("in6").value;
+   }
+
+
+
+   son.kiedy_zmodyfikowano = getModificationTime();// żeby data modyfikacji była zapisywana tylko wtedy kiedy żeczywiście są jakies zmiany
+
+
+
+    template = Handlebars.compile(obywatelDane);
+
+    var dane2 = template(son);
+
+   document.getElementById("obywatel").innerHTML = "";
+    //sleep(10000);
+    document.getElementById("obywatel").innerHTML += dane2 + window.but3;
+
+    document.getElementById("formularz").innerHTML = "";
+
+
+
+
+
+
+  }
+
+  function f2(obywatelDane,son,formularz) {
+
+
+
+    template = Handlebars.compile(formularz);
+
+    var dane = template(son);
+
+    template = Handlebars.compile(obywatelDane)
+
+    var dane2 = template(son);
+
+    document.getElementById("obywatel").innerHTML = ""
+
+   document.getElementById("obywatel").innerHTML += dane2;
+
+
+
+    document.getElementById("formularz").innerHTML+=dane;
+
+
+
+
+
+
+
+
+      //document.getElementById("obywatel").innerHTML = "";
+
+     /// f3(obywatelDane,son)
+
+
+
+
+
+
+
+
+  }
+
+  template = Handlebars.compile(obywatelDane);
+
+  var dane = template(son);
+
+
+
+  //  var bancz = ( dane + but3 + f3(obywatelDane, son));
+   // alert(son.pesel);
+
+
+  var but3  ="    <button type=\"button\" onclick=\" f2(obywatelDane,son,formularz)\">edytuj</button>"
+
+    var bancz = ( dane + but3);
+
+
+
+
+
+
+
+  document.getElementById('obywatel').innerHTML += bancz;
+
+
+
+
+
+</script>
+
+
+</body>
+</html>
+
