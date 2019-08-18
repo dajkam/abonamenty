@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doadaj</title>
+  <script src="js/handlebars-v4.1.2.js"></script>
+  <script src="js/jquery-3.4.1.js"></script>
+  <script id="result-template" type="text/x-handlebars-template">
+
+
+  </script>
+</head>
+<body>
+<p>Tu będzie dodawanie do bazy</p>
+
+<div id="derekData"></div>
+
+
+
+<script type="text/javascript">
+
+  // Structure how I want the data to dynamically be
+  // placed by defining the keys in between {{}}
+  var myInfo = "<p>My name is {{name}} and I live at {{street}} in {{city}}, {{state}}</p>";
+
+  // Generate a JS function that will create the output
+  var template = Handlebars.compile(myInfo);
+
+  // template receives the key / value pairs and puts
+  // them in place
+  var data = template({name: "Derek", street: "123 Main St", city: "Pittsburgh", state: "PA"});
+
+  // Update the div with the completed output
+  document.getElementById('derekData').innerHTML += data;
+</script>
+
+<div id="obywatel">
+
+    <div id="buttons">
+        <button type="button">Click Me!</button>
+    </div>
+</div>
+
+<!--<script type="text/javascript">
+
+
+  var obywatel = $.getJSON("http://localhost:8091/obywatel/download/", function (data) {
+    var obywatelDane = "<p>identyfikator to:{{id}} data utworzenia to:{{kiedy_utworzono}} " +
+      "data ostatniej modyfikacji to{{kiedy_zmodyfikowano}} numer dowodu{{nr_dowodu}} imie to {{imie}}" +
+      "nazwisko to {{nazwisko}} adres to {{adres}} aktualny to {{czy_zarchiwizowany}} " +
+      "data urodzenia to {{data_urodzenia}} pesel to {{pesel}}</p>";
+
+    template = Handlebars.compile(obywatelDane);
+
+    var dat = JSON.parse(data)
+
+    var dane = template(dat)
+
+    document.getElementById('obywatel').innerHTML += dane;
+
+
+
+
+  } );
+
+
+
+</script> -->
+<script type="text/javascript">
+
+
+
+    var obywatelDane = "<p>identyfikator to:{{id}} data utworzenia to:{{kiedy_utworzono}} " +
+        "data ostatniej modyfikacji to{{kiedy_zmodyfikowano}} numer dowodu{{nr_dowodu}} imie to {{imie}}" +
+        "nazwisko to {{nazwisko}} adres to {{adres}} aktualny to {{czy_zarchiwizowany}} " +
+        "data urodzenia to {{data_urodzenia}} pesel to {{pesel}}</p>";
+
+    template = Handlebars.compile(obywatelDane);
+
+    var dane = template(data);
+
+    document.getElementById('obywatel').innerHTML += dane;
+
+
+</script>
+
+</body>
+</html>
