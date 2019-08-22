@@ -29,7 +29,7 @@ class ObywatelService {
             repo.save(
                     Obywatel(
                              obywatel.id,
-                             obywatel.PESEL,
+                             obywatel.pesel,
                              obywatel.nr_dowodu,
                              obywatel.imie,
                              obywatel.nazwisko,
@@ -48,7 +48,7 @@ class ObywatelService {
     fun updateObywatel(obywatelDTO: ObywatelDTO): ObywatelDTO {
         var obywatel : Obywatel = repo.findById(obywatelDTO.id).get()
 
-        obywatel.PESEL = obywatelDTO.PESEL
+        obywatel.pesel = obywatelDTO.pesel
         obywatel.nr_dowodu = obywatelDTO.nr_dowodu
         obywatel.imie = obywatelDTO.imie
         obywatel.nazwisko = obywatelDTO.nazwisko
