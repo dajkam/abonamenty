@@ -37,7 +37,7 @@
 
 <script type="text/javascript">
 
-    var preson = []
+   // var preson = []
 
     var obywatelDane = "<p>identyfikator to: {{id}}   data utworzenia to:   {{kiedy_utworzono}}   " +
         "data ostatniej modyfikacji to   {{kiedy_zmodyfikowano}}   numer dowodu    {{nr_dowodu}}   imie to   {{imie}}   " +
@@ -69,7 +69,7 @@
 
     function main(preson) {
 
-        var son = preson[2]
+        var son = preson[0]
 
        /* var obywatelDane = "<p>identyfikator to: {{id}}   data utworzenia to:   {{kiedy_utworzono}}   " +
             "data ostatniej modyfikacji to   {{kiedy_zmodyfikowano}}   numer dowodu    {{nr_dowodu}}   imie to   {{imie}}   " +
@@ -207,14 +207,16 @@
     }
 
 
+
+
     loadData()
-        .then(function(res, preson) {
-           preson = insertData(res, preson);
+        .then(function(res) {
+          // preson = insertData(res, preson);
+            var preson = []
+            var preson = JSON.parse(res)
             console.log(preson[0].nazwisko)
             main(preson)
-        }).catch(function(err) {
-        console.error('Coś poszło nie tak');
-    })
+        })
 
     function insertData(res, preson) {
         console.log(res);
@@ -225,6 +227,37 @@
         console.log(preson[0].nazwisko)
 
         return preson
+
+    }
+
+
+    function sendSon(son) {
+
+        var xhr = new XMLHttpRequest();
+        var url = "http://localhost:8091/obywatel/update";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+
+
+        console.log("//////////////////////////////////////////////////////////////////////////")
+
+        console.log(son)
+
+        delete son.kiedy_zmodyfikowano
+        delete son.kiedy_utworzono
+
+        var json = JSON.stringify(son)
+
+        console.log("//////////////////////////////////////////////////////////////////////////")
+
+        console.log(json)
+
+
+        xhr.send(json)
+
+
+
 
     }
 
@@ -395,6 +428,8 @@
                 template = Handlebars.compile(obywatelDane);
 
                 var dane2 = template(son);
+
+                sendSon(son)
 
                 document.getElementById("obywatel").innerHTML = "";
                 //sleep(10000);

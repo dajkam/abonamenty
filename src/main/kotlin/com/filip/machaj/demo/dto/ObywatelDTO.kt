@@ -6,7 +6,7 @@ import java.util.*
 data class ObywatelDTO(
 
 
-        var PESEL:String,
+        var pesel:String,
         var nr_dowodu:String,
         var imie:String,
         var nazwisko:String,
@@ -26,7 +26,7 @@ data class ObywatelDTO(
     var kiedy_zmodyfikowano : Date = Date()
 
     constructor(obywatel: Obywatel) : this(
-            obywatel.PESEL,
+            obywatel.pesel,
             obywatel.nr_dowodu,
             obywatel.imie,
             obywatel.nazwisko,

@@ -14,7 +14,7 @@ data class Obywatel(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id : Long,
         @Column(columnDefinition = "varchar(36)")
-        var PESEL:String,
+        var pesel:String,
         var nr_dowodu:String,
         var imie:String,
         var nazwisko:String,
