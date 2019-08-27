@@ -4,8 +4,10 @@ package com.filip.machaj.demo.model.dane
 import com.fasterxml.jackson.annotation.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
+import java.time.LocalDate
 import java.util.*
 import javax.persistence.*
+
 
 @Entity
 @Table(name = "obywatel")
@@ -22,7 +24,7 @@ data class Obywatel(
         @Column(columnDefinition = "boolean")
           var czy_zarchiwizowany : Boolean = false,
         @Column(columnDefinition = "date")
-          var data_urodzenia:Date,
+          var data_urodzenia:LocalDate,
         @CreationTimestamp
         var kiedy_utworzono : Date = Date(),
         @UpdateTimestamp
@@ -52,6 +54,7 @@ data class Obywatel(
                 "", "",
                 "",
                 false,
+                LocalDate.now(),
                 Date(),
                 Date()
 

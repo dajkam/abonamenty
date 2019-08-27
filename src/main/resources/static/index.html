@@ -244,6 +244,8 @@
 
         console.log(son)
 
+        son.kiedy_zmodyfikowano = getModificationTime();// żeby data modyfikacji była zapisywana tylko wtedy kiedy żeczywiście są jakies zmiany
+
         delete son.kiedy_zmodyfikowano
         delete son.kiedy_utworzono
 
@@ -260,29 +262,6 @@
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -390,6 +369,49 @@
 
     }
 
+    function zgodnoscDatyUrodzeniaZPeselem(pesel, data_urodzenia) {
+
+        var p = []
+
+        for (var i =0;i<6; i++){ // pierwsze 6 cyfr peselu
+
+            p[i] = pesel[i]
+
+        }
+
+        var data = new Date(data_urodzenia)
+
+        var d = new Array(6)
+
+        d[0] = data_urodzenia[2]
+        d[1] = data_urodzenia[3]
+        d[2] = data_urodzenia[5]
+        d[3] = data_urodzenia[6]
+        d[4] = data_urodzenia[8]
+        d[5] = data_urodzenia[9]
+
+
+
+        if (data.getFullYear()>= 2000){
+            d[2]-=2
+
+        }
+        console.log("d to: " + JSON.stringify(d))
+        console.log("p to: " + JSON.stringify(p))
+        if (JSON.stringify(d)===JSON.stringify(p)){
+            return true
+        }
+
+        else{
+            alert("data urodzenia nie jest zgodna z peselem")
+            return false
+        }
+
+
+
+
+    }
+
 
 
 
@@ -407,6 +429,8 @@
 
 
 
+
+
                 if (walidacjaNumeruDowodu(document.getElementById("in1").value)) {
                     son.nr_dowodu = document.getElementById("in1").value; // przetestować walidację dla numeru dowodu
                 }
@@ -414,14 +438,25 @@
                 son.imie = document.getElementById("in2").value;
                 son.nazwisko = document.getElementById("in3").value;
                 son.adres = document.getElementById("in4").value;
-                son.data_urodzenia = document.getElementById("in5").value;
+
                 if (walidacjaPesela(document.getElementById("in6").value)){
+
                     son.pesel = document.getElementById("in6").value;
+
+
+                }
+                if(zgodnoscDatyUrodzeniaZPeselem(document.getElementById("in6").value,document.getElementById("in5").value)){
+
+                    son.data_urodzenia = document.getElementById("in5").value;
+
+
                 }
 
 
 
-                son.kiedy_zmodyfikowano = getModificationTime();// żeby data modyfikacji była zapisywana tylko wtedy kiedy żeczywiście są jakies zmiany
+
+
+
 
 
 
@@ -463,6 +498,8 @@
                 console.log(preson[0].nazwisko)
 
                 son = preson[0]
+
+
 
 
                 template = Handlebars.compile(formularz);

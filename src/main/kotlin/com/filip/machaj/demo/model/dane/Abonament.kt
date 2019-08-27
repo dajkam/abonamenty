@@ -14,8 +14,8 @@ data class Abonament(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long,
         @Column(columnDefinition = "date")
-        var data_rozpoczecia:Date,
-        var data_zakonczenia: Date,
+        var data_rozpoczecia:Date, // Zmienić na LocalDate
+        var data_zakonczenia: Date,// Zmienić na LocalDate
         @Column(columnDefinition = "varchar(1)")
         var sektor: String, /// zmienić na enum
         @Column(columnDefinition = "varchar(36)")
