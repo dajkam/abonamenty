@@ -48,6 +48,8 @@ class ObywatelService {
     fun updateObywatel(obywatelDTO: ObywatelDTO): ObywatelDTO {
         var obywatel : Obywatel = repo.findById(obywatelDTO.id).get()
 
+        var obywatel_old : Obywatel = repo.findById(obywatelDTO.id).get()
+
         obywatel.pesel = obywatelDTO.pesel
         obywatel.nr_dowodu = obywatelDTO.nr_dowodu
         obywatel.imie = obywatelDTO.imie
@@ -55,7 +57,14 @@ class ObywatelService {
         obywatel.adres = obywatelDTO.adres
         obywatel.czy_zarchiwizowany = obywatelDTO.czy_zarchiwizowany
         obywatel.data_urodzenia = obywatelDTO.data_urodzenia
-        obywatel.kiedy_zmodyfikowano = Date()
+        if (obywatel.equals(obywatel_old)){
+            obywatel.kiedy_zmodyfikowano = obywatel.kiedy_zmodyfikowano
+        }
+        else{
+            obywatel.kiedy_zmodyfikowano = Date()
+
+        }
+
         obywatel = repo.save(obywatel)
         return obywatelDTO(obywatel) // patrz ObywatelDTO invoke
 
