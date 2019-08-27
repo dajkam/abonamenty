@@ -1,6 +1,7 @@
 package com.filip.machaj.demo.dto
 
 import com.filip.machaj.demo.model.dane.Obywatel
+import java.time.LocalDate
 import java.util.*
 
 data class ObywatelDTO(
@@ -10,9 +11,9 @@ data class ObywatelDTO(
         var nr_dowodu:String,
         var imie:String,
         var nazwisko:String,
-        var adres : String,
-        var czy_zarchiwizowany : Boolean,
-        var data_urodzenia: Date
+        var adres: String,
+        var czy_zarchiwizowany: Boolean,
+        var data_urodzenia: LocalDate
         ) {
    operator fun invoke(obywatel: Obywatel): ObywatelDTO { // return obywatelDTO(obywatel) z funcji upDateObywatel w ObywatelService nie działa bez funkcji invoke
 
