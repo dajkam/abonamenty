@@ -58,7 +58,7 @@ class ObywatelService {
         obywatel.czy_zarchiwizowany = obywatelDTO.czy_zarchiwizowany
         obywatel.data_urodzenia = obywatelDTO.data_urodzenia
         if (obywatel.equals(obywatel_old)){
-            obywatel.kiedy_zmodyfikowano = obywatel.kiedy_zmodyfikowano
+            obywatel.kiedy_zmodyfikowano = obywatel.kiedy_zmodyfikowano // wprowadzić dla pozostałych klas
         }
         else{
             obywatel.kiedy_zmodyfikowano = Date()
