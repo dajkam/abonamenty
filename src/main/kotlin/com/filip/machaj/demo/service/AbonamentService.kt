@@ -55,7 +55,7 @@ class AbonamentService {
         abonament.czy_zarchiwizowany = abonamentDTO.czy_zarchiwizowany
         abonament.obywatel = abonamentDTO.obywatel
         abonament.pojazd = abonamentDTO.pojazd
-        abonament.kiedy_zmodyfikowano = Date()
+        abonament.kiedy_zmodyfikowano = Date() // zrobić żeby to pole sie zmieniało tylko gdy żeczywiście coś zmieniono
        // abonament.obywatel = repoO.findLast()// nowe obywatel  // te dwie linijki trzeba przeniesc do add abonament
        // abonament.pojazd = repoP.findLast()//nowe pojazd
         abonament.obywatel = abonamentDTO.obywatel

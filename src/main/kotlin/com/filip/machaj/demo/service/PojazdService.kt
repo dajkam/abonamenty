@@ -49,7 +49,7 @@ class PojazdService {
         pojazd.nr_rejstracyjny_pojazdu = pojazdDTO.nr_rejstracyjny_pojazdu
         pojazd.rok_producji = pojazdDTO.rok_produkcji
         pojazd.czy_zarchiwizowany = pojazdDTO.czy_zarchiwizowany
-        pojazd.kiedy_zmodyfikowano = Date()
+        pojazd.kiedy_zmodyfikowano = Date() // zrobić żeby to pole sie zmieniało tylko gdy żeczywiście coś zmieniono
         pojazd.model = pojazdDTO.model
         pojazd = repo.save(pojazd)
         return  pojazdDTO(pojazd)
