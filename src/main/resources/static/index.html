@@ -12,7 +12,6 @@
 <body>
 
 <div id = "obywatel"></div>
-<div id = "obywatel2"></div>
 <!--<form id = "formularz">
   nr dowodu: <br>
   <input type = "text " name = "nr_dowodu" ><br>
@@ -47,6 +46,8 @@
     template = Handlebars.compile(obywatelDane);
 
 
+
+
     var formularz = "<form id = 'ff' >\n" +
         "    nr dowodu: <br>\n" +
         "    <input id =\"in1\" type = \"text \" name = \"nr_dowodu\" value =  {{nr_dowodu}} ><br>\n" +
@@ -60,51 +61,47 @@
         "    <input id =\"in5\" type = \"date \" name = \"data_urodzenia\" value = {{data_urodzenia}}  ><br>\n" +
         "    pesel:<br>\n" +
         "    <input id =\"in6\"type = \"text \" name = \"pesel\" value = {{pesel}}><br><br>\n" +
-        "    <input type = \"button\" value = \"Zatwierdź\" onclick='f3()'>\n" +
+        "    <input type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
         "\n" +
         "\n" +
         "  </form>";
 
-    var but3  ="    <button type=\"button\" onclick=\" f2()\">edytuj</button>"
+    var but3  ="    <button type=\"button\" onclick=\" f2(this.parentNode.id)\">edytuj</button>"
 
     function main(preson) {
 
-        var son = preson[0]
+        for ( var i = 0;i<preson.length; i++) {
 
-       /* var obywatelDane = "<p>identyfikator to: {{id}}   data utworzenia to:   {{kiedy_utworzono}}   " +
-            "data ostatniej modyfikacji to   {{kiedy_zmodyfikowano}}   numer dowodu    {{nr_dowodu}}   imie to   {{imie}}   " +
-            "nazwisko to   {{nazwisko}}   adres to   {{adres}}   aktualny to    {{czy_zarchiwizowany}}   " +
-            "data urodzenia to    {{data_urodzenia}}   pesel to   {{pesel}}    </p>";
+            var son = preson[i]
 
-        template = Handlebars.compile(obywatelDane);
+            var iDiv = document.createElement('div')
+
+            iDiv.id =  i.toString() + "ob"
+
+            var div = document.getElementById('obywatel')
+
+            wyswietl(son, i,iDiv)
+
+            div.appendChild(iDiv)
+
+        }
 
 
-        var formularz = "<form id = 'ff' >\n" +
-            "    nr dowodu: <br>\n" +
-            "    <input id =\"in1\" type = \"text \" name = \"nr_dowodu\" value =  {{nr_dowodu}} ><br>\n" +
-            "    imie: <br>\n" +
-            "    <input id =\"in2\" type = \"text \" name = \"imie\"  value={{imie}}><br>\n" +
-            "    nazwisko: <br>\n" +
-            "    <input id =\"in3\" type = \"text \" name = \"nazwisko\" value={{nazwisko}} ><br>\n" +
-            "    adres: <br>\n" +
-            "    <input id =\"in4\" type = \"text \" name = \"adres\" value = {{adres}} ><br>\n" +
-            "    data urodzenia: <br>\n" +
-            "    <input id =\"in5\" type = \"date \" name = \"data_urodzenia\" value = {{data_urodzenia}}  ><br>\n" +
-            "    pesel:<br>\n" +
-            "    <input id =\"in6\"type = \"text \" name = \"pesel\" value = {{pesel}}><br><br>\n" +
-            "    <input type = \"button\" value = \"Zatwierdź\" onclick='f3(obywatelDane, son)'>\n" +
-            "\n" +
-            "\n" +
-            "  </form>";*/
+
+
+
+
+
+
+    }
+
+    function wyswietl(son, i,iDiv) {
 
         template = Handlebars.compile(obywatelDane);
 
         var dane = template(son);
 
-
-
-        //  var bancz = ( dane + but3 + f3(obywatelDane, son));
-        // alert(son.pesel);
+        //but3.id = 'but' + i.toString()
 
 
 
@@ -113,12 +110,9 @@
 
 
 
+      //  document.getElementById('ob' + i.toString()).innerHTML += bancz;
 
-
-
-
-        document.getElementById('obywatel').innerHTML += bancz;
-
+        iDiv.innerHTML += bancz;
 
     }
 
@@ -258,6 +252,8 @@
 
         xhr.send(json)
 
+        location.reload(true)
+
 
 
 
@@ -394,7 +390,7 @@
         d[3] = data_urodzenia[6]
         d[4] = data_urodzenia[8]
         d[5] = data_urodzenia[9]
-    
+
 
 
 
@@ -429,14 +425,24 @@
 
 
 
-    function f3(){
+    function f3(id){
+
+       // var id = e.target.parentNode.id
+
+     //   var id = di.parentNode.id
+
+        var on = parseInt(id,10)
 
         loadData()
             .then(function(res, preson) {
                 preson = insertData(res, preson);
                 console.log(preson[0].nazwisko)
 
-                var son = preson[0]
+                var son = preson[on]
+
+                alert("id wybranego w f3 "+ on.toString())
+
+                alert(id.toString())
 
 
 
@@ -477,9 +483,9 @@
 
                 sendSon(son)
 
-                document.getElementById("obywatel").innerHTML = "";
+                document.getElementById(id).innerHTML = "";
                 //sleep(10000);
-                document.getElementById("obywatel").innerHTML += dane2 + window.but3;
+                document.getElementById(id).innerHTML += dane2 + window.but3;
 
                 document.getElementById("formularz").innerHTML = "";
 
@@ -501,14 +507,21 @@
 
     }
 
-    function f2() {
+    function f2(id) {
+       // var id = e.target.parentNode.id
+
+
+
+        var on = parseInt(id,10)
 
         loadData()
-            .then(function(res, preson) {
+            .then(function(res, preson ) {
                 preson = insertData(res, preson);
                 console.log(preson[0].nazwisko)
 
-                son = preson[0]
+                alert("id wybranego w f2 "+ on.toString())
+
+                son = preson[on]
 
 
 
@@ -521,6 +534,10 @@
 
                 var dane2 = template(son);
 
+               // document.getElementById(id.toString()).innerHTML = ""
+
+                //document.getElementById(id.toString()).innerHTML += dane2;
+
                 document.getElementById("obywatel").innerHTML = ""
 
                 document.getElementById("obywatel").innerHTML += dane2;
@@ -528,6 +545,8 @@
 
 
                 document.getElementById("formularz").innerHTML+=dane;
+
+                document.getElementById("ff").id = id + "ff"
             })
 
 
