@@ -11,6 +11,23 @@
 </head>
 <body>
 
+<div id = "menu">
+
+    <select id = "encja">
+        <option value = "obywatel">Obywatel</option>
+        <option value = "pojazd">Pojazd</option>
+        <option value = "abonament">Abonament</option>
+        <option value = "model">Model</option>
+        <option value = "marka">Marka</option>
+
+
+
+
+    </select>
+</div>
+
+
+
 <div id = "obywatel"></div>
 <!--<form id = "formularz">
   nr dowodu: <br>
@@ -38,33 +55,79 @@
 
    // var preson = []
 
+   let wybraneDane = ""
+
     var obywatelDane = "<p>identyfikator to: {{id}}   data utworzenia to:   {{kiedy_utworzono}}   " +
         "data ostatniej modyfikacji to   {{kiedy_zmodyfikowano}}   numer dowodu    {{nr_dowodu}}   imie to   {{imie}}   " +
         "nazwisko to   {{nazwisko}}   adres to   {{adres}}   aktualny to    {{czy_zarchiwizowany}}   " +
         "data urodzenia to    {{data_urodzenia}}   pesel to   {{pesel}}    </p>";
 
-    template = Handlebars.compile(obywatelDane);
+    var abonamentDane = "<p>isentyfikator to: {{id}}  data rozpoczecia to: {{data_rozpoczecia}}" +
+        " data zakonczenia to: {{data_zakonczenia}} sektor to {{sektor}} uwagi to: {{uwagi}}" +
+        "czy aktualny to: {{czyzarchiwizowany}}</p>>"
+
+    //template = Handlebars.compile(wybraneDane);
+
+    var formularz
+
+   var obywatelFormularz = "<form id = 'ffa' >\n" +
+       "    nr dowodu: <br>\n" +
+       "    <input id =\"in1\" type = \"text \" name = \"nr_dowodu\" value =  {{nr_dowodu}} ><br>\n" +
+       "    imie: <br>\n" +
+       "    <input id =\"in2\" type = \"text \" name = \"imie\"  value={{imie}}><br>\n" +
+       "    nazwisko: <br>\n" +
+       "    <input id =\"in3\" type = \"text \" name = \"nazwisko\" value={{nazwisko}} ><br>\n" +
+       "    adres: <br>\n" +
+       "    <input id =\"in4\" type = \"text \" name = \"adres\" value = '{{adres}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
+       "    data urodzenia: <br>\n" +
+       "    <input id =\"in5\" type = \"date \" name = \"data_urodzenia\" value = {{data_urodzenia}}  ><br>\n" +
+       "    pesel:<br>\n" +
+       "    <input id =\"in6\"type = \"text \" name = \"pesel\" value = {{pesel}}><br><br>\n" +
+       "    <input type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
+       "\n" +
+       "\n" +
+       "  </form>";
+
+   var abonamentFormularz = "<form id = 'ffb' >\n" +
+       "    nr dowodu: <br>\n" +
+       "    <input id =\"in1\" type = \"date \" name = \"data_rozpoczecia\" value =  {{data_rozpoczecia}} ><br>\n" +
+       "    imie: <br>\n" +
+       "    <input id =\"in2\" type = \"date \" name = \"data_zakonczenia\"  value={{data_zakonczenia}}><br>\n" +
+       "    nazwisko: <br>\n" +
+       "    <input id =\"in3\" type = \"text \" name = \"sektor\" value={{sektor}} ><br>\n" +
+       "    adres: <br>\n" +
+       "    <input id =\"in4\" type = \"text \" name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
+       "    data urodzenia: <br>\n" +
+       "    <input type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
+       "\n" +
+       "\n" +
+       "  </form>";
+
+
+   let sel = document.getElementById("encja");
+   let selval = sel.options[sel.selectedIndex].value;
+
+   switch (selval) {
+       case "obywatel":
+          // document.getElementById('ffa').id =  "ff"  /// czemu to daje błąd że jest null
+           obywatelFormularz.id = "ff"
+           wybraneDane = obywatelDane
+           formularz = obywatelFormularz
+
+           break;
+       case "abonament":
+          // document.getElementById('ffb').id =  "ff" /// czemu to daje bląd że jest null
+           abonamentFormularz.id = "ff"
+           wybraneDane = abonamentDane
+           formularz = abonamentFormularz
+
+           break;
+   }
 
 
 
 
-    var formularz = "<form id = 'ff' >\n" +
-        "    nr dowodu: <br>\n" +
-        "    <input id =\"in1\" type = \"text \" name = \"nr_dowodu\" value =  {{nr_dowodu}} ><br>\n" +
-        "    imie: <br>\n" +
-        "    <input id =\"in2\" type = \"text \" name = \"imie\"  value={{imie}}><br>\n" +
-        "    nazwisko: <br>\n" +
-        "    <input id =\"in3\" type = \"text \" name = \"nazwisko\" value={{nazwisko}} ><br>\n" +
-        "    adres: <br>\n" +
-        "    <input id =\"in4\" type = \"text \" name = \"adres\" value = {{adres}} ><br>\n" +
-        "    data urodzenia: <br>\n" +
-        "    <input id =\"in5\" type = \"date \" name = \"data_urodzenia\" value = {{data_urodzenia}}  ><br>\n" +
-        "    pesel:<br>\n" +
-        "    <input id =\"in6\"type = \"text \" name = \"pesel\" value = {{pesel}}><br><br>\n" +
-        "    <input type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
-        "\n" +
-        "\n" +
-        "  </form>";
+
 
     var but3  ="    <button type=\"button\" onclick=\" f2(this.parentNode.id)\">edytuj</button>"
 
@@ -82,6 +145,8 @@
 
             wyswietl(son, i,iDiv)
 
+
+
             div.appendChild(iDiv)
 
         }
@@ -97,7 +162,7 @@
 
     function wyswietl(son, i,iDiv) {
 
-        template = Handlebars.compile(obywatelDane);
+        template = Handlebars.compile(wybraneDane);
 
         var dane = template(son);
 
@@ -197,7 +262,19 @@
     }
 
     function loadData() {
-        return ajax('GET', 'http://localhost:8091/obywatel/download');
+
+        var url1 = 'http://localhost:8091/'
+
+        var e = document.getElementById("encja");
+        var url2 = e.options[e.selectedIndex].value;
+
+        var url3 = '/download'
+
+        var url =  url1+url2+url3
+
+       // return ajax('GET', 'http://localhost:8091/obywatel/download');
+
+        return ajax('GET',url)
     }
 
 
@@ -438,7 +515,9 @@
                 preson = insertData(res, preson);
                 console.log(preson[0].nazwisko)
 
-                var son = preson[on]
+                alert("onid w f3 " + onid)
+
+                var son = preson[onid]
 
                 alert("id wybranego w f3 "+ on.toString())
 
@@ -477,7 +556,7 @@
 
 
 
-                template = Handlebars.compile(obywatelDane);
+                template = Handlebars.compile(wybraneDane);
 
                 var dane2 = template(son);
 
@@ -530,7 +609,7 @@
 
                 var dane = template(son);
 
-                template = Handlebars.compile(obywatelDane)
+                template = Handlebars.compile(wybraneDane)
 
                 var dane2 = template(son);
 
@@ -546,7 +625,18 @@
 
                 document.getElementById("formularz").innerHTML+=dane;
 
-                document.getElementById("ff").id = id + "ff"
+               // document.getElementById("ff").id = id + "ff" /// czemu to nie działa daje null
+
+                alert("id 628 "+ id)
+                alert("on 629 to" + on)
+
+                formularz.id = on.toString() + "ff"
+
+                onid = on /// Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki
+
+                console.log("Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki")
+
+                console.log(onid)
             })
 
 
@@ -564,7 +654,7 @@
 
         //document.getElementById("obywatel").innerHTML = "";
 
-        /// f3(obywatelDane,son)
+        /// f3(wybraneDane,son)
 
 
 
