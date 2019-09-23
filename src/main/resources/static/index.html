@@ -13,7 +13,7 @@
 
 <div id = "menu">
 
-    <select id = "encja">
+    <select id = "encja" onChange='window.location="http://localhost:8091/index.html?value=" + this.value;'>
         <option value = "obywatel">Obywatel</option>
         <option value = "pojazd">Pojazd</option>
         <option value = "abonament">Abonament</option>
@@ -55,6 +55,32 @@
 
    // var preson = []
 
+
+
+   if(true){
+       let url_string =  window.location.href;
+       let url = new URL(url_string);
+       let c = url.searchParams.get("value");
+       console.log(c);
+       //$("#encja option[value='" + result_of_gup + "']").attr("selected","selected") ;
+
+       let list = document.getElementById("encja");
+       for(let i = 0; i < list.length; i++){
+           console.log(c)
+           console.log(list[i])
+          // console.log(list[i].outerHTML)
+           //console.log(list[i].toString().includes(c.toString()))
+           //console.log(list[i].includes(c))
+           if( list[i].outerHTML.includes(c)){
+              // document.getElementById("encja")[i].selected = true;
+               document.getElementById("encja").selectedIndex = i;
+           }
+       }
+   }
+
+
+
+
    let wybraneDane = ""
 
     var obywatelDane = "<p>identyfikator to: {{id}}   data utworzenia to:   {{kiedy_utworzono}}   " +
@@ -62,9 +88,9 @@
         "nazwisko to   {{nazwisko}}   adres to   {{adres}}   aktualny to    {{czy_zarchiwizowany}}   " +
         "data urodzenia to    {{data_urodzenia}}   pesel to   {{pesel}}    </p>";
 
-    var abonamentDane = "<p>isentyfikator to: {{id}}  data rozpoczecia to: {{data_rozpoczecia}}" +
+    var abonamentDane = "<p>identyfikator to: {{id}}  data rozpoczecia to: {{data_rozpoczecia}}" +
         " data zakonczenia to: {{data_zakonczenia}} sektor to {{sektor}} uwagi to: {{uwagi}}" +
-        "czy aktualny to: {{czyzarchiwizowany}}</p>>"
+        "czy aktualny to: {{czy_zarchiwizowany}}</p>"
 
     //template = Handlebars.compile(wybraneDane);
 
