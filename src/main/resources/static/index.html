@@ -54,13 +54,17 @@
 <script type="text/javascript">
 
    // var preson = []
+   let url_string =  window.location.href;
+   let url = new URL(url_string);
+   let c = url.searchParams.get("value");
+   console.log(c)
+
+   if(c === null)
+    c = "obywatel"
 
 
+   {
 
-   if(true){
-       let url_string =  window.location.href;
-       let url = new URL(url_string);
-       let c = url.searchParams.get("value");
        console.log(c);
        //$("#encja option[value='" + result_of_gup + "']").attr("selected","selected") ;
 
@@ -88,13 +92,14 @@
         "nazwisko to   {{nazwisko}}   adres to   {{adres}}   aktualny to    {{czy_zarchiwizowany}}   " +
         "data urodzenia to    {{data_urodzenia}}   pesel to   {{pesel}}    </p>";
 
-    var abonamentDane = "<p>identyfikator to: {{id}}  data rozpoczecia to: {{data_rozpoczecia}}" +
+    var abonamentDane = "<p>identyfikator to: {{id}} data utworzenia to:   {{kiedy_utworzono}}" +
+        " data ostatniej modyfikacji to   {{kiedy_zmodyfikowano}}  data rozpoczecia to: {{data_rozpoczecia}}" +
         " data zakonczenia to: {{data_zakonczenia}} sektor to {{sektor}} uwagi to: {{uwagi}}" +
         "czy aktualny to: {{czy_zarchiwizowany}}</p>"
 
     //template = Handlebars.compile(wybraneDane);
 
-    var formularz
+    var formularz = ""
 
    var obywatelFormularz = "<form id = 'ffa' >\n" +
        "    nr dowodu: <br>\n" +
@@ -115,15 +120,15 @@
        "  </form>";
 
    var abonamentFormularz = "<form id = 'ffb' >\n" +
-       "    nr dowodu: <br>\n" +
-       "    <input id =\"in1\" type = \"date \" name = \"data_rozpoczecia\" value =  {{data_rozpoczecia}} ><br>\n" +
-       "    imie: <br>\n" +
-       "    <input id =\"in2\" type = \"date \" name = \"data_zakonczenia\"  value={{data_zakonczenia}}><br>\n" +
-       "    nazwisko: <br>\n" +
-       "    <input id =\"in3\" type = \"text \" name = \"sektor\" value={{sektor}} ><br>\n" +
-       "    adres: <br>\n" +
-       "    <input id =\"in4\" type = \"text \" name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    data urodzenia: <br>\n" +
+       "    data_rozpoczecia: <br>\n" +
+       "    <input id =\"ina1\" type = \"date \" name = \"data_rozpoczecia\" value =  {{data_rozpoczecia}} ><br>\n" +
+       "    data_zakonczenia: <br>\n" +
+       "    <input id =\"ina2\" type = \"date \" name = \"data_zakonczenia\"  value={{data_zakonczenia}}><br>\n" +
+       "    sektor: <br>\n" +
+       "    <input id =\"ina3\" type = \"text \" name = \"sektor\" value={{sektor}} ><br>\n" +
+       "    uwagi: <br>\n" +
+       "    <input id =\"ina4\" type = \"text \" name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
+       "    <br>\n" +
        "    <input type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
        "\n" +
        "\n" +
@@ -331,7 +336,9 @@
     function sendSon(son) {
 
         var xhr = new XMLHttpRequest();
-        var url = "http://localhost:8091/obywatel/update";
+        var url = "http://localhost:8091/"+ c.toString() +"/update";
+        console.log(url)
+        alert("Stop1")
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
 
@@ -339,7 +346,8 @@
 
         console.log("//////////////////////////////////////////////////////////////////////////")
 
-        console.log(son)
+        console.log(JSON.stringify(son))
+        alert("Stop2")
 
         //son.kiedy_zmodyfikowano = getModificationTime();// żeby data modyfikacji była zapisywana tylko wtedy kiedy żeczywiście są jakies zmiany
 
@@ -351,6 +359,8 @@
         console.log("//////////////////////////////////////////////////////////////////////////")
 
         console.log(json)
+
+     
 
 
         xhr.send(json)
@@ -532,7 +542,7 @@
 
        // var id = e.target.parentNode.id
 
-     //   var id = di.parentNode.id
+     //   var id = di.parentNode.iddocument.getElementById("ina1").value
 
         var on = parseInt(id,10)
 
@@ -553,25 +563,40 @@
 
 
 
-
-
-                if (walidacjaNumeruDowodu(document.getElementById("in1").value)) {
-                    son.nr_dowodu = document.getElementById("in1").value; // przetestować walidację dla numeru dowodu
-                }
-
-                son.imie = document.getElementById("in2").value;
-                son.nazwisko = document.getElementById("in3").value;
-                son.adres = document.getElementById("in4").value;
-
-                if (walidacjaPesela(document.getElementById("in6").value)){
-                    if(zgodnoscDatyUrodzeniaZPeselem(document.getElementById("in6").value,document.getElementById("in5").value)){
-
-                        son.data_urodzenia = document.getElementById("in5").value;
-                        son.pesel = document.getElementById("in6").value;
+                if(c === "obywatel" || c === null){
+                    if (walidacjaNumeruDowodu(document.getElementById("in1").value)) {
+                        son.nr_dowodu = document.getElementById("in1").value; // przetestować walidację dla numeru dowodu
                     }
 
+                    son.imie = document.getElementById("in2").value;
+                    son.nazwisko = document.getElementById("in3").value;
+                    son.adres = document.getElementById("in4").value;
+
+                    if (walidacjaPesela(document.getElementById("in6").value)){
+                        if(zgodnoscDatyUrodzeniaZPeselem(document.getElementById("in6").value,document.getElementById("in5").value)){
+
+                            son.data_urodzenia = document.getElementById("in5").value;
+                            son.pesel = document.getElementById("in6").value;
+                        }
+
+
+                    }
 
                 }
+
+                if(c === "abonament"){
+
+                    son.data_rozpoczecia = document.getElementById("ina1").value // sprawdzać czy rozpoczecie jest przed koncem
+                    son.data_zakonczenia = document.getElementById("ina2").value // wyżej
+                    son.sektor = document.getElementById("ina3").value // Sektory to jest tylko pojedyńcza litera od A do J lub słowo WSZYSTKIE
+                    son.uwagi = document.getElementById("ina4").value
+
+
+
+
+                }
+
+
 
 
 

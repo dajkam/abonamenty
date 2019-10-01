@@ -23,7 +23,7 @@ data class Pojazd (
         @Column(columnDefinition = "boolean")
         var czy_zarchiwizowany : Boolean = false,
 
-        @ManyToOne(fetch = FetchType.EAGER)
+        @ManyToOne(fetch = FetchType.EAGER, cascade =  arrayOf(CascadeType.ALL)) // dodane cascade =  arrayOf(CascadeType.ALL) jako rozwiązanie pewnego względu jednak chyba nie jest wymagane.
         @JoinColumn(name = "model_id")
         @JsonBackReference
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")

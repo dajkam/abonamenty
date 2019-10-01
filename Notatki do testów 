@@ -1,3 +1,13 @@
 
 //////Obywatel//////
-Przy pierwsym zatwierdzeniu formularza bez zmian zmienia sie timestamp zmiany a nie powinien - mysle że coś we front endzie przy pobieraniu to powoduje
+Przy pierwsym zatwierdzeniu formularza bez zmian zmienia sie timestamp zmiany a nie powinien - mysle że coś we front endzie przy pobieraniu to powoduje.
+
+
+/////Lista Rozwijana///////
+Czy nie powinna być ona wyszarzana podczas modyfikacji krotki.
+
+
+/////////Projekt///////////
+Projekt ma działać bez żadnych danych
+
+
