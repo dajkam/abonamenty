@@ -95,7 +95,7 @@
     var abonamentDane = "<p>identyfikator to: {{id}} data utworzenia to:   {{kiedy_utworzono}}" +
         " data ostatniej modyfikacji to   {{kiedy_zmodyfikowano}}  data rozpoczecia to: {{data_rozpoczecia}}" +
         " data zakonczenia to: {{data_zakonczenia}} sektor to {{sektor}} uwagi to: {{uwagi}}" +
-        "czy aktualny to: {{czy_zarchiwizowany}}</p>"
+        " czy aktualny to: {{czy_zarchiwizowany}}</p>"
 
     //template = Handlebars.compile(wybraneDane);
 
@@ -585,11 +585,63 @@
                 }
 
                 if(c === "abonament"){
+                    if(document.getElementById("ina1").value < document.getElementById("ina2").value){
 
-                    son.data_rozpoczecia = document.getElementById("ina1").value // sprawdzać czy rozpoczecie jest przed koncem
-                    son.data_zakonczenia = document.getElementById("ina2").value // wyżej
-                    son.sektor = document.getElementById("ina3").value // Sektory to jest tylko pojedyńcza litera od A do J lub słowo WSZYSTKIE
-                    son.uwagi = document.getElementById("ina4").value
+                        son.data_rozpoczecia = document.getElementById("ina1").value // sprawdzać czy rozpoczecie jest przed koncem
+                        son.data_zakonczenia = document.getElementById("ina2").value // wyżej
+
+                    }
+                    else{
+                        alert("Data rozpoczęcia nie może być po dacie zakończenia")
+                    }
+
+                    if(  (/^[A-J]{1}$/.test(document.getElementById("ina3").value)) || document.getElementById("ina3").value === "WSZYSTKIE"){
+
+                        son.sektor = document.getElementById("ina3").value // Sektory to jest tylko pojedyńcza litera od A do J lub słowo WSZYSTKIE
+                    }
+
+                    else{
+                        alert("Sektorami mogą być tylko litery od A do J lub słowo Wszystkie")
+                    }
+
+                    // kontrola uwag
+
+
+
+                    if((son.sektor != "WSZYSTKIE")){
+
+                        son.uwagi = document.getElementById("ina4").value // uwagi jeśli mają
+
+                    }
+
+                    else{
+                      //  if((son.sektor === "WSZYSTKIE") &&  ((document.getElementById("ina4").value === null) || (document.getElementById("ina4").value) === "" )){
+
+                        if((son.sektor === "WSZYSTKIE") && (/\S/.test(document.getElementById("ina4").value))){
+
+                            son.uwagi = document.getElementById("ina4").value // uwagi jeśli mają
+
+                        }
+
+
+
+
+
+                        //}
+                        else{
+
+                            alert("Napisz w uwagach dlaczego ten obywatel ma dostęp do wszystkich sektorów")
+
+                        }
+                    }
+
+
+
+                    // koniec kontroli uwag
+
+
+
+
 
 
 
@@ -636,6 +688,9 @@
 
 
     }
+
+
+
 
     function f2(id) {
        // var id = e.target.parentNode.id
