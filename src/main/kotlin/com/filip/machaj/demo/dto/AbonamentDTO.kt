@@ -16,10 +16,8 @@ class AbonamentDTO(
         var czy_zarchiwizowany:Boolean,
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
-        var obywatel: Obywatel?,
-        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
-        @JsonIdentityReference(alwaysAsId = true)
-        var pojazd:  Pojazd?
+        var pojazd:  Pojazd
+
 
 ) {
     operator fun invoke(abonament:Abonament):AbonamentDTO{
@@ -35,7 +33,6 @@ class AbonamentDTO(
             abonament.sektor,
             abonament.uwagi,
             abonament.czy_zarchiwizowany,
-            abonament.obywatel,
             abonament.pojazd
 
 

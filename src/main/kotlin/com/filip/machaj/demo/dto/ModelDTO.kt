@@ -14,7 +14,7 @@ class ModelDTO(
         var pojazdy:MutableList<Pojazd>,
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
-        var marka:Marka?
+        var marka:Marka
 ) {
     var id : Long = 0
 
@@ -27,7 +27,6 @@ class ModelDTO(
             model.nazwa,
             model.pojazdy,
             model.marka
-
     ){
         id = model.id
     }

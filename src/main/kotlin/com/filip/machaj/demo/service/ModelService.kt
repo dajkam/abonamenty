@@ -30,7 +30,9 @@ class ModelService {
                             model.id,
                             model.nazwa,
                             repoP.findAll() as MutableList<Pojazd>,
-                            repoM.findById(1).get()
+                           // repoM.findById(1).get()
+                            repoM.findLast()
+
 
                     )
             )
@@ -45,5 +47,9 @@ class ModelService {
         model.pojazdy = modelDTO.pojazdy
         model = repo.save(model)
         return modelDTO(model)
+    }
+
+    fun findLastModel():Model{
+        return repo.findLast()
     }
 }

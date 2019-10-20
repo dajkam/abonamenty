@@ -23,7 +23,8 @@ data class Marka(
 
     constructor():this(
             -1,
-            ""
+            "",
+            mutableListOf()
 
     )
 

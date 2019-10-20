@@ -27,19 +27,16 @@ data class Abonament(
         @UpdateTimestamp
         var kiedy_zmodyfikowano: Date = Date(),
 
-        @OneToOne(cascade = arrayOf(CascadeType.ALL))
-            @JoinColumn(name = "obywatel_id")
-        @JsonBackReference(value = "ab-ob")
-        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
-        @JsonIdentityReference(alwaysAsId = true)
-        var obywatel: Obywatel ? = null,
 
-        @OneToOne(cascade = arrayOf(CascadeType.ALL))
-            @JoinColumn(name = "pojazd_id")
-        @JsonBackReference(value = "ab-po")
+      //  @Transient
+        @ManyToOne(fetch = FetchType.EAGER, cascade =  arrayOf(CascadeType.ALL)) // dodane cascade =  arrayOf(CascadeType.ALL) jako rozwiązanie pewnego względu jednak chyba nie jest wymagane.
+        @JoinColumn(name = "pojazd_id")
+        @JsonBackReference(value = "poj-ab")
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
-        var pojazd: Pojazd ? = null
+        var pojazd : Pojazd
+
+
 
 
 
@@ -54,7 +51,9 @@ data class Abonament(
             "",
             false,
             Date(),
-            Date()
+            Date(),
+            Pojazd()
+
     )
 
   //  constructor(id: Long, data_rozpoczecia: Date, data_zakonczenia: Date, sektor: String, uwagi: String, czy_zarchiwizowany: Boolean, kiedy_utworzono: Obywatel?, kiedy_zmodyfikowano: Pojazd?) : this()

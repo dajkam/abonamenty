@@ -35,7 +35,10 @@ class ObywatelService {
                              obywatel.nazwisko,
                              obywatel.adres,
                              obywatel.czy_zarchiwizowany,
-                             obywatel.data_urodzenia
+                             obywatel.data_urodzenia,
+                             Date(),
+                             Date(),
+                             obywatel.pojazdy
 
                     )
             )
@@ -57,6 +60,7 @@ class ObywatelService {
         obywatel.adres = obywatelDTO.adres
         obywatel.czy_zarchiwizowany = obywatelDTO.czy_zarchiwizowany
         obywatel.data_urodzenia = obywatelDTO.data_urodzenia
+        obywatel.pojazdy = obywatelDTO.pojazdy // sprawdzić czy w liscie jest tylko 1 niezarchiwizowany pojazd
         if (obywatel.equals(obywatel_old)){
             obywatel.kiedy_zmodyfikowano = obywatel.kiedy_zmodyfikowano // wprowadzić dla pozostałych klas
         }

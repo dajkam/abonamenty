@@ -1,0 +1,1 @@
+Dlaczego pomimo metod pobierających dane do kluczy obcych, w insertach muszą być puste reprezentacje zagniezdzonych jsonów.
