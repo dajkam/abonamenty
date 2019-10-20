@@ -4,6 +4,7 @@ import com.filip.machaj.demo.dto.PojazdDTO
 import com.filip.machaj.demo.model.dane.Model
 import com.filip.machaj.demo.model.dane.Pojazd
 import com.filip.machaj.demo.repo.ModelRepo
+import com.filip.machaj.demo.repo.ObywatelRepo
 import com.filip.machaj.demo.repo.PojazdRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -19,6 +20,9 @@ class PojazdService {
     @Autowired
     lateinit var repoM: ModelRepo
 
+    @Autowired
+    lateinit var repoO : ObywatelRepo
+
     fun getPojazd():Iterable<PojazdDTO> = repo.findAll().map {it -> PojazdDTO(it) }
 
 
@@ -31,7 +35,11 @@ class PojazdService {
                             pojazd.nr_rejstracyjny_pojazdu,
                             pojazd.rok_produkcji,
                             pojazd.czy_zarchiwizowany,
-                            repoM.findById(1).get()
+                            //repoM.findById(1).get(),
+                            repoM.findLast(),
+                            repoO.findLast(),
+                            pojazd.abonamenty
+
 
 
                     )
@@ -51,6 +59,8 @@ class PojazdService {
         pojazd.czy_zarchiwizowany = pojazdDTO.czy_zarchiwizowany
         pojazd.kiedy_zmodyfikowano = Date() // zrobić żeby to pole sie zmieniało tylko gdy żeczywiście coś zmieniono
         pojazd.model = pojazdDTO.model
+        pojazd.obywatel = pojazdDTO.obywatel
+        pojazd.abonamenty = pojazdDTO.abonamenty
         pojazd = repo.save(pojazd)
         return  pojazdDTO(pojazd)
 

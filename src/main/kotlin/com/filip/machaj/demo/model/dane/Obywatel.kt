@@ -40,11 +40,17 @@ data class Obywatel(
         )
         var pojazdy: Set<Pojazd> = mutableSetOf<Pojazd>() /// spróbować stwożyc qquery testujące klucze obce*/
 
-        @OneToOne(mappedBy = "obywatel")
+   /*     @OneToOne(mappedBy = "obywatel")
         @JsonManagedReference(value = "ab-ob")
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
-        var abonament: Abonament ? = null
+        var abonament: Abonament*/
+
+        @OneToMany(mappedBy = "obywatel", cascade =  arrayOf(CascadeType.ALL))
+        @JsonManagedReference(value = "poj-ob")
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
+        var pojazdy:MutableList<Pojazd> = mutableListOf() // sprawdzać w konstruktorze czy jest tylko 1 niezarchiwizowany
 
 
 ) {
@@ -56,7 +62,8 @@ data class Obywatel(
                 false,
                 LocalDate.now(),
                 Date(),
-                Date()
+                Date(),
+                mutableListOf()
 
 
 

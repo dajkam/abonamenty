@@ -22,17 +22,19 @@ data class Model(
         @JsonIdentityReference(alwaysAsId = true)
         var pojazdy:MutableList<Pojazd> = mutableListOf(),
 
-        @ManyToOne(fetch = FetchType.EAGER)
+        @ManyToOne(fetch = FetchType.EAGER, cascade =  arrayOf(CascadeType.ALL))
         @JoinColumn(name = "marka_id")
         @JsonBackReference
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
-        var marka:Marka ? = null
+        var marka:Marka
         ) {
 
     constructor():this(
             -1,
-            ""
+            "",
+            mutableListOf(),
+            Marka()
 
     )
 

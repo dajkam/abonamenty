@@ -42,4 +42,8 @@ class MarkaService {
         marka = repo.save(marka)
         return markaDTO(marka)
     }
+
+    fun findLastMarka():Marka{
+        return repo.findLast()
+    }
 }

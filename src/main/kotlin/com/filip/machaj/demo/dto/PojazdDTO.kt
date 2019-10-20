@@ -3,7 +3,9 @@ package com.filip.machaj.demo.dto
 import com.fasterxml.jackson.annotation.JsonIdentityInfo
 import com.fasterxml.jackson.annotation.JsonIdentityReference
 import com.fasterxml.jackson.annotation.ObjectIdGenerators
+import com.filip.machaj.demo.model.dane.Abonament
 import com.filip.machaj.demo.model.dane.Model
+import com.filip.machaj.demo.model.dane.Obywatel
 import com.filip.machaj.demo.model.dane.Pojazd
 import java.util.*
 
@@ -16,7 +18,13 @@ data class PojazdDTO(
         var czy_zarchiwizowany:Boolean,
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
-        var model:Model?
+        var model:Model,
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
+        var obywatel:Obywatel,
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
+        var abonamenty: MutableList<Abonament>
 ) {
     operator fun invoke(pojazd: Pojazd):PojazdDTO {
         return this
@@ -36,7 +44,9 @@ data class PojazdDTO(
             pojazd.nr_rejstracyjny_pojazdu,
             pojazd.rok_producji,
             pojazd.czy_zarchiwizowany,
-            pojazd.model
+            pojazd.model,
+            pojazd.obywatel,
+            pojazd.abonamenty
     ){
         id = pojazd.id
         kiedy_utworzono = pojazd.kiedy_utworzono

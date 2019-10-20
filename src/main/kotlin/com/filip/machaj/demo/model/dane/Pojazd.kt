@@ -28,11 +28,7 @@ data class Pojazd (
         @JsonBackReference
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
-        var model : Model ? = null,
-        @CreationTimestamp
-        var kiedy_utworzono : Date = Date(),
-        @UpdateTimestamp
-        var kiedy_zmodyfikowano : Date = Date(),
+        var model : Model,
         //@ManyToMany(cascade = [CascadeType.ALL])
        /* @JoinTable(
                 name = "pojazd_obywatel",com/filip/machaj/demo/model/dane/Pojazd.kt:21
@@ -46,11 +42,29 @@ data class Pojazd (
 
 
 
-        @OneToOne(mappedBy = "pojazd")
+       /* @OneToOne(mappedBy = "pojazd")
         @JsonManagedReference(value = "ab-po")
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
-        var abonament: Abonament ? = null
+        var abonament: Abonament*/
+
+        @ManyToOne(fetch = FetchType.EAGER, cascade =  arrayOf(CascadeType.ALL)) // dodane cascade =  arrayOf(CascadeType.ALL) jako rozwiązanie pewnego względu jednak chyba nie jest wymagane.
+        @JoinColumn(name = "obywatel_id")
+        @JsonBackReference(value = "poj-ob")
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
+        var obywatel : Obywatel,
+
+        @Transient // pozwala na pominięcie danego pola przy tworzeniue JSONA
+        @OneToMany(mappedBy = "pojazd", cascade =  arrayOf(CascadeType.ALL))
+        @JsonManagedReference(value = "poj-ab")
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
+        var abonamenty:MutableList<Abonament> = mutableListOf(), // sprawdzać w konstruktorze czy jest tylko 1 niezarchiwizowany
+        @CreationTimestamp
+        var kiedy_utworzono : Date = Date(),
+        @UpdateTimestamp
+        var kiedy_zmodyfikowano : Date = Date()
 
 
 
@@ -80,6 +94,8 @@ data class Pojazd (
                     false,
 
                     Model(),
+                    Obywatel(),
+                    mutableListOf(),
                     Date(),
                     Date()
 

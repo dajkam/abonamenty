@@ -1,6 +1,11 @@
 package com.filip.machaj.demo.dto
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo
+import com.fasterxml.jackson.annotation.JsonIdentityReference
+import com.fasterxml.jackson.annotation.ObjectIdGenerators
+import com.filip.machaj.demo.model.dane.Model
 import com.filip.machaj.demo.model.dane.Obywatel
+import com.filip.machaj.demo.model.dane.Pojazd
 import java.time.LocalDate
 import java.util.*
 
@@ -13,7 +18,11 @@ data class ObywatelDTO(
         var nazwisko:String,
         var adres: String,
         var czy_zarchiwizowany: Boolean,
-        var data_urodzenia: LocalDate
+        var data_urodzenia: LocalDate,
+        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityReference(alwaysAsId = true)
+        var pojazdy: MutableList<Pojazd>
+
         ) {
    operator fun invoke(obywatel: Obywatel): ObywatelDTO { // return obywatelDTO(obywatel) z funcji upDateObywatel w ObywatelService nie działa bez funkcji invoke
 
@@ -33,7 +42,8 @@ data class ObywatelDTO(
             obywatel.nazwisko,
             obywatel.adres,
             obywatel.czy_zarchiwizowany,
-            obywatel.data_urodzenia
+            obywatel.data_urodzenia,
+            obywatel.pojazdy
             
     ){
         id = obywatel.id
