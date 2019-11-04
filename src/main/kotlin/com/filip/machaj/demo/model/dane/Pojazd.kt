@@ -25,7 +25,7 @@ data class Pojazd (
 
         @ManyToOne(fetch = FetchType.EAGER, cascade =  arrayOf(CascadeType.ALL)) // dodane cascade =  arrayOf(CascadeType.ALL) jako rozwiązanie pewnego względu jednak chyba nie jest wymagane.
         @JoinColumn(name = "model_id")
-        @JsonBackReference
+        @JsonBackReference(value = "mod-poj")
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
         var model : Model,

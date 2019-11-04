@@ -31,7 +31,7 @@ class ModelService {
                             model.nazwa,
                             repoP.findAll() as MutableList<Pojazd>,
                            // repoM.findById(1).get()
-                            repoM.findLast()
+                            repoM.findById(model.marka.id).get()
 
 
                     )

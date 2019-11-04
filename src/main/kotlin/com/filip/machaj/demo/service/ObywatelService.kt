@@ -25,24 +25,29 @@ class ObywatelService {
 
     //fun insertObywatel(obywatel: Obywatel):Obywatel = repo.save(obywatel)
 
-    fun insertObywatel(obywatel: ObywatelDTO) = ObywatelDTO(
-            repo.save(
-                    Obywatel(
-                             obywatel.id,
-                             obywatel.pesel,
-                             obywatel.nr_dowodu,
-                             obywatel.imie,
-                             obywatel.nazwisko,
-                             obywatel.adres,
-                             obywatel.czy_zarchiwizowany,
-                             obywatel.data_urodzenia,
-                             Date(),
-                             Date(),
-                             obywatel.pojazdy
+    fun insertObywatel(obywatel: ObywatelDTO) : ObywatelDTO{
 
-                    )
-            )
-    )
+
+        var obywatel =  Obywatel(
+                obywatel.id,
+                obywatel.pesel,
+                obywatel.nr_dowodu,
+                obywatel.imie,
+                obywatel.nazwisko,
+                obywatel.adres,
+                obywatel.czy_zarchiwizowany,
+                obywatel.data_urodzenia,
+                Date(),
+                Date(),
+                obywatel.pojazdy
+
+        )
+        if(obywatel.imie!=obywatel.pesel)
+             repo.save(obywatel)
+
+
+     return    ObywatelDTO(repo.findLast())
+}
 
     fun deleteObywatel(id:Long) = repo.deleteById(id)
 
@@ -68,8 +73,8 @@ class ObywatelService {
             obywatel.kiedy_zmodyfikowano = Date()
 
         }
-
-        obywatel = repo.save(obywatel)
+        if(obywatel.imie!=obywatel.pesel)
+            obywatel = repo.save(obywatel)
         return obywatelDTO(obywatel) // patrz ObywatelDTO invoke
 
 
@@ -90,6 +95,8 @@ class ObywatelService {
         return  repo.findByNazwisko(nazwisko).map { it -> ObywatelDTO(it)}
 
     }
+
+
 }
 
 

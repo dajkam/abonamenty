@@ -2,6 +2,8 @@ package com.filip.machaj.demo.model.dane
 
 import com.fasterxml.jackson.annotation.*
 import javax.persistence.*
+import javax.validation.constraints.NotEmpty
+import kotlin.jvm.Transient
 
 
 @Entity
@@ -12,19 +14,22 @@ data class Model(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Long,
         @Column(columnDefinition = "varchar(36)")
+        @NotEmpty
         var nazwa: String,
 
 
-
+        @Transient
         @OneToMany(mappedBy = "model", cascade =  arrayOf(CascadeType.ALL))
-        @JsonManagedReference
+        @JsonManagedReference(value = "mod-poj")
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
         var pojazdy:MutableList<Pojazd> = mutableListOf(),
 
+
         @ManyToOne(fetch = FetchType.EAGER, cascade =  arrayOf(CascadeType.ALL))
         @JoinColumn(name = "marka_id")
-        @JsonBackReference
+        @JsonBackReference(value = "mar-mod")
+       // @JsonManagedReference(value = "mod-mar")
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
         var marka:Marka
