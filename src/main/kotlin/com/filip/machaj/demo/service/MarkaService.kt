@@ -25,7 +25,7 @@ class MarkaService {
                     Marka(
                             marka.id,
                             marka.nazwa,
-                            repoM.findAll() as MutableList<Model>
+                            marka.modele
 
 
                     )

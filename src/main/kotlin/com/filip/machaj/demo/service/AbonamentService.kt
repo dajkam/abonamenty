@@ -14,33 +14,37 @@ import java.util.*
 
 class AbonamentService {
     @Autowired
-    lateinit var repo : AbonamentRepo
+    lateinit var repo: AbonamentRepo
 
     @Autowired
     lateinit var repoO: ObywatelRepo
 
     @Autowired
-    lateinit var repoP : PojazdRepo
+    lateinit var repoP: PojazdRepo
 
 
-    fun getAbonament():Iterable<AbonamentDTO> = repo.findAll().map{it -> AbonamentDTO(it) }
+    fun getAbonament(): Iterable<AbonamentDTO> = repo.findAll().map { it -> AbonamentDTO(it) }
 
-    fun insertAbonament(abonament:AbonamentDTO)=AbonamentDTO(
-            repo.save(
-                    Abonament(
-                        abonament.id,
-                        abonament.data_rozpoczecia,
-                        abonament.data_zakonczenia,
-                        abonament.sektor,
-                        abonament.uwagi,
-                        abonament.czy_zarchiwizowany,
-                            Date(),
-                            Date(),
-                         repoP.findLast()
+    fun insertAbonament(abonament: AbonamentDTO): AbonamentDTO {
 
-                    )
-            )
-    )
+        var abonament = Abonament(
+            abonament.id,
+            abonament.data_rozpoczecia,
+            abonament.data_zakonczenia,
+            abonament.sektor,
+            abonament.uwagi,
+            abonament.czy_zarchiwizowany,
+            Date(),
+            Date(),
+            repoP.findById(abonament.pojazd.id).get()
+
+        )
+        if(abonament.sektor!=abonament.uwagi)
+            repo.save(abonament)
+
+        return AbonamentDTO(repo.findLast())
+
+}
 
     fun deleteAbonament(id:Long) = repo.deleteById(id)
 
@@ -56,8 +60,8 @@ class AbonamentService {
         abonament.kiedy_zmodyfikowano = Date() // zrobić żeby to pole sie zmieniało tylko gdy żeczywiście coś zmieniono
        // abonament.obywatel = repoO.findLast()// nowe obywatel  // te dwie linijki trzeba przeniesc do add abonament
        // abonament.pojazd = repoP.findLast()//nowe pojazd
-        abonament.pojazd = abonamentDTO.pojazd
-        abonament = repo.save(abonament) /// errory przy abonament update
+        if(abonament.sektor!=abonament.uwagi)
+          abonament = repo.save(abonament) /// errory przy abonament update
         return AbonamentDTO(abonament) /// trzeba poprawić update dla abonamentu
 
 

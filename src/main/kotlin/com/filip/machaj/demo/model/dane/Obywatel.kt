@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDate
 import java.util.*
 import javax.persistence.*
+import kotlin.jvm.Transient
 
 
 @Entity
@@ -45,7 +46,7 @@ data class Obywatel(
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
         var abonament: Abonament*/
-
+        @Transient
         @OneToMany(mappedBy = "obywatel", cascade =  arrayOf(CascadeType.ALL))
         @JsonManagedReference(value = "poj-ob")
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")

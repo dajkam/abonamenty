@@ -36,8 +36,8 @@ class PojazdService {
                             pojazd.rok_produkcji,
                             pojazd.czy_zarchiwizowany,
                             //repoM.findById(1).get(),
-                            repoM.findLast(),
-                            repoO.findLast(),
+                            repoM.findById(pojazd.model.id).get(),
+                            repoO.findById(pojazd.obywatel.id).get(),
                             pojazd.abonamenty
 
 

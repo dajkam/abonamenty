@@ -2,6 +2,7 @@ package com.filip.machaj.demo.model.dane
 
 import com.fasterxml.jackson.annotation.*
 import javax.persistence.*
+import kotlin.jvm.Transient
 
 
 @Entity
@@ -13,9 +14,10 @@ data class Marka(
         @Column(columnDefinition = "varchar(36)")
         var nazwa : String,
 
-
+        @Transient
         @OneToMany(mappedBy = "marka", cascade =  arrayOf(CascadeType.ALL))
-        @JsonBackReference
+       // @JsonManagedReference(value = "mar-mod")
+       // @JsonBackReference(value = "mod-mar")
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
         var modele :MutableList<Model> =  mutableListOf()
