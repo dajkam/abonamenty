@@ -58,8 +58,8 @@ class PojazdService {
         pojazd.rok_producji = pojazdDTO.rok_produkcji
         pojazd.czy_zarchiwizowany = pojazdDTO.czy_zarchiwizowany
         pojazd.kiedy_zmodyfikowano = Date() // zrobić żeby to pole sie zmieniało tylko gdy żeczywiście coś zmieniono
-        pojazd.model = pojazdDTO.model
-        pojazd.obywatel = pojazdDTO.obywatel
+        pojazd.model = repoM.findById(pojazdDTO.model.id).get()
+        pojazd.obywatel = repoO.findById(pojazdDTO.obywatel.id).get()
         pojazd.abonamenty = pojazdDTO.abonamenty
         pojazd = repo.save(pojazd)
         return  pojazdDTO(pojazd)

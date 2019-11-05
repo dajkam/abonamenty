@@ -595,7 +595,7 @@
                         alert("Data rozpoczęcia nie może być po dacie zakończenia")
                     }
 
-                    if(  (/^[A-J]{1}$/.test(document.getElementById("ina3").value)) || document.getElementById("ina3").value === "WSZYSTKIE"){
+                    if(  (/^[A-J]{1}$/.test(document.getElementById("ina3").value)) || document.getElementById("ina3").value === "WSZYSTKIE"){ // coś nie działa z wymogiem wpisania uwagi przy wybraniu obcji wszystkie
 
                         son.sektor = document.getElementById("ina3").value // Sektory to jest tylko pojedyńcza litera od A do J lub słowo WSZYSTKIE
                     }
