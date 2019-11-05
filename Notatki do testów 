@@ -10,4 +10,8 @@ Czy nie powinna być ona wyszarzana podczas modyfikacji krotki.
 /////////Projekt///////////
 Projekt ma działać bez żadnych danych
 
+////Błąd przy kluczach obcych////////////
+
+Nie można dodawać obywatela nr 1 jako klucz obcy w niektórych sytuacjach, trzeba się dowiedzieć w jakich.
+
 
