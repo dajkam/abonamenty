@@ -57,5 +57,11 @@ class PojazdController {
             value = ["/last"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
-    fun getLastObywatel(): Pojazd = service.findLastPojazd()
+    fun getLastPojazd(): Pojazd = service.findLastPojazd()
+
+    @GetMapping(
+            value = ["/marka/model"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun getAllPojModMar() = service.getAllPojModMar()
 }

@@ -14,4 +14,14 @@ Projekt ma działać bez żadnych danych
 
 Nie można dodawać obywatela nr 1 jako klucz obcy w niektórych sytuacjach, trzeba się dowiedzieć w jakich.
 
+To jest ten błąd
+
+"timestamp" : "2019-11-07T00:39:00.069+0000",
+  "status" : 400,
+  "error" : "Bad Request",
+  "message" : "JSON parse error: Already had POJO for id (java.lang.Long) [[ObjectId: key=1, type=com.fasterxml.jackson.databind.deser.impl.PropertyBasedObjectIdGenerator, scope=java.lang.Object]]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Already had POJO for id (java.lang.Long) [[ObjectId: key=1, type=com.fasterxml.jackson.databind.deser.impl.PropertyBasedObjectIdGenerator, scope=java.lang.Object]] (through reference chain: com.filip.machaj.demo.dto.PojazdDTO[\"obywatel\"]->com.filip.machaj.demo.model.dane.Obywatel[\"id\"])",
+  "path" : "/pojazd/insert"
+
+Zauważyłem że bład występuje gdy id modelu i obywatela są takkie same
+
 

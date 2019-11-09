@@ -42,7 +42,7 @@ data class PojazdDTO(
             pojazd.kolor,
             pojazd.uwagi,
             pojazd.nr_rejstracyjny_pojazdu,
-            pojazd.rok_producji,
+            pojazd.rok_produkcji,
             pojazd.czy_zarchiwizowany,
             pojazd.model,
             pojazd.obywatel,

@@ -19,7 +19,7 @@ data class Pojazd (
         var uwagi : String?,
         var nr_rejstracyjny_pojazdu : String,
         @Column(columnDefinition = "date")
-        var rok_producji : Date, // Zmienić na LocalDate tylko rok
+        var rok_produkcji : Date, // Zmienić na LocalDate tylko rok
         @Column(columnDefinition = "boolean")
         var czy_zarchiwizowany : Boolean = false,
 
@@ -103,9 +103,9 @@ data class Pojazd (
 
 
 
-            //constructor(id: Long, kolor: String?, uwagi: String?, nr_rejstracyjny_pojazdu: String, rok_producji: Date, czy_zarchiwizowany: Boolean, kiedy_utworzono: Model) : this()
+            //constructor(id: Long, kolor: String?, uwagi: String?, nr_rejstracyjny_pojazdu: String, rok_produkcji: Date, czy_zarchiwizowany: Boolean, kiedy_utworzono: Model) : this()
 
-            //  constructor(id: Long, kolor: String?, uwagi: String?, nr_rejstracyjny_pojazdu: String, rok_producji: Date, czy_zarchiwizowany: Boolean, kiedy_utworzono: Model?) : this()
+            //  constructor(id: Long, kolor: String?, uwagi: String?, nr_rejstracyjny_pojazdu: String, rok_produkcji: Date, czy_zarchiwizowany: Boolean, kiedy_utworzono: Model?) : this()
 
             //  constructor(id: Long, model: String, kolor: String?, uwagi: String?, nr_rejstracyjny_pojazdu: String, rok_produkcji: Date, czy_zarchiwizowany: Boolean) : this()
 
