@@ -1,7 +1,7 @@
 package com.filip.machaj.demo.service
 
 import com.filip.machaj.demo.dto.PojazdDTO
-import com.filip.machaj.demo.model.dane.Model
+import com.filip.machaj.demo.model.dane.PojModMar
 import com.filip.machaj.demo.model.dane.Pojazd
 import com.filip.machaj.demo.repo.ModelRepo
 import com.filip.machaj.demo.repo.ObywatelRepo
@@ -22,6 +22,10 @@ class PojazdService {
 
     @Autowired
     lateinit var repoO : ObywatelRepo
+
+
+
+
 
     fun getPojazd():Iterable<PojazdDTO> = repo.findAll().map {it -> PojazdDTO(it) }
 
@@ -55,7 +59,7 @@ class PojazdService {
         pojazd.kolor = pojazdDTO.kolor
         pojazd.uwagi = pojazdDTO.uwagi
         pojazd.nr_rejstracyjny_pojazdu = pojazdDTO.nr_rejstracyjny_pojazdu
-        pojazd.rok_producji = pojazdDTO.rok_produkcji
+        pojazd.rok_produkcji = pojazdDTO.rok_produkcji
         pojazd.czy_zarchiwizowany = pojazdDTO.czy_zarchiwizowany
         pojazd.kiedy_zmodyfikowano = Date() // zrobić żeby to pole sie zmieniało tylko gdy żeczywiście coś zmieniono
         pojazd.model = repoM.findById(pojazdDTO.model.id).get()
@@ -75,4 +79,6 @@ class PojazdService {
     fun findLastPojazd():Pojazd{
         return repo.findLast()
     }
+
+    fun getAllPojModMar():Iterable<PojModMar> = repo.findAllPojModMar()
 }
