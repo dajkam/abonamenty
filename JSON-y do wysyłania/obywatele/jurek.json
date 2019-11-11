@@ -1,0 +1,11 @@
+{
+  "id" : -1,
+  "pesel" : "87010922751",
+  "nr_dowodu" : "NJR120060",
+  "imie" : "Jerzy",
+  "nazwisko" : "Hrostowicz",
+  "adres" : "Armi Krajowej 64/8 Sopot ",
+  "czy_zarchiwizowany" : false,
+  "data_urodzenia" : "1987-01-09",
+  "pojazdy" : [ ]
+}

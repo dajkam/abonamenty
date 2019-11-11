@@ -1,0 +1,11 @@
+{
+  "id" : -1,
+  "pesel" : "95122432428",
+  "nr_dowodu" : "YVJ922069",
+  "imie" : "Agata",
+  "nazwisko" : "Kieca",
+  "adres" : "Wybickiego 5 Sopot ",
+  "czy_zarchiwizowany" : true,
+  "data_urodzenia" : "1995-12-24",
+  "pojazdy" : [ ]
+}

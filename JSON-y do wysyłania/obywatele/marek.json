@@ -1,0 +1,11 @@
+{
+  "id" : -1,
+  "pesel" : "72061539951",
+  "nr_dowodu" : "VFV743353",
+  "imie" : "Marek",
+  "nazwisko" : "Godson",
+  "adres" : "Chopina 12 Sopot ",
+  "czy_zarchiwizowany" : false,
+  "data_urodzenia" : "1972-06-15",
+  "pojazdy" : [ ]
+}

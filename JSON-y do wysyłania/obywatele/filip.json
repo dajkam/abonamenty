@@ -1,0 +1,11 @@
+{
+  "id" : -1,
+  "pesel" : "95101303798",
+  "nr_dowodu" : "CCH864397",
+  "imie" : "Filip",
+  "nazwisko" : "Machaj",
+  "adres" : "Woronicza 16 Warszawa ",
+  "czy_zarchiwizowany" : false,
+  "data_urodzenia" : "1995-10-13",
+  "pojazdy" : [ ]
+}

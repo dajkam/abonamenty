@@ -9,6 +9,21 @@
 
 
 </head>
+<style>
+    body {
+        background-color: white;
+    }
+
+    h1 {
+        color: white;
+        text-align: center;
+    }
+
+    p {
+        font-family: verdana;
+        font-size: 20px;
+    }
+</style>
 <body>
 
 <div id = "menu">
@@ -597,7 +612,44 @@
 
                     if(  (/^[A-J]{1}$/.test(document.getElementById("ina3").value)) || document.getElementById("ina3").value === "WSZYSTKIE"){ // coś nie działa z wymogiem wpisania uwagi przy wybraniu obcji wszystkie
 
-                        son.sektor = document.getElementById("ina3").value // Sektory to jest tylko pojedyńcza litera od A do J lub słowo WSZYSTKIE
+
+
+
+                        if((document.getElementById("ina3").value != "WSZYSTKIE")){
+
+                            son.uwagi = document.getElementById("ina4").value // uwagi jeśli mają
+
+                            son.sektor = document.getElementById("ina3").value // Sektory to jest tylko pojedyńcza litera od A do J lub słowo WSZYSTKIE
+
+                        }
+
+                        else{
+                            //  if((son.sektor === "WSZYSTKIE") &&  ((document.getElementById("ina4").value === null) || (document.getElementById("ina4").value) === "" )){
+
+                            //   if((son.sektor === "WSZYSTKIE") && (/\S/.test(document.getElementById("ina4").value))){
+
+                            if((document.getElementById("ina3").value=== "WSZYSTKIE") && ((document.getElementById("ina4").value===null) || (document.getElementById("ina4").value===''))){
+
+
+
+                                alert("Napisz w uwagach dlaczego ten obywatel ma dostęp do wszystkich sektorów")
+
+
+                            }
+
+
+
+
+
+                            //}
+                            else{
+
+                                son.uwagi = document.getElementById("ina4").value // uwagi jeśli mają
+
+
+
+                            }
+                        }
                     }
 
                     else{
@@ -608,32 +660,6 @@
 
 
 
-                    if((son.sektor != "WSZYSTKIE")){
-
-                        son.uwagi = document.getElementById("ina4").value // uwagi jeśli mają
-
-                    }
-
-                    else{
-                      //  if((son.sektor === "WSZYSTKIE") &&  ((document.getElementById("ina4").value === null) || (document.getElementById("ina4").value) === "" )){
-
-                        if((son.sektor === "WSZYSTKIE") && (/\S/.test(document.getElementById("ina4").value))){
-
-                            son.uwagi = document.getElementById("ina4").value // uwagi jeśli mają
-
-                        }
-
-
-
-
-
-                        //}
-                        else{
-
-                            alert("Napisz w uwagach dlaczego ten obywatel ma dostęp do wszystkich sektorów")
-
-                        }
-                    }
 
 
 

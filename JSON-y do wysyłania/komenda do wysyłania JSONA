@@ -1,0 +1,10 @@
+curl -X PUT -d @dupa.json http://localhost:8091/marka/insert -H "Content-Type: application/json" /// marka
+
+
+curl -X PUT -d @dupa.json http://localhost:8091/model/insert -H "Content-Type: application/json"  ///// model
+
+curl -X PUT -d @filip.json http://localhost:8091/obywatel/insert -H "Content-Type: application/json" ///// obywatel
+
+curl -X PUT -d @poj1.json http://localhost:8091/pojazd/insert -H "Content-Type: application/json" ////// pojazd
+
+curl -X PUT -d @ab1.json http://localhost:8091/abonament/insert -H "Content-Type: application/json" ////// abonament

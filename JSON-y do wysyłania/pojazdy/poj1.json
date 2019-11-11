@@ -1,0 +1,15 @@
+{
+  "id" : -1,
+  "kolor" : "czerwony",
+  "uwagi" : "wlasny",
+  "nr_rejstracyjny_pojazdu" : "GSP 9087",
+  "rok_produkcji" : "2003-06-25T23:00:00.000+0000",
+  "czy_zarchiwizowany" : false,
+  "model" : {
+    "id" : 1
+  },
+  "obywatel" : {
+    "id" : 2
+  },
+  "abonamenty" : [ ]
+}

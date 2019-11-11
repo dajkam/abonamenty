@@ -1,0 +1,9 @@
+{
+  "id" : -1,
+  "data_rozpoczecia" : "2018-01-06T00:00:00.000+0000",
+  "data_zakonczenia" : "2019-02-07T00:00:00.000+0000",
+  "sektor" : "B",
+  "uwagi" : "",
+  "czy_zarchiwizowany" : false,
+  "pojazd" : {"id":1}
+}

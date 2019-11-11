@@ -1,0 +1,15 @@
+{
+  "id" : -1,
+  "kolor" : "zielony",
+  "uwagi" : "wlasny",
+  "nr_rejstracyjny_pojazdu" : "GSP 5678",
+  "rok_produkcji" : "1995-06-25T23:00:00.000+0000",
+  "czy_zarchiwizowany" : false,
+  "model" : {
+    "id" : 4
+  },
+  "obywatel" : {
+    "id" : 3
+  },
+  "abonamenty" : [ ]
+}
