@@ -1,0 +1,11 @@
+{
+  "id" : -1,
+  "pesel" : "58030514976",
+  "nr_dowodu" : "BLX811522",
+  "imie" : "Jarosław",
+  "nazwisko" : "Hilbert",
+  "adres" : "Bema 12/4 Sopot ",
+  "czy_zarchiwizowany" : false,
+  "data_urodzenia" : "1958-03-05",
+  "pojazdy" : [ ]
+}

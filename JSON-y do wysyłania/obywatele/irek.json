@@ -1,0 +1,11 @@
+{
+  "id" : -1,
+  "pesel" : "95111829918",
+  "nr_dowodu" : "PUX151913",
+  "imie" : "Ireneusz",
+  "nazwisko" : "Muller",
+  "adres" : "1 Maja 3/7 Sopot ",
+  "czy_zarchiwizowany" : false,
+  "data_urodzenia" : "1995-11-18",
+  "pojazdy" : [ ]
+}

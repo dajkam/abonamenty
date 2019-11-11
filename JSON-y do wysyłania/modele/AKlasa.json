@@ -1,0 +1,8 @@
+{
+  "id" : -1,
+  "nazwa" : "A Klasa",
+  "pojazdy" : [ ],
+  "marka" : {
+    "id" : 1
+  }
+}
