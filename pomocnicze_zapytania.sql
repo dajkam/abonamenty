@@ -2,6 +2,8 @@ select * from abonament where kiedy_utworzono=( select max(kiedy_utworzono) from
 
 select * from abonament where id=( select max(id) from abonament); /// alternatywa dla powyższego
 
+select * from obywatel where czy_zarchiwizowany = false
+
 
 /////// joiny ///////////
 

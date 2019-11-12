@@ -112,6 +112,11 @@
         " data zakonczenia to: {{data_zakonczenia}} sektor to {{sektor}} uwagi to: {{uwagi}}" +
         " czy aktualny to: {{czy_zarchiwizowany}}</p>"
 
+   var pojazdDane = "<p>identyfikator to:{{id}}  nr rejstracyjny pojazdu to: {{nr_rejstracyjny_pojazdu}}" +
+       " marka to: {{marka}} model to {{model}} rok produkcji: {{rok_produkcji}} kolor to: {{kolor}}" +
+       "  uwagi to: {{uwagi}} czy zarchiwizowany to: {{czy_zarchiwizowany}} " +
+       "kiedy utworzono to: {{kiedy_utworzono}} kiedy zmodyfikowano to: {{kiedy_zmodyfikowano}}</p>"
+
     //template = Handlebars.compile(wybraneDane);
 
     var formularz = ""
@@ -143,7 +148,20 @@
        "    <input id =\"ina3\" type = \"text \" name = \"sektor\" value={{sektor}} ><br>\n" +
        "    uwagi: <br>\n" +
        "    <input id =\"ina4\" type = \"text \" name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    <br>\n" +
+       "    <input type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
+       "\n" +
+       "\n" +
+       "  </form>";
+
+   var pojazdFormularz =  "<form id = 'ffc' >\n" +
+       "    nr rejstracyjny pojazdu: <br>\n" +
+       "    <input id =\"inp1\" type = \"text \" name = \"nr_rejestracyjny_pojazdu\" value =  '{{nr_rejstracyjny_pojazdu}}'><br>\n" +
+       "    rok produkcji: <br>\n" +
+       "    <input id =\"inp2\" type = \"date \" name = \"rok_produkcji\"  value={{rok_produkcji}}><br>\n" +
+       "    kolor: <br>\n" +
+       "    <input id =\"inp3\" type = \"text \" name = \"kolor\" value={{kolor}} ><br>\n" +
+       "    uwagi: <br>\n" +
+       "    <input id =\"inp4\" type = \"text \" name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
        "    <input type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
        "\n" +
        "\n" +
@@ -166,6 +184,12 @@
            abonamentFormularz.id = "ff"
            wybraneDane = abonamentDane
            formularz = abonamentFormularz
+
+           break;
+       case "pojazd":
+           pojazdFormularz.id = "ff"
+           wybraneDane = pojazdDane
+           formularz = pojazdFormularz
 
            break;
    }
@@ -318,6 +342,9 @@
 
         var url =  url1+url2+url3
 
+        if(url === "http://localhost:8091/pojazd/download")
+            url = "http://localhost:8091/pojazd/marka/model"
+
        // return ajax('GET', 'http://localhost:8091/obywatel/download');
 
         return ajax('GET',url)
@@ -369,11 +396,26 @@
         delete son.kiedy_zmodyfikowano
         delete son.kiedy_utworzono
 
+        if(c.toString() === "pojazd"){
+
+            delete son.marka;
+             son.model = {
+                 id : 1
+             }
+             son.obywatel = {
+                 id : 2
+             }
+             son.abonamenty = []
+
+
+        }
+
         var json = JSON.stringify(son)
 
         console.log("//////////////////////////////////////////////////////////////////////////")
 
         console.log(json)
+        alert("Stop3")
 
      
 
@@ -668,8 +710,14 @@
 
 
 
+                }
 
+                if( c === "pojazd"){
 
+                    son.nr_rejstracyjny_pojazdu = document.getElementById("inp1").value
+                    son.rok_produkcji = document.getElementById("inp2").value
+                    son.kolor = document.getElementById("inp3").value
+                    son.uwagi = document.getElementById("inp4").value
 
 
                 }
