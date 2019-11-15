@@ -12,4 +12,9 @@ interface PojModMar{
         var czy_zarchiwizowany : Boolean
         var marka : String
         var model : String
+        var obywatel_id : Long
+        var model_id : Long
+        var marka_id : Long
+        var kiedy_utworzono : Date
+        var kiedy_zmodyfikowano : Date
 }
