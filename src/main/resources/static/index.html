@@ -23,6 +23,24 @@
         font-family: verdana;
         font-size: 20px;
     }
+
+    button {
+        padding: 20px;
+        margin-left: 30px;
+    }
+    button:hover{
+        border: 5px;
+    }
+
+    .zat {
+        padding: 20px;
+        margin-left: 10px;
+    }
+
+    .but4{
+        color:red;
+    }
+
 </style>
 <body>
 
@@ -38,7 +56,12 @@
 
 
 
+
+
+
     </select>
+
+    <button type="button" onclick=" dodaj()">Dodaj</button>
 </div>
 
 
@@ -134,7 +157,7 @@
        "    <input id =\"in5\" type = \"date \" name = \"data_urodzenia\" value = {{data_urodzenia}}  ><br>\n" +
        "    pesel:<br>\n" +
        "    <input id =\"in6\"type = \"text \" name = \"pesel\" value = {{pesel}}><br><br>\n" +
-       "    <input type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
+       "    <input  class = 'zat'type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
        "\n" +
        "\n" +
        "  </form>";
@@ -148,7 +171,7 @@
        "    <input id =\"ina3\" type = \"text \" name = \"sektor\" value={{sektor}} ><br>\n" +
        "    uwagi: <br>\n" +
        "    <input id =\"ina4\" type = \"text \" name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    <input type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
+       "    <input class='zat' type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
        "\n" +
        "\n" +
        "  </form>";
@@ -162,7 +185,7 @@
        "    <input id =\"inp3\" type = \"text \" name = \"kolor\" value={{kolor}} ><br>\n" +
        "    uwagi: <br>\n" +
        "    <input id =\"inp4\" type = \"text \" name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    <input type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
+       "    <input class = 'zat'type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
        "\n" +
        "\n" +
        "  </form>";
@@ -199,7 +222,9 @@
 
 
 
-    var but3  ="    <button type=\"button\" onclick=\" f2(this.parentNode.id)\">edytuj</button>"
+    var but3  ="    <button type=\"button\" onclick=\" f2(this.parentNode.id)\">Edytuj</button>"
+
+   var but4  ="    <button class = 'but4' type=\"button\" onclick=\" usun()\">Usun</button>"
 
     function main(preson) {
 
@@ -241,7 +266,7 @@
 
 
 
-        var bancz = ( dane + but3);
+        var bancz = ( dane + but3 + but4);
 
 
 
@@ -399,13 +424,17 @@
         if(c.toString() === "pojazd"){
 
             delete son.marka;
+            delete son.marka_id;
              son.model = {
-                 id : 1
+                 id : son.model_id
              }
              son.obywatel = {
-                 id : 2
+                 id : son.obywatel_id
              }
              son.abonamenty = []
+
+            delete son.model_id
+            delete son.obywatel_id
 
 
         }
