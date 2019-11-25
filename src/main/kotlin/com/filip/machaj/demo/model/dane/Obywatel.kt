@@ -51,8 +51,9 @@ data class Obywatel(
         @JsonManagedReference(value = "poj-ob")
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
-        var pojazdy:MutableList<Pojazd> = mutableListOf() // sprawdzać w konstruktorze czy jest tylko 1 niezarchiwizowany
+        var pojazdy:MutableList<Pojazd> = mutableListOf(), // sprawdzać w konstruktorze czy jest tylko 1 niezarchiwizowany
 
+        var obywatel_id:Long = id
 
 ) {
 

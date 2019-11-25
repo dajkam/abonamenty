@@ -18,6 +18,7 @@ data class Model(
         var nazwa: String,
 
 
+
         @Transient
         @OneToMany(mappedBy = "model", cascade =  arrayOf(CascadeType.ALL))
         @JsonManagedReference(value = "mod-poj")
@@ -32,7 +33,9 @@ data class Model(
        // @JsonManagedReference(value = "mod-mar")
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
-        var marka:Marka
+        var marka:Marka,
+
+        var model_id: Long = id
         ) {
 
     constructor():this(
