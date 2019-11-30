@@ -180,7 +180,7 @@
 
 <script type="text/javascript">
 
-   // var preson = []
+   let rekord = null // wybrany rekord z bazy
    let url_string =  window.location.href;
    let url = new URL(url_string);
    let c = url.searchParams.get("value");
@@ -220,7 +220,7 @@
         "data urodzenia to    {{data_urodzenia}}   pesel to   {{pesel}}    </label></br></br>";
 
    var obywatelDane = "<table class=\"responstable tab\" >" +
-       "<tr id='rr'><th> <input type='radio'> </th></tr>"+
+       "<tr id='rr'><th> <input   type='radio' name='rad' value='nie_wybrany'> </th></tr>"+
        "<tr class='kolumna'>" +
            "<th align='center' class='okol1'>identyfikator </th>"+
            "<th align='center' class='okol2'>pesel </th>"+
@@ -276,7 +276,7 @@
        "    <input id =\"in5\" type = \"date \" name = \"data_urodzenia\" value = {{data_urodzenia}}  ><br>\n" +
        "    pesel:<br>\n" +
        "    <input id =\"in6\"type = \"text \" name = \"pesel\" value = {{pesel}}><br><br>\n" +
-       "    <input  class = 'zat'type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
+       "    <input  class = 'zat'type = \"button\" value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
        "\n" +
        "\n" +
        "  </form>";
@@ -290,7 +290,7 @@
        "    <input id =\"ina3\" type = \"text \" name = \"sektor\" value={{sektor}} ><br>\n" +
        "    uwagi: <br>\n" +
        "    <input id =\"ina4\" type = \"text \" name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    <input class='zat' type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
+       "    <input class='zat' type = \"button\" value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
        "\n" +
        "\n" +
        "  </form>";
@@ -304,7 +304,7 @@
        "    <input id =\"inp3\" type = \"text \" name = \"kolor\" value={{kolor}} ><br>\n" +
        "    uwagi: <br>\n" +
        "    <input id =\"inp4\" type = \"text \" name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    <input class = 'zat'type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
+       "    <input class = 'zat'type = \"button\" value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
        "\n" +
        "\n" +
        "  </form>";
@@ -341,7 +341,7 @@
 
 
 
-    var but3  ="    <button class='butt' type=\"button\" onclick=\" f2(this.parentNode.id)\">Edytuj</button>"
+    var but3  ="    <button class='butt' type=\"button\" onclick=\" f2(wyb_rekord())\">Edytuj</button>"
 
    var but4  ="    <button class = 'but4 butt' type=\"button\" onclick=\" usun()\">Usun</button>"
 
@@ -355,7 +355,7 @@
 
             var son = preson[i]
 
-            var iDiv = document.createElement('div')
+            var iDiv = document.createElement('label')
 
             iDiv.id =  i.toString() + "ob"
 
@@ -391,22 +391,6 @@
         var dane = template(son);
 
 
-        //but3.id = 'but' + i.toString()
-
-         ///iDiv.getElementsByTagName(p)[0]+=radio
-
-       // iDiv.append(radio)
-
-       // var radio = document.createElement("input")
-
-      //  var radio = "<input id ='r' type=\"radio\" name=\"choose\" value=\"buttons\"> "
-
-
-      //  radio.id = i.toString() +  "-radio"
-
-        //dane[0].setAttribute("for", radio.id);
-
-       // $(dane).attr('for', radio.id);
 
 
 
@@ -432,6 +416,7 @@
         iDiv.appendChild(butDiv)
 
         iDiv.innerHTML+="</br></br>"
+        iDiv.getElementsByTagName('input')[0].value = i.toString() + "selected"
 
     }
 
@@ -1033,6 +1018,21 @@
 
     }
 
+
+   function wyb_rekord() {
+       // wybrany rekord z bazy
+       var ele = document.getElementsByName('rad');
+
+       for (i = 0; i < ele.length; i++) {
+           if (ele[i].checked) {
+               alert(ele[i].value)
+               rekord = i
+               alert(rekord)
+           }
+       }
+       return rekord
+   }
+       // wybrany rekord z bazy koniec
 
 
 
