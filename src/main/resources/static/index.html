@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl-PL">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   <link rel="stylesheet" href="css/data_table.scss" type="text/css">
     <title>Zmień</title>
 
-    <script src="js/handlebars-v4.1.2.js"></script>
+    <script src="js/handlebars-v4.1.2.js" ></script>
     <script src="js/jquery-3.4.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
 </head>
@@ -26,7 +31,8 @@
 
     button {
         padding: 20px;
-        margin-left: 30px;
+        margin-bottom: 50px;
+        margin-top: 10px;
     }
     button:hover{
         border: 5px;
@@ -41,11 +47,91 @@
         color:red;
     }
 
+    .wyszukaj{
+        float: right;
+        margin-top: 10px;
+    }
+
+    #filtry{
+        background-color: cyan;
+        padding: 0;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        float: right;
+
+    }
+
+    .tab{
+        background-color:  #FFFFCC;
+        font-family: Georgia;
+        color: #006600;
+        width: 600px;
+    }
+
+    .kolumna{
+        display: inline-block;
+    }
+
+    .okol1{
+        display: flex;
+
+    }
+    .okol2{
+        display: flex;
+    }
+    .okol3{
+        display: flex;
+
+    }
+    .okol4{
+        display: flex;
+
+    }
+    .okol5{
+        display: flex;
+
+    }
+    .okol6{
+        display: flex;
+
+    }
+    .okol7{
+        display: flex;
+
+    }.okol8{
+         display:flex;
+
+     }
+    .okol9{
+        display: flex;
+
+    }
+    .okol10{
+        display: flex;
+    }
+
+    .kol{
+        background-color: cyan;
+    }
+
+    #rr{
+        background-color: red;
+    }
+
+    .butt{
+        width: 600px;
+
+
+    }
+
+
+
 </style>
 <body>
 
 <div id = "menu">
-
+<span>
     <select id = "encja" onChange='window.location="http://localhost:8091/index.html?value=" + this.value;'>
         <option value = "obywatel">Obywatel</option>
         <option value = "pojazd">Pojazd</option>
@@ -54,14 +140,17 @@
         <option value = "marka">Marka</option>
 
 
-
-
-
-
-
     </select>
 
     <button type="button" onclick=" dodaj()">Dodaj</button>
+</span>
+
+    <div id="filtry">           </div>
+
+<span>
+    <button type="submit" class="wyszukaj"><i >Wyszukaj</i></button>
+    <input  class="wyszukaj" type="text" placeholder="Wyszukaj..." name="wyszukaj">
+</span>
 </div>
 
 
@@ -91,7 +180,7 @@
 
 <script type="text/javascript">
 
-   // var preson = []
+   let rekord = null // wybrany rekord z bazy
    let url_string =  window.location.href;
    let url = new URL(url_string);
    let c = url.searchParams.get("value");
@@ -125,20 +214,50 @@
 
    let wybraneDane = ""
 
-    var obywatelDane = "<p>identyfikator to: {{id}}   data utworzenia to:   {{kiedy_utworzono}}   " +
+    var obywatelDane = "<label class='l' >identyfikator to: {{id}}   data utworzenia to:   {{kiedy_utworzono}}   " +
         "data ostatniej modyfikacji to   {{kiedy_zmodyfikowano}}   numer dowodu    {{nr_dowodu}}   imie to   {{imie}}   " +
         "nazwisko to   {{nazwisko}}   adres to   {{adres}}   aktualny to    {{czy_zarchiwizowany}}   " +
-        "data urodzenia to    {{data_urodzenia}}   pesel to   {{pesel}}    </p>";
+        "data urodzenia to    {{data_urodzenia}}   pesel to   {{pesel}}    </label></br></br>";
 
-    var abonamentDane = "<p>identyfikator to: {{id}} data utworzenia to:   {{kiedy_utworzono}}" +
+   var obywatelDane = "<table class=\"responstable tab\" >" +
+       "<tr id='rr'><th> <input   type='radio' name='rad' value='nie_wybrany'> </th></tr>"+
+       "<tr class='kolumna'>" +
+           "<th align='center' class='okol1'>identyfikator </th>"+
+           "<th align='center' class='okol2'>pesel </th>"+
+           "<th align='center' class='okol3'> numer dowodu </th>"+
+           "<th align='center' class='okol4'> imie </th>"+
+           "<th align='center' class='okol5'> nazwisko </th>"+
+           "<th align='center' class='okol6'> data urodzenia </th>"+
+           "<th align='center' class='okol7'> adres </th>"+
+           "<th align='center' class='okol8'>  data utworzenia </th>"+
+           "<th align='center' class='okol9'>  data ostatniej modyfikacji </th>"+
+           "<th align='center' class='okol10'>  czy zarchiwizowany </th>"+
+
+       "</tr>" +
+       "<tr class='kolumna'>" +
+           "<td  align='center' class='okol1  kol'>{{id}} </td>"+
+           "<td  align='center' class='okol2  kol'> {{pesel}} </td>"+
+           "<td  align='center' class='okol3  kol'>  {{nr_dowodu}} </td>"+
+           "<td  align='center' class='okol4  kol'>  {{imie}} </td> "+
+           "<td  align='center' class='okol5  kol'> {{nazwisko}} </td>"+
+           "<td  align='center'class='okol6   kol'> {{data_urodzenia}} </td>"+
+           "<td  align='center' class='okol7  kol'> {{adres}}  </td>"+
+           "<td  align='center' class='okol8  kol'>   {{kiedy_utworzono}}  </td>"+
+           "<td  align='center' class='okol9  kol'> {{kiedy_zmodyfikowano}} </td>"+
+           "<td  align='center' class='okol10 kol'>   {{czy_zarchiwizowany}}  </td>"+
+
+       "</tr>" +
+       " </table>";
+
+    var abonamentDane = "<label class='l'  >identyfikator to: {{id}} data utworzenia to:   {{kiedy_utworzono}}" +
         " data ostatniej modyfikacji to   {{kiedy_zmodyfikowano}}  data rozpoczecia to: {{data_rozpoczecia}}" +
         " data zakonczenia to: {{data_zakonczenia}} sektor to {{sektor}} uwagi to: {{uwagi}}" +
-        " czy aktualny to: {{czy_zarchiwizowany}}</p>"
+        " czy aktualny to: {{czy_zarchiwizowany}}</label></br></br>"
 
-   var pojazdDane = "<p>identyfikator to:{{id}}  nr rejstracyjny pojazdu to: {{nr_rejstracyjny_pojazdu}}" +
+   var pojazdDane = "<label class='l'  > identyfikator to:{{id}}  nr rejstracyjny pojazdu to: {{nr_rejstracyjny_pojazdu}}" +
        " marka to: {{marka}} model to {{model}} rok produkcji: {{rok_produkcji}} kolor to: {{kolor}}" +
        "  uwagi to: {{uwagi}} czy zarchiwizowany to: {{czy_zarchiwizowany}} " +
-       "kiedy utworzono to: {{kiedy_utworzono}} kiedy zmodyfikowano to: {{kiedy_zmodyfikowano}}</p>"
+       "kiedy utworzono to: {{kiedy_utworzono}} kiedy zmodyfikowano to: {{kiedy_zmodyfikowano}}</label></br></br>"
 
     //template = Handlebars.compile(wybraneDane);
 
@@ -157,7 +276,7 @@
        "    <input id =\"in5\" type = \"date \" name = \"data_urodzenia\" value = {{data_urodzenia}}  ><br>\n" +
        "    pesel:<br>\n" +
        "    <input id =\"in6\"type = \"text \" name = \"pesel\" value = {{pesel}}><br><br>\n" +
-       "    <input  class = 'zat'type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
+       "    <input  class = 'zat'type = \"button\" value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
        "\n" +
        "\n" +
        "  </form>";
@@ -171,7 +290,7 @@
        "    <input id =\"ina3\" type = \"text \" name = \"sektor\" value={{sektor}} ><br>\n" +
        "    uwagi: <br>\n" +
        "    <input id =\"ina4\" type = \"text \" name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    <input class='zat' type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
+       "    <input class='zat' type = \"button\" value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
        "\n" +
        "\n" +
        "  </form>";
@@ -185,7 +304,7 @@
        "    <input id =\"inp3\" type = \"text \" name = \"kolor\" value={{kolor}} ><br>\n" +
        "    uwagi: <br>\n" +
        "    <input id =\"inp4\" type = \"text \" name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    <input class = 'zat'type = \"button\" value = \"Zatwierdź\" onclick='f3(this.parentNode.id)'>\n" +
+       "    <input class = 'zat'type = \"button\" value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
        "\n" +
        "\n" +
        "  </form>";
@@ -222,9 +341,13 @@
 
 
 
-    var but3  ="    <button type=\"button\" onclick=\" f2(this.parentNode.id)\">Edytuj</button>"
+    var but3  ="    <button class='butt' type=\"button\" onclick=\" f2(wyb_rekord())\">Edytuj</button>"
 
-   var but4  ="    <button class = 'but4' type=\"button\" onclick=\" usun()\">Usun</button>"
+   var but4  ="    <button class = 'but4 butt' type=\"button\" onclick=\" usun()\">Usun</button>"
+
+   var but5  = "   <button class = 'but5 butt' type='button' onclick='pwiazane()'>Wyświetl Powiązane</button>"
+
+  // var radio = "<input id = 'krotka' type=\"radio\" name=\"gender\" value=\"male\"> "
 
     function main(preson) {
 
@@ -232,9 +355,13 @@
 
             var son = preson[i]
 
-            var iDiv = document.createElement('div')
+            var iDiv = document.createElement('label')
 
             iDiv.id =  i.toString() + "ob"
+
+            iDiv.className = "segment"
+
+
 
             var div = document.getElementById('obywatel')
 
@@ -257,22 +384,39 @@
 
     function wyswietl(son, i,iDiv) {
 
+
+
         template = Handlebars.compile(wybraneDane);
 
         var dane = template(son);
 
-        //but3.id = 'but' + i.toString()
 
 
 
 
-        var bancz = ( dane + but3 + but4);
+
+        var butDiv = document.createElement('div')
+
+        butDiv.id =  i.toString() + "-buttons"
+
+        butDiv.className = "butt"
+
+        butDiv.innerHTML =  (but3 + but5 + but4)
+
+
+
+        var bancz = ( dane );
 
 
 
       //  document.getElementById('ob' + i.toString()).innerHTML += bancz;
 
         iDiv.innerHTML += bancz;
+
+        iDiv.appendChild(butDiv)
+
+        iDiv.innerHTML+="</br></br>"
+        iDiv.getElementsByTagName('input')[0].value = i.toString() + "selected"
 
     }
 
@@ -874,6 +1018,21 @@
 
     }
 
+
+   function wyb_rekord() {
+       // wybrany rekord z bazy
+       var ele = document.getElementsByName('rad');
+
+       for (i = 0; i < ele.length; i++) {
+           if (ele[i].checked) {
+               alert(ele[i].value)
+               rekord = i
+               alert(rekord)
+           }
+       }
+       return rekord
+   }
+       // wybrany rekord z bazy koniec
 
 
 

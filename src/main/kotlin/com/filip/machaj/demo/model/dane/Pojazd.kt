@@ -26,7 +26,7 @@ data class Pojazd (
         @ManyToOne(fetch = FetchType.EAGER, cascade =  arrayOf(CascadeType.ALL)) // dodane cascade =  arrayOf(CascadeType.ALL) jako rozwiązanie pewnego względu jednak chyba nie jest wymagane.
         @JoinColumn(name = "model_id")
         @JsonBackReference(value = "mod-poj")
-        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityInfo(scope = Model::class,generator = ObjectIdGenerators.PropertyGenerator::class, property = "model_id")
         @JsonIdentityReference(alwaysAsId = true)
         var model : Model,
         //@ManyToMany(cascade = [CascadeType.ALL])
@@ -51,7 +51,7 @@ data class Pojazd (
         @ManyToOne(fetch = FetchType.EAGER, cascade =  arrayOf(CascadeType.ALL)) // dodane cascade =  arrayOf(CascadeType.ALL) jako rozwiązanie pewnego względu jednak chyba nie jest wymagane.
         @JoinColumn(name = "obywatel_id")
         @JsonBackReference(value = "poj-ob")
-        @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+        @JsonIdentityInfo(scope = Obywatel::class,generator = ObjectIdGenerators.PropertyGenerator::class, property = "obywatel_id")
         @JsonIdentityReference(alwaysAsId = true)
         var obywatel : Obywatel,
 
