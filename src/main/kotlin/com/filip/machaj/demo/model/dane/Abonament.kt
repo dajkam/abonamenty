@@ -19,7 +19,7 @@ data class Abonament(
         @Column(columnDefinition = "varchar(9)") /// jest 9 a nie 1 ze względu na to że szłowo "WSZYSTKIE" reprezentujące wszystkie sektory ma 9 liter czy można nazucić konkretnie 2 rozmiary?
         var sektor: String, /// zmienić na enum
         @Column(columnDefinition = "varchar(36)")
-        var uwagi: String,
+        var uwagi: String ,
         @Column(columnDefinition = "boolean")
         var czy_zarchiwizowany: Boolean = false,
         @CreationTimestamp

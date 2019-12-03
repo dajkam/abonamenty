@@ -33,6 +33,7 @@
         padding: 20px;
         margin-bottom: 50px;
         margin-top: 10px;
+        cursor: pointer;
     }
     button:hover{
         border: 5px;
@@ -119,15 +120,26 @@
         background-color: red;
     }
 
-    .butt{
-        width: 600px;
 
-
-    }
 
 
 
 </style>
+<style id="bstyle">
+    .butt{
+
+        pointer-events: none;
+
+        background-color: gray;
+        cursor: not-allowed;
+        color: black;
+
+
+
+    }
+
+</style>
+
 <body>
 
 <div id = "menu">
@@ -143,6 +155,12 @@
     </select>
 
     <button type="button" onclick=" dodaj()">Dodaj</button>
+
+    <button class='butt' type=\"button\" onclick='f2(wyb_rekord())'>Edytuj</button>
+
+     <button class = 'but4 butt' type=\"button\" onclick='usun()' >Usun</button>
+
+      <button class = 'but5 butt' type='button' onclick='pwiazane()'>Wyświetl Powiązane</button>
 </span>
 
     <div id="filtry">           </div>
@@ -220,7 +238,7 @@
         "data urodzenia to    {{data_urodzenia}}   pesel to   {{pesel}}    </label></br></br>";
 
    var obywatelDane = "<table class=\"responstable tab\" >" +
-       "<tr id='rr'><th> <input   type='radio' name='rad' value='nie_wybrany'> </th></tr>"+
+       "<tr id='rr'><th> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th></tr>"+
        "<tr class='kolumna'>" +
            "<th align='center' class='okol1'>identyfikator </th>"+
            "<th align='center' class='okol2'>pesel </th>"+
@@ -254,12 +272,73 @@
         " data zakonczenia to: {{data_zakonczenia}} sektor to {{sektor}} uwagi to: {{uwagi}}" +
         " czy aktualny to: {{czy_zarchiwizowany}}</label></br></br>"
 
+   var abonamentDane =   "<table class=\"responstable tab\" >" +
+       "<tr  id='rr' ><th> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th></tr>"+
+       "<tr class='kolumna'>" +
+       "<th align='center' class='okol1'>identyfikator </th>"+
+       "<th align='center' class='okol2'>data rozpoczecia  </th>"+
+       "<th align='center' class='okol3'> data zakonczenia </th>"+
+       "<th align='center' class='okol4'> sektor </th>"+
+       "<th align='center' class='okol5'> uwagi </th>"+
+       "<th align='center' class='okol6'> czy zarchiwizowany </th>"+
+       "<th  align='center' class='okol8  '>   kiedy utworzono  </th>"+
+       "<th align='center' class='okol9  '> kiedy zmodyfikowano </th>"+
+
+
+       "</tr>" +
+       "<tr class='kolumna'>" +
+       "<td  align='center' class='okol1  kol'>{{id}} </td>"+
+       "<td  align='center' class='okol2  kol'>  {{data_rozpoczecia}} </td>"+
+       "<td  align='center' class='okol3  kol'>  {{data_zakonczenia}} </td>"+
+       "<td  align='center' class='okol4  kol'>  {{sektor}} </td> "+
+       "<td  align='center'class='okol6   kol'> {{czy_zarchiwizowany}}</td>"+
+       "<td  align='center' class='okol8  kol'>   {{kiedy_utworzono}}  </td>"+
+       "<td  align='center' class='okol9  kol'> {{kiedy_zmodyfikowano}} </td>"+
+       "<td  align='center' class='okol5  kol'> {{uwagi}} </td>"+
+
+
+       "</tr>" +
+       " </table>";
+
+
+
+
    var pojazdDane = "<label class='l'  > identyfikator to:{{id}}  nr rejstracyjny pojazdu to: {{nr_rejstracyjny_pojazdu}}" +
        " marka to: {{marka}} model to {{model}} rok produkcji: {{rok_produkcji}} kolor to: {{kolor}}" +
        "  uwagi to: {{uwagi}} czy zarchiwizowany to: {{czy_zarchiwizowany}} " +
        "kiedy utworzono to: {{kiedy_utworzono}} kiedy zmodyfikowano to: {{kiedy_zmodyfikowano}}</label></br></br>"
 
-    //template = Handlebars.compile(wybraneDane);
+   var pojazdDane = "<table class=\"responstable tab\" >" +
+       "<tr id='rr'><th> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th></tr>"+
+       "<tr class='kolumna'>" +
+       "<th align='center' class='okol1'>identyfikator </th>"+
+       "<th align='center' class='okol2'> nr rejstracyjny pojazdu to: </th>"+
+       "<th align='center' class='okol3'>  marka</th>"+
+       "<th align='center' class='okol4'>model </th>"+
+       "<th align='center' class='okol5'> rok produkcji</th>"+
+       "<th align='center' class='okol6'> kolor</th>"+
+       "<th align='center' class='okol7'>  uwagi to: </th>"+
+       "<th align='center' class='okol8'>  czy zarchiwizowany to: </th>"+
+       "<th align='center' class='okol9'>  kiedy utworzono to: </th>"+
+       "<th align='center' class='okol10'>  kiedy zmodyfikowano to:  </th>"+
+
+       "</tr>" +
+       "<tr class='kolumna'>" +
+       "<td  align='center' class='okol1  kol'>{{id}} </td>"+
+       "<td  align='center' class='okol2  kol'>  {{nr_rejstracyjny_pojazdu}} </td>"+
+       "<td  align='center' class='okol3  kol'>  {{marka}} </td>"+
+       "<td  align='center' class='okol4  kol'>   {{model}} </td> "+
+       "<td  align='center' class='okol5  kol'> {{rok_produkcji}} </td>"+
+       "<td  align='center'class='okol6   kol'> {{kolor}} </td>"+
+       "<td  align='center' class='okol7  kol'>  {{uwagi}} </td>"+
+       "<td  align='center' class='okol8  kol'>   {{czy_zarchiwizowany}} </td>"+
+       "<td  align='center' class='okol9  kol'> {{kiedy_utworzono}} </td>"+
+       "<td  align='center' class='okol10 kol'>  {{kiedy_zmodyfikowano}}  </td>"+
+
+       "</tr>" +
+       " </table>";
+
+
 
     var formularz = ""
 
@@ -341,12 +420,15 @@
 
 
 
-    var but3  ="    <button class='butt' type=\"button\" onclick=\" f2(wyb_rekord())\">Edytuj</button>"
+   /* var but3  ="    <button class='butt' type=\"button\" onclick=\" f2(wyb_rekord())\">Edytuj</button>"
 
    var but4  ="    <button class = 'but4 butt' type=\"button\" onclick=\" usun()\">Usun</button>"
 
    var but5  = "   <button class = 'but5 butt' type='button' onclick='pwiazane()'>Wyświetl Powiązane</button>"
-
+*/
+   var but3 =""
+   var but4 = ""
+   var but5 = ""
   // var radio = "<input id = 'krotka' type=\"radio\" name=\"gender\" value=\"male\"> "
 
     function main(preson) {
@@ -1030,6 +1112,13 @@
                alert(rekord)
            }
        }
+       document.getElementById('bstyle').innerHTML =
+           `
+           .butt{
+
+        pointer-events: auto;
+    }
+           `;
        return rekord
    }
        // wybrany rekord z bazy koniec
