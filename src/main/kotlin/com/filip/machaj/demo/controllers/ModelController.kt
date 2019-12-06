@@ -29,7 +29,7 @@ class ModelController {
             value = ["delete/{id}"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
-    fun deleteModel(@PathVariable(name = "id")id:Long) = service.deleteModel(id)
+    fun deleteModel(@PathVariable(name = "id")id:Int) = service.deleteModel(id)
 
     @PostMapping(
             value = ["/update"],

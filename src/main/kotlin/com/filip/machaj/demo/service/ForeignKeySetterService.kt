@@ -56,7 +56,7 @@ class ForeignKeySetterService {
         // println(repoModel.findById(foreignKeySetter.model_id).get().marka.toString())
 
         repoPojazd.findById(1).get().
-                model=repoModel.findById(foreignKeySetter.model_id).get()
+                model=repoModel.findById(foreignKeySetter.model_id.toInt()).get()
 
         return foreignKeySetter
     }

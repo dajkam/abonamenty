@@ -16,7 +16,7 @@ class ModelDTO(
         @JsonIdentityReference(alwaysAsId = true)
         var marka:Marka
 ) {
-    var id : Long = 0
+    var id : Int = 0
 
     operator fun invoke(model: Model):ModelDTO{
         return this

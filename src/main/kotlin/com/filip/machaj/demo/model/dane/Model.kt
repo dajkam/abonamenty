@@ -12,7 +12,7 @@ import kotlin.jvm.Transient
 
 data class Model(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Long,
+        var id: Int,
         @Column(columnDefinition = "varchar(36)")
         @NotEmpty
         var nazwa: String,
@@ -35,7 +35,7 @@ data class Model(
         @JsonIdentityReference(alwaysAsId = true)
         var marka:Marka,
 
-        var model_id: Long = id
+        var model_id: Int = id
         ) {
 
     constructor():this(

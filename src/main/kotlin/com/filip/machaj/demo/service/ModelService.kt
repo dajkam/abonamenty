@@ -38,7 +38,7 @@ class ModelService {
             )
     )
 
-    fun deleteModel(id:Long) = repo.deleteById(id)
+    fun deleteModel(id:Int) = repo.deleteById(id)
 
     fun updateModel(modelDTO: ModelDTO):ModelDTO{
         var model:Model = repo.findById(modelDTO.id).get()

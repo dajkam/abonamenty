@@ -14,7 +14,7 @@
 
 
 </head>
-<style>
+<!--<style>
     body {
         background-color: white;
     }
@@ -124,6 +124,31 @@
 
 
 
+</style>-->     <!-- Stary css -->
+
+<style>
+    .kol{
+        width: 500px;
+        display: table-cell;
+        text-align: center;
+        padding: 20px;
+    }
+    .nagl{
+
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        background-color: #167F92;
+
+
+
+    }
+    .row{
+        display: table-row;
+    }
+
+
+
 </style>
 <style id="bstyle">
     .butt{
@@ -169,6 +194,25 @@
     <button type="submit" class="wyszukaj"><i >Wyszukaj</i></button>
     <input  class="wyszukaj" type="text" placeholder="Wyszukaj..." name="wyszukaj">
 </span>
+</div>
+
+<div class="nagl">
+    <table class="row">
+        <tr >
+
+            <th align='center' class='okol1 kol'>identyfikator</th>
+            <th align='center' class='okol2 kol '>pesel</th>
+            <th align='center' class='okol3 kol'>numer dowodu</th>
+            <th align='center' class='okol4 kol'>imie</th>
+            <th align='center' class='okol5 kol'>nazwisko</th>
+            <th align='center' class='okol6 kol'>data urodzenia</th>
+            <th align='center' class='okol7 kol'>adres</th>
+            <th align='center' class='okol8 kol '>data utworzenia</th>
+            <th align='center' class='okol9 kol'>data ostatniej modyfikacji</th>
+            <th align='center' class='okol10 kol'>czy zarchiwizowany</th>
+
+        </tr>
+    </table>
 </div>
 
 
@@ -237,32 +281,20 @@
         "nazwisko to   {{nazwisko}}   adres to   {{adres}}   aktualny to    {{czy_zarchiwizowany}}   " +
         "data urodzenia to    {{data_urodzenia}}   pesel to   {{pesel}}    </label></br></br>";
 
-   var obywatelDane = "<table class=\"responstable tab\" >" +
-       "<tr id='rr'><th> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th></tr>"+
-       "<tr class='kolumna'>" +
-           "<th align='center' class='okol1'>identyfikator </th>"+
-           "<th align='center' class='okol2'>pesel </th>"+
-           "<th align='center' class='okol3'> numer dowodu </th>"+
-           "<th align='center' class='okol4'> imie </th>"+
-           "<th align='center' class='okol5'> nazwisko </th>"+
-           "<th align='center' class='okol6'> data urodzenia </th>"+
-           "<th align='center' class='okol7'> adres </th>"+
-           "<th align='center' class='okol8'>  data utworzenia </th>"+
-           "<th align='center' class='okol9'>  data ostatniej modyfikacji </th>"+
-           "<th align='center' class='okol10'>  czy zarchiwizowany </th>"+
-
-       "</tr>" +
-       "<tr class='kolumna'>" +
-           "<td  align='center' class='okol1  kol'>{{id}} </td>"+
-           "<td  align='center' class='okol2  kol'> {{pesel}} </td>"+
-           "<td  align='center' class='okol3  kol'>  {{nr_dowodu}} </td>"+
-           "<td  align='center' class='okol4  kol'>  {{imie}} </td> "+
-           "<td  align='center' class='okol5  kol'> {{nazwisko}} </td>"+
-           "<td  align='center'class='okol6   kol'> {{data_urodzenia}} </td>"+
-           "<td  align='center' class='okol7  kol'> {{adres}}  </td>"+
-           "<td  align='center' class='okol8  kol'>   {{kiedy_utworzono}}  </td>"+
-           "<td  align='center' class='okol9  kol'> {{kiedy_zmodyfikowano}} </td>"+
-           "<td  align='center' class='okol10 kol'>   {{czy_zarchiwizowany}}  </td>"+
+   var obywatelDane =
+           "<table>" +
+       "<tr class='row'>" +
+           "<th align='center' class='okol1 kol '><input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '></th>" +
+           "<td  align='center' class='okol1  kol'>{{id}}</td>"+
+           "<td  align='center' class='okol2  kol'>{{pesel}}</td>"+
+           "<td  align='center' class='okol3  kol'>{{nr_dowodu}}</td>"+
+           "<td  align='center' class='okol4  kol'>{{imie}}</td> "+
+           "<td  align='center' class='okol5  kol'>{{nazwisko}}</td>"+
+           "<td  align='center'class='okol6   kol'>{{data_urodzenia}}</td>"+
+           "<td  align='center' class='okol7  kol'>{{adres}} </td>"+
+           "<td  align='center' class='okol8  kol'>{{kiedy_utworzono}}</td>"+
+           "<td  align='center' class='okol9  kol'>{{kiedy_zmodyfikowano}}</td>"+
+           "<td  align='center' class='okol10 kol'>{{czy_zarchiwizowany}}</td>"+
 
        "</tr>" +
        " </table>";
