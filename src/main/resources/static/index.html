@@ -130,8 +130,11 @@
     .kol{
         width: 500px;
         display: table-cell;
-        text-align: center;
         padding: 20px;
+        text-align: left;
+
+        border-style: solid;
+        border: deepskyblue;
     }
     .nagl{
 
@@ -149,6 +152,7 @@
 
 
 
+
 </style>
 <style id="bstyle">
     .butt{
@@ -163,6 +167,7 @@
 
     }
 
+
 </style>
 
 <body>
@@ -173,8 +178,7 @@
         <option value = "obywatel">Obywatel</option>
         <option value = "pojazd">Pojazd</option>
         <option value = "abonament">Abonament</option>
-        <option value = "model">Model</option>
-        <option value = "marka">Marka</option>
+
 
 
     </select>
@@ -196,20 +200,56 @@
 </span>
 </div>
 
-<div class="nagl">
+<div class="nagl" id="nago">
     <table class="row">
         <tr >
 
-            <th align='center' class='okol1 kol'>identyfikator</th>
-            <th align='center' class='okol2 kol '>pesel</th>
-            <th align='center' class='okol3 kol'>numer dowodu</th>
-            <th align='center' class='okol4 kol'>imie</th>
-            <th align='center' class='okol5 kol'>nazwisko</th>
-            <th align='center' class='okol6 kol'>data urodzenia</th>
-            <th align='center' class='okol7 kol'>adres</th>
-            <th align='center' class='okol8 kol '>data utworzenia</th>
-            <th align='center' class='okol9 kol'>data ostatniej modyfikacji</th>
-            <th align='center' class='okol10 kol'>czy zarchiwizowany</th>
+            <th  class='okol1 kol'>identyfikator</th>
+            <th  class='okol2 kol '>pesel</th>
+            <th  class='okol3 kol'>numer dowodu</th>
+            <th  class='okol4 kol'>imie</th>
+            <th class='okol5 kol'>nazwisko</th>
+            <th  class='okol6 kol'>data urodzenia</th>
+            <th  class='okol7 kol'>adres</th>
+            <th  class='okol8 kol '>data utworzenia</th>
+            <th  class='okol9 kol'>data ostatniej modyfikacji</th>
+            <th  class='okol10 kol'>czy zarchiwizowany</th>
+
+        </tr>
+    </table>
+</div>
+
+<div class="nagl" id="naga">
+    <table class="row">
+        <tr >
+
+            <th  class='okol1 kol'>identyfikator</th>
+            <th  class='okol2 kol'>data rozpoczecia</th>
+            <th  class='okol3 kol'>data zakonczenia</th>
+            <th  class='okol4 kol'>sektor</th>
+            <th class='okol5 kol'>uwagi </th>
+            <th class='okol6 kol'>czy zarchiwizowany </th>
+            <th   class='okol8 kol  '>kiedy zmodyfikowano </th>
+            <th  class='okol9 kol '>kiedy utworzono</th>
+
+        </tr>
+    </table>
+</div>
+
+<div class="nagl" id="nagp">
+    <table class="row">
+        <tr >
+
+            <th  class='okol1 kol'>id</th>
+            <th  class='okol2 kol'>nr rejstracyjny pojazdu </th>
+            <th class='okol3 kol'>marka</th>
+            <th  class='okol4 kol'>model </th>
+            <th  class='okol5 kol'>rok produkcji</th>
+            <th  class='okol6 kol'>kolor</th>
+            <th  class='okol7 kol'>uwagi</th>
+            <th  class='okol8 kol'>czy zarchiwizowany</th>
+            <th  class='okol9 kol'>kiedy utworzono</th>
+            <th class='okol10 kol' >kiedy zmodyfikowano </th>
 
         </tr>
     </table>
@@ -241,6 +281,8 @@
 
 
 <script type="text/javascript">
+
+    
 
    let rekord = null // wybrany rekord z bazy
    let url_string =  window.location.href;
@@ -284,17 +326,17 @@
    var obywatelDane =
            "<table>" +
        "<tr class='row'>" +
-           "<th align='center' class='okol1 kol '><input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '></th>" +
-           "<td  align='center' class='okol1  kol'>{{id}}</td>"+
-           "<td  align='center' class='okol2  kol'>{{pesel}}</td>"+
-           "<td  align='center' class='okol3  kol'>{{nr_dowodu}}</td>"+
-           "<td  align='center' class='okol4  kol'>{{imie}}</td> "+
-           "<td  align='center' class='okol5  kol'>{{nazwisko}}</td>"+
-           "<td  align='center'class='okol6   kol'>{{data_urodzenia}}</td>"+
-           "<td  align='center' class='okol7  kol'>{{adres}} </td>"+
-           "<td  align='center' class='okol8  kol'>{{kiedy_utworzono}}</td>"+
-           "<td  align='center' class='okol9  kol'>{{kiedy_zmodyfikowano}}</td>"+
-           "<td  align='center' class='okol10 kol'>{{czy_zarchiwizowany}}</td>"+
+           "<th  class='okol0 kol '><input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '></th>" +
+           "<td   class='okol1  kol'>{{id}}</td>"+
+           "<td  class='okol2  kol'>{{pesel}}</td>"+
+           "<td   class='okol3  kol'>{{nr_dowodu}}</td>"+
+           "<td   class='okol4  kol'>{{imie}}</td> "+
+           "<td  class='okol5  kol'>{{nazwisko}}</td>"+
+           "<td  class='okol6   kol'>{{data_urodzenia}}</td>"+
+           "<td   class='okol7  kol'>{{adres}} </td>"+
+           "<td   class='okol8  kol'>{{kiedy_utworzono}}</td>"+
+           "<td   class='okol9  kol'>{{kiedy_zmodyfikowano}}</td>"+
+           "<td   class='okol10 kol'>{{czy_zarchiwizowany}}</td>"+
 
        "</tr>" +
        " </table>";
@@ -304,29 +346,18 @@
         " data zakonczenia to: {{data_zakonczenia}} sektor to {{sektor}} uwagi to: {{uwagi}}" +
         " czy aktualny to: {{czy_zarchiwizowany}}</label></br></br>"
 
-   var abonamentDane =   "<table class=\"responstable tab\" >" +
-       "<tr  id='rr' ><th> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th></tr>"+
-       "<tr class='kolumna'>" +
-       "<th align='center' class='okol1'>identyfikator </th>"+
-       "<th align='center' class='okol2'>data rozpoczecia  </th>"+
-       "<th align='center' class='okol3'> data zakonczenia </th>"+
-       "<th align='center' class='okol4'> sektor </th>"+
-       "<th align='center' class='okol5'> uwagi </th>"+
-       "<th align='center' class='okol6'> czy zarchiwizowany </th>"+
-       "<th  align='center' class='okol8  '>   kiedy utworzono  </th>"+
-       "<th align='center' class='okol9  '> kiedy zmodyfikowano </th>"+
+   var abonamentDane =   "<table  >" +
 
-
-       "</tr>" +
-       "<tr class='kolumna'>" +
-       "<td  align='center' class='okol1  kol'>{{id}} </td>"+
-       "<td  align='center' class='okol2  kol'>  {{data_rozpoczecia}} </td>"+
-       "<td  align='center' class='okol3  kol'>  {{data_zakonczenia}} </td>"+
-       "<td  align='center' class='okol4  kol'>  {{sektor}} </td> "+
-       "<td  align='center'class='okol6   kol'> {{czy_zarchiwizowany}}</td>"+
-       "<td  align='center' class='okol8  kol'>   {{kiedy_utworzono}}  </td>"+
-       "<td  align='center' class='okol9  kol'> {{kiedy_zmodyfikowano}} </td>"+
-       "<td  align='center' class='okol5  kol'> {{uwagi}} </td>"+
+       "<tr class='row'>" +
+       "<th> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
+       "<td   class='okol1  kol'>{{id}} </td>"+
+       "<td   class='okol2  kol'>{{data_rozpoczecia}}</td>"+
+       "<td   class='okol3  kol'>{{data_zakonczenia}}</td>"+
+       "<td   class='okol4  kol'>{{sektor}}</td> "+
+       "<td  class='okol6   kol'> {{uwagi}}</td>"+
+       "<td   class='okol8  kol'>{{czy_zarchiwizowany}}</td>"+
+       "<td   class='okol9  kol'>{{kiedy_zmodyfikowano}}</td>"+
+       "<td   class='okol5  kol'>{{kiedy_utworzono}}</td>"+
 
 
        "</tr>" +
@@ -341,31 +372,19 @@
        "kiedy utworzono to: {{kiedy_utworzono}} kiedy zmodyfikowano to: {{kiedy_zmodyfikowano}}</label></br></br>"
 
    var pojazdDane = "<table class=\"responstable tab\" >" +
-       "<tr id='rr'><th> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th></tr>"+
-       "<tr class='kolumna'>" +
-       "<th align='center' class='okol1'>identyfikator </th>"+
-       "<th align='center' class='okol2'> nr rejstracyjny pojazdu to: </th>"+
-       "<th align='center' class='okol3'>  marka</th>"+
-       "<th align='center' class='okol4'>model </th>"+
-       "<th align='center' class='okol5'> rok produkcji</th>"+
-       "<th align='center' class='okol6'> kolor</th>"+
-       "<th align='center' class='okol7'>  uwagi to: </th>"+
-       "<th align='center' class='okol8'>  czy zarchiwizowany to: </th>"+
-       "<th align='center' class='okol9'>  kiedy utworzono to: </th>"+
-       "<th align='center' class='okol10'>  kiedy zmodyfikowano to:  </th>"+
 
-       "</tr>" +
        "<tr class='kolumna'>" +
-       "<td  align='center' class='okol1  kol'>{{id}} </td>"+
-       "<td  align='center' class='okol2  kol'>  {{nr_rejstracyjny_pojazdu}} </td>"+
-       "<td  align='center' class='okol3  kol'>  {{marka}} </td>"+
-       "<td  align='center' class='okol4  kol'>   {{model}} </td> "+
-       "<td  align='center' class='okol5  kol'> {{rok_produkcji}} </td>"+
-       "<td  align='center'class='okol6   kol'> {{kolor}} </td>"+
-       "<td  align='center' class='okol7  kol'>  {{uwagi}} </td>"+
-       "<td  align='center' class='okol8  kol'>   {{czy_zarchiwizowany}} </td>"+
-       "<td  align='center' class='okol9  kol'> {{kiedy_utworzono}} </td>"+
-       "<td  align='center' class='okol10 kol'>  {{kiedy_zmodyfikowano}}  </td>"+
+       "<th> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
+       "<td   class='okol1  kol'>{{id}}</td>"+
+       "<td   class='okol2  kol'>{{nr_rejstracyjny_pojazdu}} </td>"+
+       "<td   class='okol3  kol'>{{marka}}</td>"+
+       "<td   class='okol4  kol'>{{model}}</td> "+
+       "<td   class='okol5  kol'> {{rok_produkcji}}</td>"+
+       "<td  class='okol6   kol'>{{kolor}}</td>"+
+       "<td   class='okol7  kol'>{{uwagi}}</td>"+
+       "<td  class='okol8  kol'>{{czy_zarchiwizowany}}</td>"+
+       "<td   class='okol9  kol'>{{kiedy_utworzono}}</td>"+
+       "<td  class='okol10 kol'>{{kiedy_zmodyfikowano}} </td>"+
 
        "</tr>" +
        " </table>";
@@ -430,6 +449,8 @@
            obywatelFormularz.id = "ff"
            wybraneDane = obywatelDane
            formularz = obywatelFormularz
+           document.getElementById("naga").remove()
+           document.getElementById("nagp").remove()
 
            break;
        case "abonament":
@@ -437,12 +458,16 @@
            abonamentFormularz.id = "ff"
            wybraneDane = abonamentDane
            formularz = abonamentFormularz
+           document.getElementById("nago").remove()
+           document.getElementById("nagp").remove()
 
            break;
        case "pojazd":
            pojazdFormularz.id = "ff"
            wybraneDane = pojazdDane
            formularz = pojazdFormularz
+           document.getElementById("nago").remove()
+           document.getElementById("naga").remove()
 
            break;
    }
@@ -501,6 +526,7 @@
 
 
         template = Handlebars.compile(wybraneDane);
+
 
         var dane = template(son);
 
@@ -1138,11 +1164,15 @@
        var ele = document.getElementsByName('rad');
 
        for (i = 0; i < ele.length; i++) {
+           document.getElementById(i.toString() + 'ob').style.backgroundColor = 'white'
            if (ele[i].checked) {
                alert(ele[i].value)
                rekord = i
                alert(rekord)
+               document.getElementById(i.toString() + 'ob').style.backgroundColor = 'red'
+
            }
+
        }
        document.getElementById('bstyle').innerHTML =
            `
@@ -1151,6 +1181,7 @@
         pointer-events: auto;
     }
            `;
+
        return rekord
    }
        // wybrany rekord z bazy koniec
