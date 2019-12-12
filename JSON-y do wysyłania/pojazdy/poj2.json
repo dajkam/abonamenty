@@ -3,7 +3,7 @@
   "kolor" : "szary",
   "uwagi" : "wlasny",
   "nr_rejstracyjny_pojazdu" : "GSP 6666",
-  "rok_produkcji" : "1966-06-25T23:00:00.000+0000",
+  "rok_produkcji" : 1966,
   "czy_zarchiwizowany" : false,
   "model" : {
     "id" : 2
