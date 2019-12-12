@@ -14,7 +14,7 @@ data class PojazdDTO(
         var kolor:String?,
         var uwagi:String?,
         var nr_rejstracyjny_pojazdu:String,
-        var rok_produkcji:Date,
+        var rok_produkcji:Int,
         var czy_zarchiwizowany:Boolean,
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)

@@ -3,7 +3,7 @@
   "kolor" : "zielony",
   "uwagi" : "wlasny",
   "nr_rejstracyjny_pojazdu" : "GSP 5678",
-  "rok_produkcji" : "1995-06-25T23:00:00.000+0000",
+  "rok_produkcji" : 1995,
   "czy_zarchiwizowany" : false,
   "model" : {
     "id" : 4

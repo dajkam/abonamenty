@@ -11,6 +11,8 @@
     <script src="js/jquery-3.4.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/pl.js"></script>
 
 
 </head>
@@ -282,9 +284,15 @@
 
 <script type="text/javascript">
 
-    
+    // moment date format
 
-   let rekord = null // wybrany rekord z bazy
+
+
+
+    // END
+
+
+    let rekord = null // wybrany rekord z bazy
    let url_string =  window.location.href;
    let url = new URL(url_string);
    let c = url.searchParams.get("value");
@@ -323,6 +331,26 @@
         "nazwisko to   {{nazwisko}}   adres to   {{adres}}   aktualny to    {{czy_zarchiwizowany}}   " +
         "data urodzenia to    {{data_urodzenia}}   pesel to   {{pesel}}    </label></br></br>";
 
+    var DateFormats = {
+        short: "DD MMMM - YYYY",
+        long: "dddd DD.MM.YYYY HH:mm"
+    };
+
+    // Deprecated since version 0.8.0
+    Handlebars.registerHelper("formatDate", function(datetime, format) {
+
+// Use UI.registerHelper..
+
+            if (moment) {
+                // can use other formats like 'lll' too
+                format = DateFormats[format] || format;
+                return moment(datetime).format(format);
+            }
+            else {
+                return datetime;
+            }
+        });
+
    var obywatelDane =
            "<table>" +
        "<tr class='row'>" +
@@ -332,10 +360,10 @@
            "<td   class='okol3  kol'>{{nr_dowodu}}</td>"+
            "<td   class='okol4  kol'>{{imie}}</td> "+
            "<td  class='okol5  kol'>{{nazwisko}}</td>"+
-           "<td  class='okol6   kol'>{{data_urodzenia}}</td>"+
+           "<td  class='okol6   kol'>{{formatDate data_urodzenia  'short'}}</td>"+
            "<td   class='okol7  kol'>{{adres}} </td>"+
            "<td   class='okol8  kol'>{{kiedy_utworzono}}</td>"+
-           "<td   class='okol9  kol'>{{kiedy_zmodyfikowano}}</td>"+
+           "<td   class='okol9  kol'>{{ formatDate kiedy_zmodyfikowano 'short'}}</td>"+
            "<td   class='okol10 kol'>{{czy_zarchiwizowany}}</td>"+
 
        "</tr>" +
@@ -1026,9 +1054,14 @@
                 }
 
                 if( c === "pojazd"){
+                    let y = new Date()
+                    y = y.getFullYear()
 
                     son.nr_rejstracyjny_pojazdu = document.getElementById("inp1").value
-                    son.rok_produkcji = document.getElementById("inp2").value
+                    if((document.getElementById("inp2").value <= y)&&(document.getElementById("inp2").value >= 1829))
+                        son.rok_produkcji = document.getElementById("inp2").value
+                    else
+                        alert("Rok produkcji musi sie zawierać między rokiem 1829 a rokiem obecnym")
                     son.kolor = document.getElementById("inp3").value
                     son.uwagi = document.getElementById("inp4").value
 
@@ -1164,12 +1197,14 @@
        var ele = document.getElementsByName('rad');
 
        for (i = 0; i < ele.length; i++) {
-           document.getElementById(i.toString() + 'ob').style.backgroundColor = 'white'
+           if(document.getElementById(i.toString() + 'ob')!=null)
+             document.getElementById(i.toString() + 'ob').style.backgroundColor = 'white'
            if (ele[i].checked) {
                alert(ele[i].value)
                rekord = i
                alert(rekord)
-               document.getElementById(i.toString() + 'ob').style.backgroundColor = 'red'
+               if(document.getElementById(i.toString() + 'ob')!=null)
+                 document.getElementById(i.toString() + 'ob').style.backgroundColor = 'red'
 
            }
 

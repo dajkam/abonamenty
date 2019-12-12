@@ -18,8 +18,8 @@ data class Pojazd (
         var kolor : String?,
         var uwagi : String?,
         var nr_rejstracyjny_pojazdu : String,
-        @Column(columnDefinition = "date")
-        var rok_produkcji : Date, // Zmienić na LocalDate tylko rok
+        @Column(columnDefinition = "int")
+         var rok_produkcji: Int, // Zmienić na LocalDate tylko rok
         @Column(columnDefinition = "boolean")
         var czy_zarchiwizowany : Boolean = false,
 
@@ -90,7 +90,7 @@ data class Pojazd (
                     "",
                     "",
                     "",
-                    Date(),
+                    -1,
                     false,
 
                     Model(),
