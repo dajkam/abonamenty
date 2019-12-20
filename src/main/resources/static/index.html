@@ -129,28 +129,46 @@
 </style>-->     <!-- Stary css -->
 
 <style>
-    .kol{
-        width: 500px;
-        display: table-cell;
-        padding: 20px;
-        text-align: left;
-
-        border-style: solid;
-        border: deepskyblue;
+    .hid{
+        display: none;
+        overflow:hidden;
+        visibility: hidden;
     }
+    /*.kol{
+
+        display: inline;
+        text-align: left;
+        position: relative;
+        padding: 50px;
+
+
+    }*/
+
     .nagl{
 
         position: -webkit-sticky;
         position: sticky;
         top: 0;
         background-color: #167F92;
+       }
 
 
-
+th, td{
+    width: 12vw;
+    text-align: left;
+}
+body{
+padding: 10px;
     }
     .row{
+       /* display: table-row;*/
         display: table-row;
+        table-layout: fixed;
+        width: 100%;
+
     }
+    td:empty { display: none; }
+
 
 
 
@@ -202,64 +220,62 @@
 </span>
 </div>
 
-<div class="nagl" id="nago">
-    <table class="row">
-        <tr >
-
-            <th  class='okol1 kol'>identyfikator</th>
-            <th  class='okol2 kol '>pesel</th>
-            <th  class='okol3 kol'>numer dowodu</th>
-            <th  class='okol4 kol'>imie</th>
-            <th class='okol5 kol'>nazwisko</th>
-            <th  class='okol6 kol'>data urodzenia</th>
-            <th  class='okol7 kol'>adres</th>
-            <th  class='okol8 kol '>data utworzenia</th>
-            <th  class='okol9 kol'>data ostatniej modyfikacji</th>
-            <th  class='okol10 kol'>czy zarchiwizowany</th>
-
-        </tr>
-    </table>
-</div>
-
-<div class="nagl" id="naga">
-    <table class="row">
-        <tr >
-
-            <th  class='okol1 kol'>identyfikator</th>
-            <th  class='okol2 kol'>data rozpoczecia</th>
-            <th  class='okol3 kol'>data zakonczenia</th>
-            <th  class='okol4 kol'>sektor</th>
-            <th class='okol5 kol'>uwagi </th>
-            <th class='okol6 kol'>czy zarchiwizowany </th>
-            <th   class='okol8 kol  '>kiedy zmodyfikowano </th>
-            <th  class='okol9 kol '>kiedy utworzono</th>
-
-        </tr>
-    </table>
-</div>
-
-<div class="nagl" id="nagp">
-    <table class="row">
-        <tr >
-
-            <th  class='okol1 kol'>id</th>
-            <th  class='okol2 kol'>nr rejstracyjny pojazdu </th>
-            <th class='okol3 kol'>marka</th>
-            <th  class='okol4 kol'>model </th>
-            <th  class='okol5 kol'>rok produkcji</th>
-            <th  class='okol6 kol'>kolor</th>
-            <th  class='okol7 kol'>uwagi</th>
-            <th  class='okol8 kol'>czy zarchiwizowany</th>
-            <th  class='okol9 kol'>kiedy utworzono</th>
-            <th class='okol10 kol' >kiedy zmodyfikowano </th>
-
-        </tr>
-    </table>
-</div>
 
 
 
-<div id = "obywatel"></div>
+
+
+
+
+
+
+
+<table id = "obywatel">
+    <thead class="nagl row" id="nago">
+    <tr >
+
+        <th  class=' kol'>id</th>
+        <th  class=' kol '>pesel</th>
+        <th  class=' kol'>numer dowodu</th>
+        <th  class=' kol'>imie</th>
+        <th class=' kol'>nazwisko</th>
+        <th  class=' kol'>data urodzenia</th>
+        <th  class=' kol'>adres</th>
+
+
+    </tr>
+    </thead>
+
+    <thead class="nagl row" id="nagp">
+
+    <tr>
+
+        <th  class='okol1 kol'>id</th>
+        <th  class='okol2 kol'>nr rejstracyjny pojazdu </th>
+        <th class='okol3 kol'>marka</th>
+        <th  class='okol4 kol'>model </th>
+        <th  class='okol5 kol'>rok produkcji</th>
+        <th  class='okol6 kol'>kolor</th>
+        <th class='okol7 kol'>uwagi</th>
+
+
+    </tr>
+    </thead>
+
+    <thead class="nagl row" id="naga">
+
+    <tr >
+
+        <th  class='okol1 kol'>id</th>
+        <th  class='okol2 kol'>data rozpoczecia</th>
+        <th  class='okol3 kol'>data zakonczenia</th>
+        <th  class='okol4 kol'>sektor</th>
+        <th class='okol5 kol'>uwagi </th>
+
+
+    </tr>
+    </thead>
+</table>
 <!--<form id = "formularz">
   nr dowodu: <br>
   <input type = "text " name = "nr_dowodu" ><br>
@@ -290,8 +306,6 @@
 
 
     // END
-
-
     let rekord = null // wybrany rekord z bazy
    let url_string =  window.location.href;
    let url = new URL(url_string);
@@ -333,8 +347,14 @@
 
     var DateFormats = {
         short: "DD MMMM - YYYY",
-        long: "dddd DD.MM.YYYY HH:mm"
+        long: "dddd DD.MM.YYYY HH:mm",
+        standard: "YYYY-MM-DD"
     };
+    function dataFormat(datetime, format) {
+
+alert("w dattime")
+            return moment(datetime).format(format);
+    }
 
     // Deprecated since version 0.8.0
     Handlebars.registerHelper("formatDate", function(datetime, format) {
@@ -354,17 +374,15 @@
    var obywatelDane =
            "<table>" +
        "<tr class='row'>" +
-           "<th  class='okol0 kol '><input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '></th>" +
-           "<td   class='okol1  kol'>{{id}}</td>"+
-           "<td  class='okol2  kol'>{{pesel}}</td>"+
-           "<td   class='okol3  kol'>{{nr_dowodu}}</td>"+
-           "<td   class='okol4  kol'>{{imie}}</td> "+
-           "<td  class='okol5  kol'>{{nazwisko}}</td>"+
-           "<td  class='okol6   kol'>{{formatDate data_urodzenia  'short'}}</td>"+
-           "<td   class='okol7  kol'>{{adres}} </td>"+
-           "<td   class='okol8  kol'>{{kiedy_utworzono}}</td>"+
-           "<td   class='okol9  kol'>{{ formatDate kiedy_zmodyfikowano 'short'}}</td>"+
-           "<td   class='okol10 kol'>{{czy_zarchiwizowany}}</td>"+
+           "<td  class=' hid '><input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '></td>" +
+           "<td   id='  kol'>{{id}}</td>"+
+           "<td  class='  kol'>{{pesel}}</td>"+
+           "<td   class='  kol'>{{nr_dowodu}}</td>"+
+           "<td   class='  kol'>{{imie}}</td> "+
+           "<td  class='  kol'>{{nazwisko}}</td>"+
+           "<td  class='   kol'>{{formatDate data_urodzenia  'short'}}</td>"+
+           "<td   class='  kol'>{{adres}} </td>"+
+
 
        "</tr>" +
        " </table>";
@@ -377,15 +395,12 @@
    var abonamentDane =   "<table  >" +
 
        "<tr class='row'>" +
-       "<th> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
+       "<th class=' hid '> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
        "<td   class='okol1  kol'>{{id}} </td>"+
-       "<td   class='okol2  kol'>{{data_rozpoczecia}}</td>"+
-       "<td   class='okol3  kol'>{{data_zakonczenia}}</td>"+
+       "<td   class='okol2  kol'>{{formatDate  data_rozpoczecia 'short'}}</td>"+
+       "<td   class='okol3  kol'>{{formatDate data_zakonczenia 'short'}}</td>"+
        "<td   class='okol4  kol'>{{sektor}}</td> "+
        "<td  class='okol6   kol'> {{uwagi}}</td>"+
-       "<td   class='okol8  kol'>{{czy_zarchiwizowany}}</td>"+
-       "<td   class='okol9  kol'>{{kiedy_zmodyfikowano}}</td>"+
-       "<td   class='okol5  kol'>{{kiedy_utworzono}}</td>"+
 
 
        "</tr>" +
@@ -401,8 +416,8 @@
 
    var pojazdDane = "<table class=\"responstable tab\" >" +
 
-       "<tr class='kolumna'>" +
-       "<th> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
+       "<tr class='row'>" +
+       "<th class='hid'> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
        "<td   class='okol1  kol'>{{id}}</td>"+
        "<td   class='okol2  kol'>{{nr_rejstracyjny_pojazdu}} </td>"+
        "<td   class='okol3  kol'>{{marka}}</td>"+
@@ -410,9 +425,7 @@
        "<td   class='okol5  kol'> {{rok_produkcji}}</td>"+
        "<td  class='okol6   kol'>{{kolor}}</td>"+
        "<td   class='okol7  kol'>{{uwagi}}</td>"+
-       "<td  class='okol8  kol'>{{czy_zarchiwizowany}}</td>"+
-       "<td   class='okol9  kol'>{{kiedy_utworzono}}</td>"+
-       "<td  class='okol10 kol'>{{kiedy_zmodyfikowano}} </td>"+
+
 
        "</tr>" +
        " </table>";
@@ -431,7 +444,7 @@
        "    adres: <br>\n" +
        "    <input id =\"in4\" type = \"text \" name = \"adres\" value = '{{adres}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
        "    data urodzenia: <br>\n" +
-       "    <input id =\"in5\" type = \"date \" name = \"data_urodzenia\" value = {{data_urodzenia}}  ><br>\n" +
+       "    <input id =\"in5\" type = 'date' name = \"data_urodzenia\" value = {{data_urodzenia}}  ><br>\n" +
        "    pesel:<br>\n" +
        "    <input id =\"in6\"type = \"text \" name = \"pesel\" value = {{pesel}}><br><br>\n" +
        "    <input  class = 'zat'type = \"button\" value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
@@ -441,9 +454,9 @@
 
    var abonamentFormularz = "<form id = 'ffb' >\n" +
        "    data_rozpoczecia: <br>\n" +
-       "    <input id =\"ina1\" type = \"date \" name = \"data_rozpoczecia\" value =  {{data_rozpoczecia}} ><br>\n" +
+       "    <input id =\"ina1\" type = \"date \" name = \"data_rozpoczecia\" value =  '{{formatDate  data_rozpoczecia \"short\"}} '><br>\n" +
        "    data_zakonczenia: <br>\n" +
-       "    <input id =\"ina2\" type = \"date \" name = \"data_zakonczenia\"  value={{data_zakonczenia}}><br>\n" +
+       "    <input id =\"ina2\" type = \"date \" name = \"data_zakonczenia\"  value= '{{formatDate  data_zakonczenia \"short\"}} '><br>\n" +
        "    sektor: <br>\n" +
        "    <input id =\"ina3\" type = \"text \" name = \"sektor\" value={{sektor}} ><br>\n" +
        "    uwagi: <br>\n" +
@@ -955,6 +968,7 @@
 
                 alert("id wybranego w f3 "+ on.toString())
 
+
                 alert(id.toString())
 
 
@@ -985,8 +999,12 @@
                 if(c === "abonament"){
                     if(document.getElementById("ina1").value < document.getElementById("ina2").value){
 
-                        son.data_rozpoczecia = document.getElementById("ina1").value // sprawdzać czy rozpoczecie jest przed koncem
-                        son.data_zakonczenia = document.getElementById("ina2").value // wyżej
+                        son.data_rozpoczecia = dataFormat(document.getElementById("ina1").value , DateFormats.standard)
+                        alert( dataFormat(document.getElementById("ina1").value , DateFormats.standard))
+                        alert(document.getElementById("ina1").value)
+                        alert(typeof document.getElementById("ina1").value)
+
+                        son.data_zakonczenia = dataFormat( document.getElementById("ina2").value, DateFormats.standard)
 
                     }
                     else{
