@@ -168,6 +168,9 @@ padding: 10px;
 
     }
     td:empty { display: none; }
+    .id{
+
+    }
 
 
 
@@ -207,7 +210,7 @@ padding: 10px;
 
     <button class='butt' type=\"button\" onclick='f2(wyb_rekord())'>Edytuj</button>
 
-     <button class = 'but4 butt' type=\"button\" onclick='usun()' >Usun</button>
+     <button class = 'but4 butt' type=\"button\" onclick='usun(wyb_rekord())' >Usun</button>
 
       <button class = 'but5 butt' type='button' onclick='pwiazane()'>Wyświetl Powiązane</button>
 </span>
@@ -234,7 +237,7 @@ padding: 10px;
     <thead class="nagl row" id="nago">
     <tr >
 
-        <th  class=' kol'>id</th>
+        <th  class=' kol id'>id</th>
         <th  class=' kol '>pesel</th>
         <th  class=' kol'>numer dowodu</th>
         <th  class=' kol'>imie</th>
@@ -250,7 +253,7 @@ padding: 10px;
 
     <tr>
 
-        <th  class='okol1 kol'>id</th>
+        <th  class='okol1 kol id'>id</th>
         <th  class='okol2 kol'>nr rejstracyjny pojazdu </th>
         <th class='okol3 kol'>marka</th>
         <th  class='okol4 kol'>model </th>
@@ -266,7 +269,7 @@ padding: 10px;
 
     <tr >
 
-        <th  class='okol1 kol'>id</th>
+        <th  class='okol1 kol id'>id</th>
         <th  class='okol2 kol'>data rozpoczecia</th>
         <th  class='okol3 kol'>data zakonczenia</th>
         <th  class='okol4 kol'>sektor</th>
@@ -375,7 +378,7 @@ alert("w dattime")
            "<table>" +
        "<tr class='row'>" +
            "<td  class=' hid '><input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '></td>" +
-           "<td   id='  kol'>{{id}}</td>"+
+           "<td   id='  kol id'>{{id}}</td>"+
            "<td  class='  kol'>{{pesel}}</td>"+
            "<td   class='  kol'>{{nr_dowodu}}</td>"+
            "<td   class='  kol'>{{imie}}</td> "+
@@ -396,7 +399,7 @@ alert("w dattime")
 
        "<tr class='row'>" +
        "<th class=' hid '> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
-       "<td   class='okol1  kol'>{{id}} </td>"+
+       "<td   class='okol1  kol id'>{{id}} </td>"+
        "<td   class='okol2  kol'>{{formatDate  data_rozpoczecia 'short'}}</td>"+
        "<td   class='okol3  kol'>{{formatDate data_zakonczenia 'short'}}</td>"+
        "<td   class='okol4  kol'>{{sektor}}</td> "+
@@ -418,7 +421,7 @@ alert("w dattime")
 
        "<tr class='row'>" +
        "<th class='hid'> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
-       "<td   class='okol1  kol'>{{id}}</td>"+
+       "<td   class='okol1  kol id'>{{id}}</td>"+
        "<td   class='okol2  kol'>{{nr_rejstracyjny_pojazdu}} </td>"+
        "<td   class='okol3  kol'>{{marka}}</td>"+
        "<td   class='okol4  kol'>{{model}}</td> "+
@@ -533,23 +536,25 @@ alert("w dattime")
 
         for ( var i = 0;i<preson.length; i++) {
 
-            var son = preson[i]
+            var son = preson[i];
+            if(son.czy_zarchiwizowany === false){
+                var iDiv = document.createElement('label')
 
-            var iDiv = document.createElement('label')
+                iDiv.id =  i.toString() + "ob"
 
-            iDiv.id =  i.toString() + "ob"
-
-            iDiv.className = "segment"
-
-
-
-            var div = document.getElementById('obywatel')
-
-            wyswietl(son, i,iDiv)
+                iDiv.className = "segment"
 
 
 
-            div.appendChild(iDiv)
+                var div = document.getElementById('obywatel')
+
+                wyswietl(son, i,iDiv)
+
+
+
+                div.appendChild(iDiv)
+            }
+
 
         }
 
@@ -1241,7 +1246,15 @@ alert("w dattime")
 
 
 
+function usun() {
+        if(confirm("Czy napeno chcesz usunąć ten element")){
 
+        }
+        else{
+            
+        }
+
+}
 
 
 </script>
