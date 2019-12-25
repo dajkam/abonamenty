@@ -212,7 +212,7 @@ padding: 10px;
 
      <button class = 'but4 butt' type=\"button\" onclick='usun(wyb_rekord())' >Usun</button>
 
-      <button class = 'but5 butt' type='button' onclick='pwiazane()'>Wyświetl Powiązane</button>
+      <button class = 'but5 butt' type='button' onclick='powiazane()'>Wyświetl Powiązane</button>
 </span>
 
     <div id="filtry">           </div>
@@ -1224,7 +1224,7 @@ alert("w dattime")
              document.getElementById(i.toString() + 'ob').style.backgroundColor = 'white'
            if (ele[i].checked) {
                alert(ele[i].value)
-               rekord = i
+               rekord = i // rekord zmienna globalna
                alert(rekord)
                if(document.getElementById(i.toString() + 'ob')!=null)
                  document.getElementById(i.toString() + 'ob').style.backgroundColor = 'red'
@@ -1246,8 +1246,19 @@ alert("w dattime")
 
 
 
-function usun() {
-        if(confirm("Czy napeno chcesz usunąć ten element")){
+function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz z jego samochodami i abonamentami
+        if(confirm("Czy napeno chcesz usunąć ten element")){ // czy trigger w backendzie to dobry pomysł?
+            // najlepiej zrobić to za pomocą jakiegoś zapytania SQL myślę
+            var on = parseInt(id,10)
+            loadData()
+                .then(function (res,preson) {
+                    preson = insertData(res, preson)
+                    let son = preson[on]
+                    son.czy_zarchiwizowany = true;
+                    sendSon(son)
+
+
+                })
 
         }
         else{
