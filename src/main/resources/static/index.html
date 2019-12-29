@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl-PL">
+<!--<script>
+    window.alert = function() {
+        debugger;
+    }
+</script>-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -192,6 +197,9 @@ padding: 10px;
 
 
 </style>
+<style id = "addstyle">
+
+</style>
 
 <body>
 
@@ -206,11 +214,11 @@ padding: 10px;
 
     </select>
 
-    <button type="button" onclick=" dodaj()">Dodaj</button>
+    <button class="add" type='button' onclick=" dodaj()">Dodaj</button>
 
-    <button class='butt' type=\"button\" onclick='f2(wyb_rekord())'>Edytuj</button>
+    <button class='butt' type= 'button' onclick='f2(wyb_rekord())'>Edytuj</button>
 
-     <button class = 'but4 butt' type=\"button\" onclick='usun(wyb_rekord())' >Usun</button>
+     <button class = 'but4 butt' type='button' onclick='usun(wyb_rekord())' >Usun</button>
 
       <button class = 'but5 butt' type='button' onclick='powiazane()'>Wyświetl Powiązane</button>
 </span>
@@ -439,46 +447,46 @@ alert("w dattime")
 
    var obywatelFormularz = "<form id = 'ffa' >\n" +
        "    nr dowodu: <br>\n" +
-       "    <input id =\"in1\" type = \"text \" name = \"nr_dowodu\" value =  {{nr_dowodu}} ><br>\n" +
+       "    <input id =\"in1\" type = 'text' name = \"nr_dowodu\" value =  {{nr_dowodu}} ><br>\n" +
        "    imie: <br>\n" +
-       "    <input id =\"in2\" type = \"text \" name = \"imie\"  value={{imie}}><br>\n" +
+       "    <input id =\"in2\" type = 'text' name = \"imie\"  value={{imie}}><br>\n" +
        "    nazwisko: <br>\n" +
-       "    <input id =\"in3\" type = \"text \" name = \"nazwisko\" value={{nazwisko}} ><br>\n" +
+       "    <input id =\"in3\" type = 'text' name = \"nazwisko\" value={{nazwisko}} ><br>\n" +
        "    adres: <br>\n" +
-       "    <input id =\"in4\" type = \"text \" name = \"adres\" value = '{{adres}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
+       "    <input id =\"in4\" type = 'text' name = \"adres\" value = '{{adres}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
        "    data urodzenia: <br>\n" +
        "    <input id =\"in5\" type = 'date' name = \"data_urodzenia\" value = {{data_urodzenia}}  ><br>\n" +
        "    pesel:<br>\n" +
-       "    <input id =\"in6\"type = \"text \" name = \"pesel\" value = {{pesel}}><br><br>\n" +
-       "    <input  class = 'zat'type = \"button\" value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
+       "    <input id =\"in6\"type = 'text' name = \"pesel\" value = {{pesel}}><br><br>\n" +
+       "    <input  class = 'zat'type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
        "\n" +
        "\n" +
        "  </form>";
 
    var abonamentFormularz = "<form id = 'ffb' >\n" +
        "    data_rozpoczecia: <br>\n" +
-       "    <input id =\"ina1\" type = \"date \" name = \"data_rozpoczecia\" value =  '{{formatDate  data_rozpoczecia \"short\"}} '><br>\n" +
+       "    <input id =\"ina1\" type = 'date' name = \"data_rozpoczecia\" value =  '{{formatDate  data_rozpoczecia \"short\"}} '><br>\n" +
        "    data_zakonczenia: <br>\n" +
-       "    <input id =\"ina2\" type = \"date \" name = \"data_zakonczenia\"  value= '{{formatDate  data_zakonczenia \"short\"}} '><br>\n" +
+       "    <input id =\"ina2\" type = 'date' name = \"data_zakonczenia\"  value= '{{formatDate  data_zakonczenia \"short\"}} '><br>\n" +
        "    sektor: <br>\n" +
-       "    <input id =\"ina3\" type = \"text \" name = \"sektor\" value={{sektor}} ><br>\n" +
+       "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
        "    uwagi: <br>\n" +
-       "    <input id =\"ina4\" type = \"text \" name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    <input class='zat' type = \"button\" value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
+       "    <input id =\"ina4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
+       "    <input class='zat' type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
        "\n" +
        "\n" +
        "  </form>";
 
    var pojazdFormularz =  "<form id = 'ffc' >\n" +
        "    nr rejstracyjny pojazdu: <br>\n" +
-       "    <input id =\"inp1\" type = \"text \" name = \"nr_rejestracyjny_pojazdu\" value =  '{{nr_rejstracyjny_pojazdu}}'><br>\n" +
+       "    <input id =\"inp1\" type = 'text' name = \"nr_rejestracyjny_pojazdu\" value =  '{{nr_rejstracyjny_pojazdu}}'><br>\n" +
        "    rok produkcji: <br>\n" +
-       "    <input id =\"inp2\" type = \"date \" name = \"rok_produkcji\"  value={{rok_produkcji}}><br>\n" +
+       "    <input id =\"inp2\" type = 'number' name = \"rok_produkcji\"  value={{rok_produkcji}}><br>\n" +
        "    kolor: <br>\n" +
-       "    <input id =\"inp3\" type = \"text \" name = \"kolor\" value={{kolor}} ><br>\n" +
+       "    <input id =\"inp3\" type = 'text' name = \"kolor\" value={{kolor}} ><br>\n" +
        "    uwagi: <br>\n" +
-       "    <input id =\"inp4\" type = \"text \" name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    <input class = 'zat'type = \"button\" value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
+       "    <input id =\"inp4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
+       "    <input class = 'zat'type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
        "\n" +
        "\n" +
        "  </form>";
@@ -602,7 +610,7 @@ alert("w dattime")
         iDiv.appendChild(butDiv)
 
         iDiv.innerHTML+="</br></br>"
-        iDiv.getElementsByTagName('input')[0].value = i.toString() + "selected"
+        iDiv.getElementsByTagName('input')[0].value = i.toString() + " "+  "selected"
 
     }
 
@@ -735,7 +743,7 @@ alert("w dattime")
         var xhr = new XMLHttpRequest();
         var url = "http://localhost:8091/"+ c.toString() +"/update";
         console.log(url)
-        alert("Stop1")
+
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
 
@@ -744,7 +752,7 @@ alert("w dattime")
         console.log("//////////////////////////////////////////////////////////////////////////")
 
         console.log(JSON.stringify(son))
-        alert("Stop2")
+
 
         //son.kiedy_zmodyfikowano = getModificationTime();// żeby data modyfikacji była zapisywana tylko wtedy kiedy żeczywiście są jakies zmiany
 
@@ -774,7 +782,7 @@ alert("w dattime")
         console.log("//////////////////////////////////////////////////////////////////////////")
 
         console.log(json)
-        alert("Stop3")
+
 
      
 
@@ -964,17 +972,41 @@ alert("w dattime")
 
         loadData()
             .then(function(res, preson) {
-                preson = insertData(res, preson);
-                console.log(preson[0].nazwisko)
+                if(id != -1) {
+                    preson = insertData(res, preson);
+                    console.log(preson[0].nazwisko)
 
-                alert("onid w f3 " + onid)
+                    alert("onid w f3 " + onid)
 
-                var son = preson[onid]
+                    var son = preson[onid]
 
-                alert("id wybranego w f3 "+ on.toString())
+                    alert("id wybranego w f3 " + on.toString())
 
 
-                alert(id.toString())
+                    alert(id.toString())
+                }
+            //    var $$$$$_$q = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}; // przykład obiektów w javascript
+                else{
+                    if(c === "obywatel" || c === null){
+                        son = {
+                            id : -1,
+                            pesel : "",
+                            nr_dowodu : "",
+                            imie : "",
+                            nazwisko : "",
+                            adres : "",
+                            czy_zarchiwizowany : false,
+                            data_urodzenia : "",
+                            pojazdy : [ ]
+                        }
+                    }
+                    if(c === "pojazd"){
+                        son = "dupa2"
+                    }
+                    if(c === "abonament"){
+                        son = "dupa3"
+                    }
+                }
 
 
 
@@ -1105,8 +1137,12 @@ alert("w dattime")
                 template = Handlebars.compile(wybraneDane);
 
                 var dane2 = template(son);
+                if(son.id != -1)
+                  sendSon(son)
+                if(son.id === -1)
+                    insertSon(son)
 
-                sendSon(son)
+
 
                 document.getElementById(id).innerHTML = "";
                 //sleep(10000);
@@ -1216,22 +1252,13 @@ alert("w dattime")
 
 
    function wyb_rekord() {
+        if(rekord === -1)
+            return -1
        // wybrany rekord z bazy
        var ele = document.getElementsByName('rad');
 
-       for (i = 0; i < ele.length; i++) {
-           if(document.getElementById(i.toString() + 'ob')!=null)
-             document.getElementById(i.toString() + 'ob').style.backgroundColor = 'white'
-           if (ele[i].checked) {
-               alert(ele[i].value)
-               rekord = i // rekord zmienna globalna
-               alert(rekord)
-               if(document.getElementById(i.toString() + 'ob')!=null)
-                 document.getElementById(i.toString() + 'ob').style.backgroundColor = 'red'
+       ele.forEach(zaznacz)
 
-           }
-
-       }
        document.getElementById('bstyle').innerHTML =
            `
            .butt{
@@ -1243,7 +1270,22 @@ alert("w dattime")
        return rekord
    }
        // wybrany rekord z bazy koniec
+function zaznacz(item,index) {
 
+        console.log(rekord)
+        item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = 'white' // wgłab do  i + 'ob'
+
+    if (item.checked) {
+        alert(item.value)
+        rekord = parseInt(item.value.substr(0,item.value.indexOf(' '))); // rekord zmienna globalna
+        alert(rekord)
+
+            item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = 'red' // wgłab do  i + 'ob'
+
+
+    }
+
+}
 
 
 function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz z jego samochodami i abonamentami
@@ -1265,6 +1307,54 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
             
         }
 
+}
+
+function dodaj() {
+      template = Handlebars.compile(formularz);
+      rekord = -1
+      let dane = template(null)
+    document.getElementById('addstyle').innerHTML = `
+
+     .add{
+
+        pointer-events: none;
+
+        background-color: gray;
+        cursor: not-allowed;
+        color: black;
+
+
+
+    }
+    `;
+      document.getElementById("bstyle").innerHTML = `
+       .butt{
+
+        pointer-events: none;
+
+        background-color: gray;
+        cursor: not-allowed;
+        color: black;
+
+
+
+    }
+      `;
+    document.getElementById("obywatel").innerHTML = ""
+    document.getElementById("formularz").innerHTML += dane;
+}
+
+function insertSon(son) {
+        var xhr = new XMLHttpRequest();
+        var url = "http://localhost:8091/"+ c.toString() +"/insert";
+
+         xhr.open("PUT", url, true);
+         xhr.setRequestHeader("Content-Type", "application/json");
+         var json = JSON.stringify(son)
+
+        xhr.send(json)
+
+        location.reload(true)
 }
 
 
