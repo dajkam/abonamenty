@@ -6,11 +6,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import com.filip.machaj.demo.model.dane.Abonament
 import com.filip.machaj.demo.model.dane.Obywatel
 import com.filip.machaj.demo.model.dane.Pojazd
+import java.time.LocalDate
 import java.util.*
 
 class AbonamentDTO(
-        var data_rozpoczecia:Date,
-        var data_zakonczenia:Date,
+        var data_rozpoczecia: LocalDate,
+        var data_zakonczenia: LocalDate,
         var sektor:String,
         var uwagi:String,
         var czy_zarchiwizowany:Boolean,

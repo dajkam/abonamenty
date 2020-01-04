@@ -225,10 +225,10 @@ padding: 10px;
 
     <div id="filtry">           </div>
 
-<span>
-    <button type="submit" class="wyszukaj"><i >Wyszukaj</i></button>
+<form>
+    <button type="submit" class="wyszukaj" onsubmit='wyszukaj()'><i >Wyszukaj</i></button> <!-- on submit czym sie różni od onclick ????? -->
     <input  class="wyszukaj" type="text" placeholder="Wyszukaj..." name="wyszukaj">
-</span>
+</form>
 </div>
 
 
@@ -465,9 +465,9 @@ alert("w dattime")
 
    var abonamentFormularz = "<form id = 'ffb' >\n" +
        "    data_rozpoczecia: <br>\n" +
-       "    <input id =\"ina1\" type = 'date' name = \"data_rozpoczecia\" value =  '{{formatDate  data_rozpoczecia \"short\"}} '><br>\n" +
+       "    <input id =\"ina1\" type = 'date' name = \"data_rozpoczecia\" value =  {{data_rozpoczecia}} ><br>\n" +
        "    data_zakonczenia: <br>\n" +
-       "    <input id =\"ina2\" type = 'date' name = \"data_zakonczenia\"  value= '{{formatDate  data_zakonczenia \"short\"}} '><br>\n" +
+       "    <input id =\"ina2\" type = 'date' name = \"data_zakonczenia\"  value= {{data_zakonczenia}} ><br>\n" +
        "    sektor: <br>\n" +
        "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
        "    uwagi: <br>\n" +
