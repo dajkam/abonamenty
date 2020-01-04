@@ -1001,10 +1001,34 @@ alert("w dattime")
                         }
                     }
                     if(c === "pojazd"){
-                        son = "dupa2"
+                        son = {
+                            id : -1,
+                            kolor : "",
+                            uwagi : "",
+                            nr_rejstracyjny_pojazdu : "",
+                            rok_produkcji : -2,
+                            czy_zarchiwizowany : false,
+                            model : {
+                                id:1
+
+                            },
+                            obywatel : {
+                                id: 1
+
+                            },
+                            abonamenty : [ ]
+                        }
                     }
                     if(c === "abonament"){
-                        son = "dupa3"
+                        son = {
+                            id : -1,
+                            data_rozpoczecia : "",
+                            data_zakonczenia : "",
+                            sektor : "",
+                            uwagi : "",
+                            czy_zarchiwizowany : false,
+                            pojazd : {id:1}
+                        }
                     }
                 }
 
