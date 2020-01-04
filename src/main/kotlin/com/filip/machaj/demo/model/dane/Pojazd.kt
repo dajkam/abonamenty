@@ -90,7 +90,7 @@ data class Pojazd (
                     "",
                     "",
                     "",
-                    -1,
+                    -2,
                     false,
 
                     Model(),
