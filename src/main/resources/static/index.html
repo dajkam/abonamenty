@@ -214,13 +214,13 @@ padding: 10px;
 
     </select>
 
-    <button class="add" type='button' onclick=" dodaj()">Dodaj</button>
+    <button class="add" type='button' onclick=" dodaj()"  tabindex="-1">Dodaj</button>
 
-    <button class='butt' type= 'button' onclick='f2(wyb_rekord())'>Edytuj</button>
+    <button class='butt' type= 'button' onclick='f2(wyb_rekord())'  tabindex="-1">Edytuj</button>
 
-     <button class = 'but4 butt' type='button' onclick='usun(wyb_rekord())' >Usun</button>
+     <button class = 'but4 butt' type='button' onclick='usun(wyb_rekord())'  tabindex="-1" >Usun</button>
 
-      <button class = 'but5 butt' type='button' onclick='powiazane()'>Wyświetl Powiązane</button>
+      <button class = 'but5 butt' type='button' onclick='powiazane()'  tabindex="-1">Wyświetl Powiązane</button>
 </span>
 
     <div id="filtry">           </div>
@@ -462,14 +462,27 @@ alert("w dattime")
        "\n" +
        "\n" +
        "  </form>";
-
+// stare wybie ranie sektora  "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
+    // nowe rozwiązanie  w select nie ma atrybutu value={{sektor}}
    var abonamentFormularz = "<form id = 'ffb' >\n" +
        "    data_rozpoczecia: <br>\n" +
        "    <input id =\"ina1\" type = 'date' name = \"data_rozpoczecia\" value =  {{data_rozpoczecia}} ><br>\n" +
        "    data_zakonczenia: <br>\n" +
        "    <input id =\"ina2\" type = 'date' name = \"data_zakonczenia\"  value= {{data_zakonczenia}} ><br>\n" +
        "    sektor: <br>\n" +
-       "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
+      ` <select id ="ina3" >
+        <option value="Wybierz" selected disabled hidden>Wybierz</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="G">G</option>
+        <option value="H">I</option>
+        <option value="J">J</option>
+        <option value="WSZYSTKIE">WSZYSTKIE</option>
+        </select> <br>`+
        "    uwagi: <br>\n" +
        "    <input id =\"ina4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
        "    <input class='zat' type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
@@ -1230,8 +1243,6 @@ alert("w dattime")
 
                 document.getElementById("obywatel").innerHTML += dane2;
 
-
-
                 document.getElementById("formularz").innerHTML+=dane;
 
                // document.getElementById("ff").id = id + "ff" /// czemu to nie działa daje null
@@ -1246,6 +1257,11 @@ alert("w dattime")
                 console.log("Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki")
 
                 console.log(onid)
+
+                document.getElementById("ina3").value = son.sektor
+
+
+                block_buttons()
             })
 
 
@@ -1337,6 +1353,25 @@ function dodaj() {
       template = Handlebars.compile(formularz);
       rekord = -1
       let dane = template(null)
+
+    document.getElementById("obywatel").innerHTML = ""
+    document.getElementById("formularz").innerHTML += dane;
+      block_buttons()
+}
+
+function insertSon(son) {
+        var xhr = new XMLHttpRequest();
+        var url = "http://localhost:8091/"+ c.toString() +"/insert";
+
+         xhr.open("PUT", url, true);
+         xhr.setRequestHeader("Content-Type", "application/json");
+         var json = JSON.stringify(son)
+
+        xhr.send(json)
+
+        location.reload(true)
+}
+function block_buttons() {
     document.getElementById('addstyle').innerHTML = `
 
      .add{
@@ -1351,7 +1386,7 @@ function dodaj() {
 
     }
     `;
-      document.getElementById("bstyle").innerHTML = `
+    document.getElementById("bstyle").innerHTML = `
        .butt{
 
         pointer-events: none;
@@ -1364,21 +1399,7 @@ function dodaj() {
 
     }
       `;
-    document.getElementById("obywatel").innerHTML = ""
-    document.getElementById("formularz").innerHTML += dane;
-}
 
-function insertSon(son) {
-        var xhr = new XMLHttpRequest();
-        var url = "http://localhost:8091/"+ c.toString() +"/insert";
-
-         xhr.open("PUT", url, true);
-         xhr.setRequestHeader("Content-Type", "application/json");
-         var json = JSON.stringify(son)
-
-        xhr.send(json)
-
-        location.reload(true)
 }
 
 

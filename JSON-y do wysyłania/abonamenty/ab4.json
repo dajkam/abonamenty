@@ -1,7 +1,7 @@
 {
   "id" : -1,
-  "data_rozpoczecia" : "2018-08-06T00:00:00.000+0000",
-  "data_zakonczenia" : "2019-08-07T00:00:00.000+0000",
+  "data_rozpoczecia" : "2018-08-06",
+  "data_zakonczenia" : "2019-08-07",
   "sektor" : "WSZYSTKIE",
   "uwagi" : "Duszpasterz",
   "czy_zarchiwizowany" : false,

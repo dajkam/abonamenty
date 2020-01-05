@@ -1,7 +1,7 @@
 {
   "id" : -1,
-  "data_rozpoczecia" : "2018-06-06T00:00:00.000+0000",
-  "data_zakonczenia" : "2019-06-07T00:00:00.000+0000",
+  "data_rozpoczecia" : "2018-06-06",
+  "data_zakonczenia" : "2019-06-07",
   "sektor" : "A",
   "uwagi" : "",
   "czy_zarchiwizowany" : false,
