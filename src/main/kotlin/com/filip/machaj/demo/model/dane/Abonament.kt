@@ -15,8 +15,8 @@ data class Abonament(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long,
         @Column(columnDefinition = "date")
-        var data_rozpoczecia:LocalDate, // Zmienić na LocalDate
-        var data_zakonczenia: LocalDate,// Zmienić na LocalDate
+        var data_rozpoczecia:LocalDate,
+        var data_zakonczenia: LocalDate,
         @Column(columnDefinition = "varchar(9)") /// jest 9 a nie 1 ze względu na to że szłowo "WSZYSTKIE" reprezentujące wszystkie sektory ma 9 liter czy można nazucić konkretnie 2 rozmiary?
         var sektor: String, /// zmienić na enum
         @Column(columnDefinition = "varchar(36)")
