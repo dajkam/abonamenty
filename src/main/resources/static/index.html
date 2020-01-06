@@ -164,9 +164,7 @@ th, td{
     width: 12vw;
     text-align: left;
 }
-body{
-padding: 10px;
-    }
+
     .row{
        /* display: table-row;*/
         display: table-row;
@@ -188,6 +186,7 @@ padding: 10px;
 
 
 
+
     }
     #obywatel{
         top: 200px;
@@ -204,6 +203,11 @@ padding: 10px;
     .poj-pad{
         top: 250px;
         padding-top: 50px;
+    }
+    .okol1{
+        padding-left: 10px;
+        text-align: center;
+
     }
 
 
@@ -275,7 +279,7 @@ padding: 10px;
     <thead class="nagl row" id="nago">
     <tr >
 
-        <th  class=' kol id'>id</th>
+        <th  class=' kol okol1'>id</th>
         <th  class=' kol '>pesel</th>
         <th  class=' kol'>numer dowodu</th>
         <th  class=' kol'>imie</th>
@@ -292,7 +296,7 @@ padding: 10px;
     <tr>
 
         <th  class='okol1 kol id'>id</th>
-        <th  class='okol2 kol'>nr rejstracyjny pojazdu </th>
+        <th  class='okol2 kol'>nr rejstracyjny</th>
         <th class='okol3 kol'>marka</th>
         <th  class='okol4 kol'>model </th>
         <th  class='okol5 kol'>rok produkcji</th>
@@ -418,7 +422,7 @@ alert("w dattime")
            "<table>" +
        "<tr class='row'>" +
            "<td  class=' hid '><input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '></td>" +
-           "<td   id='  kol id'>{{id}}</td>"+
+           "<td   class='  kol okol1'>{{id}}</td>"+
            "<td  class='  kol'>{{pesel}}</td>"+
            "<td   class='  kol'>{{nr_dowodu}}</td>"+
            "<td   class='  kol'>{{imie}}</td> "+
@@ -490,9 +494,10 @@ alert("w dattime")
        "    <input id =\"in5\" type = 'date' name = \"data_urodzenia\" value = {{data_urodzenia}}  ><br>\n" +
        "    pesel:<br>\n" +
        "    <input id =\"in6\"type = 'text' name = \"pesel\" value = {{pesel}}><br><br>\n" +
+           "<span>"+
        "    <input  class = 'zat'type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
-       "\n" +
-       "\n" +
+       "    <input  class = 'zat'type = 'button' value = \"Dodaj Pojazd\" onclick='dodaj_pojazd()'>\n" +
+          "</span>"+
        "  </form>";
 // stare wybie ranie sektora  "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
     // nowe rozwiązanie  w select nie ma atrybutu value={{sektor}}

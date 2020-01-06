@@ -33,9 +33,9 @@ data class Model(
        // @JsonManagedReference(value = "mod-mar")
         @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
         @JsonIdentityReference(alwaysAsId = true)
-        var marka:Marka,
+        var marka:Marka
 
-        var model_id: Int = id
+
         ) {
 
     constructor():this(
