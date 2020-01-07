@@ -42,3 +42,32 @@ select pojazd.id,pojazd.czy_zarchiwizowany,pojazd.kiedy_utworzono,pojazd.kiedy_z
 on pojazd.model_id = model.id
   join marka
 on model.marka_id = marka.id
+
+/////////// widok abonament - pojazd obywatel // bez modelu i marki pojazdu
+
+
+select abonament.id, abonament.data_rozpoczecia, abonament.data_zakonczenia, abonament.sektor, pojazd.nr_rejstracyjny_pojazdu, obywatel.imie, obywatel.nazwisko, obywatel.pesel from abonament
+    join pojazd 
+on abonament.pojazd_id = pojazd.id
+    join obywatel 
+on pojazd.obywatel_id = obywatel.id
+
+
+/////////// widok abonament - pojazd obywatel // z modelu i marki pojazdu
+
+
+
+
+select abonament.id, abonament.data_rozpoczecia, abonament.data_zakonczenia, abonament.sektor, pojazd.nr_rejstracyjny_pojazdu, marka.nazwa as marka,model.nazwa as model, obywatel.imie, obywatel.nazwisko, obywatel.pesel from abonament
+    join pojazd 
+on abonament.pojazd_id = pojazd.id
+    join obywatel 
+on pojazd.obywatel_id = obywatel.id
+    join model 
+on pojazd.model_id = model.id
+    join marka
+on model.marka_id = marka.id
+      
+      
+
+
