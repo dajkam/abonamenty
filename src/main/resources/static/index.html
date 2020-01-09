@@ -254,7 +254,7 @@ th, td{
 
      <button class = 'but4 butt' type='button' onclick='usun(wyb_rekord())'  tabindex="-1" >Usun</button>
 
-      <button class = 'but5 butt' type='button' onclick='powiazane()'  tabindex="-1">Wyświetl Powiązane</button>
+      <button class = 'but5 butt' type='button' onclick='powiazane()'  tabindex="-1">Wyświetl Szczegóły</button>
 </span>
 
     <div id="filtry">           </div>
@@ -315,7 +315,13 @@ th, td{
         <th  class='okol2 kol'>data rozpoczecia</th>
         <th  class='okol3 kol'>data zakonczenia</th>
         <th  class='okol4 kol'>sektor</th>
-        <th class='okol5 kol'>uwagi </th>
+        <th  class='okol2 kol'>nr rejstracyjny</th>
+        <th class='okol3 kol'>marka</th>
+        <th  class='okol4 kol'>model </th>
+        <th  class=' kol'>imie</th>
+        <th class=' kol'>nazwisko</th>
+        <th  class=' kol '>pesel</th>
+
 
 
     </tr>
@@ -439,7 +445,7 @@ alert("w dattime")
         " data zakonczenia to: {{data_zakonczenia}} sektor to {{sektor}} uwagi to: {{uwagi}}" +
         " czy aktualny to: {{czy_zarchiwizowany}}</label></br></br>"
 
-   var abonamentDane =   "<table  >" +
+ /*  var abonamentDane =   "<table  >" +
 
        "<tr class='row'>" +
        "<th class=' hid '> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
@@ -451,7 +457,26 @@ alert("w dattime")
 
 
        "</tr>" +
-       " </table>";
+       " </table>"; */ // stara krotka abonamentu
+
+    var abonamentDane =   "<table  >" +
+
+        "<tr class='row'>" +
+        "<th class=' hid '> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
+        "<td   class='okol1  kol id'>{{id}} </td>"+
+        "<td   class='okol2  kol'>{{formatDate  data_rozpoczecia 'short'}}</td>"+
+        "<td   class='okol3  kol'>{{formatDate data_zakonczenia 'short'}}</td>"+
+        "<td   class='okol4  kol'>{{sektor}}</td> "+
+        "<td   class='okol2  kol'>{{nr_rejstracyjny_pojazdu}} </td>"+
+        "<td   class='okol3  kol'>{{marka}}</td>"+
+        "<td   class='okol4  kol'>{{model}}</td> "+
+        "<td   class='  kol'>{{imie}}</td> "+
+        "<td  class='  kol'>{{nazwisko}}</td>"+
+        "<td  class='  kol'>{{pesel}}</td>"+
+
+
+        "</tr>" +
+        " </table>";
 
 
 
@@ -632,9 +657,14 @@ alert("w dattime")
 
 
         template = Handlebars.compile(wybraneDane);
+        console.log(template)
+        alert(template)
 
 
         var dane = template(son);
+        console.log(dane)
+        alert(dane)
+
 
 
 
@@ -758,7 +788,9 @@ alert("w dattime")
         var url =  url1+url2+url3
 
         if(url === "http://localhost:8091/pojazd/download")
-            url = "http://localhost:8091/pojazd/marka/model"
+        { url = "http://localhost:8091/pojazd/marka/model";}
+        if(url === "http://localhost:8091/abonament/download")
+             {url = "http://localhost:8091/abonament/full";} ///////////////////////////////////////////////////////////////////////////////// tytaj wybieranie widoku
 
        // return ajax('GET', 'http://localhost:8091/obywatel/download');
 
@@ -773,7 +805,7 @@ alert("w dattime")
           // preson = insertData(res, preson);
             var preson = []
             var preson = JSON.parse(res)
-            console.log(preson[0].nazwisko)
+            console.log(preson)
             main(preson)
         })
 
@@ -826,6 +858,23 @@ alert("w dattime")
             delete son.model_id
             delete son.obywatel_id
 
+
+        }
+
+        if(c.toString() === "pojazd"){
+            delete son.nr_rejstracyjny_pojazdu;
+            delete son.marka;
+            delete son.model;
+            delete son.imie;
+            delete son.nazwisko;
+            delete son.pesel;
+            son.pojazd = {
+                id : son.pojazd_id
+            }
+            delete son.pojazd_id;
+            delete son.obywatel_id;
+            delete son.marka_id;
+            delete son.model_id;
 
         }
 

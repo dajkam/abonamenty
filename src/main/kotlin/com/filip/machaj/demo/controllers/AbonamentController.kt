@@ -51,4 +51,10 @@ class AbonamentController {
     fun getAbonamentByZakonczenie(
             @RequestBody payload: AbonamentByZak
     ):Iterable<AbonamentDTO> = service.getAbonamentByZakonczenie(payload.zak)
+
+    @GetMapping(
+            value = ["/full"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun findAllAbonamentInfo() = service.findAllAbonamentInfo()
 }
