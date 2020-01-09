@@ -2,6 +2,7 @@ package com.filip.machaj.demo.service
 
 import com.filip.machaj.demo.dto.AbonamentDTO
 import com.filip.machaj.demo.model.dane.Abonament
+import com.filip.machaj.demo.model.dane.AbonamentInfo
 import com.filip.machaj.demo.repo.AbonamentRepo
 import com.filip.machaj.demo.repo.ObywatelRepo
 import com.filip.machaj.demo.repo.PojazdRepo
@@ -78,4 +79,5 @@ class AbonamentService {
     fun findLastAbonament():Abonament{
         return repo.findLast()
     }
+      fun findAllAbonamentInfo(): Iterable<AbonamentInfo> = repo.findAllAbonamentInfo()
 }

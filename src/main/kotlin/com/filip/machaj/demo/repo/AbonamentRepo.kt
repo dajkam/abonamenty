@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo
 import com.fasterxml.jackson.annotation.JsonIdentityReference
 import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import com.filip.machaj.demo.model.dane.Abonament
+import com.filip.machaj.demo.model.dane.AbonamentInfo
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import java.util.*
@@ -17,4 +18,23 @@ interface AbonamentRepo : CrudRepository<Abonament, Long> {
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     fun findLast():Abonament
+
+    @Query("""
+      select abonament.id, abonament.data_rozpoczecia, abonament.data_zakonczenia, abonament.sektor, abonament.czy_zarchiwizowany,
+ pojazd.nr_rejstracyjny_pojazdu, marka.nazwa as marka,model.nazwa as model, obywatel.imie, obywatel.nazwisko,
+  obywatel.pesel, abonament.pojazd_id, pojazd.obywatel_id, model.marka_id, pojazd.model_id, abonament.kiedy_utworzono, abonament.kiedy_zmodyfikowano from abonament
+    join pojazd 
+on abonament.pojazd_id = pojazd.id
+    join obywatel 
+on pojazd.obywatel_id = obywatel.id
+    join model 
+on pojazd.model_id = model.id
+    join marka
+on model.marka_id = marka.id
+      
+        
+    """, nativeQuery = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    fun findAllAbonamentInfo(): Iterable<AbonamentInfo>
 }
