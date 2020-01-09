@@ -20,7 +20,7 @@ interface AbonamentRepo : CrudRepository<Abonament, Long> {
     fun findLast():Abonament
 
     @Query("""
-      select abonament.id, abonament.data_rozpoczecia, abonament.data_zakonczenia, abonament.sektor, abonament.czy_zarchiwizowany,
+      select abonament.id, abonament.data_rozpoczecia, abonament.data_zakonczenia, abonament.sektor, abonament.czy_zarchiwizowany, abonament.uwagi,
  pojazd.nr_rejstracyjny_pojazdu, marka.nazwa as marka,model.nazwa as model, obywatel.imie, obywatel.nazwisko,
   obywatel.pesel, abonament.pojazd_id, pojazd.obywatel_id, model.marka_id, pojazd.model_id, abonament.kiedy_utworzono, abonament.kiedy_zmodyfikowano from abonament
     join pojazd 

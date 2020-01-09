@@ -8,6 +8,7 @@ interface AbonamentInfo {
     var data_rozpoczecia: LocalDate
     var data_zakonczenia: LocalDate
     var sektor: String
+    var uwagi: String
     var nr_rejstracyjny_pojazdu: String
     var marka: String
     var model:String

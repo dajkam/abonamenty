@@ -97,6 +97,26 @@ on pojazd.obywatel_id = obywatel.id
 on pojazd.model_id = model.id
     join marka
 on model.marka_id = marka.id
+
+
+
+
+
+
+//// to samo tylko jeszcze z abonament.uwagi
+
+ select abonament.id, abonament.data_rozpoczecia, abonament.data_zakonczenia, abonament.sektor, abonament.czy_zarchiwizowany, abonament.uwagi,
+ pojazd.nr_rejstracyjny_pojazdu, marka.nazwa as marka,model.nazwa as model, obywatel.imie, obywatel.nazwisko,
+  obywatel.pesel, abonament.pojazd_id, pojazd.obywatel_id, model.marka_id, pojazd.model_id, abonament.kiedy_utworzono, abonament.kiedy_zmodyfikowano from abonament
+    join pojazd 
+on abonament.pojazd_id = pojazd.id
+    join obywatel 
+on pojazd.obywatel_id = obywatel.id
+    join model 
+on pojazd.model_id = model.id
+    join marka
+on model.marka_id = marka.id
+
       
       
 
