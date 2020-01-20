@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl-PL">
-<script>
+<!--<script>
     window.alert = function() {
         debugger;
     }
-</script>
+</script>-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -162,7 +162,7 @@
 
 th, td{
     width: 12vw;
-    text-align: left;
+    text-align: center;
 }
 
     .row{
@@ -248,11 +248,11 @@ th, td{
 
     </select>
 
-    <button class="add" type='button' onclick=" dodaj()"  tabindex="-1">Dodaj</button>
+    <button  id="dodaj" class="add hid" type='button' onclick=" dodaj(obywatelFormularz)"  tabindex="-1">Dodaj</button>
 
-    <button class='butt' type= 'button' onclick='f2(wyb_rekord())'  tabindex="-1">Edytuj</button>
+    <button id="edytuj"class='butt hid' type= 'button' onclick='f2(wyb_rekord())'  tabindex="-1">Edytuj</button>
 
-     <button class = 'but4 butt' type='button' onclick='usun(wyb_rekord())'  tabindex="-1" >Usun</button>
+     <button id="usun" class = 'but4 butt hid' type='button' onclick='usun(wyb_rekord())'  tabindex="-1" >Usun</button>
 
       <button class = 'but5 butt' type='button' onclick='powiazane()'  tabindex="-1">Wyświetl Szczegóły</button>
 </span>
@@ -363,7 +363,13 @@ th, td{
    let url_string =  window.location.href;
    let url = new URL(url_string);
    let c = url.searchParams.get("value");
+   let czy_dodawany = false;
+  let pojazd_size = -4
+    let obywatel_size = -5
    console.log(c)
+    let son_set = new Set();
+
+  var global_dupa
 
    if(c === null)
     c = "obywatel"
@@ -519,14 +525,13 @@ alert("w dattime")
        "    <input id =\"in5\" type = 'date' name = \"data_urodzenia\" value = {{data_urodzenia}}  ><br>\n" +
        "    pesel:<br>\n" +
        "    <input id =\"in6\"type = 'text' name = \"pesel\" value = {{pesel}}><br><br>\n" +
-           "<span>"+
-       "    <input  class = 'zat'type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
-       "    <input  class = 'zat'type = 'button' value = \"Dodaj Pojazd\" onclick='dodaj_pojazd()'>\n" +
-          "</span>"+
+
+       "    <input id='zatwierdz' class = 'zat'type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
+
        "  </form>";
 // stare wybie ranie sektora  "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
     // nowe rozwiązanie  w select nie ma atrybutu value={{sektor}}
-   var abonamentFormularz = "<form id = 'ffb' >\n" +
+   var abonamentFormularz = "<form id = 'ffc' >\n" +
        "    data_rozpoczecia: <br>\n" +
        "    <input id =\"ina1\" type = 'date' name = \"data_rozpoczecia\" value =  {{data_rozpoczecia}} ><br>\n" +
        "    data_zakonczenia: <br>\n" +
@@ -547,12 +552,12 @@ alert("w dattime")
         </select> <br>`+
        "    uwagi: <br>\n" +
        "    <input id =\"ina4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    <input class='zat' type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
+       "    <input id='zatwierdz' class='zat' type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
        "\n" +
        "\n" +
        "  </form>";
 
-   var pojazdFormularz =  "<form id = 'ffc' >\n" +
+   var pojazdFormularz =  "<form id = 'ffb' >\n" +
        "    nr rejstracyjny pojazdu: <br>\n" +
        "    <input id =\"inp1\" type = 'text' name = \"nr_rejestracyjny_pojazdu\" value =  '{{nr_rejstracyjny_pojazdu}}'><br>\n" +
        "    rok produkcji: <br>\n" +
@@ -561,7 +566,7 @@ alert("w dattime")
        "    <input id =\"inp3\" type = 'text' name = \"kolor\" value={{kolor}} ><br>\n" +
        "    uwagi: <br>\n" +
        "    <input id =\"inp4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    <input class = 'zat'type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
+       "    <input id='zatwierdz' class = 'zat'type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
        "\n" +
        "\n" +
        "  </form>";
@@ -579,6 +584,10 @@ alert("w dattime")
            document.getElementById("naga").remove()
            document.getElementById("nagp").remove()
 
+           document.getElementById("dodaj").classList.add("hid")
+           document.getElementById("edytuj").classList.add("hid")
+           document.getElementById("usun").classList.add("hid")
+
            break;
        case "abonament":
           // document.getElementById('ffb').id =  "ff" /// czemu to daje bląd że jest null
@@ -587,6 +596,10 @@ alert("w dattime")
            formularz = abonamentFormularz
            document.getElementById("nago").remove()
            document.getElementById("nagp").remove()
+
+           document.getElementById("dodaj").classList.remove("hid")
+           document.getElementById("edytuj").classList.remove("hid")
+           document.getElementById("usun").classList.remove("hid")
 
            break;
        case "pojazd":
@@ -597,6 +610,10 @@ alert("w dattime")
            document.getElementById("naga").remove()
 
            document.getElementById("obywatel").classList.add("poj-pad");
+
+           document.getElementById("dodaj").classList.add("hid")
+           document.getElementById("edytuj").classList.add("hid")
+           document.getElementById("usun").classList.add("hid")
 
            break;
    }
@@ -620,6 +637,12 @@ alert("w dattime")
     function main(preson) {
 
         for ( var i = 0;i<preson.length; i++) {
+            if(c === "pojazd"){
+                pojazd_size = preson.length
+            }
+            if(c === "obywatel"){
+               obywatel_size = preson.length
+            }
 
             var son = preson[i];
             if(son.czy_zarchiwizowany === false){
@@ -1088,7 +1111,10 @@ alert("w dattime")
                 }
             //    var $$$$$_$q = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}; // przykład obiektów w javascript
                 else{
-                    if(c === "obywatel" || c === null){
+                    console.log(document.getElementById('zatwierdz').parentElement.id); // czysty java script
+                    console.log($("#zatwierdz")[0].parentElement.id); // to samo co powyzej tylko z uzyciej jquery
+
+                    if(document.getElementById('zatwierdz').parentElement.id === "ffa"){
                         son = {
                             id : -1,
                             pesel : "",
@@ -1098,10 +1124,11 @@ alert("w dattime")
                             adres : "",
                             czy_zarchiwizowany : false,
                             data_urodzenia : "",
+                            kto : "obywatel",
                             pojazdy : [ ]
                         }
                     }
-                    if(c === "pojazd"){
+                    if(document.getElementById('zatwierdz').parentElement.id === "ffb"){
                         son = {
                             id : -1,
                             kolor : "",
@@ -1109,18 +1136,19 @@ alert("w dattime")
                             nr_rejstracyjny_pojazdu : "",
                             rok_produkcji : -2,
                             czy_zarchiwizowany : false,
+                            kto: "pojazd",
                             model : {
-                                id:1
+                                id: 1
 
                             },
                             obywatel : {
-                                id: 1
+                                id: -1
 
                             },
                             abonamenty : [ ]
                         }
                     }
-                    if(c === "abonament"){
+                    if(document.getElementById('zatwierdz').parentElement.id === "ffc"){
                         son = {
                             id : -1,
                             data_rozpoczecia : "",
@@ -1128,7 +1156,8 @@ alert("w dattime")
                             sektor : "",
                             uwagi : "",
                             czy_zarchiwizowany : false,
-                            pojazd : {id:1}
+                            kto : "abonament",
+                            pojazd : {id:-1}
                         }
                     }
                 }
@@ -1137,7 +1166,7 @@ alert("w dattime")
 
 
 
-                if(c === "obywatel" || c === null){
+                if(document.getElementById('zatwierdz').parentElement.id === "ffa"){
                     if (walidacjaNumeruDowodu(document.getElementById("in1").value)) {
                         son.nr_dowodu = document.getElementById("in1").value; // przetestować walidację dla numeru dowodu
                     }
@@ -1158,7 +1187,7 @@ alert("w dattime")
 
                 }
 
-                if(c === "abonament"){
+                if(document.getElementById('zatwierdz').parentElement.id === "ffc"){
                     if(document.getElementById("ina1").value < document.getElementById("ina2").value){
 
                         son.data_rozpoczecia = dataFormat(document.getElementById("ina1").value , DateFormats.standard)
@@ -1233,7 +1262,7 @@ alert("w dattime")
 
                 }
 
-                if( c === "pojazd"){
+                if( document.getElementById('zatwierdz').parentElement.id === "ffb"){
                     let y = new Date()
                     y = y.getFullYear()
 
@@ -1264,12 +1293,34 @@ alert("w dattime")
                 var dane2 = template(son);
                 if(son.id != -1)
                   sendSon(son)
-                if(son.id === -1)
-                    insertSon(son)
+                if(son.id === -1){
+                    // insertSon(son)
+                    son_set.add(son);
+                    if(son.kto === "obywatel"){
+                        document.getElementById("formularz").innerHTML = "";
+                        dodaj(pojazdFormularz)
+
+                    }
+                    if(son.kto === "pojazd"){
+                        document.getElementById("formularz").innerHTML = "";
+                        dodaj(abonamentFormularz)
+
+                    }
+                    if(son.kto === "abonament"){
+                        document.getElementById("formularz").innerHTML = "";
+                        insertTuple(son_set)
+
+                    }
 
 
 
-                document.getElementById(id).innerHTML = "";
+
+                }
+
+
+
+
+               // document.getElementById(id).innerHTML = "";
                 //sleep(10000);
                 document.getElementById(id).innerHTML += dane2 + window.but3;
 
@@ -1437,7 +1488,7 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
 
 }
 
-function dodaj() {
+/*function dodaj() {
       template = Handlebars.compile(formularz);
       rekord = -1
       let dane = template(null)
@@ -1445,19 +1496,77 @@ function dodaj() {
     document.getElementById("obywatel").innerHTML = ""
     document.getElementById("formularz").innerHTML += dane;
       block_buttons()
-}
+}*/ // stare dodaj
+
+    function dodaj(formularz) {
+        czy_dodawany = true;
+        template = Handlebars.compile(formularz);
+        rekord = -1
+        let dane = template(null)
+
+        document.getElementById("obywatel").innerHTML = ""
+        document.getElementById("formularz").innerHTML += dane;
+        block_buttons()
+
+
+    }
+
+    function insertTuple(son_set) {
+        var obywatel_id = -3;
+        var pojazd_id = -3
+        for(let item of son_set){
+            if(item.kto === "obywatel"){
+                insertSon(item)
+                last('http://localhost:8091/obywatel/last')
+              obywatel_id =   global_dupa
+                alert("id obywatela")
+                alert(obywatel_id)
+            }
+            if(item.kto === "pojazd"){
+                item.obywatel.id = obywatel_id
+                insertSon(item)
+                last('http://localhost:8091/pojazd/last')
+                pojazd_id = global_dupa 
+
+                alert("id pojazdu")
+                alert(pojazd_id)
+
+            }
+            if(item.kto === "abonament"){
+                item.pojazd.id = pojazd_id;
+               insertSon(item)
+                location.reload(true)
+
+            }
+
+        }
+
+    }
+
+    function last(url) {
+        var request = new XMLHttpRequest();
+        request.open('GET', url, false);  // `false` makes the request synchronous
+        request.send(null);
+
+        if (request.status === 200) {
+           global_dupa = JSON.parse(request.responseText).id;
+        }
+
+
+    }
 
 function insertSon(son) {
         var xhr = new XMLHttpRequest();
-        var url = "http://localhost:8091/"+ c.toString() +"/insert";
-
+        var url = "http://localhost:8091/"+ son.kto.toString() +"/insert";
          xhr.open("PUT", url, true);
          xhr.setRequestHeader("Content-Type", "application/json");
          var json = JSON.stringify(son)
 
         xhr.send(json)
 
-        location.reload(true)
+
+
+
 }
 function block_buttons() {
     document.getElementById('addstyle').innerHTML = `
