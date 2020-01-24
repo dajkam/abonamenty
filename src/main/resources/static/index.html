@@ -21,117 +21,7 @@
 
 
 </head>
-<!--<style>
-    body {
-        background-color: white;
-    }
 
-    h1 {
-        color: white;
-        text-align: center;
-    }
-
-    p {
-        font-family: verdana;
-        font-size: 20px;
-    }
-
-    button {
-        padding: 20px;
-        margin-bottom: 50px;
-        margin-top: 10px;
-        cursor: pointer;
-    }
-    button:hover{
-        border: 5px;
-    }
-
-    .zat {
-        padding: 20px;
-        margin-left: 10px;
-    }
-
-    .but4{
-        color:red;
-    }
-
-    .wyszukaj{
-        float: right;
-        margin-top: 10px;
-    }
-
-    #filtry{
-        background-color: cyan;
-        padding: 0;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-        float: right;
-
-    }
-
-    .tab{
-        background-color:  #FFFFCC;
-        font-family: Georgia;
-        color: #006600;
-        width: 600px;
-    }
-
-    .kolumna{
-        display: inline-block;
-    }
-
-    .okol1{
-        display: flex;
-
-    }
-    .okol2{
-        display: flex;
-    }
-    .okol3{
-        display: flex;
-
-    }
-    .okol4{
-        display: flex;
-
-    }
-    .okol5{
-        display: flex;
-
-    }
-    .okol6{
-        display: flex;
-
-    }
-    .okol7{
-        display: flex;
-
-    }.okol8{
-         display:flex;
-
-     }
-    .okol9{
-        display: flex;
-
-    }
-    .okol10{
-        display: flex;
-    }
-
-    .kol{
-        background-color: cyan;
-    }
-
-    #rr{
-        background-color: red;
-    }
-
-
-
-
-
-</style>-->     <!-- Stary css -->
 
 <style>
     .hid{
@@ -546,7 +436,8 @@ alert("w dattime")
         <option value="E">E</option>
         <option value="F">F</option>
         <option value="G">G</option>
-        <option value="H">I</option>
+        <option value="H">H</option>
+        <option value="I">I</option>
         <option value="J">J</option>
         <option value="WSZYSTKIE">WSZYSTKIE</option>
         </select> <br>`+
@@ -806,6 +697,8 @@ alert("w dattime")
         var e = document.getElementById("encja");
         var url2 = e.options[e.selectedIndex].value;
 
+
+
         var url3 = '/download'
 
         var url =  url1+url2+url3
@@ -816,6 +709,23 @@ alert("w dattime")
              {url = "http://localhost:8091/abonament/full";} ///////////////////////////////////////////////////////////////////////////////// tytaj wybieranie widoku
 
        // return ajax('GET', 'http://localhost:8091/obywatel/download');
+
+        return ajax('GET',url)
+    }
+
+    function loadDataToUsun( k) {
+
+        var url1 = 'http://localhost:8091/'
+
+
+        var url2 = k;
+
+        var url3 = '/download'
+
+        var url =  url1+url2+url3
+
+        if(url === "http://localhost:8091/abonament/download")
+            {url = "http://localhost:8091/abonament/full";}
 
         return ajax('GET',url)
     }
@@ -845,10 +755,12 @@ alert("w dattime")
     }
 
 
-    function sendSon(son) {
+    function sendSon(son, k) {
 
         var xhr = new XMLHttpRequest();
         var url = "http://localhost:8091/"+ c.toString() +"/update";
+        if(k!=null)
+            url = "http://localhost:8091/"+ k.toString() +"/update";
         console.log(url)
 
         xhr.open("POST", url, true);
@@ -866,7 +778,7 @@ alert("w dattime")
         delete son.kiedy_zmodyfikowano
         delete son.kiedy_utworzono
 
-        if(c.toString() === "pojazd"){
+        if((c.toString() === "pojazd")|| (k === "pojazd")){
 
             delete son.marka;
             delete son.marka_id;
@@ -907,13 +819,9 @@ alert("w dattime")
 
         console.log(json)
 
-
-     
-
-
         xhr.send(json)
 
-        location.reload(true)
+        //location.reload(true)
 
 
 
@@ -1149,10 +1057,11 @@ alert("w dattime")
                         }
                     }
                     if(document.getElementById('zatwierdz').parentElement.id === "ffc"){
+                        var d =  new Date()
                         son = {
                             id : -1,
-                            data_rozpoczecia : "",
-                            data_zakonczenia : "",
+                            data_rozpoczecia : Date().toString(),
+                            data_zakonczenia : Date(d.getFullYear()+1,d.getMonth(),d.getDay()).toString(),
                             sektor : "",
                             uwagi : "",
                             czy_zarchiwizowany : false,
@@ -1470,16 +1379,72 @@ function zaznacz(item,index) {
 function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz z jego samochodami i abonamentami
         if(confirm("Czy napeno chcesz usunąć ten element")){ // czy trigger w backendzie to dobry pomysł?
             // najlepiej zrobić to za pomocą jakiegoś zapytania SQL myślę
+            let obywatel_id = null;
+            let  pojazd_id_= null;
             var on = parseInt(id,10)
-            loadData()
-                .then(function (res,preson) {
-                    preson = insertData(res, preson)
-                    let son = preson[on]
-                    son.czy_zarchiwizowany = true;
-                    sendSon(son)
+            if(c === 'abonament'){
+                loadDataToUsun('abonament')
+                    .then(function (res,preson) {
+                        preson = insertData(res, preson)
+                        let son = preson[on]
+                        son.czy_zarchiwizowany = true;
+
+                        obywatel_id = son.obywatel_id -1
+                        pojazd_id = son.pojazd_id -1
+                        sendSon(son)
 
 
-                })
+
+
+                    });
+
+
+
+                loadDataToUsun('obywatel')
+                    .then(function (res,preson) {
+                        preson = insertData(res, preson)
+                        alert("id obywatela w usunieciu")
+                        alert(obywatel_id)
+                        console.log(preson[obywatel_id])
+                        let son = preson[obywatel_id]
+                        son.czy_zarchiwizowany = true;
+                        sendSon(son,'obywatel')
+
+
+                    });
+
+                loadDataToUsun('pojazd')
+                    .then(function (res,preson) {
+                        preson = insertData(res, preson)
+                        alert("id pojazdu w usunieciu")
+                        alert(pojazd_id)
+                        console.log( preson[pojazd_id ])
+                        alert("po jsonie")
+                        let son = preson[pojazd_id ]
+                        son.czy_zarchiwizowany = true;
+                        sendSon(son,'pojazd')
+
+
+
+
+                    });
+
+
+
+
+            }
+            else {
+                loadData()
+                    .then(function (res,preson) {
+                        preson = insertData(res, preson)
+                        let son = preson[on]
+                        son.czy_zarchiwizowany = true;
+                        sendSon(son)
+
+
+                    })
+            }
+
 
         }
         else{

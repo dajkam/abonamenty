@@ -1,0 +1,9 @@
+{"id":2,"kiedy_utworzono":"2020-01-22T22:15:19.560+0000",
+"kiedy_zmodyfikowano":"2020-01-22T22:15:19.560+0000",
+"kolor":"szary",
+"uwagi":"wlasny",
+"nr_rejstracyjny_pojazdu":"GSP 6666",
+"rok_produkcji":1966,
+"czy_zarchiwizowany":true,
+"model":{"id":2,"nazwa":"A Klasa","pojazdy":[]},
+"obywatel":{"id":1,"pesel":"95101303798","nr_dowodu":"CCH864397","imie":"Filip","nazwisko":"Machaj","adres":"Woronicza 16 Warszawa ","czy_zarchiwizowany":false,"data_urodzenia":"1995-10-13","kiedy_utworzono":"2020-01-22T22:15:19.367+0000","kiedy_zmodyfikowano":"2020-01-22T22:15:19.367+0000","pojazdy":[]},"abonamenty":[]}

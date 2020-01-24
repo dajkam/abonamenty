@@ -117,6 +117,13 @@ on pojazd.model_id = model.id
     join marka
 on model.marka_id = marka.id
 
+
+archiwizacja obywatela 
+
+update obywatel 
+set czy_zarchiwizowany = true 
+where id = 3
+;
       
       
 

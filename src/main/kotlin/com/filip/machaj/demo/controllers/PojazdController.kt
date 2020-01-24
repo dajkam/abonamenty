@@ -64,4 +64,10 @@ class PojazdController {
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun getAllPojModMar() = service.getAllPojModMar()
+
+    @PostMapping(
+            value = ["archiwizuj/{id}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun archwizujPojazd(@PathVariable(name = "id")id:Long) = service.archwizujPojazd(id)
 }

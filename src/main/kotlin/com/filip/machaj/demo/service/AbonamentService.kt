@@ -80,4 +80,6 @@ class AbonamentService {
         return repo.findLast()
     }
       fun findAllAbonamentInfo(): Iterable<AbonamentInfo> = repo.findAllAbonamentInfo()
+
+        fun archiwizujAbonament(id:Long) = repo.archwizujAbonament(id)
 }

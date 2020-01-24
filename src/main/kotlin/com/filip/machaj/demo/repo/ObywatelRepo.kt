@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo
 import com.fasterxml.jackson.annotation.JsonIdentityReference
 import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import com.filip.machaj.demo.model.dane.Obywatel
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
+import org.springframework.data.repository.query.Param
+import org.springframework.transaction.annotation.Transactional
 
 interface ObywatelRepo : CrudRepository<Obywatel, Long>  {
     @Query("select * from obywatel where imie = ?1", nativeQuery = true)
@@ -19,5 +22,13 @@ interface ObywatelRepo : CrudRepository<Obywatel, Long>  {
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     fun findByNazwisko(nazwisko:String): Iterable<Obywatel>
+
+    @Modifying(clearAutomatically = true, flushAutomatically = true) // mandatory if native quaries are modying something in the dataBase
+    @Transactional
+    @Query("""
+        update obywatel
+        set czy_zarchiwizowany = true 
+        where id = :id""", nativeQuery = true)
+    fun archwizujObywatela(@Param("id") id:Long) // tego typu funkcje muszą być typu void.
 
 }
