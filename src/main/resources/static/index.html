@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl-PL">
-<!--<script>
+<script>
     window.alert = function() {
         debugger;
     }
-</script>-->
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -665,10 +665,14 @@ alert("w dattime")
 
 
 
-    function ajax(method, url) {
+    function ajax(method, url, async) {
         return new Promise(function(resolve, reject) {
             const xhr = new XMLHttpRequest();
-            xhr.open(method, url);
+            if(async === null)
+                 xhr.open(method, url,true);
+            else
+                xhr.open(method, url,false);
+
             xhr.addEventListener('load', function() {
                 if (this.status === 200) {
                     resolve(xhr.response);
@@ -821,7 +825,7 @@ alert("w dattime")
 
         xhr.send(json)
 
-        //location.reload(true)
+        location.reload(true)
 
 
 
@@ -1379,55 +1383,35 @@ function zaznacz(item,index) {
 function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz z jego samochodami i abonamentami
         if(confirm("Czy napeno chcesz usunąć ten element")){ // czy trigger w backendzie to dobry pomysł?
             // najlepiej zrobić to za pomocą jakiegoś zapytania SQL myślę
-            let obywatel_id = null;
-            let  pojazd_id_= null;
+
             var on = parseInt(id,10)
             if(c === 'abonament'){
                 loadDataToUsun('abonament')
                     .then(function (res,preson) {
                         preson = insertData(res, preson)
                         let son = preson[on]
-                        son.czy_zarchiwizowany = true;
-
-                        obywatel_id = son.obywatel_id -1
-                        pojazd_id = son.pojazd_id -1
-                        sendSon(son)
 
 
+                      let  obywatel_id = son.obywatel_id
+                      let  pojazd_id = son.pojazd_id
 
 
-                    });
+                       let url = "http://localhost:8091/abonament/archiwizuj/" + son.id.toString()
+                        ajax("POST",url, false)
+                        url = "http://localhost:8091/pojazd/archiwizuj/" + pojazd_id.toString()
+                        ajax("POST",url, false)
+                        url = "http://localhost:8091/obywatel/archiwizuj/" + obywatel_id.toString()
+                        ajax("POST",url, false)
 
 
-
-                loadDataToUsun('obywatel')
-                    .then(function (res,preson) {
-                        preson = insertData(res, preson)
-                        alert("id obywatela w usunieciu")
-                        alert(obywatel_id)
-                        console.log(preson[obywatel_id])
-                        let son = preson[obywatel_id]
-                        son.czy_zarchiwizowany = true;
-                        sendSon(son,'obywatel')
-
-
-                    });
-
-                loadDataToUsun('pojazd')
-                    .then(function (res,preson) {
-                        preson = insertData(res, preson)
-                        alert("id pojazdu w usunieciu")
-                        alert(pojazd_id)
-                        console.log( preson[pojazd_id ])
-                        alert("po jsonie")
-                        let son = preson[pojazd_id ]
-                        son.czy_zarchiwizowany = true;
-                        sendSon(son,'pojazd')
 
 
 
 
                     });
+
+
+
 
 
 
@@ -1445,7 +1429,7 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
                     })
             }
 
-
+            location.reload(true)
         }
         else{
             
@@ -1479,31 +1463,36 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
     function insertTuple(son_set) {
         var obywatel_id = -3;
         var pojazd_id = -3
-        for(let item of son_set){
-            if(item.kto === "obywatel"){
-                insertSon(item)
-                last('http://localhost:8091/obywatel/last')
-              obywatel_id =   global_dupa
-                alert("id obywatela")
-                alert(obywatel_id)
+        if (son_set.length === 3) {
+            for (let item of son_set) {
+                if (item.kto === "obywatel") {
+                    insertSon(item)
+                    last('http://localhost:8091/obywatel/last')
+                    obywatel_id = global_dupa
+                    alert("id obywatela")
+                    alert(obywatel_id)
+                }
+                if (item.kto === "pojazd") {
+                    item.obywatel.id = obywatel_id
+                    insertSon(item)
+                    last('http://localhost:8091/pojazd/last')
+                    pojazd_id = global_dupa
+
+                    alert("id pojazdu")
+                    alert(pojazd_id)
+
+                }
+                if (item.kto === "abonament") {
+                    item.pojazd.id = pojazd_id;
+                    insertSon(item)
+                    location.reload(true)
+
+                }
+
             }
-            if(item.kto === "pojazd"){
-                item.obywatel.id = obywatel_id
-                insertSon(item)
-                last('http://localhost:8091/pojazd/last')
-                pojazd_id = global_dupa
-
-                alert("id pojazdu")
-                alert(pojazd_id)
-
-            }
-            if(item.kto === "abonament"){
-                item.pojazd.id = pojazd_id;
-               insertSon(item)
-                location.reload(true)
-
-            }
-
+        }
+        else {
+            location.reload(true)
         }
 
     }
