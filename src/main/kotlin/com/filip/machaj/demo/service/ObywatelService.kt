@@ -5,6 +5,7 @@ import com.filip.machaj.demo.model.dane.Obywatel
 import com.filip.machaj.demo.repo.ObywatelRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 
@@ -95,6 +96,9 @@ class ObywatelService {
         return  repo.findByNazwisko(nazwisko).map { it -> ObywatelDTO(it)}
 
     }
+
+    @Transactional
+    fun archiwizujObywatela(id:Long) = repo.archwizujObywatela(id)
 
 
 }

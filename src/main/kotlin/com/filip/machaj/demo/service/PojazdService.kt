@@ -8,6 +8,7 @@ import com.filip.machaj.demo.repo.ObywatelRepo
 import com.filip.machaj.demo.repo.PojazdRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 
@@ -81,4 +82,6 @@ class PojazdService {
     }
 
     fun getAllPojModMar():Iterable<PojModMar> = repo.findAllPojModMar()
+    @Transactional
+    fun archwizujPojazd(id:Long) = repo.archwizujPojazd(id)
 }

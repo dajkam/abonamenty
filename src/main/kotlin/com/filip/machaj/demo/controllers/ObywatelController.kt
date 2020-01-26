@@ -78,5 +78,9 @@ class ObywatelController {
     )
    fun getObywatelByNazwisko(@RequestBody payload: OBywatelFindByNazwisko): Iterable<ObywatelDTO> = service.findByNazwisko(payload.nazwisko)*/
 
-
+    @PostMapping(
+            value = ["archiwizuj/{id}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun archwizujObywatela(@PathVariable(name = "id")id:Long) = service. archiwizujObywatela(id)
 }
