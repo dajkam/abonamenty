@@ -201,16 +201,16 @@ th, td{
 
     <tr >
 
-        <th  class='okol1 kol id'>id</th>
-        <th  class='okol2 kol'>data rozpoczecia</th>
-        <th  class='okol3 kol'>data zakonczenia</th>
-        <th  class='okol4 kol'>sektor</th>
-        <th  class='okol2 kol'>nr rejstracyjny</th>
-        <th class='okol3 kol'>marka</th>
-        <th  class='okol4 kol'>model </th>
-        <th  class=' kol'>imie</th>
-        <th class=' kol'>nazwisko</th>
-        <th  class=' kol '>pesel</th>
+        <th  class='okol1 kol id' onclick="orderBy('abo_id')" id="abo_id">id</th>
+        <th  class='okol2 kol' onclick="orderBy('abo_data_rozpoczecia')" id="abo_data_rozpoczecia">data rozpoczecia</th>
+        <th  class='okol3 kol'  onclick="orderBy('abo_data_zakonczenia')" id="abo_data_zakonczenia">data zakonczenia</th>
+        <th  class='okol4 kol' onclick="orderBy('abo_sektor')" id="abo_sektor">sektor</th>
+        <th  class='okol2 kol' onclick="orderBy('abo_nr_rejstracyjny')" id="abo_nr_rejstracyjny">nr rejstracyjny</th>
+        <th class='okol3 kol' onclick="orderBy('abo_marka')" id="abo_marka">marka</th>
+        <th  class='okol4 kol' onclick="orderBy('abo_model')" id="abo_model">model </th>
+        <th  class=' kol' onclick="orderBy('abo_imie')" id="abo_imie">imie</th>
+        <th class=' kol'onclick="orderBy('abo_nazwisko')" id="abo_nazwisko">nazwisko</th>
+        <th  class='kol' onclick="orderBy('abo_pesel')" id="abo_pesel">pesel</th>
 
 
 
@@ -1552,7 +1552,17 @@ function block_buttons() {
       `;
 
 }
+ function orderBy(id){
 
+        let abo_head_id = ["abo_id", "abo_data_rozpoczecia", "abo_data_zakonczenia", "abo_sektor",
+            "abo_nr_rejstracyjny", "abo_marka", "abo_model", "abo_imie", "abo_nazwisko", "abo_pesel"]
+
+      abo_head_id.forEach(function (_id) {
+           document.getElementById(_id).style.backgroundColor = "#167F92";
+       });
+     document.getElementById(id).style.backgroundColor = "green"
+
+    }
 
 </script>
 
