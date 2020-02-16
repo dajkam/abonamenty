@@ -354,21 +354,29 @@ alert("w dattime")
 
        "</tr>" +
        " </table>"; */ // stara krotka abonamentu
+    /*
+    *
+    * let abo_head_id = ["abo_id", "abo_data_rozpoczecia", "abo_data_zakonczenia", "abo_sektor",
+            "abo_nr_rejstracyjny", "abo_marka", "abo_model", "abo_imie", "abo_nazwisko", "abo_pesel"]
+
+    *
+    *
+    * */
 
     var abonamentDane =   "<table  >" +
 
         "<tr class='row'>" +
         "<th class=' hid '> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
-        "<td   class='okol1  kol id'>{{id}} </td>"+
-        "<td   class='okol2  kol'>{{formatDate  data_rozpoczecia 'short'}}</td>"+
-        "<td   class='okol3  kol'>{{formatDate data_zakonczenia 'short'}}</td>"+
-        "<td   class='okol4  kol'>{{sektor}}</td> "+
-        "<td   class='okol2  kol'>{{nr_rejstracyjny_pojazdu}} </td>"+
-        "<td   class='okol3  kol'>{{marka}}</td>"+
-        "<td   class='okol4  kol'>{{model}}</td> "+
-        "<td   class='  kol'>{{imie}}</td> "+
-        "<td  class='  kol'>{{nazwisko}}</td>"+
-        "<td  class='  kol'>{{pesel}}</td>"+
+        "<td   class='okol1  kol id abo_id' >{{id}} </td>"+
+        "<td   class='okol2  kol abo_data_rozpoczecia' title='{{data_rozpoczecia}}'>{{formatDate  data_rozpoczecia 'short'}}</td>"+
+        "<td   class='okol3  kol abo_data_zakonczenia' title='{{data_zakonczenia}}'>{{formatDate data_zakonczenia 'short'}}</td>"+
+        "<td   class='okol4  kol abo_sektor'>{{sektor}}</td> "+
+        "<td   class='okol2  kol abo_nr_rejstracyjny'>{{nr_rejstracyjny_pojazdu}} </td>"+
+        "<td   class='okol3  kol abo_marka'>{{marka}}</td>"+
+        "<td   class='okol4  kol abo_model'>{{model}}</td> "+
+        "<td   class='  kol abo_imie'>{{imie}}</td> "+
+        "<td  class='  kol abo_nazwisko'>{{nazwisko}}</td>"+
+        "<td  class='  kol abo_pesel'>{{pesel}}</td>"+
 
 
         "</tr>" +
@@ -1561,6 +1569,30 @@ function block_buttons() {
            document.getElementById(_id).style.backgroundColor = "#167F92";
        });
      document.getElementById(id).style.backgroundColor = "green"
+
+   //  var list = document.querySelector("ul");
+     var list = document.getElementById("obywatel")
+     var items = list.querySelectorAll("label");
+    var pola = document.getElementsByClassName(id)
+
+
+    for(let i = 0; i < items.length; i=i+1){
+        if((id =="abo_data_rozpoczecia") || id == "abo_data_zakonczenia")
+          items[i].title = pola[i].title
+        else
+             items[i].title = pola[i].textContent
+        console.log(pola[i].textContent)
+        console.log("uwaga uwaga")
+        console.log(items[i].title)
+    }
+
+   var itemsy = Array.from(items).sort(  function(a, b) {
+       return a.title.toString().localeCompare(b.title.toString());
+   });
+     for (var i = 0; i < itemsy.length; i++) {
+         itemsy[i].parentNode.appendChild(itemsy[i]);
+     }
+
 
     }
 
