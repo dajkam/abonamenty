@@ -368,8 +368,8 @@ alert("w dattime")
         "<tr class='row'>" +
         "<th class=' hid '> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
         "<td   class='okol1  kol id abo_id' >{{id}} </td>"+
-        "<td   class='okol2  kol abo_data_rozpoczecia'>{{formatDate  data_rozpoczecia 'short'}}</td>"+
-        "<td   class='okol3  kol abo_data_zakonczenia'>{{formatDate data_zakonczenia 'short'}}</td>"+
+        "<td   class='okol2  kol abo_data_rozpoczecia' title='{{data_rozpoczecia}}'>{{formatDate  data_rozpoczecia 'short'}}</td>"+
+        "<td   class='okol3  kol abo_data_zakonczenia' title='{{data_zakonczenia}}'>{{formatDate data_zakonczenia 'short'}}</td>"+
         "<td   class='okol4  kol abo_sektor'>{{sektor}}</td> "+
         "<td   class='okol2  kol abo_nr_rejstracyjny'>{{nr_rejstracyjny_pojazdu}} </td>"+
         "<td   class='okol3  kol abo_marka'>{{marka}}</td>"+
@@ -1577,7 +1577,10 @@ function block_buttons() {
 
 
     for(let i = 0; i < items.length; i=i+1){
-        items[i].title = pola[i].textContent
+        if((id =="abo_data_rozpoczecia") || id == "abo_data_zakonczenia")
+          items[i].title = pola[i].title
+        else
+             items[i].title = pola[i].textContent
         console.log(pola[i].textContent)
         console.log("uwaga uwaga")
         console.log(items[i].title)
