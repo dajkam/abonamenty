@@ -62,4 +62,11 @@ class AbonamentController {
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun archwizujAbonament(@PathVariable(name = "id")id:Long) = service.archiwizujAbonament(id)
+
+
+    @GetMapping(
+            value = ["/full/pesel"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun findAllAbonamentInfoOrderByPesel() = service.findAllAbonamentInfoOrderByPesel()
 }
