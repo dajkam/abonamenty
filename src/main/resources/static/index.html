@@ -147,11 +147,16 @@ th, td{
       <button class = 'but5 butt' type='button' onclick='powiazane()'  tabindex="-1">Wyświetl Szczegóły</button>
 </span>
 
-    <div id="filtry">           </div>
+    <span id="filtry">
+        <input type="checkbox" id="arch" name="pokaż wygasłe" value="true" onChange='wyswietl_zarchiwizowane(this.checked)'>
+    <label for="arch">Pokaż Wygasłe</label>
+
+    </span>
 
 <form>
     <button type="submit" class="wyszukaj" onsubmit='wyszukaj()'><i >Wyszukaj</i></button> <!-- on submit czym sie różni od onclick ????? -->
     <input  class="wyszukaj" type="text" placeholder="Wyszukaj..." name="wyszukaj">
+
 </form>
 </div>
 
@@ -249,12 +254,14 @@ th, td{
 
 
     // END
+
     let rekord = null // wybrany rekord z bazy
+    let arch = new URL(window.location).searchParams.get('arch')
    let url_string =  window.location.href;
    let url = new URL(url_string);
    let c = url.searchParams.get("value");
    let czy_dodawany = false;
-  let pojazd_size = -4
+   let pojazd_size = -4
     let obywatel_size = -5
    console.log(c)
     let son_set = new Set();
@@ -262,9 +269,12 @@ th, td{
   var global_dupa
 
    if(c === null)
-    c = "obywatel"
+         c = "abonament"
+    if(arch === null)
+        arch = false
 
 
+    document.getElementById("arch").checked = JSON.parse(arch);
    {
 
        console.log(c);
@@ -544,7 +554,12 @@ alert("w dattime")
             }
 
             var son = preson[i];
-            if(son.czy_zarchiwizowany === false){
+            console.log(arch)
+         //   confirm("zobacz wartosc arch:")
+            console.log(isBoolean(arch))
+           // confirm("czy arch jest logiczny")
+            let barch = JSON.parse(arch)
+            if(son.czy_zarchiwizowany === barch){ // warunek do wyświetlania zarchiwizowanych lub nie zarchiwizowanych
                 var iDiv = document.createElement('label')
 
                 iDiv.id =  i.toString() + "ob"
@@ -1594,6 +1609,16 @@ function block_buttons() {
      }
 
 
+    }
+    function wyswietl_zarchiwizowane(czy_arch) {
+        let url =  new URL(window.location)
+        url.searchParams.set('arch',czy_arch)
+        window.location = url.toString()
+       // location.reload(true)
+
+    }
+    function isBoolean (value) {
+        return typeof value === 'boolean';
     }
 
 </script>
