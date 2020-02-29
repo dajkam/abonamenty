@@ -3,6 +3,7 @@ package com.filip.machaj.demo.service
 import com.filip.machaj.demo.dto.ObywatelDTO
 import com.filip.machaj.demo.model.dane.Obywatel
 import com.filip.machaj.demo.repo.ObywatelRepo
+import com.filip.machaj.demo.service.exceptions.ModifyingArchivedObjectExcepion
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -57,7 +58,11 @@ class ObywatelService {
     fun updateObywatel(obywatelDTO: ObywatelDTO): ObywatelDTO {
         var obywatel : Obywatel = repo.findById(obywatelDTO.id).get()
 
-        var obywatel_old : Obywatel = repo.findById(obywatelDTO.id).get()
+        if((obywatel.czy_zarchiwizowany == true)&&(obywatelDTO.czy_zarchiwizowany == true))
+            throw ModifyingArchivedObjectExcepion("Ten obywatel został zarchiwizowany " + // napisz testy do tego wyjątku
+                    "i przez to nie może być modyfikowany")
+
+        val obywatel_old : Obywatel = repo.findById(obywatelDTO.id).get()
 
         obywatel.pesel = obywatelDTO.pesel
         obywatel.nr_dowodu = obywatelDTO.nr_dowodu

@@ -6,6 +6,7 @@ import com.filip.machaj.demo.model.dane.AbonamentInfo
 import com.filip.machaj.demo.repo.AbonamentRepo
 import com.filip.machaj.demo.repo.ObywatelRepo
 import com.filip.machaj.demo.repo.PojazdRepo
+import com.filip.machaj.demo.service.exceptions.ModifyingArchivedObjectExcepion
 import org.springframework.beans.factory.annotation.Autowired
 
 import org.springframework.stereotype.Service
@@ -51,6 +52,11 @@ class AbonamentService {
 
     fun updateAbonament(abonamentDTO: AbonamentDTO):AbonamentDTO{
         var abonament:Abonament = repo.findById(abonamentDTO.id).get()
+        if((abonament.czy_zarchiwizowany == true)&&(abonamentDTO.czy_zarchiwizowany == true))
+            throw ModifyingArchivedObjectExcepion("Ten abonament został zarchiwizowany " +
+                    "i przez to nie może być modyfikowany")
+
+        var abonament_old: Abonament = repo.findById(abonamentDTO.id).get()
 
         abonament.data_rozpoczecia = abonamentDTO.data_rozpoczecia
         abonament.data_zakonczenia = abonamentDTO.data_zakonczenia
@@ -61,6 +67,14 @@ class AbonamentService {
         abonament.kiedy_zmodyfikowano = Date() // zrobić żeby to pole sie zmieniało tylko gdy żeczywiście coś zmieniono
        // abonament.obywatel = repoO.findLast()// nowe obywatel  // te dwie linijki trzeba przeniesc do add abonament
        // abonament.pojazd = repoP.findLast()//nowe pojazd
+
+        if (abonament==abonament_old){ // nie działa dla pojazdu i abonamentu
+            abonament.kiedy_zmodyfikowano = abonament.kiedy_zmodyfikowano
+        }
+        else{
+            abonament.kiedy_zmodyfikowano = Date()
+        }
+
         if(abonament.sektor!=abonament.uwagi)
           abonament = repo.save(abonament) /// errory przy abonament update
         return AbonamentDTO(abonament) /// trzeba poprawić update dla abonamentu

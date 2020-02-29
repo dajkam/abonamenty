@@ -6,6 +6,7 @@ import com.filip.machaj.demo.model.dane.Pojazd
 import com.filip.machaj.demo.repo.ModelRepo
 import com.filip.machaj.demo.repo.ObywatelRepo
 import com.filip.machaj.demo.repo.PojazdRepo
+import com.filip.machaj.demo.service.exceptions.ModifyingArchivedObjectExcepion
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -56,7 +57,11 @@ class PojazdService {
     fun updatePojazd(pojazdDTO: PojazdDTO):PojazdDTO{
         var pojazd:Pojazd = repo.findById(pojazdDTO.id).get()
 
+        if((pojazd.czy_zarchiwizowany == true)&&(pojazdDTO.czy_zarchiwizowany == true))
+            throw ModifyingArchivedObjectExcepion("Ten pojazd został zarchiwizowany " + // napisz testy do tego wyjątku
+                    "i przez to nie może być modyfikowany")
 
+        var pojazd_old: Pojazd = repo.findById(pojazdDTO.id).get()
         pojazd.kolor = pojazdDTO.kolor
         pojazd.uwagi = pojazdDTO.uwagi
         pojazd.nr_rejstracyjny_pojazdu = pojazdDTO.nr_rejstracyjny_pojazdu
@@ -66,6 +71,13 @@ class PojazdService {
         pojazd.model = repoM.findById(pojazdDTO.model.id).get()
         pojazd.obywatel = repoO.findById(pojazdDTO.obywatel.id).get()
         pojazd.abonamenty = pojazdDTO.abonamenty
+        if(pojazd == pojazd_old){ // nie działa dla pojazdu i abonamentu
+            pojazd.kiedy_zmodyfikowano = pojazd.kiedy_zmodyfikowano
+        }
+        else{
+            pojazd.kiedy_zmodyfikowano = Date()
+        }
+
         pojazd = repo.save(pojazd)
         return  pojazdDTO(pojazd)
 
