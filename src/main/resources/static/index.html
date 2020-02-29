@@ -263,6 +263,8 @@ th, td{
    let czy_dodawany = false;
    let pojazd_size = -4
     let obywatel_size = -5
+    let jij = 0; // do określania czy sortowanie ma być malejące czy rosnące
+  let  id_old_sort = -1; // zmienna globalna do przechowywania ostatniego id.
    console.log(c)
     let son_set = new Set();
 
@@ -846,6 +848,7 @@ alert("w dattime")
 
         console.log(json)
 
+
         xhr.send(json)
 
         location.reload(true)
@@ -1285,83 +1288,67 @@ alert("w dattime")
 
     function f2(id) {
        // var id = e.target.parentNode.id
+        if(JSON.parse(arch))
+            alert("nie można modyfikować zarchiwizowanych danych")
+        else {
 
 
+            var on = parseInt(id, 10)
 
-        var on = parseInt(id,10)
+            loadData()
+                .then(function (res, preson) {
+                    preson = insertData(res, preson);
+                    console.log(preson[0].nazwisko)
 
-        loadData()
-            .then(function(res, preson ) {
-                preson = insertData(res, preson);
-                console.log(preson[0].nazwisko)
+                    alert("id wybranego w f2 " + on.toString())
 
-                alert("id wybranego w f2 "+ on.toString())
-
-                son = preson[on]
-
+                    son = preson[on]
 
 
+                    template = Handlebars.compile(formularz);
 
-                template = Handlebars.compile(formularz);
+                    var dane = template(son);
 
-                var dane = template(son);
+                    template = Handlebars.compile(wybraneDane)
 
-                template = Handlebars.compile(wybraneDane)
+                    var dane2 = template(son);
 
-                var dane2 = template(son);
+                    // document.getElementById(id.toString()).innerHTML = ""
 
-               // document.getElementById(id.toString()).innerHTML = ""
+                    //document.getElementById(id.toString()).innerHTML += dane2;
 
-                //document.getElementById(id.toString()).innerHTML += dane2;
+                    document.getElementById("obywatel").innerHTML = ""
 
-                document.getElementById("obywatel").innerHTML = ""
+                    document.getElementById("obywatel").innerHTML += dane2;
 
-                document.getElementById("obywatel").innerHTML += dane2;
+                    document.getElementById("formularz").innerHTML += dane;
 
-                document.getElementById("formularz").innerHTML+=dane;
+                    // document.getElementById("ff").id = id + "ff" /// czemu to nie działa daje null
 
-               // document.getElementById("ff").id = id + "ff" /// czemu to nie działa daje null
+                    alert("id 628 " + id)
+                    alert("on 629 to" + on)
 
-                alert("id 628 "+ id)
-                alert("on 629 to" + on)
+                    formularz.id = on.toString() + "ff"
 
-                formularz.id = on.toString() + "ff"
+                    onid = on /// Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki
 
-                onid = on /// Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki
+                    console.log("Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki")
 
-                console.log("Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki")
+                    console.log(onid)
 
-                console.log(onid)
-
-                document.getElementById("ina3").value = son.sektor
-
-
-                block_buttons()
-            })
+                    document.getElementById("ina3").value = son.sektor
 
 
+                    block_buttons()
+                })
 
 
+            //document.getElementById("obywatel").innerHTML = "";
+
+            /// f3(wybraneDane,son)
 
 
-
-
-
-
-
-
-
-
-        //document.getElementById("obywatel").innerHTML = "";
-
-        /// f3(wybraneDane,son)
-
-
-
-
-
-
-
+        }
 
     }
 
@@ -1404,45 +1391,38 @@ function zaznacz(item,index) {
 
 
 function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz z jego samochodami i abonamentami
-        if(confirm("Czy napeno chcesz usunąć ten element")){ // czy trigger w backendzie to dobry pomysł?
+    if(JSON.parse(arch))
+        alert("nie można usuwać usuniętych danych")
+    else {
+        if (confirm("Czy napeno chcesz usunąć ten element")) { // czy trigger w backendzie to dobry pomysł?
             // najlepiej zrobić to za pomocą jakiegoś zapytania SQL myślę
 
-            var on = parseInt(id,10)
-            if(c === 'abonament'){
+            var on = parseInt(id, 10)
+            if (c === 'abonament') {
                 loadDataToUsun('abonament')
-                    .then(function (res,preson) {
+                    .then(function (res, preson) {
                         preson = insertData(res, preson)
                         let son = preson[on]
 
 
-                      let  obywatel_id = son.obywatel_id
-                      let  pojazd_id = son.pojazd_id
+                        let obywatel_id = son.obywatel_id
+                        let pojazd_id = son.pojazd_id
 
 
-                       let url = "http://localhost:8091/abonament/archiwizuj/" + son.id.toString()
-                        ajax("POST",url, false)
+                        let url = "http://localhost:8091/abonament/archiwizuj/" + son.id.toString()
+                        ajax("POST", url, false)
                         url = "http://localhost:8091/pojazd/archiwizuj/" + pojazd_id.toString()
-                        ajax("POST",url, false)
+                        ajax("POST", url, false)
                         url = "http://localhost:8091/obywatel/archiwizuj/" + obywatel_id.toString()
-                        ajax("POST",url, false)
-
-
-
-
+                        ajax("POST", url, false)
 
 
                     });
 
 
-
-
-
-
-
-            }
-            else {
+            } else {
                 loadData()
-                    .then(function (res,preson) {
+                    .then(function (res, preson) {
                         preson = insertData(res, preson)
                         let son = preson[on]
                         son.czy_zarchiwizowany = true;
@@ -1453,10 +1433,10 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
             }
 
             location.reload(true)
+        } else {
+
         }
-        else{
-            
-        }
+    }
 
 }
 
@@ -1604,11 +1584,18 @@ function block_buttons() {
    var itemsy = Array.from(items).sort(  function(a, b) {
        return a.title.toString().localeCompare(b.title.toString());
    });
+    if(id != id_old_sort)
+        jij = 0;
+    if(jij % 2 != 0){
+        document.getElementById(id).style.backgroundColor = "yellow"
+        itemsy.reverse();
+    }
      for (var i = 0; i < itemsy.length; i++) {
          itemsy[i].parentNode.appendChild(itemsy[i]);
      }
 
-
+    jij = jij +1; // do określania czy ma sortować malejąco czy rosnąco zmienna globalna jij
+     id_old_sort = id; // zmienna globalna do przechowywania ostatniego id.
     }
     function wyswietl_zarchiwizowane(czy_arch) {
         let url =  new URL(window.location)
