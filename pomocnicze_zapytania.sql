@@ -117,6 +117,55 @@ on pojazd.model_id = model.id
     join marka
 on model.marka_id = marka.id
 
+//// to samo tylko jeszcze z like 
+
+ select abonament.id, abonament.data_rozpoczecia, abonament.data_zakonczenia, abonament.sektor, abonament.czy_zarchiwizowany, abonament.uwagi,
+ pojazd.nr_rejstracyjny_pojazdu, marka.nazwa as marka,model.nazwa as model, obywatel.imie, obywatel.nazwisko,
+  obywatel.pesel, abonament.pojazd_id, pojazd.obywatel_id, model.marka_id, pojazd.model_id, abonament.kiedy_utworzono, abonament.kiedy_zmodyfikowano from abonament
+    join pojazd 
+on abonament.pojazd_id = pojazd.id
+    join obywatel 
+on pojazd.obywatel_id = obywatel.id
+    join model 
+on pojazd.model_id = model.id
+    join marka
+on model.marka_id = marka.id
+where obywatel.imie like '%p%' or nr_rejstracyjny_pojazdu like '%p%'
+
+//// to samo tylko jeszcze z like i zprowadzeniem wszystkiego do lower case
+
+ select abonament.id, abonament.data_rozpoczecia, abonament.data_zakonczenia, abonament.sektor, abonament.czy_zarchiwizowany, abonament.uwagi,
+ pojazd.nr_rejstracyjny_pojazdu, marka.nazwa as marka,model.nazwa as model, obywatel.imie, obywatel.nazwisko,
+  obywatel.pesel, abonament.pojazd_id, pojazd.obywatel_id, model.marka_id, pojazd.model_id, abonament.kiedy_utworzono, abonament.kiedy_zmodyfikowano from abonament
+    join pojazd 
+on abonament.pojazd_id = pojazd.id
+    join obywatel 
+on pojazd.obywatel_id = obywatel.id
+    join model 
+on pojazd.model_id = model.id
+    join marka
+on model.marka_id = marka.id
+where lower(obywatel.imie) like '%a%' or lower(pojazd.nr_rejstracyjny_pojazdu) like '%p%'
+
+
+//// to samo tylko jeszcze z like pełne do wklejenia jako native query do programu
+
+ select abonament.id, abonament.data_rozpoczecia, abonament.data_zakonczenia, abonament.sektor, abonament.czy_zarchiwizowany, abonament.uwagi,
+ pojazd.nr_rejstracyjny_pojazdu, marka.nazwa as marka,model.nazwa as model, obywatel.imie, obywatel.nazwisko,
+  obywatel.pesel, abonament.pojazd_id, pojazd.obywatel_id, model.marka_id, pojazd.model_id, abonament.kiedy_utworzono, abonament.kiedy_zmodyfikowano from abonament
+    join pojazd 
+on abonament.pojazd_id = pojazd.id
+    join obywatel 
+on pojazd.obywatel_id = obywatel.id
+    join model 
+on pojazd.model_id = model.id
+    join marka
+on model.marka_id = marka.id
+where  
+ lower(abonament.sektor) like '%p%'
+or lower(pojazd.nr_rejstracyjny_pojazdu) like '%p%' or lower(marka.nazwa) like '%p%' 
+or lower(model.nazwa) like '%p%' or lower(obywatel.imie) like '%a%' 
+or lower(obywatel.nazwisko) like '%a%' or lower(obywatel.pesel) like '%a%'
 
 archiwizacja obywatela 
 

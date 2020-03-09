@@ -98,4 +98,6 @@ class AbonamentService {
     fun archiwizujAbonament(id:Long) = repo.archwizujAbonament(id)
 
     fun findAllAbonamentInfoOrderByPesel(): Iterable<AbonamentInfo> = repo.findAllAbonamentInfoOrderByPesel()
+
+    fun szukaj(fraza:String):Iterable<AbonamentInfo> = repo.szukaj(fraza.toLowerCase())
 }
