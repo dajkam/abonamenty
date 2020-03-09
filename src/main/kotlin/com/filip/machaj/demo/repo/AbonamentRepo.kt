@@ -87,6 +87,8 @@ where
 or lower(pojazd.nr_rejstracyjny_pojazdu) like ?1 or lower(marka.nazwa) like ?1
 or lower(model.nazwa) like ?1 or lower(obywatel.imie) like ?1
 or lower(obywatel.nazwisko) like ?1 or lower(obywatel.pesel) like ?1
+or lower(cast(abonament.id as varchar(36) )) like ?1 or lower(cast(abonament.data_rozpoczecia as varchar(36) )) like ?1
+or lower(cast(abonament.data_zakonczenia as varchar(36) )) like ?1
 
 """, nativeQuery = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")

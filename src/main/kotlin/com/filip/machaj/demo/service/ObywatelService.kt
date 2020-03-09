@@ -106,6 +106,8 @@ class ObywatelService {
     fun archiwizujObywatela(id:Long) = repo.archwizujObywatela(id)
 
 
+    fun szukaj(fraza:String):Iterable<Obywatel> = repo.szukaj(fraza.toLowerCase())
+
 }
 
 

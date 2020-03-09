@@ -39,5 +39,19 @@ on model.marka_id = marka.id
         set czy_zarchiwizowany = true 
         where id = :id""", nativeQuery = true)
     fun archwizujPojazd(@Param("id") id:Long) // tego typu funkcje muszą być typu void.
+    @Query("""
+  select pojazd.id,pojazd.czy_zarchiwizowany,pojazd.kiedy_utworzono,pojazd.kiedy_zmodyfikowano,pojazd.kolor,pojazd.nr_rejstracyjny_pojazdu,pojazd.rok_produkcji,pojazd.uwagi, marka.nazwa as marka,model.nazwa as model, pojazd.model_id,pojazd.obywatel_id, model.marka_id from pojazd
+  join model 
+on pojazd.model_id = model.id
+  join marka
+on model.marka_id = marka.id
+        where 
+        lower(pojazd.nr_rejstracyjny_pojazdu) like ?1 or lower(marka.nazwa) like ?1 or lower(model.nazwa) like ?1
+        or lower(cast(pojazd.rok_produkcji as varchar(36) )) like ?1 or lower(pojazd.kolor) like ?1
+        or lower(pojazd.uwagi) like ?1 or lower(cast(pojazd.id as varchar(36))) like ?1
+    """, nativeQuery = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    fun szukaj(fraza:String): Iterable<PojModMar>
 
 }
