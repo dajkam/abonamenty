@@ -155,7 +155,7 @@ th, td{
 
 <form>
     <button type="submit" class="wyszukaj" onsubmit='wyszukaj()'><i >Wyszukaj</i></button> <!-- on submit czym sie różni od onclick ????? -->
-    <input  class="wyszukaj" type="text" placeholder="Wyszukaj..." name="wyszukaj">
+    <input  class="wyszukaj" type="text" id="wyszuk"  placeholder="Wyszukaj..." name="wyszukaj">
 
 </form>
 </div>
@@ -257,6 +257,7 @@ th, td{
 
     let rekord = null // wybrany rekord z bazy
     let arch = new URL(window.location).searchParams.get('arch')
+    let szuk = new URL(window.location).searchParams.get('wyszukaj')
    let url_string =  window.location.href;
    let url = new URL(url_string);
    let c = url.searchParams.get("value");
@@ -274,6 +275,14 @@ th, td{
          c = "abonament"
     if(arch === null)
         arch = false
+
+    if((szuk!=null)||!(/^\s+$/.test(szuk))){
+        document.getElementById("wyszuk").value = szuk;
+
+    }
+    const local_szuk = document.getElementById("wyszuk").value;
+    if((local_szuk === null)||(local_szuk ==="")||(/^\s+$/.test(local_szuk))) // sprawdzanie czy parametr wyszukaj jest null lub pusty lub składa się z samych białych znaków
+        szuk = null
 
 
     document.getElementById("arch").checked = JSON.parse(arch);
@@ -726,7 +735,11 @@ alert("w dattime")
         var e = document.getElementById("encja");
         var url2 = e.options[e.selectedIndex].value;
 
-
+         if(szuk != null){ // wyszukiwanie
+             let url3 = "/szukaj/"
+            let url =  url1+url2+url3+szuk
+             return ajax('GET',url)
+        } // koniec wyszukiwania
 
         var url3 = '/download'
 
@@ -736,6 +749,7 @@ alert("w dattime")
         { url = "http://localhost:8091/pojazd/marka/model";}
         if(url === "http://localhost:8091/abonament/download")
              {url = "http://localhost:8091/abonament/full";} ///////////////////////////////////////////////////////////////////////////////// tytaj wybieranie widoku
+
 
        // return ajax('GET', 'http://localhost:8091/obywatel/download');
 
