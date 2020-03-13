@@ -31,4 +31,14 @@ interface ObywatelRepo : CrudRepository<Obywatel, Long>  {
         where id = :id""", nativeQuery = true)
     fun archwizujObywatela(@Param("id") id:Long) // tego typu funkcje muszą być typu void.
 
+    @Query("""
+        select * from obywatel
+        where 
+        lower(cast(id as varchar(36))) like ?1 or lower(pesel) like ?1 or lower(nr_dowodu) like ?1
+        or lower(imie) like ?1 or lower(nazwisko) like ?1 or lower(cast(data_urodzenia as varchar(36))) like ?1
+        or lower(adres) like ?1
+        
+    """, nativeQuery = true)
+    fun szukaj(fraza:String):Iterable<Obywatel>
+
 }

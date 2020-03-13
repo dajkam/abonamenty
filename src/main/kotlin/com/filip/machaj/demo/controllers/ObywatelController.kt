@@ -83,4 +83,11 @@ class ObywatelController {
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun archwizujObywatela(@PathVariable(name = "id")id:Long) = service. archiwizujObywatela(id)
+
+    @GetMapping(
+            value = ["/szukaj/{fraza}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun szukaj(@PathVariable(name = "fraza")fraza:String) = service.szukaj(("%"+fraza.toLowerCase()+"%"))
+
 }

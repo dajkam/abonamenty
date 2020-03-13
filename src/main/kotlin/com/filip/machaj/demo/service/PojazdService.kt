@@ -96,4 +96,6 @@ class PojazdService {
     fun getAllPojModMar():Iterable<PojModMar> = repo.findAllPojModMar()
     @Transactional
     fun archwizujPojazd(id:Long) = repo.archwizujPojazd(id)
+
+    fun szukaj(fraza:String):Iterable<PojModMar> = repo.szukaj(fraza.toLowerCase())
 }
