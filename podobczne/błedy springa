@@ -1,0 +1,6 @@
+7	Spring Configuration Check
+			Unmapped Spring configuration files found.
+			Please configure Spring facet or use 'Create Default Context' to add one including all unmapped files.
+			com.filip.machaj.demo (2 files)   Create Default Context
+			Show Help Disable...
+
