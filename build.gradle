@@ -144,6 +144,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.github.mvysny.karibudsl/karibu-dsl-v8
     compile group: 'com.github.mvysny.karibudsl', name: 'karibu-dsl-v8', version: '0.7.0'
 
+    compile("org.springframework.boot:spring-boot-starter-security")
+
 
 
 
@@ -190,6 +192,11 @@ dependencies {
 
          runtime "psql:psql-connector-java"
         compile "org.springframework.boot:spring-boot-starter-data-jpa"
+
+      
+
+
+
 
     }
     implementation """org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"""
