@@ -5,12 +5,19 @@ import com.filip.machaj.demo.dto.UserDetailsDTO
 import com.filip.machaj.demo.model.user.*
 import com.filip.machaj.demo.repo.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-class UserService {
+ class UserService: UserDetailsService {
+    override fun loadUserByUsername(username: String?): UserDetails {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+
     @Autowired
     lateinit var repo: UserRepository
 
