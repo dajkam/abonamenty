@@ -188,4 +188,24 @@ on model.marka_id = marka.id
         or lower(pojazd.uwagi) like ?1 or lower(cast(pojazd.id as varchar(36))) like ?1
       
 
+// dodanie usera 
+
+INSERT INTO user (imie,
+        nazwisko,
+        email,
+        haslo,
+        role,
+        czy_zarchiwizowany ,
+        aktywne,
+        nie_wygasniete,
+        nie_zablokowane,
+        nie_wygasniete_id_i_haslo,
+        kiedy_utworzono ,
+       kiedy_zmodyfikowano,
+       dtype
+ ) VALUES ('Filip','Machaj', 'machajfil@gmail.com','123fil','ULICZNY,STRAZNIK,ADMIN,',
+false,true,true,true,true,'2008-01-01 00:00:01','2008-01-01 00:00:01','fdrgrg');
+
+
+
 
