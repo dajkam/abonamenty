@@ -11,7 +11,7 @@ class WebSecurityEntryPoint:AuthenticationEntryPoint {
     override fun commence(request: HttpServletRequest?,
                           response: HttpServletResponse?,
                           authException: AuthenticationException?) {
-       response?.sendError(HttpServletResponse.SC_UNAUTHORIZED, "odmowa dostępu")
+       response?.sendError(HttpServletResponse.SC_UNAUTHORIZED, "odmowa dostępu huju")
     }
 
 }

@@ -1088,10 +1088,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	function template(templateSpec, env) {
 	  /* istanbul ignore next */
 	  if (!env) {
-	    throw new _exception2['default']('No environment passed to template');
+	    throw new _exception2['default']('No environment passed to templates');
 	  }
 	  if (!templateSpec || !templateSpec.main) {
-	    throw new _exception2['default']('Unknown template object: ' + typeof templateSpec);
+	    throw new _exception2['default']('Unknown templates object: ' + typeof templateSpec);
 	  }
 
 	  templateSpec.main.decorator = templateSpec.main_d;
@@ -3767,7 +3767,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // When using true SourceNodes, this will update all references to the given alias
 	    // as the source nodes are reused in situ. For the non-source node compilation mode,
 	    // aliases will not be used, but this case is already being run on the client and
-	    // we aren't concern about minimizing the template size.
+	    // we aren't concern about minimizing the templates size.
 	    var aliasCount = 0;
 	    for (var alias in this.aliases) {
 	      // eslint-disable-line guard-for-in

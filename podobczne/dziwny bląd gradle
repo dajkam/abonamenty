@@ -1,0 +1,4 @@
+15:17	Unsupported Modules Detected: Compilation is not supported for following modules: main. Unfortunately you can't have non-Gradle Java modules and Android-Gradle modules in one project.
+
+
+z związku z nim usunąłem zależność(dependecje) karibu, jest to częśc vaadin, z którego nie kożystam.
