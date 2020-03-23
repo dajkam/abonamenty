@@ -23,7 +23,7 @@ class UserController {
     )
     fun insertAdmin(
             @RequestBody user:UserDTO
-    ) = service.SaveAdmin(user)
+    ) = service.saveAdmin(user)
 
     @PutMapping(
             value = ["/straznik"],
@@ -32,7 +32,7 @@ class UserController {
     )
     fun insertStraznik(
             @RequestBody user:UserDTO
-    ) = service.SaveStraznik(user)
+    ) = service.saveStraznik(user)
 
     @PutMapping(
             value = ["/uliczny"],
@@ -41,7 +41,7 @@ class UserController {
     )
     fun insertUliczny(
             @RequestBody user:UserDTO
-    ) = service.SaveUliczny(user)
+    ) = service.saveUliczny(user)
 
     @DeleteMapping(
             value = ["/{id}"],

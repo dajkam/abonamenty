@@ -13,8 +13,9 @@ import java.util.*
 
 @Repository
  class UserService: UserDetailsService {
-    override fun loadUserByUsername(username: String?): UserDetails {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun loadUserByUsername(email: String): UserDetails {
+        return repo.findUserByEmail(email) ?:
+        throw RuntimeException("Konto o emailu $email nie istnieje lub zostało usunięte.")
     }
 
 
@@ -27,7 +28,7 @@ import java.util.*
         return repo.findUserByEmail(email) ?:
                 throw RuntimeException("Konto o emailu $email nie istnieje lub zostało usunięte.")
     }
-    fun SaveAdmin(user:UserDTO):User{
+    fun saveAdmin(user:UserDTO):User{
         val admin = Admin()
         admin.imie = user.imie
         admin.nazwisko = user.nazwisko
@@ -38,7 +39,7 @@ import java.util.*
 
 
     }
-    fun SaveStraznik(user:UserDTO):User{
+    fun saveStraznik(user:UserDTO):User{
        val straznik = Straznik()
        straznik.imie = user.imie
        straznik.nazwisko = user.nazwisko
@@ -50,7 +51,7 @@ import java.util.*
 
     }
 
-    fun SaveUliczny(user:UserDTO):User{
+    fun saveUliczny(user:UserDTO):User{
         val uliczny = Uliczny()
        uliczny.imie = user.imie
        uliczny.nazwisko = user.nazwisko

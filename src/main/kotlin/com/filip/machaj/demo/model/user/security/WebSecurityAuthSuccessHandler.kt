@@ -20,11 +20,12 @@ class WebSecurityAuthSuccessHandler: SimpleUrlAuthenticationSuccessHandler() {
             return
         }
         val parameter = request?.getParameter(targetUrlParameter)
-        val ok = isAlwaysUseDefaultTargetUrl || targetUrlParameter != null
+        val ok = isAlwaysUseDefaultTargetUrl || targetUrlParameter != null// tu był targetUrlParameter oryginalnie
                 && StringUtils.hasText(parameter)
         if(ok){
             requestCache.removeRequest(request,response)
             clearAuthenticationAttributes(request)
+            response?.sendRedirect("index.html")
             return
         }
         clearAuthenticationAttributes(request)
