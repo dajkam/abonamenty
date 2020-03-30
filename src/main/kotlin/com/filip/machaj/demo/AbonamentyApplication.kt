@@ -6,9 +6,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.PropertySource
 import org.springframework.transaction.annotation.EnableTransactionManagement
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
 
-@SpringBootApplication
+
+
+@SpringBootApplication(exclude = arrayOf(SecurityAutoConfiguration::class) )
 @EnableTransactionManagement
 @PropertySource( "classpath:application.properties" )
 @ComponentScan( "com.filip.machaj" )
