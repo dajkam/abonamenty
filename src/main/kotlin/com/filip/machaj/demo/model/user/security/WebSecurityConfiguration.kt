@@ -40,12 +40,15 @@ class WebSecurityConfiguration: WebSecurityConfigurerAdapter() {
         auth.inMemoryAuthentication()
                 .withUser("user").password(passwordEncoder().encode("du"))
                 .authorities(Role.ADMIN.poziom)
+        auth.inMemoryAuthentication()
+                .withUser("user1").password(passwordEncoder().encode("du1"))
+                .authorities(Role.ULICZNY.poziom)
     }
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.authorizeRequests()
-                .antMatchers("/marka/**").authenticated() // dodawanie z poza front endu działa tylko przez curl curl -u user:du żeby działał postman trzeba .authenticeded() zmienić na .permitAll()
+                .antMatchers("/uliczny.html").authenticated() // dodawanie z poza front endu działa tylko przez curl curl -u user:du żeby działał postman trzeba .authenticeded() zmienić na .permitAll()
                 .anyRequest().authenticated()// dodawanie z poza front endu działa tylko przez curl curl -u user:du żeby działał postman trzeba .authenticeded() zmienić na .permitAll()
                 .and()
                 .csrf().disable()
@@ -53,6 +56,7 @@ class WebSecurityConfiguration: WebSecurityConfigurerAdapter() {
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .and()
                 .formLogin()
+                .successHandler(WebSecurityAuthSuccessHandler())
 
 
 
