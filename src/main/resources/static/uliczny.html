@@ -1,10 +1,1071 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl-PL">
+<script>
+    window.alert = function() {
+        debugger;
+    }
+</script>
 <head>
     <meta charset="UTF-8">
-    <title>cos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/data_table.scss" type="text/css">
+    <title>Uliczny</title>
+
+    <script src="js/handlebars-v4.1.2.js" ></script>
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/pl.js"></script>
+
+
 </head>
+
+
+<style>
+    .hid{
+        display: none;
+        overflow:hidden;
+        visibility: hidden;
+    }
+    /*.kol{
+
+        display: inline;
+        text-align: left;
+        position: relative;
+        padding: 50px;
+
+
+    }*/
+
+    .nagl{
+
+
+        background-color: #167F92;
+        top: 100px;
+        position: fixed;
+        padding: 20px;
+
+    }
+
+
+    th, td{
+        width: 12vw;
+        text-align: center;
+    }
+
+    .row{
+        /* display: table-row;*/
+        display: table-row;
+        table-layout: fixed;
+        width: 100%;
+
+    }
+    td:empty { display: none; }
+    #menu{
+        padding: 20px;
+        top: 0;
+        position: fixed;
+        background-color: #167F92;
+        visibility: visible;
+        z-index: 2;
+        width: 100%;
+
+
+
+
+
+
+    }
+    #obywatel{
+        top: 200px;
+        position: relative;
+        z-index: 1;
+    }
+    #formularz{
+        top: 200px;
+        position: relative;
+        z-index: 0;
+        padding-top: 10px;
+
+    }
+    .poj-pad{
+        top: 250px;
+        padding-top: 50px;
+    }
+    .okol1{
+        padding-left: 10px;
+        text-align: center;
+
+    }
+
+
+ @media screen and (max-width: 1024px) {
+     .nagl{
+
+
+         background-color: unset;
+         top: unset;
+         position: unset;
+         padding: unset;
+
+     }
+     #menu{
+         padding: unset;
+         top: unset;
+         position: unset;
+         background-color: #167F92;
+         visibility: unset;
+         z-index: unset;
+         width: unset;
+     }
+
+     th, td{
+         width: unset;
+         text-align: unset;
+     }
+
+     .row{
+         /* display: table-row;*/
+         display: unset;
+         table-layout: unset;
+         width: unset;
+
+     }
+     table {
+         width: 100%;
+         border-collapse: collapse;
+     }
+     td, th {
+         padding: 6px;
+         border: 1px solid #ccc;
+         text-align: left;
+     }
+     table, thead, tbody, th, td, tr {
+         display: block;
+     }
+
+     /* Hide table headers (but not display: none;, for accessibility) */
+     thead tr {
+         position: absolute;
+         top: -9999px;
+         left: -9999px;
+     }
+
+     tr { border: 1px solid #ccc; }
+
+     td {
+         /* Behave  like a "row" */
+         border: none;
+         border-bottom: 1px solid #eee;
+         position: relative;
+         padding-left: 50%;
+     }
+
+     td:before {
+         /* Now like a table header */
+         position: absolute;
+         /* Top/left values mimic padding */
+         top: 6px;
+         left: 6px;
+         width: 45%;
+         padding-right: 10px;
+         white-space: nowrap;
+     }
+
+     /*
+Label the data
+*/
+     td:nth-of-type(1):before { content: "First Name"; }
+     td:nth-of-type(2):before { content: "Last Name"; }
+     td:nth-of-type(3):before { content: "Job Title"; }
+     td:nth-of-type(4):before { content: "Favorite Color"; }
+     td:nth-of-type(5):before { content: "Wars of Trek?"; }
+     td:nth-of-type(6):before { content: "Secret Alias"; }
+     td:nth-of-type(7):before { content: "Date of Birth"; }
+     td:nth-of-type(8):before { content: "Dream Vacation City"; }
+     td:nth-of-type(9):before { content: "GPA"; }
+     td:nth-of-type(10):before { content: "Arbitrary Data"; }
+ }
+
+
+ }
+
+
+/*tr:nth-of-type(odd) {
+  background: #eee;
+}
+co robi powyższe
+
+*/
+
+</style>
+<style id="bstyle">
+    .butt{
+
+        pointer-events: none;
+
+        background-color: gray;
+        cursor: not-allowed;
+        color: black;
+
+
+
+    }
+
+
+
+
+</style>
+<style id = "addstyle">
+
+</style>
+
 <body>
+
+<div id = "menu">
+<span>
+    <select id = "encja" onChange='window.location="http://localhost:8091/index.html?value=" + this.value;'>
+        <option value = "obywatel">Obywatel</option>
+        <option value = "pojazd">Pojazd</option>
+        <option value = "abonament">Abonament</option>
+
+
+
+    </select>
+
+      <button class = 'but5 butt' type='button' onclick='powiazane()'  tabindex="-1">Wyświetl Szczegóły</button>
+</span>
+
+    <span id="filtry">
+        <input type="checkbox" id="arch" name="pokaż wygasłe" value="true" onChange='wyswietl_zarchiwizowane(this.checked)'>
+    <label for="arch">Pokaż Wygasłe</label>
+
+    </span>
+
+    <form>
+        <button type="submit" class="wyszukaj" onsubmit='wyszukaj()'><i >Wyszukaj</i></button> <!-- on submit czym sie różni od onclick ????? -->
+        <input  class="wyszukaj" type="text" id="wyszuk"  placeholder="Wyszukaj..." name="wyszukaj">
+
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<table id = "obywatel">
+    <thead class="nagl row" id="nago">
+    <tr >
+
+        <th  class=' kol okol1'>id</th>
+        <th  class=' kol '>pesel</th>
+        <th  class=' kol'>numer dowodu</th>
+        <th  class=' kol'>imie</th>
+        <th class=' kol'>nazwisko</th>
+        <th  class=' kol'>data urodzenia</th>
+        <th  class=' kol'>adres</th>
+
+
+    </tr>
+    </thead>
+
+    <thead class="nagl row" id="nagp">
+
+    <tr>
+
+        <th  class='okol1 kol id'>id</th>
+        <th  class='okol2 kol'>nr rejstracyjny</th>
+        <th class='okol3 kol'>marka</th>
+        <th  class='okol4 kol'>model </th>
+        <th  class='okol5 kol'>rok produkcji</th>
+        <th  class='okol6 kol'>kolor</th>
+        <th class='okol7 kol'>uwagi</th>
+
+
+    </tr>
+    </thead>
+
+    <thead class="nagl row" id="naga">
+
+    <tr >
+
+        <th  class='okol1 kol id' onclick="orderBy('abo_id')" id="abo_id">id</th>
+        <th  class='okol2 kol' onclick="orderBy('abo_data_rozpoczecia')" id="abo_data_rozpoczecia">data rozpoczecia</th>
+        <th  class='okol3 kol'  onclick="orderBy('abo_data_zakonczenia')" id="abo_data_zakonczenia">data zakonczenia</th>
+        <th  class='okol4 kol' onclick="orderBy('abo_sektor')" id="abo_sektor">sektor</th>
+        <th  class='okol2 kol' onclick="orderBy('abo_nr_rejstracyjny')" id="abo_nr_rejstracyjny">nr rejstracyjny</th>
+        <th class='okol3 kol' onclick="orderBy('abo_marka')" id="abo_marka">marka</th>
+        <th  class='okol4 kol' onclick="orderBy('abo_model')" id="abo_model">model </th>
+        <th  class=' kol' onclick="orderBy('abo_imie')" id="abo_imie">imie</th>
+        <th class=' kol'onclick="orderBy('abo_nazwisko')" id="abo_nazwisko">nazwisko</th>
+        <th  class='kol' onclick="orderBy('abo_pesel')" id="abo_pesel">pesel</th>
+
+
+
+    </tr>
+    </thead>
+</table>
+<!--<form id = "formularz">
+  nr dowodu: <br>
+  <input type = "text " name = "nr_dowodu" ><br>
+  imie: <br>
+  <input type = "text " name = "imie" ><br>
+  nazwisko: <br>
+  <input type = "text " name = "nazwisko" ><br>
+  adres: <br>
+  <input type = "text " name = "adres" ><br>
+  data urodzenia: <br>
+  <input type = "date " name = "data_urodzenia" ><br>
+  pesel:<br>
+  <input type = "text " name = "pesel" ><br><br>
+  <input type = "submit" value = "Zatwierdź">
+
+
+</form>-->
+<div id = "formularz"></div>
+
+
+
+
+<script type="text/javascript">
+
+    // moment date format
+
+
+
+
+
+
+    // END
+
+    let rekord = null // wybrany rekord z bazy
+    let arch = new URL(window.location).searchParams.get('arch')
+    let szuk = new URL(window.location).searchParams.get('wyszukaj')
+    let url_string =  window.location.href;
+    let url = new URL(url_string);
+    let c = url.searchParams.get("value");
+    let czy_dodawany = false;
+    let pojazd_size = -4
+    let obywatel_size = -5
+    let jij = 0; // do określania czy sortowanie ma być malejące czy rosnące
+    let  id_old_sort = -1; // zmienna globalna do przechowywania ostatniego id.
+    console.log(c)
+    let son_set = new Set();
+
+    var global_dupa
+
+    if(c === null)
+        c = "abonament"
+    if(arch === null)
+        arch = false
+
+    if((szuk!=null)||!(/^\s+$/.test(szuk))){
+        document.getElementById("wyszuk").value = szuk;
+
+    }
+    const local_szuk = document.getElementById("wyszuk").value;
+    if((local_szuk === null)||(local_szuk ==="")||(/^\s+$/.test(local_szuk))) // sprawdzanie czy parametr wyszukaj jest null lub pusty lub składa się z samych białych znaków
+        szuk = null
+
+
+    document.getElementById("arch").checked = JSON.parse(arch);
+    {
+
+        console.log(c);
+        //$("#encja option[value='" + result_of_gup + "']").attr("selected","selected") ;
+
+        let list = document.getElementById("encja");
+        for(let i = 0; i < list.length; i++){
+            console.log(c)
+            console.log(list[i])
+            // console.log(list[i].outerHTML)
+            //console.log(list[i].toString().includes(c.toString()))
+            //console.log(list[i].includes(c))
+            if( list[i].outerHTML.includes(c)){
+                // document.getElementById("encja")[i].selected = true;
+                document.getElementById("encja").selectedIndex = i;
+            }
+        }
+    }
+
+
+
+
+    let wybraneDane = ""
+
+    var obywatelDane = "<label class='l' >identyfikator to: {{id}}   data utworzenia to:   {{kiedy_utworzono}}   " +
+        "data ostatniej modyfikacji to   {{kiedy_zmodyfikowano}}   numer dowodu    {{nr_dowodu}}   imie to   {{imie}}   " +
+        "nazwisko to   {{nazwisko}}   adres to   {{adres}}   aktualny to    {{czy_zarchiwizowany}}   " +
+        "data urodzenia to    {{data_urodzenia}}   pesel to   {{pesel}}    </label></br></br>";
+
+    var DateFormats = {
+        short: "DD MMMM - YYYY",
+        long: "dddd DD.MM.YYYY HH:mm",
+        standard: "YYYY-MM-DD"
+    };
+    function dataFormat(datetime, format) {
+
+        alert("w dattime")
+        return moment(datetime).format(format);
+    }
+
+    // Deprecated since version 0.8.0
+    Handlebars.registerHelper("formatDate", function(datetime, format) {
+
+// Use UI.registerHelper..
+
+        if (moment) {
+            // can use other formats like 'lll' too
+            format = DateFormats[format] || format;
+            return moment(datetime).format(format);
+        }
+        else {
+            return datetime;
+        }
+    });
+
+    var obywatelDane =
+        "<table>" +
+        "<tr class='row'>" +
+        "<td  class=' hid '><input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '></td>" +
+        "<td   class='  kol okol1'>{{id}}</td>"+
+        "<td  class='  kol'>{{pesel}}</td>"+
+        "<td   class='  kol'>{{nr_dowodu}}</td>"+
+        "<td   class='  kol'>{{imie}}</td> "+
+        "<td  class='  kol'>{{nazwisko}}</td>"+
+        "<td  class='   kol'>{{formatDate data_urodzenia  'short'}}</td>"+
+        "<td   class='  kol'>{{adres}} </td>"+
+
+
+        "</tr>" +
+        " </table>";
+
+    var abonamentDane = "<label class='l'  >identyfikator to: {{id}} data utworzenia to:   {{kiedy_utworzono}}" +
+        " data ostatniej modyfikacji to   {{kiedy_zmodyfikowano}}  data rozpoczecia to: {{data_rozpoczecia}}" +
+        " data zakonczenia to: {{data_zakonczenia}} sektor to {{sektor}} uwagi to: {{uwagi}}" +
+        " czy aktualny to: {{czy_zarchiwizowany}}</label></br></br>"
+
+    /*  var abonamentDane =   "<table  >" +
+
+          "<tr class='row'>" +
+          "<th class=' hid '> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
+          "<td   class='okol1  kol id'>{{id}} </td>"+
+          "<td   class='okol2  kol'>{{formatDate  data_rozpoczecia 'short'}}</td>"+
+          "<td   class='okol3  kol'>{{formatDate data_zakonczenia 'short'}}</td>"+
+          "<td   class='okol4  kol'>{{sektor}}</td> "+
+          "<td  class='okol6   kol'> {{uwagi}}</td>"+
+
+
+          "</tr>" +
+          " </table>"; */ // stara krotka abonamentu
+    /*
+    *
+    * let abo_head_id = ["abo_id", "abo_data_rozpoczecia", "abo_data_zakonczenia", "abo_sektor",
+            "abo_nr_rejstracyjny", "abo_marka", "abo_model", "abo_imie", "abo_nazwisko", "abo_pesel"]
+
+    *
+    *
+    * */
+
+    var abonamentDane =   "<table  >" +
+
+        "<tr class='row'>" +
+        "<th class=' hid '> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
+        "<td   class='okol1  kol id abo_id' >{{id}} </td>"+
+        "<td   class='okol2  kol abo_data_rozpoczecia' title='{{data_rozpoczecia}}'>{{formatDate  data_rozpoczecia 'short'}}</td>"+
+        "<td   class='okol3  kol abo_data_zakonczenia' title='{{data_zakonczenia}}'>{{formatDate data_zakonczenia 'short'}}</td>"+
+        "<td   class='okol4  kol abo_sektor'>{{sektor}}</td> "+
+        "<td   class='okol2  kol abo_nr_rejstracyjny'>{{nr_rejstracyjny_pojazdu}} </td>"+
+        "<td   class='okol3  kol abo_marka'>{{marka}}</td>"+
+        "<td   class='okol4  kol abo_model'>{{model}}</td> "+
+        "<td   class='  kol abo_imie'>{{imie}}</td> "+
+        "<td  class='  kol abo_nazwisko'>{{nazwisko}}</td>"+
+        "<td  class='  kol abo_pesel'>{{pesel}}</td>"+
+
+
+        "</tr>" +
+        " </table>";
+
+
+
+
+    var pojazdDane = "<label class='l'  > identyfikator to:{{id}}  nr rejstracyjny pojazdu to: {{nr_rejstracyjny_pojazdu}}" +
+        " marka to: {{marka}} model to {{model}} rok produkcji: {{rok_produkcji}} kolor to: {{kolor}}" +
+        "  uwagi to: {{uwagi}} czy zarchiwizowany to: {{czy_zarchiwizowany}} " +
+        "kiedy utworzono to: {{kiedy_utworzono}} kiedy zmodyfikowano to: {{kiedy_zmodyfikowano}}</label></br></br>"
+
+    var pojazdDane = "<table class=\"responstable tab\" >" +
+
+        "<tr class='row'>" +
+        "<th class='hid'> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
+        "<td   class='okol1  kol id'>{{id}}</td>"+
+        "<td   class='okol2  kol'>{{nr_rejstracyjny_pojazdu}} </td>"+
+        "<td   class='okol3  kol'>{{marka}}</td>"+
+        "<td   class='okol4  kol'>{{model}}</td> "+
+        "<td   class='okol5  kol'> {{rok_produkcji}}</td>"+
+        "<td  class='okol6   kol'>{{kolor}}</td>"+
+        "<td   class='okol7  kol'>{{uwagi}}</td>"+
+
+
+        "</tr>" +
+        " </table>";
+
+
+
+
+
+
+    // stare wybie ranie sektora  "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
+    // nowe rozwiązanie  w select nie ma atrybutu value={{sektor}}
+
+
+
+    let sel = document.getElementById("encja");
+    let selval = sel.options[sel.selectedIndex].value;
+
+    switch (selval) {
+        case "obywatel":
+            // document.getElementById('ffa').id =  "ff"  /// czemu to daje błąd że jest null
+
+            wybraneDane = obywatelDane
+
+            document.getElementById("naga").remove()
+            document.getElementById("nagp").remove()
+
+            document.getElementById("dodaj").classList.add("hid")
+            document.getElementById("edytuj").classList.add("hid")
+            document.getElementById("usun").classList.add("hid")
+
+            break;
+        case "abonament":
+            // document.getElementById('ffb').id =  "ff" /// czemu to daje bląd że jest null
+
+            wybraneDane = abonamentDane
+
+            document.getElementById("nago").remove()
+            document.getElementById("nagp").remove()
+
+
+
+            break;
+        case "pojazd":
+
+            wybraneDane = pojazdDane
+
+            document.getElementById("nago").remove()
+            document.getElementById("naga").remove()
+
+            document.getElementById("obywatel").classList.add("poj-pad");
+
+            document.getElementById("dodaj").classList.add("hid")
+            document.getElementById("edytuj").classList.add("hid")
+            document.getElementById("usun").classList.add("hid")
+
+            break;
+    }
+
+
+
+
+
+
+    /* var but3  ="    <button class='butt' type=\"button\" onclick=\" f2(wyb_rekord())\">Edytuj</button>"
+
+    var but4  ="    <button class = 'but4 butt' type=\"button\" onclick=\" usun()\">Usun</button>"
+
+    var but5  = "   <button class = 'but5 butt' type='button' onclick='pwiazane()'>Wyświetl Powiązane</button>"
+ */
+    var but3 =""
+    var but4 = ""
+    var but5 = ""
+    // var radio = "<input id = 'krotka' type=\"radio\" name=\"gender\" value=\"male\"> "
+
+    function main(preson) {
+
+        for ( var i = 0;i<preson.length; i++) {
+            if(c === "pojazd"){
+                pojazd_size = preson.length
+            }
+            if(c === "obywatel"){
+                obywatel_size = preson.length
+            }
+
+            var son = preson[i];
+            console.log(arch)
+            //   confirm("zobacz wartosc arch:")
+            console.log(isBoolean(arch))
+            // confirm("czy arch jest logiczny")
+            let barch = JSON.parse(arch)
+            if(son.czy_zarchiwizowany === barch){ // warunek do wyświetlania zarchiwizowanych lub nie zarchiwizowanych
+                var iDiv = document.createElement('label')
+
+                iDiv.id =  i.toString() + "ob"
+
+                iDiv.className = "segment"
+
+
+
+                var div = document.getElementById('obywatel')
+
+                wyswietl(son, i,iDiv)
+
+
+
+                div.appendChild(iDiv)
+            }
+
+
+        }
+
+
+
+
+
+
+
+
+    }
+
+    function wyswietl(son, i,iDiv) {
+
+
+
+        template = Handlebars.compile(wybraneDane);
+        console.log(template)
+        alert(template)
+
+
+        var dane = template(son);
+        console.log(dane)
+        alert(dane)
+
+
+
+
+
+
+
+        var butDiv = document.createElement('div')
+
+        butDiv.id =  i.toString() + "-buttons"
+
+        butDiv.className = "butt"
+
+        butDiv.innerHTML =  (but3 + but5 + but4)
+
+
+
+        var bancz = ( dane );
+
+
+
+        //  document.getElementById('ob' + i.toString()).innerHTML += bancz;
+
+        iDiv.innerHTML += bancz;
+
+        iDiv.appendChild(butDiv)
+
+        iDiv.innerHTML+="</br></br>"
+        iDiv.getElementsByTagName('input')[0].value = i.toString() + " "+  "selected"
+
+    }
+
+    function ajax(method, url, async) {
+        return new Promise(function(resolve, reject) {
+            const xhr = new XMLHttpRequest();
+            if(async === null)
+                xhr.open(method, url,true);
+            else
+                xhr.open(method, url,false);
+
+            xhr.addEventListener('load', function() {
+                if (this.status === 200) {
+                    resolve(xhr.response);
+                } else {
+                    reject({
+                        status: this.status,
+                        statusText: xhr.statusText
+                    });
+                }
+            });
+            xhr.addEventListener('error', function() {
+                reject({
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+            });
+
+            xhr.send();
+        });
+    }
+
+    function loadData() {
+
+        var url1 = 'http://localhost:8091/'
+
+        var e = document.getElementById("encja");
+        var url2 = e.options[e.selectedIndex].value;
+
+        if(szuk != null){ // wyszukiwanie
+            let url3 = "/szukaj/"
+            let url =  url1+url2+url3+szuk
+            return ajax('GET',url)
+        } // koniec wyszukiwania
+
+        var url3 = '/download'
+
+        var url =  url1+url2+url3
+
+        if(url === "http://localhost:8091/pojazd/download")
+        { url = "http://localhost:8091/pojazd/marka/model";}
+        if(url === "http://localhost:8091/abonament/download")
+        {url = "http://localhost:8091/abonament/full";} ///////////////////////////////////////////////////////////////////////////////// tytaj wybieranie widoku
+
+
+        // return ajax('GET', 'http://localhost:8091/obywatel/download');
+
+        return ajax('GET',url)
+    }
+
+    function loadDataToUsun( k) {
+
+        var url1 = 'http://localhost:8091/'
+
+
+        var url2 = k;
+
+        var url3 = '/download'
+
+        var url =  url1+url2+url3
+
+        if(url === "http://localhost:8091/abonament/download")
+        {url = "http://localhost:8091/abonament/full";}
+
+        return ajax('GET',url)
+    }
+
+
+
+
+    loadData()
+        .then(function(res) {
+            // preson = insertData(res, preson);
+            var preson = []
+            var preson = JSON.parse(res)
+            console.log(preson)
+            main(preson)
+        })
+
+    function insertData(res, preson) {
+        console.log(res);
+
+        preson = JSON.parse(res)
+        console.log(preson[0].imie)
+
+        console.log(preson[0].nazwisko)
+
+        return preson
+
+    }
+
+
+    function sendSon(son, k) {
+
+        var xhr = new XMLHttpRequest();
+        var url = "http://localhost:8091/"+ c.toString() +"/update";
+        if(k!=null)
+            url = "http://localhost:8091/"+ k.toString() +"/update";
+        console.log(url)
+
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+
+
+        console.log("//////////////////////////////////////////////////////////////////////////")
+
+        console.log(JSON.stringify(son))
+
+
+        //son.kiedy_zmodyfikowano = getModificationTime();// żeby data modyfikacji była zapisywana tylko wtedy kiedy żeczywiście są jakies zmiany
+
+        delete son.kiedy_zmodyfikowano
+        delete son.kiedy_utworzono
+
+        if((c.toString() === "pojazd")|| (k === "pojazd")){
+
+            delete son.marka;
+            delete son.marka_id;
+            son.model = {
+                id : son.model_id
+            }
+            son.obywatel = {
+                id : son.obywatel_id
+            }
+            son.abonamenty = []
+
+            delete son.model_id
+            delete son.obywatel_id
+
+
+        }
+
+        if(c.toString() === "abonament"){
+            delete son.nr_rejstracyjny_pojazdu;
+            delete son.marka;
+            delete son.model;
+            delete son.imie;
+            delete son.nazwisko;
+            delete son.pesel;
+            son.pojazd = {
+                id : son.pojazd_id
+            }
+            delete son.pojazd_id;
+            delete son.obywatel_id;
+            delete son.marka_id;
+            delete son.model_id;
+
+        }
+
+        var json = JSON.stringify(son)
+
+        console.log("//////////////////////////////////////////////////////////////////////////")
+
+        console.log(json)
+
+
+        xhr.send(json)
+
+        location.reload(true)
+
+
+
+
+    }
+
+
+
+
+
+
+    function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds){
+                break;
+            }
+        }
+    }
+
+    function getModificationTime() {
+
+
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+
+        //alert(dateTime)
+
+        return dateTime;
+
+    }
+    function walidacjaPesela(pesel) {
+        if (pesel.length !=11){
+            alert("PESEL musi mieć 11 cyfr")
+            return false
+        }
+
+        if(!(/^[0-9]*$/.test(pesel))){
+            alert("PESEL może zawierać tylko cyfry")
+            return false
+        }
+
+        var p = []
+
+        for (var i =0; i<pesel.length; i++){
+            p[i] = pesel.charCodeAt(i) - 48
+
+        }
+        if ((9*p[0]+7*p[1]+3*p[2]+1*p[3]+9*p[4]+7*p[5]+3*p[6]+1*p[7]+9*p[8]+7*p[9])%10===p[10])
+            return true
+        else
+            alert("PESEL nie jest prawidłowy")
+        return false
+
+    }
+
+    String.prototype.replaceAt=function(index, replacement) {
+        return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    function wyb_rekord() {
+        if(rekord === -1)
+            return -1
+        // wybrany rekord z bazy
+        var ele = document.getElementsByName('rad');
+
+        ele.forEach(zaznacz)
+
+        document.getElementById('bstyle').innerHTML =
+            `
+           .butt{
+
+        pointer-events: auto;
+    }
+           `;
+
+        return rekord
+    }
+    // wybrany rekord z bazy koniec
+    function zaznacz(item,index) {
+
+        console.log(rekord)
+        item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = 'white' // wgłab do  i + 'ob'
+
+        if (item.checked) {
+            alert(item.value)
+            rekord = parseInt(item.value.substr(0,item.value.indexOf(' '))); // rekord zmienna globalna
+            alert(rekord)
+
+            item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = 'red' // wgłab do  i + 'ob'
+
+
+        }
+
+    }
+
+
+
+    /*function dodaj() {
+          templates = Handlebars.compile(formularz);
+          rekord = -1
+          let dane = templates(null)
+
+        document.getElementById("obywatel").innerHTML = ""
+        document.getElementById("formularz").innerHTML += dane;
+          block_buttons()
+    }*/ // stare dodaj
+
+
+
+    function last(url) {
+        var request = new XMLHttpRequest();
+        request.open('GET', url, false);  // `false` makes the request synchronous
+        request.send(null);
+
+        if (request.status === 200) {
+            global_dupa = JSON.parse(request.responseText).id;
+        }
+
+
+    }
+
+    function block_buttons() {
+        document.getElementById('addstyle').innerHTML = `
+
+     .add{
+
+        pointer-events: none;
+
+        background-color: gray;
+        cursor: not-allowed;
+        color: black;
+
+
+
+    }
+    `;
+        document.getElementById("bstyle").innerHTML = `
+       .butt{
+
+        pointer-events: none;
+
+        background-color: gray;
+        cursor: not-allowed;
+        color: black;
+
+
+
+    }
+      `;
+
+    }
+    function orderBy(id){
+
+        let abo_head_id = ["abo_id", "abo_data_rozpoczecia", "abo_data_zakonczenia", "abo_sektor",
+            "abo_nr_rejstracyjny", "abo_marka", "abo_model", "abo_imie", "abo_nazwisko", "abo_pesel"]
+
+        abo_head_id.forEach(function (_id) {
+            document.getElementById(_id).style.backgroundColor = "#167F92";
+        });
+        document.getElementById(id).style.backgroundColor = "green"
+
+        //  var list = document.querySelector("ul");
+        var list = document.getElementById("obywatel")
+        var items = list.querySelectorAll("label");
+        var pola = document.getElementsByClassName(id)
+
+
+        for(let i = 0; i < items.length; i=i+1){
+            if((id =="abo_data_rozpoczecia") || id == "abo_data_zakonczenia")
+                items[i].title = pola[i].title
+            else
+                items[i].title = pola[i].textContent
+            console.log(pola[i].textContent)
+            console.log("uwaga uwaga")
+            console.log(items[i].title)
+        }
+
+        var itemsy = Array.from(items).sort(  function(a, b) {
+            return a.title.toString().localeCompare(b.title.toString());
+        });
+        if(id != id_old_sort)
+            jij = 0;
+        if(jij % 2 != 0){
+            document.getElementById(id).style.backgroundColor = "yellow"
+            itemsy.reverse();
+        }
+        for (var i = 0; i < itemsy.length; i++) {
+            itemsy[i].parentNode.appendChild(itemsy[i]);
+        }
+
+        jij = jij +1; // do określania czy ma sortować malejąco czy rosnąco zmienna globalna jij
+        id_old_sort = id; // zmienna globalna do przechowywania ostatniego id.
+    }
+    function wyswietl_zarchiwizowane(czy_arch) {
+        let url =  new URL(window.location)
+        url.searchParams.set('arch',czy_arch)
+        window.location = url.toString()
+        // location.reload(true)
+
+    }
+    function isBoolean (value) {
+        return typeof value === 'boolean';
+    }
+
+</script>
+
 
 </body>
 </html>
+
