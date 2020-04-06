@@ -29,15 +29,7 @@
         overflow:hidden;
         visibility: hidden;
     }
-    /*.kol{
 
-        display: inline;
-        text-align: left;
-        position: relative;
-        padding: 50px;
-
-
-    }*/
 
     .nagl{
 
@@ -82,6 +74,7 @@
         top: 200px;
         position: relative;
         z-index: 1;
+
     }
     #formularz{
         top: 200px;
@@ -99,7 +92,9 @@
         text-align: center;
 
     }
+    .base{
 
+    }
 
  @media screen and (max-width: 1024px) {
      .nagl{
@@ -109,6 +104,12 @@
          top: unset;
          position: unset;
          padding: unset;
+
+     }
+     .kol{
+
+         display: none;
+
 
      }
      #menu{
@@ -177,20 +178,32 @@
      /*
 Label the data
 */
-     td:nth-of-type(1):before { content: "First Name"; }
-     td:nth-of-type(2):before { content: "Last Name"; }
-     td:nth-of-type(3):before { content: "Job Title"; }
-     td:nth-of-type(4):before { content: "Favorite Color"; }
-     td:nth-of-type(5):before { content: "Wars of Trek?"; }
-     td:nth-of-type(6):before { content: "Secret Alias"; }
-     td:nth-of-type(7):before { content: "Date of Birth"; }
-     td:nth-of-type(8):before { content: "Dream Vacation City"; }
-     td:nth-of-type(9):before { content: "GPA"; }
-     td:nth-of-type(10):before { content: "Arbitrary Data"; }
+     td:nth-of-type(odd):before {
+         overflow-wrap: break-word;
+     }
+     td:nth-of-type(even):before {
+         overflow-wrap: break-word;
+
+     }
+
+     td:nth-of-type(1):before { content: "id"; }
+     td:nth-of-type(2):before { content: "data rozpoczecia";
+
+     }
+     td:nth-of-type(3):before { content: "data zakonczenia";
+
+     }
+     td:nth-of-type(4):before { content: "sektor"; }
+     td:nth-of-type(5):before { content: "nr rejstracyjny"; }
+     td:nth-of-type(6):before { content: "marka"; }
+     td:nth-of-type(7):before { content: "model"; }
+     td:nth-of-type(8):before { content: "imie"; }
+     td:nth-of-type(9):before { content: "nazwisko"; }
+     td:nth-of-type(10):before { content: "pesel"; }
  }
 
 
- }
+
 
 
 /*tr:nth-of-type(odd) {
@@ -300,10 +313,10 @@ co robi powyższe
         <th  class='okol1 kol id' onclick="orderBy('abo_id')" id="abo_id">id</th>
         <th  class='okol2 kol' onclick="orderBy('abo_data_rozpoczecia')" id="abo_data_rozpoczecia">data rozpoczecia</th>
         <th  class='okol3 kol'  onclick="orderBy('abo_data_zakonczenia')" id="abo_data_zakonczenia">data zakonczenia</th>
-        <th  class='okol4 kol' onclick="orderBy('abo_sektor')" id="abo_sektor">sektor</th>
-        <th  class='okol2 kol' onclick="orderBy('abo_nr_rejstracyjny')" id="abo_nr_rejstracyjny">nr rejstracyjny</th>
-        <th class='okol3 kol' onclick="orderBy('abo_marka')" id="abo_marka">marka</th>
-        <th  class='okol4 kol' onclick="orderBy('abo_model')" id="abo_model">model </th>
+        <th  class='okol4  base' onclick="orderBy('abo_sektor')" id="abo_sektor">sektor</th>
+        <th  class='okol2  base' onclick="orderBy('abo_nr_rejstracyjny')" id="abo_nr_rejstracyjny">nr rejstracyjny</th>
+        <th class='okol3  base' onclick="orderBy('abo_marka')" id="abo_marka">marka</th>
+        <th  class='okol4  base' onclick="orderBy('abo_model')" id="abo_model">model </th>
         <th  class=' kol' onclick="orderBy('abo_imie')" id="abo_imie">imie</th>
         <th class=' kol'onclick="orderBy('abo_nazwisko')" id="abo_nazwisko">nazwisko</th>
         <th  class='kol' onclick="orderBy('abo_pesel')" id="abo_pesel">pesel</th>
@@ -478,14 +491,14 @@ co robi powyższe
     var abonamentDane =   "<table  >" +
 
         "<tr class='row'>" +
-        "<th class=' hid '> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
+        "<th class=' hid  '> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
         "<td   class='okol1  kol id abo_id' >{{id}} </td>"+
         "<td   class='okol2  kol abo_data_rozpoczecia' title='{{data_rozpoczecia}}'>{{formatDate  data_rozpoczecia 'short'}}</td>"+
         "<td   class='okol3  kol abo_data_zakonczenia' title='{{data_zakonczenia}}'>{{formatDate data_zakonczenia 'short'}}</td>"+
-        "<td   class='okol4  kol abo_sektor'>{{sektor}}</td> "+
-        "<td   class='okol2  kol abo_nr_rejstracyjny'>{{nr_rejstracyjny_pojazdu}} </td>"+
-        "<td   class='okol3  kol abo_marka'>{{marka}}</td>"+
-        "<td   class='okol4  kol abo_model'>{{model}}</td> "+
+        "<td   class='okol4   base abo_sektor'>{{sektor}}</td> "+
+        "<td   class='okol2   base abo_nr_rejstracyjny'>{{nr_rejstracyjny_pojazdu}} </td>"+
+        "<td   class='okol3   base abo_marka'>{{marka}}</td>"+
+        "<td   class='okol4   base abo_model'>{{model}}</td> "+
         "<td   class='  kol abo_imie'>{{imie}}</td> "+
         "<td  class='  kol abo_nazwisko'>{{nazwisko}}</td>"+
         "<td  class='  kol abo_pesel'>{{pesel}}</td>"+
@@ -939,15 +952,31 @@ co robi powyższe
     // wybrany rekord z bazy koniec
     function zaznacz(item,index) {
 
-        console.log(rekord)
-        item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = 'white' // wgłab do  i + 'ob'
+        let row =  item.parentElement.parentElement.getElementsByTagName("td") // faktyczny rząd tabeli
+        console.log("to jest row")
+        console.log(row)
+                                                                //  item.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement// wgłab do  i + 'ob'
+      for  (var cell of row){
+          zwin(cell)
+          console.log("to jest cell:")
+          console.log(cell)
 
+      }
         if (item.checked) {
             alert(item.value)
             rekord = parseInt(item.value.substr(0,item.value.indexOf(' '))); // rekord zmienna globalna
             alert(rekord)
 
-            item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = 'red' // wgłab do  i + 'ob'
+            for  (var cell of row){
+                rozwin(cell)
+                console.log("to jest zaznaczenie:")
+                console.log("/////////////////////////////////////////////////////////////////////")
+                console.log(cell)
+
+            }
+
+
+
 
 
         }
@@ -1061,6 +1090,23 @@ co robi powyższe
     }
     function isBoolean (value) {
         return typeof value === 'boolean';
+    }
+    function rozwin (cell ){
+        if (!cell.classList.contains("base")) {
+
+            cell.classList.remove("kol")
+
+        }
+        console.log(cell)
+
+    }
+    function zwin (cell ){
+        if (!cell.classList.contains("base")) {
+            cell.classList.add("kol")
+
+        }
+        console.log(cell)
+
     }
 
 </script>
