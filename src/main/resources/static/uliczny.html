@@ -24,6 +24,7 @@
 
 
 <style>
+
     .hid{
         display: none;
         overflow:hidden;
@@ -92,9 +93,7 @@
         text-align: center;
 
     }
-    .base{
-
-    }
+    .base{ } /*   Bardzo ważna klasa  rozróżnia kliknięte krotki-kafelki w widoku mobilnym dla ulicznego*/
 
  @media screen and (max-width: 1024px) {
      .nagl{
@@ -132,6 +131,7 @@
          display: unset;
          table-layout: unset;
          width: unset;
+         margin: auto; /* Pierwsza krotka się nie rozjeżdza*/
 
      }
      table {
@@ -142,6 +142,7 @@
          padding: 6px;
          border: 1px solid #ccc;
          text-align: left;
+         margin: auto;
      }
      table, thead, tbody, th, td, tr {
          display: block;
@@ -162,6 +163,9 @@
          border-bottom: 1px solid #eee;
          position: relative;
          padding-left: 50%;
+         /*word-break: break-word;*/
+         /*overflow: auto;*/
+
      }
 
      td:before {
@@ -169,10 +173,14 @@
          position: absolute;
          /* Top/left values mimic padding */
          top: 6px;
-         left: 6px;
-         width: 45%;
-         padding-right: 10px;
+         left: 30px;
+         width: 100%;
+
+
          white-space: nowrap;
+
+         /*position: relative;*/ /*ciekawy efekt warty wypróbowania później*/
+
      }
 
      /*
@@ -187,14 +195,20 @@ Label the data
      }
 
      td:nth-of-type(1):before { content: "id"; }
-     td:nth-of-type(2):before { content: "data rozpoczecia";
+     td:nth-of-type(2):before { content: "rozpoczecie";
+         padding-right: 30px;
 
      }
-     td:nth-of-type(3):before { content: "data zakonczenia";
+     td:nth-of-type(3):before { content: "zakonczenie";
+         padding-right: 30px;
+
 
      }
      td:nth-of-type(4):before { content: "sektor"; }
-     td:nth-of-type(5):before { content: "nr rejstracyjny"; }
+     td:nth-of-type(5):before { content: "rejstracja";
+         margin-right: 10px;
+
+     }
      td:nth-of-type(6):before { content: "marka"; }
      td:nth-of-type(7):before { content: "model"; }
      td:nth-of-type(8):before { content: "imie"; }
@@ -248,7 +262,6 @@ co robi powyższe
 
     </select>
 
-      <button class = 'but5 butt' type='button' onclick='powiazane()'  tabindex="-1">Wyświetl Szczegóły</button>
 </span>
 
     <span id="filtry">
