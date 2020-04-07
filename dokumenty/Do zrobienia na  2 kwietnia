@@ -1,0 +1,15 @@
+1.Zrób logowanie //działa częściowo
+
+2. Wprowadź użytkowników - odchaczone, ale do otestowania // działa częściowo
+
+3. zrób prosty widok dla strażnika ulicznego  // prorytet
+
+////// jeżeli starczy czasu
+
+4.Do archiwizowalnych klas wprowadź pole "Od kiedy zarchiwizowano"
+
+5. Zrób testy do różnych niedoskonałości np. daty modyfikacji nie działają poprawnie, dodawanie danych z front-endu nie działa -> nie ma żadnych errorów po stronie back-endu => problem  musi być po stronie front-endu.
+
+6. zacznij pisać rozdział 5- z pracy architektura systemu. // zrobione 
+
+7. dadawanie danych przez frontend coś nie działa // chociaż zidentyfikuj problem
