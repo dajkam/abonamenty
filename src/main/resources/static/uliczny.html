@@ -206,7 +206,7 @@ Label the data
      }
      td:nth-of-type(4):before { content: "sektor"; }
      td:nth-of-type(5):before { content: "rejstracja";
-         margin-right: 10px;
+         margin-right: 30px;
 
      }
      td:nth-of-type(6):before { content: "marka"; }
@@ -253,10 +253,18 @@ co robi powyższe
 
 <div id = "menu">
 <span>
-    <select id = "encja" onChange='window.location="http://localhost:8091/index.html?value=" + this.value;'>
-        <option value = "obywatel">Obywatel</option>
-        <option value = "pojazd">Pojazd</option>
-        <option value = "abonament">Abonament</option>
+    <select id = "encja" onChange='window.location="http://localhost:8091/uliczny.html?value=" + this.value;'>
+        <option value = "A">A</option>
+        <option value = "B">B</option>
+        <option value = "C">C</option>
+         <option value = "D">D</option>
+         <option value = "E">E</option>
+         <option value = "F">F</option>
+         <option value = "G">G</option>
+         <option value = "H">H</option>
+         <option value = "I">I</option>
+         <option value = "J">J</option>
+         <option value = "WSZYSTKIE">WSZYSTKIE</option>
 
 
 
@@ -377,7 +385,9 @@ co robi powyższe
     let szuk = new URL(window.location).searchParams.get('wyszukaj')
     let url_string =  window.location.href;
     let url = new URL(url_string);
-    let c = url.searchParams.get("value");
+    let c = "abonament";// nie ruszać musi być
+  //  let wyb_sektor = document.getElementById("encja").options[document.getElementById("encja").selectedIndex].value; // wybrany sektor do przeszukiwania
+    let wyb_sektor = url.searchParams.get("value")
     let czy_dodawany = false;
     let pojazd_size = -4
     let obywatel_size = -5
@@ -410,14 +420,20 @@ co robi powyższe
 
         let list = document.getElementById("encja");
         for(let i = 0; i < list.length; i++){
-            console.log(c)
+            console.log(wyb_sektor)
             console.log(list[i])
             // console.log(list[i].outerHTML)
             //console.log(list[i].toString().includes(c.toString()))
             //console.log(list[i].includes(c))
-            if( list[i].outerHTML.includes(c)){
-                // document.getElementById("encja")[i].selected = true;
+            if( list[i].outerHTML.includes(wyb_sektor)){
+                 document.getElementById("encja")[i].selected = true;
                 document.getElementById("encja").selectedIndex = i;
+                break;
+            }
+            else{
+                alert(wyb_sektor)
+                console.log("Wybrany sektor:")
+                console.log(wyb_sektor)
             }
         }
     }
@@ -557,7 +573,7 @@ co robi powyższe
     let sel = document.getElementById("encja");
     let selval = sel.options[sel.selectedIndex].value;
 
-    switch (selval) {
+    switch ("abonament") {
         case "obywatel":
             // document.getElementById('ffa').id =  "ff"  /// czemu to daje błąd że jest null
 
@@ -737,8 +753,10 @@ co robi powyższe
 
         var url1 = 'http://localhost:8091/'
 
-        var e = document.getElementById("encja");
-        var url2 = e.options[e.selectedIndex].value;
+      //  var e = document.getElementById("encja");
+     //   var url2 = e.options[e.selectedIndex].value; // słóży do wyboru z listy rozwijanej
+        var url2 = "abonament"
+
 
         if(szuk != null){ // wyszukiwanie
             let url3 = "/szukaj/"
@@ -806,7 +824,7 @@ co robi powyższe
     function sendSon(son, k) {
 
         var xhr = new XMLHttpRequest();
-        var url = "http://localhost:8091/"+ c.toString() +"/update";
+        var url = "http://localhost:8091/abonament/update";
         if(k!=null)
             url = "http://localhost:8091/"+ k.toString() +"/update";
         console.log(url)
@@ -844,7 +862,7 @@ co robi powyższe
 
         }
 
-        if(c.toString() === "abonament"){
+        if("abonament" === "abonament"){
             delete son.nr_rejstracyjny_pojazdu;
             delete son.marka;
             delete son.model;
