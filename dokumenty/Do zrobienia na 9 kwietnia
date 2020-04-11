@@ -1,6 +1,11 @@
 1. Popraw Widok dla ulicznego. -> Rozwijane kafelki dla każdej z "Krotek" i wybór sektora, który jest aktualnie przeszukiwany.
+    -Redukcja do samego wyszukiwania 
 2.Npaisz podroździały 5.2 i 5.3 
     - 5.2:Opisać wzorce projektowe: MVC IoC oraz Stan
     - 5.3 OPisać Model danych w projekcie (powiązane z nastęnymi punktami)
 3. narysuj diagram ilustrujący działanie systemu.
 4. Narysuj implementacyjny diagram baz danych.
+
+5. Opisz konkurencje.
+
+6. Firma mandatująca -> nowy aktor.
