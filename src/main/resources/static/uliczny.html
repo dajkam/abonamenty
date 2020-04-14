@@ -8,19 +8,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/data_table.scss" type="text/css">
     <title>Uliczny</title>
 
     <script src="js/handlebars-v4.1.2.js" ></script>
     <script src="js/jquery-3.4.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src = "https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.js"></script>
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/pl.js"></script>
 
 
-</head>
+
 
 
 <style>
@@ -29,6 +27,9 @@
         display: none;
         overflow:hidden;
         visibility: hidden;
+    }
+    #naga{
+        display: none;
     }
 
 
@@ -39,6 +40,7 @@
         top: 100px;
         position: fixed;
         padding: 20px;
+        display: none;
 
     }
 
@@ -103,6 +105,7 @@
          top: unset;
          position: unset;
          padding: unset;
+         display: none;
 
      }
      .kol{
@@ -120,6 +123,7 @@
          z-index: unset;
          width: unset;
      }
+
 
      th, td{
          width: unset;
@@ -166,6 +170,8 @@
          /*word-break: break-word;*/
          /*overflow: auto;*/
 
+
+
      }
 
      td:before {
@@ -178,6 +184,7 @@
 
 
          white-space: nowrap;
+
 
          /*position: relative;*/ /*ciekawy efekt warty wypróbowania później*/
 
@@ -197,10 +204,12 @@ Label the data
      td:nth-of-type(1):before { content: "id"; }
      td:nth-of-type(2):before { content: "rozpoczecie";
          padding-right: 30px;
+         text-align: left;
 
      }
      td:nth-of-type(3):before { content: "zakonczenie";
          padding-right: 30px;
+         text-align: left;
 
 
      }
@@ -228,32 +237,15 @@ co robi powyższe
 */
 
 </style>
-<style id="bstyle">
-    .butt{
+</head>
 
-        pointer-events: none;
-
-        background-color: gray;
-        cursor: not-allowed;
-        color: black;
-
-
-
-    }
-
-
-
-
-</style>
-<style id = "addstyle">
-
-</style>
 
 <body>
 
 <div id = "menu">
 <span>
     <select id = "encja" onChange='window.location="http://localhost:8091/uliczny.html?value=" + this.value;'>
+        <option value="NIE_WYBRANO">-__-</option>
         <option value = "A">A</option>
         <option value = "B">B</option>
         <option value = "C">C</option>
@@ -296,75 +288,9 @@ co robi powyższe
 
 
 <table id = "obywatel">
-    <thead class="nagl row" id="nago">
-    <tr >
-
-        <th  class=' kol okol1'>id</th>
-        <th  class=' kol '>pesel</th>
-        <th  class=' kol'>numer dowodu</th>
-        <th  class=' kol'>imie</th>
-        <th class=' kol'>nazwisko</th>
-        <th  class=' kol'>data urodzenia</th>
-        <th  class=' kol'>adres</th>
-
-
-    </tr>
-    </thead>
-
-    <thead class="nagl row" id="nagp">
-
-    <tr>
-
-        <th  class='okol1 kol id'>id</th>
-        <th  class='okol2 kol'>nr rejstracyjny</th>
-        <th class='okol3 kol'>marka</th>
-        <th  class='okol4 kol'>model </th>
-        <th  class='okol5 kol'>rok produkcji</th>
-        <th  class='okol6 kol'>kolor</th>
-        <th class='okol7 kol'>uwagi</th>
-
-
-    </tr>
-    </thead>
-
-    <thead class="nagl row" id="naga">
-
-    <tr >
-
-        <th  class='okol1 kol id' onclick="orderBy('abo_id')" id="abo_id">id</th>
-        <th  class='okol2 kol' onclick="orderBy('abo_data_rozpoczecia')" id="abo_data_rozpoczecia">data rozpoczecia</th>
-        <th  class='okol3 kol'  onclick="orderBy('abo_data_zakonczenia')" id="abo_data_zakonczenia">data zakonczenia</th>
-        <th  class='okol4  base' onclick="orderBy('abo_sektor')" id="abo_sektor">sektor</th>
-        <th  class='okol2  base' onclick="orderBy('abo_nr_rejstracyjny')" id="abo_nr_rejstracyjny">nr rejstracyjny</th>
-        <th class='okol3  base' onclick="orderBy('abo_marka')" id="abo_marka">marka</th>
-        <th  class='okol4  base' onclick="orderBy('abo_model')" id="abo_model">model </th>
-        <th  class=' kol' onclick="orderBy('abo_imie')" id="abo_imie">imie</th>
-        <th class=' kol'onclick="orderBy('abo_nazwisko')" id="abo_nazwisko">nazwisko</th>
-        <th  class='kol' onclick="orderBy('abo_pesel')" id="abo_pesel">pesel</th>
-
-
-
-    </tr>
-    </thead>
 </table>
-<!--<form id = "formularz">
-  nr dowodu: <br>
-  <input type = "text " name = "nr_dowodu" ><br>
-  imie: <br>
-  <input type = "text " name = "imie" ><br>
-  nazwisko: <br>
-  <input type = "text " name = "nazwisko" ><br>
-  adres: <br>
-  <input type = "text " name = "adres" ><br>
-  data urodzenia: <br>
-  <input type = "date " name = "data_urodzenia" ><br>
-  pesel:<br>
-  <input type = "text " name = "pesel" ><br><br>
-  <input type = "submit" value = "Zatwierdź">
+<!---->
 
-
-</form>-->
-<div id = "formularz"></div>
 
 
 
@@ -398,8 +324,8 @@ co robi powyższe
 
     var global_dupa
 
-    if(c === null)
-        c = "abonament"
+    if(wyb_sektor === null)
+        wyb_sektor = "NIE_WYBRANO"
     if(arch === null)
         arch = false
 
@@ -579,8 +505,7 @@ co robi powyższe
 
             wybraneDane = obywatelDane
 
-            document.getElementById("naga").remove()
-            document.getElementById("nagp").remove()
+
 
             document.getElementById("dodaj").classList.add("hid")
             document.getElementById("edytuj").classList.add("hid")
@@ -592,8 +517,6 @@ co robi powyższe
 
             wybraneDane = abonamentDane
 
-            document.getElementById("nago").remove()
-            document.getElementById("nagp").remove()
 
 
 
@@ -602,8 +525,7 @@ co robi powyższe
 
             wybraneDane = pojazdDane
 
-            document.getElementById("nago").remove()
-            document.getElementById("naga").remove()
+
 
             document.getElementById("obywatel").classList.add("poj-pad");
 
@@ -647,21 +569,42 @@ co robi powyższe
             // confirm("czy arch jest logiczny")
             let barch = JSON.parse(arch)
             if(son.czy_zarchiwizowany === barch){ // warunek do wyświetlania zarchiwizowanych lub nie zarchiwizowanych
-                var iDiv = document.createElement('label')
+                if(wyb_sektor === "NIE_WYBRANO"){
+                    var iDiv = document.createElement('label')
 
-                iDiv.id =  i.toString() + "ob"
+                    iDiv.id =  i.toString() + "ob"
 
-                iDiv.className = "segment"
-
-
-
-                var div = document.getElementById('obywatel')
-
-                wyswietl(son, i,iDiv)
+                    iDiv.className = "segment"
 
 
 
-                div.appendChild(iDiv)
+                    var div = document.getElementById('obywatel')
+
+                    wyswietl(son, i,iDiv)
+
+
+
+                    div.appendChild(iDiv)
+                }
+                else{
+                    if(wyb_sektor === son.sektor){
+                        var iDiv = document.createElement('label')
+
+                        iDiv.id =  i.toString() + "ob"
+
+                        iDiv.className = "segment"
+
+
+
+                        var div = document.getElementById('obywatel')
+
+                        wyswietl(son, i,iDiv)
+
+
+
+                        div.appendChild(iDiv)
+                    }
+                }
             }
 
 
