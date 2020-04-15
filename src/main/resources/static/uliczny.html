@@ -2,7 +2,7 @@
 <html lang="pl-PL">
 <script>
     window.alert = function() {
-        debugger;
+      //  debugger;
     }
 </script>
 <head>
@@ -352,8 +352,11 @@ co robi powyższe
             //console.log(list[i].toString().includes(c.toString()))
             //console.log(list[i].includes(c))
             if( list[i].outerHTML.includes(wyb_sektor)){
-                 document.getElementById("encja")[i].selected = true;
-                document.getElementById("encja").selectedIndex = i;
+                // document.getElementById("encja")[i].selected = true; // zbędne linijka poniżej wystarcza
+                //document.getElementById("encja").selectedIndex = i; // zbędnie 2 linijki poniżej wystarcza
+                document.getElementById("encja").value = wyb_sektor;
+                console.log("wybrany sektor to:")
+                console.log(wyb_sektor)
                 break;
             }
             else{
