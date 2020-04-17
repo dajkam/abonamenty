@@ -214,27 +214,30 @@ Label the data
      td:nth-of-type(1):before { content: "";  /*w kontext powinno być id ale dziwnie sie wyswietla jest zamienione miejscami z numerem*/
 
      }
-     td:nth-of-type(2):before { content: "rozpoczecie";
+     td:nth-of-type(2):before{
+         content: "Status:";
+     }
+     td:nth-of-type(3):before { content: "rozpoczecie";
          padding-right: 30px;
          text-align: left;
 
      }
-     td:nth-of-type(3):before { content: "zakonczenie";
+     td:nth-of-type(4):before { content: "zakonczenie";
          padding-right: 30px;
          text-align: left;
 
 
      }
-     td:nth-of-type(4):before { content: "sektor"; }
-     td:nth-of-type(5):before { content: "rejstracja";
+     td:nth-of-type(5):before { content: "sektor"; }
+     td:nth-of-type(6):before { content: "rejstracja";
          margin-right: 30px;
 
      }
-     td:nth-of-type(6):before { content: "marka"; }
-     td:nth-of-type(7):before { content: "model"; }
-     td:nth-of-type(8):before { content: "imie"; }
-     td:nth-of-type(9):before { content: "nazwisko"; }
-     td:nth-of-type(10):before { content: "pesel"; }
+     td:nth-of-type(7):before { content: "marka"; }
+     td:nth-of-type(8):before { content: "model"; }
+     td:nth-of-type(9):before { content: "imie"; }
+     td:nth-of-type(10):before { content: "nazwisko"; }
+     td:nth-of-type(11):before { content: "pesel"; }
  }
 
 
@@ -463,6 +466,7 @@ co robi powyższe
         "<tr class='row'>" +
         "<th class=' hid  '> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
         "<td   class='okol1  kol id abo_id' >{{id}} </td>"+
+        "<td class='base abo_czy_zarchiwizowany'>{{formatZarchiwizowany czy_zarchiwizowany}}</td>"+
         "<td   class='okol2  kol abo_data_rozpoczecia' title='{{data_rozpoczecia}}'>{{formatDate  data_rozpoczecia 'short'}}</td>"+
         "<td   class='okol3  kol abo_data_zakonczenia' title='{{data_zakonczenia}}'>{{formatDate data_zakonczenia 'short'}}</td>"+
         "<td   class='okol4   base abo_sektor'>{{sektor}}</td> "+
@@ -625,7 +629,7 @@ co robi powyższe
 
         }
 
-
+        koloruj_status(); /// kolorowanie komórki status
 
 
 
@@ -1095,6 +1099,39 @@ co robi powyższe
 
         }
         console.log(cell)
+
+    }
+
+    Handlebars.registerHelper( "formatZarchiwizowany", function (czy_zarchiwizowany) {
+
+
+
+            if(czy_zarchiwizowany == true){ // jest == zamiast === bo nie wiem co dokładnie trafia do helpera. // == tez daje w tym przypadku pożądany efekt
+                return "WYGASŁY";
+            }
+
+            else{
+                return "AKTUALNY";
+            }
+
+
+        }
+
+    );
+
+    function koloruj_status() {
+        //item.style.backgroundColor
+        // żeby dostać sie do textu używamy innerHTML
+        var cells = document.getElementsByClassName('abo_czy_zarchiwizowany');
+        for (let i = 0; i<cells; i++){
+            if(cells[i].innerHTML ==="WYGASŁY")
+                cells[i].style.backgroundColor = "red";
+            else
+                cells[i].style.backgroundColor = "green";
+
+
+
+        }
 
     }
 
