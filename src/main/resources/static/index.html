@@ -276,7 +276,7 @@ th, td{
     if(arch === null)
         arch = false
 
-    if((szuk!=null)||!(/^\s+$/.test(szuk))){
+    if((szuk!==null)||!(/^\s+$/.test(szuk))){
         document.getElementById("wyszuk").value = szuk;
 
     }
@@ -735,7 +735,7 @@ alert("w dattime")
         var e = document.getElementById("encja");
         var url2 = e.options[e.selectedIndex].value;
 
-         if(szuk != null){ // wyszukiwanie
+         if(szuk !== null){ // wyszukiwanie
              let url3 = "/szukaj/"
             let url =  url1+url2+url3+szuk
              return ajax('GET',url)
@@ -802,7 +802,7 @@ alert("w dattime")
 
         var xhr = new XMLHttpRequest();
         var url = "http://localhost:8091/"+ c.toString() +"/update";
-        if(k!=null)
+        if(k!==null)
             url = "http://localhost:8091/"+ k.toString() +"/update";
         console.log(url)
 
@@ -900,7 +900,7 @@ alert("w dattime")
 
     }
     function walidacjaPesela(pesel) {
-        if (pesel.length !=11){
+        if (pesel.length !==11){
             alert("PESEL musi mieć 11 cyfr")
             return false
         }
@@ -1048,7 +1048,7 @@ alert("w dattime")
 
         loadData()
             .then(function(res, preson) {
-                if(id != -1) {
+                if(id !== -1) {
                     preson = insertData(res, preson);
                     console.log(preson[0].nazwisko)
 
@@ -1160,7 +1160,7 @@ alert("w dattime")
 
 
 
-                        if((document.getElementById("ina3").value != "WSZYSTKIE")){
+                        if((document.getElementById("ina3").value !== "WSZYSTKIE")){
 
                             son.uwagi = document.getElementById("ina4").value // uwagi jeśli mają
 
@@ -1244,8 +1244,9 @@ alert("w dattime")
                 template = Handlebars.compile(wybraneDane);
 
                 var dane2 = template(son);
-                if(son.id != -1)
+                if(son.id !== -1)
                   sendSon(son)
+                  alert("Zaraz po wykonaniu sendSon")
                 if(son.id === -1){
                     // insertSon(son)
                     son_set.add(son);
@@ -1598,9 +1599,9 @@ function block_buttons() {
    var itemsy = Array.from(items).sort(  function(a, b) {
        return a.title.toString().localeCompare(b.title.toString());
    });
-    if(id != id_old_sort)
+    if(id !== id_old_sort)
         jij = 0;
-    if(jij % 2 != 0){
+    if(jij % 2 !== 0){
         document.getElementById(id).style.backgroundColor = "yellow"
         itemsy.reverse();
     }
