@@ -798,12 +798,11 @@ th, td{
     }
 
 
-    function sendSon(son, k) {
+    function sendSon(son) {
 
         var xhr = new XMLHttpRequest();
         var url = "http://localhost:8091/"+ c.toString() +"/update";
-        if(k!==null)
-            url = "http://localhost:8091/"+ k.toString() +"/update";
+
         console.log(url)
 
         xhr.open("POST", url, true);
@@ -821,7 +820,7 @@ th, td{
         delete son.kiedy_zmodyfikowano
         delete son.kiedy_utworzono
 
-        if((c.toString() === "pojazd")|| (k === "pojazd")){
+        if(c.toString() === "pojazd"){
 
             delete son.marka;
             delete son.marka_id;
