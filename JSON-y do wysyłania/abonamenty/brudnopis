@@ -1,0 +1,28 @@
+{"id":2,
+"marka":"Mercedes",
+"model":"A Klasa",
+"imie":"Filip",
+"data_zakonczenia":"2019-06-07",
+"sektor":"A",
+"uwagi":"",
+"czy_zarchiwizowany":false,
+"nr_rejstracyjny_pojazdu":"GSP 6666",
+"kiedy_utworzono":"2020-04-22T17:34:44.921+0000",
+"pesel":"95101303798",
+"nazwisko":"Machaj",
+"data_rozpoczecia":"2020-4-22",
+"kiedy_zmodyfikowano":"2020-04-22T17:34:44.921+0000",
+"model_id":2,
+"obywatel_id":1,
+"marka_id":1,"pojazd_id":2,"data_urodzenia":"2021-4-22"}
+
+
+{
+"data_zakonczenia":"2021-4-22",
+"sektor":"A",
+"uwagi":"",
+"czy_zarchiwizowany":false,
+"data_rozpoczecia":"2020-4-22",
+"id":2,
+"pojazd":{"id":2}
+}

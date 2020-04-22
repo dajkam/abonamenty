@@ -71,6 +71,12 @@ class PojazdController {
     )
     fun archwizujPojazd(@PathVariable(name = "id")id:Long) = service.archwizujPojazd(id)
 
+    @PostMapping(
+            value = ["odnow/{id}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun odnowPojazd(@PathVariable(name = "id")id:Long) = service.odnowPojazd(id)
+
     @GetMapping(
             value = ["/szukaj/{fraza}"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)

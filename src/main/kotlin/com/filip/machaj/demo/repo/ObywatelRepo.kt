@@ -31,6 +31,14 @@ interface ObywatelRepo : CrudRepository<Obywatel, Long>  {
         where id = :id""", nativeQuery = true)
     fun archwizujObywatela(@Param("id") id:Long) // tego typu funkcje muszą być typu void.
 
+    @Modifying(clearAutomatically = true, flushAutomatically = true) // mandatory if native quaries are modying something in the dataBase
+    @Transactional
+    @Query("""
+        update obywatel
+        set czy_zarchiwizowany = false 
+        where id = :id""", nativeQuery = true)
+    fun odnowObywatela(@Param("id") id:Long) // tego typu funkcje muszą być typu void.
+
     @Query("""
         select * from obywatel
         where 

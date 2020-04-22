@@ -105,6 +105,9 @@ class ObywatelService {
     @Transactional
     fun archiwizujObywatela(id:Long) = repo.archwizujObywatela(id)
 
+    @Transactional
+    fun odnowObywatela(id:Long) = repo.odnowObywatela(id)
+
 
     fun szukaj(fraza:String):Iterable<Obywatel> = repo.szukaj(fraza.toLowerCase())
 
