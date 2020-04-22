@@ -144,6 +144,8 @@ th, td{
 
      <button id="usun" class = 'but4 butt hid' type='button' onclick='usun(wyb_rekord())'  tabindex="-1" >Usun</button>
 
+    <button id="odnow" class = 'but4 butt hid' type='button' onclick='odnow(wyb_rekord())'  tabindex="-1" >Odnow</button>
+
       <button class = 'but5 butt' type='button' onclick='powiazane()'  tabindex="-1">Wyświetl Szczegóły</button>
 </span>
 
@@ -570,6 +572,14 @@ th, td{
             console.log(isBoolean(arch))
            // confirm("czy arch jest logiczny")
             let barch = JSON.parse(arch)
+            if (barch === true){
+                document.getElementById("usun").classList.add("hid")
+                document.getElementById("odnow").classList.remove("hid")
+            } else{
+                document.getElementById("usun").classList.remove("hid")
+                document.getElementById("odnow").classList.add("hid")
+
+            }
             if(son.czy_zarchiwizowany === barch){ // warunek do wyświetlania zarchiwizowanych lub nie zarchiwizowanych
                 var iDiv = document.createElement('label')
 
@@ -860,9 +870,11 @@ th, td{
         console.log("//////////////////////////////////////////////////////////////////////////")
 
         console.log(json)
+        alert("json wysyłany w sendSon")
 
 
         xhr.send(json)
+        alert("po wysłaniu jsona:")
 
         location.reload(true)
 
@@ -1459,6 +1471,76 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
     }
 
 }
+
+    function odnow(id) { // rozbudować porobić trigery dla usuwania obywatela wraz z jego samochodami i abonamentami
+        if(!JSON.parse(arch))
+            alert("nie można odnawiać nie usuniętych danych")
+        else {
+            if (confirm("Czy napeno chcesz odnowić ten element")) { // czy trigger w backendzie to dobry pomysł?
+                // najlepiej zrobić to za pomocą jakiegoś zapytania SQL myślę
+
+                var on = parseInt(id, 10)
+                if (c === 'abonament') {
+                    loadDataToUsun('abonament')
+                        .then(function (res, preson) {
+                            preson = insertData(res, preson)
+                            let son = preson[on]
+
+
+                            let obywatel_id = son.obywatel_id
+                            let pojazd_id = son.pojazd_id
+
+
+
+                         let   url = "http://localhost:8091/obywatel/odnow/" + obywatel_id.toString()
+                            ajax("POST", url, false)
+                            url = "http://localhost:8091/pojazd/odnow/" + pojazd_id.toString()
+                            ajax("POST", url, false)
+
+                            odnow_abonament(son)
+
+
+
+                        });
+
+
+                } else {
+                    loadData()
+                        .then(function (res, preson) {
+                            preson = insertData(res, preson)
+                            let son = preson[on]
+                            son.czy_zarchiwizowany = false;
+                            sendSon(son)
+
+
+                        })
+                }
+
+                location.reload(true)
+            } else {
+
+            }
+        }
+
+    }
+    function odnow_abonament(son) {
+        let today = new Date();
+        let month = today.getMonth() + 1 // bo liczy miesiące od zera
+        let day = today.getDate()
+        if(month < 10)
+            month = "0" + month;
+        if(day < 10)
+            day = "0" + day;
+        son.czy_zarchiwizowany = false;
+        son.data_rozpoczecia = today.getFullYear() +"-" + month + "-" + day;
+        son.data_zakonczenia =  (today.getFullYear()+1) +"-" + month + "-" + day;
+        console.log("odnawiany abonament w console log:")
+        console.log(JSON.stringify(son))
+        alert("odnawiany abonament w console log")
+
+        sendSon(son)
+
+    }
 
 /*function dodaj() {
       templates = Handlebars.compile(formularz);

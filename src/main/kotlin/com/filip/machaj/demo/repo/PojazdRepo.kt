@@ -39,6 +39,13 @@ on model.marka_id = marka.id
         set czy_zarchiwizowany = true 
         where id = :id""", nativeQuery = true)
     fun archwizujPojazd(@Param("id") id:Long) // tego typu funkcje muszą być typu void.
+    @Modifying(clearAutomatically = true, flushAutomatically = true) // mandatory if native quaries are modying something in the dataBase
+    @Transactional
+    @Query("""
+        update pojazd 
+        set czy_zarchiwizowany = false 
+        where id = :id""", nativeQuery = true)
+    fun odnowPojazd(@Param("id") id:Long) // tego typu funkcje muszą być typu void.
     @Query("""
   select pojazd.id,pojazd.czy_zarchiwizowany,pojazd.kiedy_utworzono,pojazd.kiedy_zmodyfikowano,pojazd.kolor,pojazd.nr_rejstracyjny_pojazdu,pojazd.rok_produkcji,pojazd.uwagi, marka.nazwa as marka,model.nazwa as model, pojazd.model_id,pojazd.obywatel_id, model.marka_id from pojazd
   join model 

@@ -84,6 +84,12 @@ class ObywatelController {
     )
     fun archwizujObywatela(@PathVariable(name = "id")id:Long) = service. archiwizujObywatela(id)
 
+    @PostMapping(
+            value = ["odnow/{id}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun odnowObywatela(@PathVariable(name = "id")id:Long) = service.odnowObywatela(id)
+
     @GetMapping(
             value = ["/szukaj/{fraza}"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
