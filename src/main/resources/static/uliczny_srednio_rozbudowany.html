@@ -284,8 +284,8 @@
 </span>
 
     <span id="filtry">
-        <input class="hid" type="checkbox" id="arch" name="pokaż wygasłe" value="true" onChange='wyswietl_zarchiwizowane(this.checked)'>
-    <label class="hid" for="arch">Pokaż Wygasłe</label>
+        <input type="checkbox" id="arch" name="pokaż wygasłe" value="true" onChange='wyswietl_zarchiwizowane(this.checked)'>
+    <label for="arch">Pokaż Wygasłe</label>
 
     </span>
 
@@ -578,10 +578,10 @@
     function main(preson) {
 
         for ( var i = 0;i<preson.length; i++) {
-            if (c === "pojazd") {
+            if(c === "pojazd"){
                 pojazd_size = preson.length
             }
-            if (c === "obywatel") {
+            if(c === "obywatel"){
                 obywatel_size = preson.length
             }
 
@@ -591,43 +591,44 @@
             console.log(isBoolean(arch))
             // confirm("czy arch jest logiczny")
             let barch = JSON.parse(arch)
-         //   let bszuk = JSON.parse(szuk)
-            //  if(son.czy_zarchiwizowany === barch){ // warunek do wyświetlania zarchiwizowanych lub nie zarchiwizowanych
-
-            if (wyb_sektor === "NIE_WYBRANO") {
-                var iDiv = document.createElement('label')
-
-                iDiv.id = i.toString() + "ob"
-
-                iDiv.className = "segment"
-
-
-                var div = document.getElementById('obywatel')
-
-                wyswietl(son, i, iDiv)
-              //  console.log(bszuk)
-
-
-                div.appendChild(iDiv)
-            } else {
-                if (wyb_sektor === son.sektor) {
+            if(son.czy_zarchiwizowany === barch){ // warunek do wyświetlania zarchiwizowanych lub nie zarchiwizowanych
+                if(wyb_sektor === "NIE_WYBRANO"){
                     var iDiv = document.createElement('label')
 
-                    iDiv.id = i.toString() + "ob"
+                    iDiv.id =  i.toString() + "ob"
 
                     iDiv.className = "segment"
 
 
+
                     var div = document.getElementById('obywatel')
 
-                    wyswietl(son, i, iDiv)
+                    wyswietl(son, i,iDiv)
+
 
 
                     div.appendChild(iDiv)
                 }
-            }
-            //  } koniec barch koniec warunku do wyswietlania zarchiwizowanych
+                else{
+                    if(wyb_sektor === son.sektor){
+                        var iDiv = document.createElement('label')
 
+                        iDiv.id =  i.toString() + "ob"
+
+                        iDiv.className = "segment"
+
+
+
+                        var div = document.getElementById('obywatel')
+
+                        wyswietl(son, i,iDiv)
+
+
+
+                        div.appendChild(iDiv)
+                    }
+                }
+            }
 
 
         }
@@ -642,47 +643,46 @@
     }
 
     function wyswietl(son, i,iDiv) {
-        let bszuk = szuk
-        console.log(bszuk)
-        if((bszuk!==null)){ // to powoduje że wyświetlanie bez wyszukiwania nie działa
-            if(bszuk!=="") {
-                template = Handlebars.compile(wybraneDane);
-                console.log(template)
-                alert(template)
-
-
-                var dane = template(son);
-                console.log(dane)
-                alert(dane)
-
-
-                var butDiv = document.createElement('div')
-
-                butDiv.id = i.toString() + "-buttons"
-
-                butDiv.className = "butt"
-
-                butDiv.innerHTML = (but3 + but5 + but4)
-
-
-                var bancz = (dane);
-
-
-                //  document.getElementById('ob' + i.toString()).innerHTML += bancz;
-
-                iDiv.innerHTML += bancz;
-
-                iDiv.appendChild(butDiv)
-
-                iDiv.innerHTML += "</br></br>"
-                iDiv.getElementsByTagName('input')[0].value = i.toString() + " " + "selected"
-            }// to też trzeba wyłączyć aby się normalnie wyswietlało
-
-
-        } // koniec blokowania wys
 
 
 
+        template = Handlebars.compile(wybraneDane);
+        console.log(template)
+        alert(template)
+
+
+        var dane = template(son);
+        console.log(dane)
+        alert(dane)
+
+
+
+
+
+
+
+        var butDiv = document.createElement('div')
+
+        butDiv.id =  i.toString() + "-buttons"
+
+        butDiv.className = "butt"
+
+        butDiv.innerHTML =  (but3 + but5 + but4)
+
+
+
+        var bancz = ( dane );
+
+
+
+        //  document.getElementById('ob' + i.toString()).innerHTML += bancz;
+
+        iDiv.innerHTML += bancz;
+
+        iDiv.appendChild(butDiv)
+
+        iDiv.innerHTML+="</br></br>"
+        iDiv.getElementsByTagName('input')[0].value = i.toString() + " "+  "selected"
 
     }
 
@@ -1144,4 +1144,5 @@
 
 </body>
 </html>
+
 
