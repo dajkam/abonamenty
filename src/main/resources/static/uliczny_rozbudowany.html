@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="pl-PL">
 <script>
     window.alert = function() {
-        //  debugger;
+      //  debugger;
     }
 </script>
 <head>
@@ -22,240 +21,237 @@
 
 
 
-    <style>
+<style>
 
-        .hid{
-            display: none;
-            overflow:hidden;
-            visibility: hidden;
-        }
-        #naga{
-            display: none;
-        }
-
-
-        .nagl{
+    .hid{
+        display: none;
+        overflow:hidden;
+        visibility: hidden;
+    }
+    #naga{
+        display: none;
+    }
 
 
-            background-color: #167F92;
-            top: 100px;
-            position: fixed;
-            padding: 20px;
-            display: none;
-
-        }
+    .nagl{
 
 
-        th, td{
-            width: 12vw;
-            text-align: center;
-        }
+        background-color: #167F92;
+        top: 100px;
+        position: fixed;
+        padding: 20px;
+        display: none;
 
-        .row{
-            /* display: table-row;*/
-            display: table-row;
-            table-layout: fixed;
-            width: 100%;
-
-        }
-        td:empty { display: none; }
-        #menu{
-            padding: 20px;
-            top: 0;
-            position: fixed;
-            background-color: #167F92;
-            visibility: visible;
-            z-index: 2;
-            width: 100%;
+    }
 
 
+    th, td{
+        width: 12vw;
+        text-align: center;
+    }
 
+    .row{
+        /* display: table-row;*/
+        display: table-row;
+        table-layout: fixed;
+        width: 100%;
 
-
-
-        }
-        #obywatel{
-            top: 200px;
-            position: relative;
-            z-index: 1;
-
-        }
-        #formularz{
-            top: 200px;
-            position: relative;
-            z-index: 0;
-            padding-top: 10px;
-
-        }
-        .poj-pad{
-            top: 250px;
-            padding-top: 50px;
-        }
-        .okol1{
-            padding-left: 10px;
-            text-align: center;
-
-        }
-        .base{ } /*   Bardzo ważna klasa  rozróżnia kliknięte krotki-kafelki w widoku mobilnym dla ulicznego*/
-        #encja{
-            display: none; /*wyświetlanie sektora oznaczam jako niewidoczne*/
-        }
-
-        @media screen and (max-width: 1024px) {
-            .nagl{
-
-
-                background-color: unset;
-                top: unset;
-                position: unset;
-                padding: unset;
-                display: none;
-
-            }
-            .kol{
-
-                display: none;
-
-
-            }
-            /*  #menu{
-                  padding: unset;
-                  top: unset;
-                  position: unset;
-                  background-color: #167F92;
-                  visibility: unset;
-                  z-index: unset;
-                  width: unset;
-              }*/
-            #menu{
-
-            }
-            #obywatel{
-                top: 70px;
-                position: relative;
-                z-index: 1;
-
-            }
-
-
-            th, td{
-                width: unset;
-                text-align: unset;
-            }
-
-            .row{
-                /* display: table-row;*/
-                display: unset;
-                table-layout: unset;
-                width: unset;
-                margin: auto; /* Pierwsza krotka się nie rozjeżdza*/
-
-            }
-            table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-            td, th {
-                padding: 6px;
-                border: 1px solid #ccc;
-                text-align: left;
-                margin: auto;
-            }
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-
-            /* Hide table headers (but not display: none;, for accessibility) */
-            thead tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-
-            tr { border: 1px solid #ccc; }
-
-            td {
-                /* Behave  like a "row" */
-                border: none;
-                border-bottom: 1px solid #eee;
-                position: relative;
-                padding-left: 50%;
-                /*word-break: break-word;*/
-                /*overflow: auto;*/
-
-
-
-            }
-
-            td:before {
-                /* Now like a table header */
-                position: absolute;
-                /* Top/left values mimic padding */
-                top: 6px;
-                left: 30px;
-                width: 100%;
-
-
-                white-space: nowrap;
-
-
-                /*position: relative;*/ /*ciekawy efekt warty wypróbowania później*/
-
-            }
-
-
-            /*
-       Label the data
-       */
-            td:nth-of-type(odd):before {
-                overflow-wrap: break-word;
-            }
-            td:nth-of-type(even):before {
-                overflow-wrap: break-word;
-
-            }
-
-            td:nth-of-type(1):before { content: "";  /*w kontext powinno być id ale dziwnie sie wyswietla jest zamienione miejscami z numerem*/
-
-            }
-            td:nth-of-type(2):before{
-                content: "Status:";
-            }
-            td:nth-of-type(3):before { content: "rozpoczecie";
-                padding-right: 30px;
-                text-align: left;
-
-            }
-            td:nth-of-type(4):before { content: "zakonczenie";
-                padding-right: 30px;
-                text-align: left;
-
-
-            }
-            td:nth-of-type(5):before { content: "sektor"; }
-            td:nth-of-type(6):before { content: "rejstracja";
-                margin-right: 30px;
-
-            }
-            td:nth-of-type(7):before { content: "marka"; }
-            td:nth-of-type(8):before { content: "model"; }
-            td:nth-of-type(9):before { content: "imie"; }
-            td:nth-of-type(10):before { content: "nazwisko"; }
-            td:nth-of-type(11):before { content: "pesel"; }
-        }
+    }
+    td:empty { display: none; }
+    #menu{
+        padding: 20px;
+        top: 0;
+        position: fixed;
+        background-color: #167F92;
+        visibility: visible;
+        z-index: 2;
+        width: 100%;
 
 
 
 
 
-        /*tr:nth-of-type(odd) {
-          background: #eee;
-        }
-        co robi powyższe
 
-        */
+    }
+    #obywatel{
+        top: 200px;
+        position: relative;
+        z-index: 1;
 
-    </style>
+    }
+    #formularz{
+        top: 200px;
+        position: relative;
+        z-index: 0;
+        padding-top: 10px;
+
+    }
+    .poj-pad{
+        top: 250px;
+        padding-top: 50px;
+    }
+    .okol1{
+        padding-left: 10px;
+        text-align: center;
+
+    }
+    .base{ } /*   Bardzo ważna klasa  rozróżnia kliknięte krotki-kafelki w widoku mobilnym dla ulicznego*/
+
+ @media screen and (max-width: 1024px) {
+     .nagl{
+
+
+         background-color: unset;
+         top: unset;
+         position: unset;
+         padding: unset;
+         display: none;
+
+     }
+     .kol{
+
+         display: none;
+
+
+     }
+   /*  #menu{
+         padding: unset;
+         top: unset;
+         position: unset;
+         background-color: #167F92;
+         visibility: unset;
+         z-index: unset;
+         width: unset;
+     }*/
+     #menu{
+
+     }
+     #obywatel{
+         top: 70px;
+         position: relative;
+         z-index: 1;
+
+     }
+
+
+     th, td{
+         width: unset;
+         text-align: unset;
+     }
+
+     .row{
+         /* display: table-row;*/
+         display: unset;
+         table-layout: unset;
+         width: unset;
+         margin: auto; /* Pierwsza krotka się nie rozjeżdza*/
+
+     }
+     table {
+         width: 100%;
+         border-collapse: collapse;
+     }
+     td, th {
+         padding: 6px;
+         border: 1px solid #ccc;
+         text-align: left;
+         margin: auto;
+     }
+     table, thead, tbody, th, td, tr {
+         display: block;
+     }
+
+     /* Hide table headers (but not display: none;, for accessibility) */
+     thead tr {
+         position: absolute;
+         top: -9999px;
+         left: -9999px;
+     }
+
+     tr { border: 1px solid #ccc; }
+
+     td {
+         /* Behave  like a "row" */
+         border: none;
+         border-bottom: 1px solid #eee;
+         position: relative;
+         padding-left: 50%;
+         /*word-break: break-word;*/
+         /*overflow: auto;*/
+
+
+
+     }
+
+     td:before {
+         /* Now like a table header */
+         position: absolute;
+         /* Top/left values mimic padding */
+         top: 6px;
+         left: 30px;
+         width: 100%;
+
+
+         white-space: nowrap;
+
+
+         /*position: relative;*/ /*ciekawy efekt warty wypróbowania później*/
+
+     }
+
+
+     /*
+Label the data
+*/
+     td:nth-of-type(odd):before {
+         overflow-wrap: break-word;
+     }
+     td:nth-of-type(even):before {
+         overflow-wrap: break-word;
+
+     }
+
+     td:nth-of-type(1):before { content: "";  /*w kontext powinno być id ale dziwnie sie wyswietla jest zamienione miejscami z numerem*/
+
+     }
+     td:nth-of-type(2):before{
+         content: "Status:";
+     }
+     td:nth-of-type(3):before { content: "rozpoczecie";
+         padding-right: 30px;
+         text-align: left;
+
+     }
+     td:nth-of-type(4):before { content: "zakonczenie";
+         padding-right: 30px;
+         text-align: left;
+
+
+     }
+     td:nth-of-type(5):before { content: "sektor"; }
+     td:nth-of-type(6):before { content: "rejstracja";
+         margin-right: 30px;
+
+     }
+     td:nth-of-type(7):before { content: "marka"; }
+     td:nth-of-type(8):before { content: "model"; }
+     td:nth-of-type(9):before { content: "imie"; }
+     td:nth-of-type(10):before { content: "nazwisko"; }
+     td:nth-of-type(11):before { content: "pesel"; }
+ }
+
+
+
+
+
+/*tr:nth-of-type(odd) {
+  background: #eee;
+}
+co robi powyższe
+
+*/
+
+</style>
 </head>
 
 
@@ -331,7 +327,7 @@
     let url_string =  window.location.href;
     let url = new URL(url_string);
     let c = "abonament";// nie ruszać musi być
-    //  let wyb_sektor = document.getElementById("encja").options[document.getElementById("encja").selectedIndex].value; // wybrany sektor do przeszukiwania
+  //  let wyb_sektor = document.getElementById("encja").options[document.getElementById("encja").selectedIndex].value; // wybrany sektor do przeszukiwania
     let wyb_sektor = url.searchParams.get("value")
     let czy_dodawany = false;
     let pojazd_size = -4
@@ -719,8 +715,8 @@
 
         var url1 = 'http://localhost:8091/'
 
-        //  var e = document.getElementById("encja");
-        //   var url2 = e.options[e.selectedIndex].value; // słóży do wyboru z listy rozwijanej
+      //  var e = document.getElementById("encja");
+     //   var url2 = e.options[e.selectedIndex].value; // słóży do wyboru z listy rozwijanej
         var url2 = "abonament"
 
 
@@ -952,13 +948,13 @@
         let row =  item.parentElement.parentElement.getElementsByTagName("td") // faktyczny rząd tabeli
         console.log("to jest row")
         console.log(row)
-        //  item.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement// wgłab do  i + 'ob'
-        for  (var cell of row){
-            zwin(cell)
-            console.log("to jest cell:")
-            console.log(cell)
+                                                                //  item.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement// wgłab do  i + 'ob'
+      for  (var cell of row){
+          zwin(cell)
+          console.log("to jest cell:")
+          console.log(cell)
 
-        }
+      }
         if (item.checked) {
             alert(item.value)
             rekord = parseInt(item.value.substr(0,item.value.indexOf(' '))); // rekord zmienna globalna
