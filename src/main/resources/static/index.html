@@ -1112,17 +1112,28 @@ th, td{
                         }
                     }
                     if(document.getElementById('zatwierdz').parentElement.id === "ffc"){
-                        var d =  new Date()
+                        let today =  new Date()
+                        let month = today.getMonth() + 1 // bo liczy miesiące od zera
+                        let day = today.getDate()
+                        if(month < 10)
+                            month = "0" + month;
+                        if(day < 10)
+                            day = "0" + day;
+
                         son = {
                             id : -1,
-                            data_rozpoczecia : Date().toString(),
-                            data_zakonczenia : Date(d.getFullYear()+1,d.getMonth(),d.getDay()).toString(),
+                            data_rozpoczecia : "",
+                            data_zakonczenia : "",
                             sektor : "",
                             uwagi : "",
                             czy_zarchiwizowany : false,
                             kto : "abonament",
                             pojazd : {id:-1}
                         }
+                        son.data_rozpoczecia = today.getFullYear() +"-" + month + "-" + day;
+                        son.data_zakonczenia = (today.getFullYear()+1) +"-" + month + "-" + day;
+                        console.log(JSON.stringify(son))
+                        alert("dodawanie abonamentu tuż po ustawieniu dat w sonie:")
                     }
                 }
 
@@ -1554,9 +1565,13 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
 
     function dodaj(formularz) {
         czy_dodawany = true;
+        var dane = null
         template = Handlebars.compile(formularz);
         rekord = -1
-        let dane = template(null)
+        if (formularz === abonamentFormularz)
+             dane = get_empty_abonament_form(template)
+        else
+             dane = template(null)
 
         document.getElementById("obywatel").innerHTML = ""
         document.getElementById("formularz").innerHTML += dane;
@@ -1711,6 +1726,36 @@ function block_buttons() {
     }
     function isBoolean (value) {
         return typeof value === 'boolean';
+    }
+
+    function get_empty_abonament_form(template) {
+        let today =  new Date()
+        let month = today.getMonth() + 1 // bo liczy miesiące od zera
+        let day = today.getDate()
+        if(month < 10)
+            month = "0" + month;
+        if(day < 10)
+            day = "0" + day;
+
+       let son = {
+            id : -1,
+            data_rozpoczecia : "",
+            data_zakonczenia : "",
+            sektor : "",
+            uwagi : "",
+            czy_zarchiwizowany : false,
+            kto : "abonament",
+            pojazd : {id:-1}
+        }
+        son.data_rozpoczecia = today.getFullYear() +"-" + month + "-" + day;
+        son.data_zakonczenia = (today.getFullYear()+1) +"-" + month + "-" + day;
+        console.log(JSON.stringify(son))
+        alert("dodawanie abonamentu tuż po ustawieniu dat w sonie:")
+
+        return template(son);
+
+
+
     }
 
 </script>
