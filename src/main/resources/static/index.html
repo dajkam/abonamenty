@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl-PL">
-<script>
+<!--<script>
     window.alert = function() {
         debugger;
     }
-</script>
+</script>-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -322,7 +322,7 @@ th, td{
     };
     function dataFormat(datetime, format) {
 
-alert("w dattime")
+            alert("w dattime")
             return moment(datetime).format(format);
     }
 
@@ -1244,12 +1244,17 @@ alert("w dattime")
                 template = Handlebars.compile(wybraneDane);
 
                 var dane2 = template(son);
-                if(son.id !== -1)
-                  sendSon(son)
-                  alert("Zaraz po wykonaniu sendSon")
-                if(son.id === -1){
+                if(son.id != -1){
+                      sendSon(son)
+                      alert("Zaraz po wykonaniu sendSon")
+                      alert(son.id)
+                }
+
+
+                if(son.id == -1){
                     // insertSon(son)
                     son_set.add(son);
+                    alert("Zaraz po dodaniu do sonset")
                     if(son.kto === "obywatel"){
                         document.getElementById("formularz").innerHTML = "";
                         dodaj(pojazdFormularz)
@@ -1262,6 +1267,7 @@ alert("w dattime")
                     }
                     if(son.kto === "abonament"){
                         document.getElementById("formularz").innerHTML = "";
+                        alert("przed insert tuple")
                         insertTuple(son_set)
 
                     }
@@ -1479,10 +1485,14 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
     }
 
     function insertTuple(son_set) {
-        var obywatel_id = -3;
-        var pojazd_id = -3
-        if (son_set.length === 3) {
+        alert("Początek tuple");
+        alert(son_set.size) ////// długość seta w js jest tylko size nie lenght
+        let obywatel_id = -3;
+        let pojazd_id = -3;
+        alert(son_set.size)
+            alert("w if tuple")
             for (let item of son_set) {
+                alert("W for tuple")
                 if (item.kto === "obywatel") {
                     insertSon(item)
                     last('http://localhost:8091/obywatel/last')
@@ -1501,6 +1511,7 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
 
                 }
                 if (item.kto === "abonament") {
+                    alert("insert abonament")
                     item.pojazd.id = pojazd_id;
                     insertSon(item)
                     location.reload(true)
@@ -1509,11 +1520,9 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
 
             }
         }
-        else {
-            location.reload(true)
-        }
 
-    }
+
+
 
     function last(url) {
         var request = new XMLHttpRequest();
