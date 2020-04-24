@@ -96,4 +96,10 @@ class ObywatelController {
     )
     fun szukaj(@PathVariable(name = "fraza")fraza:String) = service.szukaj(("%"+fraza.toLowerCase()+"%"))
 
+    @GetMapping(
+            value = ["/get/{id}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun getObywatelById(@PathVariable(name = "id")id:Long) = service.getObywatelById(id)
+
 }

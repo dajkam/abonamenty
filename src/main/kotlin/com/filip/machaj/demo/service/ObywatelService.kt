@@ -111,6 +111,11 @@ class ObywatelService {
 
     fun szukaj(fraza:String):Iterable<Obywatel> = repo.szukaj(fraza.toLowerCase())
 
+
+    fun getObywatelById(id:Long):Obywatel = repo.getObywatelById(id)
+
+
+
 }
 
 
