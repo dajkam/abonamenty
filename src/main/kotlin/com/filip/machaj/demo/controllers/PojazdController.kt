@@ -82,4 +82,10 @@ class PojazdController {
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun szukaj(@PathVariable(name = "fraza")fraza:String) = service.szukaj(("%"+fraza.toLowerCase()+"%"))
+
+    @GetMapping(
+            value = ["/get/{id}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun getPojazdById(@PathVariable(name = "id")id:Long) = service.getPojazdById(id)
 }

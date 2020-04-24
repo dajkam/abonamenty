@@ -101,4 +101,6 @@ class PojazdService {
     fun odnowPojazd(id:Long) = repo.odnowPojazd(id)
 
     fun szukaj(fraza:String):Iterable<PojModMar> = repo.szukaj(fraza.toLowerCase())
+
+    fun getPojazdById(id: Long):Pojazd = repo.getPojazdById(id)
 }
