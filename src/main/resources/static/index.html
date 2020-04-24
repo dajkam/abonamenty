@@ -497,48 +497,50 @@ th, td{
    let sel = document.getElementById("encja");
    let selval = sel.options[sel.selectedIndex].value;
 
-   switch (selval) {
-       case "obywatel":
-          // document.getElementById('ffa').id =  "ff"  /// czemu to daje błąd że jest null
-           obywatelFormularz.id = "ff"
-           wybraneDane = obywatelDane
-           formularz = obywatelFormularz
-           document.getElementById("naga").remove()
-           document.getElementById("nagp").remove()
+    switch (selval) {
+        case "obywatel":
+            // document.getElementById('ffa').id =  "ff"  /// czemu to daje błąd że jest null
+            obywatelFormularz.id = "ff"
+            wybraneDane = obywatelDane
+            formularz = obywatelFormularz
+            document.getElementById("naga").remove()
+            document.getElementById("nagp").remove()
 
-           document.getElementById("dodaj").classList.add("hid")
-           document.getElementById("edytuj").classList.add("hid")
-           document.getElementById("usun").classList.add("hid")
+            document.getElementById("dodaj").classList.add("hid")
+            document.getElementById("edytuj").classList.add("hid")
+            document.getElementById("usun").classList.add("hid")
 
-           break;
-       case "abonament":
-          // document.getElementById('ffb').id =  "ff" /// czemu to daje bląd że jest null
-           abonamentFormularz.id = "ff"
-           wybraneDane = abonamentDane
-           formularz = abonamentFormularz
-           document.getElementById("nago").remove()
-           document.getElementById("nagp").remove()
+            break;
+        case "abonament":
+            // document.getElementById('ffb').id =  "ff" /// czemu to daje bląd że jest null
+            abonamentFormularz.id = "ff"
+            wybraneDane = abonamentDane
+            formularz = abonamentFormularz
+            document.getElementById("nago").remove()
+            document.getElementById("nagp").remove()
 
-           document.getElementById("dodaj").classList.remove("hid")
-           document.getElementById("edytuj").classList.remove("hid")
-           document.getElementById("usun").classList.remove("hid")
+            document.getElementById("dodaj").classList.remove("hid")
+            document.getElementById("edytuj").classList.remove("hid")
+            document.getElementById("usun").classList.remove("hid")
 
-           break;
-       case "pojazd":
-           pojazdFormularz.id = "ff"
-           wybraneDane = pojazdDane
-           formularz = pojazdFormularz
-           document.getElementById("nago").remove()
-           document.getElementById("naga").remove()
+            break;
+        case "pojazd":
+            pojazdFormularz.id = "ff"
+            wybraneDane = pojazdDane
+            formularz = pojazdFormularz
+            document.getElementById("nago").remove()
+            document.getElementById("naga").remove()
 
-           document.getElementById("obywatel").classList.add("poj-pad");
+            document.getElementById("obywatel").classList.add("poj-pad");
 
-           document.getElementById("dodaj").classList.add("hid")
-           document.getElementById("edytuj").classList.add("hid")
-           document.getElementById("usun").classList.add("hid")
+            document.getElementById("dodaj").classList.add("hid")
+            document.getElementById("edytuj").classList.add("hid")
+            document.getElementById("usun").classList.add("hid")
 
-           break;
-   }
+            break;
+    }
+
+    
 
 
 
@@ -572,13 +574,17 @@ th, td{
             console.log(isBoolean(arch))
            // confirm("czy arch jest logiczny")
             let barch = JSON.parse(arch)
-            if (barch === true){
+            if ((barch === true)&&(selval ==="abonament")){
                 document.getElementById("usun").classList.add("hid")
                 document.getElementById("odnow").classList.remove("hid")
-            } else{
+            } else if(selval ==="abonament"){
                 document.getElementById("usun").classList.remove("hid")
                 document.getElementById("odnow").classList.add("hid")
 
+            }
+            else {
+                document.getElementById("usun").classList.add("hid")
+                document.getElementById("odnow").classList.add("hid")
             }
             if(son.czy_zarchiwizowany === barch){ // warunek do wyświetlania zarchiwizowanych lub nie zarchiwizowanych
                 var iDiv = document.createElement('label')
@@ -608,7 +614,9 @@ th, td{
 
 
 
+
     }
+
 
     function wyswietl(son, i,iDiv) {
 
@@ -786,14 +794,14 @@ th, td{
 
 
 
-    loadData()
+    loadData()  // to jest właściwe wykonywanie programu
         .then(function(res) {
           // preson = insertData(res, preson);
             var preson = []
             var preson = JSON.parse(res)
             console.log(preson)
             main(preson)
-        })
+        }) // koniec właściwego wykonywania programu
 
     function insertData(res, preson) {
         console.log(res);
