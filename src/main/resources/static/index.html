@@ -137,7 +137,7 @@ th, td{
 
 
     </select>
-    <p>dupadupa dupa dupa</p>
+
 
     <button  id="dodaj" class="add hid" type='button' onclick=" dodaj(obywatelFormularz)"  tabindex="-1">Dodaj</button>
 
@@ -147,7 +147,7 @@ th, td{
 
     <button id="odnow" class = 'but4 butt hid' type='button' onclick='odnow(wyb_rekord())'  tabindex="-1" >Odnow</button>
 
-      <button class = 'but5 butt' type='button' onclick='powiazane()'  tabindex="-1">Wyświetl Szczegóły</button>
+      <button class = 'but5 butt' type='button' onclick='powiazane(wyb_rekord())'  tabindex="-1">Wyświetl Szczegóły</button>
 </span>
 
     <span id="filtry">
@@ -1763,6 +1763,60 @@ function block_buttons() {
 
         return template(son);
 
+
+
+    }
+
+    function powiazane(id) {
+        const table_dan = document.getElementById("obywatel") // const jest lepszy w przypadku obiektów jak ten bo zawsze ma pokazywać ten obiekt i obiekty w js zawsze sa przekazywane przez referencje
+        table_dan.textContent = ""; // można też użyć .innerHTML ale podobno to podejscie jest lepsze bo nie wywołuje parsera html przeglądarki
+        /*
+        *
+        *
+        * With const, though, you're explicitly telling the engine that the value cannot change¹. So it's free to do any optimization it wants, including emitting a literal instead of a variable reference to code using it, knowing that the values cannot be changed.
+
+¹ Remember that with objects, the value is a reference to the object, not the object itself. So with const o = {}, you could change the state of the object (o.answer = 42), but you can't make o point to a new object (because that would require changing the object reference it contains).
+        *
+        *  zródło: https://stackoverflow.com/questions/40070631/v8-javascript-performance-implications-of-const-let-and-var
+        *  najwyżej oceniany post zaznaczony jako rozwiązanie
+        *
+        *
+        *
+        *
+        *
+        *
+        * */
+        let nago = `<thead class="nagl row" id="nago">
+    <tr >
+
+        <th  class=' kol okol1'>id</th>
+        <th  class=' kol '>pesel</th>
+        <th  class=' kol'>numer dowodu</th>
+        <th  class=' kol'>imie</th>
+        <th class=' kol'>nazwisko</th>
+        <th  class=' kol'>data urodzenia</th>
+        <th  class=' kol'>adres</th>
+
+
+    </tr>
+    </thead>`;
+
+        let nagp = ` <thead class="nagl row" id="nagp">
+
+    <tr>
+
+        <th  class='okol1 kol id'>id</th>
+        <th  class='okol2 kol'>nr rejstracyjny</th>
+        <th class='okol3 kol'>marka</th>
+        <th  class='okol4 kol'>model </th>
+        <th  class='okol5 kol'>rok produkcji</th>
+        <th  class='okol6 kol'>kolor</th>
+        <th class='okol7 kol'>uwagi</th>
+
+
+    </tr>
+    </thead>`;
+        table_dan.innerHTML = nago;
 
 
     }
