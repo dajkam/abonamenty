@@ -100,4 +100,6 @@ class AbonamentService {
     fun findAllAbonamentInfoOrderByPesel(): Iterable<AbonamentInfo> = repo.findAllAbonamentInfoOrderByPesel()
 
     fun szukaj(fraza:String):Iterable<AbonamentInfo> = repo.szukaj(fraza.toLowerCase())
+
+    fun getAbonamentInfoById(id: Long): AbonamentInfo = repo.getAbonamentInfoById(id)
 }

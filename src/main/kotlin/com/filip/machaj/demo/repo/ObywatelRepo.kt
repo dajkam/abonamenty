@@ -48,5 +48,9 @@ interface ObywatelRepo : CrudRepository<Obywatel, Long>  {
         
     """, nativeQuery = true)
     fun szukaj(fraza:String):Iterable<Obywatel>
+    @Query("select * from obywatel where id = ?1", nativeQuery = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    fun getObywatelById(@Param("id")id:Long):Obywatel
 
 }

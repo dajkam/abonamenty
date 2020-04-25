@@ -61,4 +61,9 @@ on model.marka_id = marka.id
     @JsonIdentityReference(alwaysAsId = true)
     fun szukaj(fraza:String): Iterable<PojModMar>
 
+    @Query("select * from pojazd where id = :id", nativeQuery = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    fun getPojazdById(id:Long): Pojazd
+
 }
