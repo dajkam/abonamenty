@@ -1845,39 +1845,12 @@ function block_buttons() {
         *
         *
         * */
-        let nago = `<thead class="nagl row" id="nago">
-    <tr >
-
-        <th  class=' kol okol1'>id</th>
-        <th  class=' kol '>pesel</th>
-        <th  class=' kol'>numer dowodu</th>
-        <th  class=' kol'>imie</th>
-        <th class=' kol'>nazwisko</th>
-        <th  class=' kol'>data urodzenia</th>
-        <th  class=' kol'>adres</th>
 
 
-    </tr>
-    </thead>`;
 
-        let nagp = ` <thead class="nagl row" id="nagp">
-
-    <tr >
-
-        <th  class='okol1 kol id'>id</th>
-        <th  class='okol2 kol'>nr rejstracyjny</th>
-        <th class='okol3 kol'>marka</th>
-        <th  class='okol4 kol'>model </th>
-        <th  class='okol5 kol'>rok produkcji</th>
-        <th  class='okol6 kol'>kolor</th>
-        <th class='okol7 kol'>uwagi</th>
-
-
-    </tr>
-    </thead>`;
         ob_div.innerHTML = `<table id = "obywatel">
     <thead class="nagl2 row" id="nago2">
-    <tr >
+    <tr id="nago2.1" >
 
         <th  class=' kol okol1'>id</th>
         <th  class=' kol '>pesel</th>
@@ -1893,7 +1866,7 @@ function block_buttons() {
 
     <thead class="nagl2 row" id="nagp2" >
 
-    <tr>
+    <tr id="nagp2.1">
 
         <th  class='okol1 kol id'>id</th>
         <th  class='okol2 kol'>nr rejstracyjny</th>
@@ -1909,7 +1882,7 @@ function block_buttons() {
 
     <thead class="nagl2 row"  id="naga2">
 
-    <tr >
+    <tr id="naga2.1">
 
         <th  class='okol1 kol id' id="abo_id">id</th>
         <th  class='okol2 kol'  id="abo_data_rozpoczecia">data rozpoczecia</th>
@@ -1931,9 +1904,9 @@ function block_buttons() {
         document.getElementById("obywatel").style.top = "110px"; // experymentalnie doszedłem do tych wartosci
         document.getElementById("menu").style.paddingBottom = "0px"; // experymentalnie doszedłem do tych wartosci
 
-        document.getElementById("nago2").style.backgroundColor = "#167F92";
-        document.getElementById("nagp2").style.backgroundColor = "#167F92";
-        document.getElementById("naga2").style.backgroundColor = "#167F92";
+        document.getElementById("nago2.1").style.backgroundColor = "#167F92";
+        document.getElementById("nagp2.1").style.backgroundColor = "#167F92";
+        document.getElementById("naga2.1").style.backgroundColor = "#167F92";
         // manipulacje css-esem koniec
 
         console.log("to jest id w powiązanym")
