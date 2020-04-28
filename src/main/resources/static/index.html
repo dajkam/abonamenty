@@ -242,7 +242,7 @@ th, td{
 
 
 </form>-->
-<div id = "formularz"></div>
+
 
 
 
@@ -1862,7 +1862,7 @@ function block_buttons() {
 
         let nagp = ` <thead class="nagl row" id="nagp">
 
-    <tr>
+    <tr >
 
         <th  class='okol1 kol id'>id</th>
         <th  class='okol2 kol'>nr rejstracyjny</th>
@@ -1875,7 +1875,67 @@ function block_buttons() {
 
     </tr>
     </thead>`;
-        ob_div.innerHTML = nago;
+        ob_div.innerHTML = `<table id = "obywatel">
+    <thead class="nagl2 row" id="nago2">
+    <tr >
+
+        <th  class=' kol okol1'>id</th>
+        <th  class=' kol '>pesel</th>
+        <th  class=' kol'>numer dowodu</th>
+        <th  class=' kol'>imie</th>
+        <th class=' kol'>nazwisko</th>
+        <th  class=' kol'>data urodzenia</th>
+        <th  class=' kol'>adres</th>
+
+
+    </tr>
+    </thead>
+
+    <thead class="nagl2 row" id="nagp2" >
+
+    <tr>
+
+        <th  class='okol1 kol id'>id</th>
+        <th  class='okol2 kol'>nr rejstracyjny</th>
+        <th class='okol3 kol'>marka</th>
+        <th  class='okol4 kol'>model </th>
+        <th  class='okol5 kol'>rok produkcji</th>
+        <th  class='okol6 kol'>kolor</th>
+        <th class='okol7 kol'>uwagi</th>
+
+
+    </tr>
+    </thead>
+
+    <thead class="nagl2 row"  id="naga2">
+
+    <tr >
+
+        <th  class='okol1 kol id' id="abo_id">id</th>
+        <th  class='okol2 kol'  id="abo_data_rozpoczecia">data rozpoczecia</th>
+        <th  class='okol3 kol'   id="abo_data_zakonczenia">data zakonczenia</th>
+        <th  class='okol4 kol'  id="abo_sektor">sektor</th>
+        <th  class='okol2 kol'  id="abo_nr_rejstracyjny">nr rejstracyjny</th>
+        <th class='okol3 kol'  id="abo_marka">marka</th>
+        <th  class='okol4 kol'id="abo_model">model </th>
+        <th  class=' kol' id="abo_imie">imie</th>
+        <th class=' kol' id="abo_nazwisko">nazwisko</th>
+        <th  class='kol' id="abo_pesel">pesel</th>
+
+
+
+    </tr>
+    </thead>
+</table>`;
+        // manipulacje css-em początek
+        document.getElementById("obywatel").style.top = "110px"; // experymentalnie doszedłem do tych wartosci
+        document.getElementById("menu").style.paddingBottom = "0px"; // experymentalnie doszedłem do tych wartosci
+
+        document.getElementById("nago2").style.backgroundColor = "#167F92";
+        document.getElementById("nagp2").style.backgroundColor = "#167F92";
+        document.getElementById("naga2").style.backgroundColor = "#167F92";
+        // manipulacje css-esem koniec
+
         console.log("to jest id w powiązanym")
         console.log(id)
         var ason = null
@@ -1893,14 +1953,7 @@ function block_buttons() {
                 console.log(obywatel_id)
                 console.log(pojazd_id)
 
-                loadDataToPowiazane("pojazd/", pojazd_id)
-                    .then(function (res) {
-                        pson = JSON.parse(res);
-                        console.log(res)
 
-
-
-                    });
                 loadDataToPowiazane("obywatel/",obywatel_id)
                     .then(function (res) {
                         oson = JSON.parse(res);
@@ -1908,20 +1961,48 @@ function block_buttons() {
 
                         let iDiv = document.createElement("label")
                         console.log("Tutaj jest ason")
-                        console.log(ason)
+                        console.log(oson)
                         wyswietl2(oson,1,iDiv,obywatelDane)
-                        ob_div.appendChild(iDiv)
+                        iDiv.style.backgroundColor = "white";
+                        document.getElementById("nago2").appendChild(iDiv)
+
+
+
+                    });
+                loadDataToPowiazane("pojazd/", pojazd_id)
+                    .then(function (res) {
+                        pson = JSON.parse(res);
+                        console.log(res)
+                        // ponizsza linijka przekształca string w html node
+                      //  let doc = new DOMParser().parseFromString(nagp, "text/xml"); // jest text/xml a nie a nie text/html bo przy tym drugim tworzą sie domyslini rodzicie typu body i html a w tym pierwszym przekształacane są tylko zdane tagi
+                        let iDiv = document.createElement("label")
+                        console.log("Tutaj jest pson")
+                        console.log(pson)
+                       wyswietl2(pson,2,iDiv,pojazdDane)
+                        iDiv.style.backgroundColor = "white";
+                       document.getElementById("nagp2").appendChild(iDiv)
+
 
 
 
                     });
 
+                console.log(ason)
+                console.log(JSON.stringify(ason))
+                alert("ason w powiązanych w logach konsoli")
+
+                let iDiv = document.createElement("label")
+                console.log("Tutaj jest pson")
+                console.log(ason)
+                wyswietl2(ason,3,iDiv,abonamentDane)
+                iDiv.style.backgroundColor = "white";
+                document.getElementById("naga2").appendChild(iDiv)
+
             });
 
 
-        console.log(ason)
-        console.log(JSON.stringify(ason))
-        alert("ason w powiązanych w logach konsoli")
+
+
 
 
 
