@@ -662,6 +662,18 @@ th, td{
         iDiv.getElementsByTagName('input')[0].value = i.toString() + " "+  "selected"
 
     }
+    function wyswietl2(son, i,iDiv,format) { // coś się jebało jak próbowałem użyć przeciążenia funkcji więc jebać to o to funkcja nr 2
+
+
+
+        template = Handlebars.compile(format);
+        console.log(template)
+        alert(template)
+
+
+        var dane = template(son);
+        console.log(dane)
+        alert(dane)
 
 
 
@@ -669,7 +681,39 @@ th, td{
 
 
 
-   // var arson = JSON.parse($.getJSON("http://localhost:8091/obywatel/download"))
+        var butDiv = document.createElement('div')
+
+        butDiv.id =  i.toString() + "-buttons"
+
+        butDiv.className = "butt"
+
+        butDiv.innerHTML =  (but3 + but5 + but4)
+
+
+
+        var bancz = ( dane );
+
+
+
+        //  document.getElementById('ob' + i.toString()).innerHTML += bancz;
+
+        iDiv.innerHTML += bancz;
+
+        iDiv.appendChild(butDiv)
+
+        iDiv.innerHTML+="</br></br>"
+        iDiv.getElementsByTagName('input')[0].value = i.toString() + " "+  "selected"
+
+    }
+
+
+
+
+
+
+
+
+    // var arson = JSON.parse($.getJSON("http://localhost:8091/obywatel/download"))
 
     //alert(arson)
 
@@ -792,6 +836,21 @@ th, td{
         return ajax('GET',url)
     }
 
+    function loadDataToPowiazane( e,k) {
+
+        var url1 = 'http://localhost:8091/'
+
+
+        var url2 = e + "get/";
+
+        var url3 = k.toString()
+
+        var url =  url1+url2+url3
+
+
+
+        return ajax('GET',url)
+    }
 
 
 
@@ -1768,8 +1827,8 @@ function block_buttons() {
     }
 
     function powiazane(id) {
-        const table_dan = document.getElementById("obywatel") // const jest lepszy w przypadku obiektów jak ten bo zawsze ma pokazywać ten obiekt i obiekty w js zawsze sa przekazywane przez referencje
-        table_dan.textContent = ""; // można też użyć .innerHTML ale podobno to podejscie jest lepsze bo nie wywołuje parsera html przeglądarki
+        const ob_div = document.getElementById("obywatel") // const jest lepszy w przypadku obiektów jak ten bo zawsze ma pokazywać ten obiekt i obiekty w js zawsze sa przekazywane przez referencje
+        ob_div.textContent = ""; // można też użyć .innerHTML ale podobno to podejscie jest lepsze bo nie wywołuje parsera html przeglądarki
         /*
         *
         *
@@ -1816,7 +1875,60 @@ function block_buttons() {
 
     </tr>
     </thead>`;
-        table_dan.innerHTML = nago;
+        ob_div.innerHTML = nago;
+        console.log("to jest id w powiązanym")
+        console.log(id)
+        var ason = null
+        var pson = null
+        var oson = null
+        id = id + 1 ; // ponieważ liczy od zera
+        loadDataToPowiazane("abonament/full/",id)
+            .then(function (res) {
+
+                ason = JSON.parse(res);
+                console.log(res)
+
+                let obywatel_id = ason.obywatel_id
+                let pojazd_id =   ason.pojazd_id
+                console.log(obywatel_id)
+                console.log(pojazd_id)
+
+                loadDataToPowiazane("pojazd/", pojazd_id)
+                    .then(function (res) {
+                        pson = JSON.parse(res);
+                        console.log(res)
+
+
+
+                    });
+                loadDataToPowiazane("obywatel/",obywatel_id)
+                    .then(function (res) {
+                        oson = JSON.parse(res);
+                        console.log(res)
+
+                        let iDiv = document.createElement("label")
+                        console.log("Tutaj jest ason")
+                        console.log(ason)
+                        wyswietl2(oson,1,iDiv,obywatelDane)
+                        ob_div.appendChild(iDiv)
+
+
+
+                    });
+
+            });
+
+
+        console.log(ason)
+        console.log(JSON.stringify(ason))
+        alert("ason w powiązanych w logach konsoli")
+
+
+
+
+
+
+
 
 
 
