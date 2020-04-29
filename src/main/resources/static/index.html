@@ -150,7 +150,9 @@ th, td{
 
     <button id="odnow" class = 'but4 butt hid' type='button' onclick='odnow(wyb_rekord())'  tabindex="-1" >Odnow</button>
 
-      <button class = 'but5 butt' type='button' onclick='powiazane(wyb_rekord())'  tabindex="-1">Wyświetl Szczegóły</button>
+      <button id="powiazane" class = 'but5 butt' type='button' onclick='powiazane(wyb_rekord())'  tabindex="-1">Wyświetl Szczegóły</button>
+
+    <button id="n_pojazd"class='butt' style="display: none;" type= 'button' onclick='n_pojazd(wyb_rekord())'  tabindex="-1">Dodaj Nowy Pojazd</button>
 </span>
 
     <span id="filtry">
@@ -159,7 +161,7 @@ th, td{
 
     </span>
 
-<form>
+<form id="wysz">
     <button type="submit" class="wyszukaj" onsubmit='wyszukaj()'><i >Wyszukaj</i></button> <!-- on submit czym sie różni od onclick ????? -->
     <input  class="wyszukaj" type="text" id="wyszuk"  placeholder="Wyszukaj..." name="wyszukaj">
 
@@ -246,8 +248,8 @@ th, td{
 
 </form>-->
 
-
-
+<div id = "formularz"></div> <!-- ten div jest bardzo potrzebny dodawany do niego jest formularz do modyfikacji i dodawania -->
+<!-- NIGDY NIE USUWAĆ POWYŻSZEGO diva-->
 
 
 <script type="text/javascript">
@@ -1906,12 +1908,25 @@ function block_buttons() {
     </thead>
 </table>`;
         // manipulacje css-em początek
-        document.getElementById("obywatel").style.top = "110px"; // experymentalnie doszedłem do tych wartosci
+        document.getElementById("obywatel").style.top = "60px"; // experymentalnie doszedłem do tych wartosci
         document.getElementById("menu").style.paddingBottom = "0px"; // experymentalnie doszedłem do tych wartosci
 
         document.getElementById("nago2.1").style.backgroundColor = "#167F92";
         document.getElementById("nagp2.1").style.backgroundColor = "#167F92";
         document.getElementById("naga2.1").style.backgroundColor = "#167F92";
+        //widoczność przycisków
+        document.getElementById("edytuj").style.display = "unset"; // edycja na unset aby wyswitlała się przy wejsciu z obywatela lub pojazdu
+        document.getElementById("edytuj").classList.remove("hid") // usuwa edytuj z klasy hid, która ukrywa element
+        document.getElementById("encja").style.display = "none";
+        document.getElementById("dodaj").style.display = "none";
+        document.getElementById("usun").style.display = "none"; // to do zastanowienia się czy jest sensowne
+        document.getElementById("odnow").style.display = "none";
+        document.getElementById("powiazane").style.display = "none";
+        document.getElementById("filtry").style.display = "none";
+        document.getElementById("encja").style.display = "none";
+        document.getElementById("wysz").style.display = "none";
+        document.getElementById("n_pojazd").style.display = "unset";
+
         // manipulacje css-esem koniec
 
         console.log("to jest id w powiązanym")
