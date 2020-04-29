@@ -102,5 +102,5 @@ class PojazdService {
 
     fun szukaj(fraza:String):Iterable<PojModMar> = repo.szukaj(fraza.toLowerCase())
 
-    fun getPojazdById(id: Long):Pojazd = repo.getPojazdById(id)
+    fun getPojazdById(id: Long): PojModMar = repo.getPojazdById(id)
 }

@@ -38,6 +38,9 @@
 
 
     }*/
+    .empty{
+
+    }
 
     .nagl{
 
@@ -242,7 +245,7 @@ th, td{
 
 
 </form>-->
-<div id = "formularz"></div>
+
 
 
 
@@ -662,6 +665,18 @@ th, td{
         iDiv.getElementsByTagName('input')[0].value = i.toString() + " "+  "selected"
 
     }
+    function wyswietl2(son, i,iDiv,format) { // coś się jebało jak próbowałem użyć przeciążenia funkcji więc jebać to o to funkcja nr 2
+
+
+
+        template = Handlebars.compile(format);
+        console.log(template)
+        alert(template)
+
+
+        var dane = template(son);
+        console.log(dane)
+        alert(dane)
 
 
 
@@ -669,7 +684,39 @@ th, td{
 
 
 
-   // var arson = JSON.parse($.getJSON("http://localhost:8091/obywatel/download"))
+        var butDiv = document.createElement('div')
+
+        butDiv.id =  i.toString() + "-buttons"
+
+        butDiv.className = "butt"
+
+        butDiv.innerHTML =  (but3 + but5 + but4)
+
+
+
+        var bancz = ( dane );
+
+
+
+        //  document.getElementById('ob' + i.toString()).innerHTML += bancz;
+
+        iDiv.innerHTML += bancz;
+
+        iDiv.appendChild(butDiv)
+
+        iDiv.innerHTML+="</br></br>"
+        iDiv.getElementsByTagName('input')[0].value = i.toString() + " "+  "selected"
+
+    }
+
+
+
+
+
+
+
+
+    // var arson = JSON.parse($.getJSON("http://localhost:8091/obywatel/download"))
 
     //alert(arson)
 
@@ -792,6 +839,21 @@ th, td{
         return ajax('GET',url)
     }
 
+    function loadDataToPowiazane( e,k) {
+
+        var url1 = 'http://localhost:8091/'
+
+
+        var url2 = e + "get/";
+
+        var url3 = k.toString()
+
+        var url =  url1+url2+url3
+
+
+
+        return ajax('GET',url)
+    }
 
 
 
@@ -1768,8 +1830,8 @@ function block_buttons() {
     }
 
     function powiazane(id) {
-        const table_dan = document.getElementById("obywatel") // const jest lepszy w przypadku obiektów jak ten bo zawsze ma pokazywać ten obiekt i obiekty w js zawsze sa przekazywane przez referencje
-        table_dan.textContent = ""; // można też użyć .innerHTML ale podobno to podejscie jest lepsze bo nie wywołuje parsera html przeglądarki
+        const ob_div = document.getElementById("obywatel") // const jest lepszy w przypadku obiektów jak ten bo zawsze ma pokazywać ten obiekt i obiekty w js zawsze sa przekazywane przez referencje
+        ob_div.textContent = ""; // można też użyć .innerHTML ale podobno to podejscie jest lepsze bo nie wywołuje parsera html przeglądarki
         /*
         *
         *
@@ -1786,8 +1848,12 @@ function block_buttons() {
         *
         *
         * */
-        let nago = `<thead class="nagl row" id="nago">
-    <tr >
+
+
+
+        ob_div.innerHTML = `<table id = "obywatel">
+    <thead class="nagl2 row" id="nago2">
+    <tr id="nago2.1" >
 
         <th  class=' kol okol1'>id</th>
         <th  class=' kol '>pesel</th>
@@ -1798,12 +1864,13 @@ function block_buttons() {
         <th  class=' kol'>adres</th>
 
 
+
     </tr>
-    </thead>`;
+    </thead>
 
-        let nagp = ` <thead class="nagl row" id="nagp">
+    <thead class="nagl2 row" id="nagp2" >
 
-    <tr>
+    <tr id="nagp2.1">
 
         <th  class='okol1 kol id'>id</th>
         <th  class='okol2 kol'>nr rejstracyjny</th>
@@ -1814,9 +1881,113 @@ function block_buttons() {
         <th class='okol7 kol'>uwagi</th>
 
 
+
     </tr>
-    </thead>`;
-        table_dan.innerHTML = nago;
+    </thead>
+
+    <thead class="nagl2 row"  id="naga2">
+
+    <tr id="naga2.1">
+
+        <th  class='okol1 kol id' id="abo_id">id</th>
+        <th  class='okol2 kol'  id="abo_data_rozpoczecia">data rozpoczecia</th>
+        <th  class='okol3 kol'   id="abo_data_zakonczenia">data zakonczenia</th>
+        <th  class='okol4 kol'  id="abo_sektor">sektor</th>
+        <th  class='okol2 kol'  id="abo_nr_rejstracyjny">nr rejstracyjny</th>
+        <th class='okol3 kol'  id="abo_marka">marka</th>
+        <th  class='okol4 kol'id="abo_model">model </th>
+        <th  class=' kol' id="abo_imie">imie</th>
+        <th class=' kol' id="abo_nazwisko">nazwisko</th>
+        <th  class='kol' id="abo_pesel">pesel</th>
+
+
+
+    </tr>
+    </thead>
+</table>`;
+        // manipulacje css-em początek
+        document.getElementById("obywatel").style.top = "110px"; // experymentalnie doszedłem do tych wartosci
+        document.getElementById("menu").style.paddingBottom = "0px"; // experymentalnie doszedłem do tych wartosci
+
+        document.getElementById("nago2.1").style.backgroundColor = "#167F92";
+        document.getElementById("nagp2.1").style.backgroundColor = "#167F92";
+        document.getElementById("naga2.1").style.backgroundColor = "#167F92";
+        // manipulacje css-esem koniec
+
+        console.log("to jest id w powiązanym")
+        console.log(id)
+        var ason = null
+        var pson = null
+        var oson = null
+        id = id + 1 ; // ponieważ liczy od zera
+        loadDataToPowiazane("abonament/full/",id)
+            .then(function (res) {
+
+                ason = JSON.parse(res);
+                console.log(res)
+
+                let obywatel_id = ason.obywatel_id
+                let pojazd_id =   ason.pojazd_id
+                console.log(obywatel_id)
+                console.log(pojazd_id)
+
+
+                loadDataToPowiazane("obywatel/",obywatel_id)
+                    .then(function (res) {
+                        oson = JSON.parse(res);
+                        console.log(res)
+
+                        let iDiv = document.createElement("label")
+                        console.log("Tutaj jest ason")
+                        console.log(oson)
+                        wyswietl2(oson,1,iDiv,obywatelDane)
+                        iDiv.style.backgroundColor = "white";
+                        document.getElementById("nago2").appendChild(iDiv)
+
+
+
+                    });
+                loadDataToPowiazane("pojazd/", pojazd_id)
+                    .then(function (res) {
+                        pson = JSON.parse(res);
+                        console.log(res)
+                        // ponizsza linijka przekształca string w html node
+                      //  let doc = new DOMParser().parseFromString(nagp, "text/xml"); // jest text/xml a nie a nie text/html bo przy tym drugim tworzą sie domyslini rodzicie typu body i html a w tym pierwszym przekształacane są tylko zdane tagi
+                        let iDiv = document.createElement("label")
+                        console.log("Tutaj jest pson")
+                        console.log(pson)
+                       wyswietl2(pson,2,iDiv,pojazdDane)
+                        iDiv.style.backgroundColor = "white";
+                       document.getElementById("nagp2").appendChild(iDiv)
+
+
+
+
+                    });
+
+                console.log(ason)
+                console.log(JSON.stringify(ason))
+                alert("ason w powiązanych w logach konsoli")
+
+                let iDiv = document.createElement("label")
+                console.log("Tutaj jest pson")
+                console.log(ason)
+                wyswietl2(ason,3,iDiv,abonamentDane)
+                iDiv.style.backgroundColor = "white";
+                document.getElementById("naga2").appendChild(iDiv)
+
+            });
+
+
+
+
+
+
+
+
+
+
+
 
 
 
