@@ -144,7 +144,7 @@ th, td{
 
     <button  id="dodaj" class="add hid" type='button' onclick=" dodaj(obywatelFormularz)"  tabindex="-1">Dodaj</button>
 
-    <button id="edytuj"class='butt hid' type= 'button' onclick='f2(wyb_rekord())'  tabindex="-1">Edytuj</button>
+    <button id="edytuj"class='butt hid' type= 'button' onclick='f2(wyb_rekord(),czy_powi())'  tabindex="-1">Edytuj</button>
 
      <button id="usun" class = 'but4 butt hid' type='button' onclick='usun(wyb_rekord())'  tabindex="-1" >Usun</button>
 
@@ -277,7 +277,13 @@ th, td{
    console.log(c)
     let son_set = new Set();
 
-  var global_dupa
+  var global_dupa;
+
+  var czy_pow = false; // globalna zmienna czy jestesmy w powiązanych.
+  function czy_powi() {
+      return czy_pow;
+  }
+  var pow_id = null; // id encji wybrane w powiązanym
 
    if(c === null)
          c = "abonament"
@@ -706,6 +712,8 @@ th, td{
 
         iDiv.appendChild(butDiv)
 
+        iDiv.id = i.toString();
+
         iDiv.innerHTML+="</br></br>"
         iDiv.getElementsByTagName('input')[0].value = i.toString() + " "+  "selected"
 
@@ -856,6 +864,37 @@ th, td{
 
         return ajax('GET',url)
     }
+
+    function loadDataToPowiazane2( pow_id,k) {
+        var e = "błąd"
+        if(pow_id === 1){
+            e = "obywatel/"
+        }
+
+        if(pow_id === 2){
+            e = "pojazd/"
+
+        }
+
+        if(pow_id === 3){
+            e = "abonament/"
+
+        }
+
+        var url1 = 'http://localhost:8091/'
+
+
+        var url2 = e + "get/";
+
+        var url3 = k.toString()
+
+        var url =  url1+url2+url3
+
+
+
+        return ajax('GET',url)
+    }
+
 
 
 
@@ -1402,7 +1441,7 @@ th, td{
 
 
 
-    function f2(id) {
+    function f2(id,czy_pow) {
        // var id = e.target.parentNode.id
         if(JSON.parse(arch))
             alert("nie można modyfikować zarchiwizowanych danych")
@@ -1411,21 +1450,102 @@ th, td{
 
             var on = parseInt(id, 10)
 
-            loadData()
-                .then(function (res, preson) {
-                    preson = insertData(res, preson);
-                    console.log(preson[0].nazwisko)
+            if (czy_pow === false){
+                loadData()
+                    .then(function (res, preson) {
+                        preson = insertData(res, preson);
+                        console.log(preson[0].nazwisko)
 
-                    alert("id wybranego w f2 " + on.toString())
+                        alert("id wybranego w f2 " + on.toString())
 
-                    son = preson[on]
+                        son = preson[on]
 
 
-                    template = Handlebars.compile(formularz);
 
+
+
+                        // wybrane dane oryginalnie wybraneDane
+                        let rodzajDanych = null;
+                        let rodzajFormularza = null;
+                        if(son.pesel !== null){
+                            rodzajDanych = obywatelDane;
+                            rodzajFormularza = obywatelFormularz;
+                        }
+
+                        if(son.kolor !== null){
+                            rodzajDanych = pojazdDane;
+                            rodzajFormularza = pojazdFormularz;
+                        }
+
+                        if(son.sektor !== null){
+                            rodzajDanych = obywatelDane;
+                            rodzajFormularza = abonamentFormularz;
+                        }
+
+                        template = Handlebars.compile(rodzajFormularza);
+                        var dane = template(son);
+
+                        template = Handlebars.compile(rodzajDanych);
+
+                        var dane2 = template(son);
+
+                        // document.getElementById(id.toString()).innerHTML = ""
+
+                        //document.getElementById(id.toString()).innerHTML += dane2;
+
+                        document.getElementById("obywatel").innerHTML = ""
+
+                        document.getElementById("obywatel").innerHTML += dane2;
+
+                        document.getElementById("formularz").innerHTML += dane;
+
+                        // document.getElementById("ff").id = id + "ff" /// czemu to nie działa daje null
+
+                        alert("id 628 " + id)
+                        alert("on 629 to" + on)
+
+                        formularz.id = on.toString() + "ff"
+
+                        onid = on /// Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki
+
+                        console.log("Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki")
+
+                        console.log(onid)
+
+                        document.getElementById("ina3").value = son.sektor
+
+
+                        block_buttons()
+                    });
+
+            }
+        if(czy_pow === true){
+            loadDataToPowiazane2(pow_id, id)
+                .then(function (res) {
+
+                    var son = JSON.parse(res);
+
+                    let rodzajDanych = null;
+                    let rodzajFormularza = null;
+                    if(pow_id === 1){
+                        rodzajDanych = obywatelDane;
+                        rodzajFormularza = obywatelFormularz;
+                    }
+
+                    if(pow_id === 2){
+                        rodzajDanych = pojazdDane;
+                        rodzajFormularza = pojazdFormularz;
+                    }
+
+                    if(pow_id === 3){
+                        rodzajDanych = obywatelDane;
+                        rodzajFormularza = abonamentFormularz;
+                    }
+
+                    template = Handlebars.compile(rodzajFormularza);
                     var dane = template(son);
 
-                    template = Handlebars.compile(wybraneDane)
+                    template = Handlebars.compile(rodzajDanych);
 
                     var dane2 = template(son);
 
@@ -1456,7 +1576,11 @@ th, td{
 
 
                     block_buttons()
-                })
+                });
+
+
+        }
+
 
 
             //document.getElementById("obywatel").innerHTML = "";
@@ -1490,6 +1614,7 @@ th, td{
        // wybrany rekord z bazy koniec
 function zaznacz(item,index) {
 
+
         console.log(rekord)
         item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = 'white' // wgłab do  i + 'ob'
 
@@ -1500,10 +1625,27 @@ function zaznacz(item,index) {
 
             item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = 'red' // wgłab do  i + 'ob'
 
+        if(czy_pow === true){
+       pow_id =     item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor.id
+
+        }
+
 
     }
 
 }
+
+    function pow_sc(pow_id){
+        if(pow_id === 1)
+            return "obywatel/"
+        if(pow_id === 2)
+            return "pojazd/"
+        if(pow_id === 3)
+            return "abonament/"
+        else
+            return "błąd wyboru encji"
+
+    }
 
 
 function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz z jego samochodami i abonamentami
@@ -1916,7 +2058,7 @@ function block_buttons() {
         document.getElementById("naga2.1").style.backgroundColor = "#167F92";
         //widoczność przycisków
         document.getElementById("edytuj").style.display = "unset"; // edycja na unset aby wyswitlała się przy wejsciu z obywatela lub pojazdu
-        document.getElementById("edytuj").classList.remove("hid") // usuwa edytuj z klasy hid, która ukrywa element
+        document.getElementById("edytuj").classList.remove("hid"); // usuwa edytuj z klasy hid, która ukrywa element
         document.getElementById("encja").style.display = "none";
         document.getElementById("dodaj").style.display = "none";
         document.getElementById("usun").style.display = "none"; // to do zastanowienia się czy jest sensowne
@@ -1992,11 +2134,7 @@ function block_buttons() {
                 document.getElementById("naga2").appendChild(iDiv)
 
             });
-
-
-
-
-
+        czy_pow = true;
 
 
 
