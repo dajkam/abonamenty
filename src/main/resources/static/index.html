@@ -283,7 +283,7 @@ th, td{
   function czy_powi() {
       return czy_pow;
   }
-  var pow_id = null; // id encji wybrane w powiązanym
+  let pow_id; // id encji wybrane w powiązanym
 
    if(c === null)
          c = "abonament"
@@ -866,17 +866,19 @@ th, td{
     }
 
     function loadDataToPowiazane2( pow_id,k) {
-        var e = "błąd"
-        if(pow_id === 1){
+        var e;
+        console.log("pow_id w loadDataToPowiazane2")
+        console.log(pow_id)
+        if(pow_id == 1){
             e = "obywatel/"
         }
 
-        if(pow_id === 2){
+        if(pow_id == 2){
             e = "pojazd/"
 
         }
 
-        if(pow_id === 3){
+        if(pow_id == 3){
             e = "abonament/"
 
         }
@@ -884,7 +886,7 @@ th, td{
         var url1 = 'http://localhost:8091/'
 
 
-        var url2 = e + "get/";
+        var url2 = e.toString() + "get/";
 
         var url3 = k.toString()
 
@@ -1626,7 +1628,9 @@ function zaznacz(item,index) {
             item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = 'red' // wgłab do  i + 'ob'
 
         if(czy_pow === true){
-       pow_id =     item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor.id
+       pow_id = item.parentElement.parentElement.parentElement.parentElement.parentElement.id // id elementu
+            console.log("tutaj jest pow_id:")
+            console.log(pow_id)
 
         }
 
