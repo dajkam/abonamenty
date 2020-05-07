@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl-PL">
-<script>
+<!--<script>
     window.alert = function() {
         debugger;
     }
-</script>
+</script>-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -1529,17 +1529,19 @@ th, td{
 
                     let rodzajDanych = null;
                     let rodzajFormularza = null;
-                    if(pow_id === 1){
+                    alert("pow id w load data to powiązane")
+                    alert(pow_id)
+                    if(pow_id == 1){
                         rodzajDanych = obywatelDane;
                         rodzajFormularza = obywatelFormularz;
                     }
 
-                    if(pow_id === 2){
+                    if(pow_id == 2){
                         rodzajDanych = pojazdDane;
                         rodzajFormularza = pojazdFormularz;
                     }
 
-                    if(pow_id === 3){
+                    if(pow_id == 3){
                         rodzajDanych = obywatelDane;
                         rodzajFormularza = abonamentFormularz;
                     }
