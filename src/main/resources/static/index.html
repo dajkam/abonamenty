@@ -280,6 +280,12 @@ th, td{
   var global_dupa;
 
   var czy_pow = false; // globalna zmienna czy jestesmy w powiązanych.
+    var pow_global = null; // jaki rodzaj danych jest wysyłany w f3 w sendson
+
+    let ob_pow_id = null; // WYBRANE ID obywatela do pobranego
+    let poj_pow_id = null; //to co wyżej dla pojazdu
+    let ab_pow_id = null; // to co wyżej dla abonamentu
+
   function czy_powi() {
       return czy_pow;
   }
@@ -888,7 +894,8 @@ th, td{
 
         var url2 = e.toString() + "get/";
 
-        var url3 = k.toString()
+     //   var url3 = k.toString()
+        var url3 = ob_pow_id.toString()
 
         var url =  url1+url2+url3
 
@@ -944,6 +951,10 @@ th, td{
         delete son.kiedy_zmodyfikowano
         delete son.kiedy_utworzono
 
+        if(c.toString() === "obywatel"){
+            son.pojazdy = []
+        }
+
         if(c.toString() === "pojazd"){
 
             delete son.marka;
@@ -988,6 +999,7 @@ th, td{
 
 
         xhr.send(json)
+
         alert("po wysłaniu jsona:")
 
         location.reload(true)
@@ -1381,6 +1393,12 @@ th, td{
 
                 var dane2 = template(son);
                 if(son.id != -1){
+                    if(pow_global == 1)
+                        c= "obywatel"
+                     if(pow_global == 2)
+                        c="pojazd";
+                    if(pow_global == 3)
+                        c="abonament";
                       sendSon(son)
                       alert("Zaraz po wykonaniu sendSon")
                       alert(son.id)
@@ -1532,19 +1550,23 @@ th, td{
                     alert("pow id w load data to powiązane")
                     alert(pow_id)
                     if(pow_id == 1){
+                        c= "obywatel"
                         rodzajDanych = obywatelDane;
                         rodzajFormularza = obywatelFormularz;
                     }
 
                     if(pow_id == 2){
+                        c = "pojazd"
                         rodzajDanych = pojazdDane;
                         rodzajFormularza = pojazdFormularz;
                     }
 
                     if(pow_id == 3){
+                        c = "abonament"
                         rodzajDanych = obywatelDane;
                         rodzajFormularza = abonamentFormularz;
                     }
+                    pow_global = pow_id;
 
                     template = Handlebars.compile(rodzajFormularza);
                     var dane = template(son);
@@ -1632,7 +1654,10 @@ function zaznacz(item,index) {
         if(czy_pow === true){
        pow_id = item.parentElement.parentElement.parentElement.parentElement.parentElement.id // id elementu
             console.log("tutaj jest pow_id:")
-            console.log(pow_id)
+            console.log(pow_id);
+       let id_cell =   item.parentElement.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("okol1")[0];
+       ob_pow_id = parseInt(id_cell.textContent)
+
 
         }
 
