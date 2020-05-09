@@ -144,13 +144,15 @@ th, td{
 
     <button  id="dodaj" class="add hid" type='button' onclick=" dodaj(obywatelFormularz)"  tabindex="-1">Dodaj</button>
 
-    <button id="edytuj"class='butt hid' type= 'button' onclick='f2(wyb_rekord())'  tabindex="-1">Edytuj</button>
+    <button id="edytuj"class='butt hid' type= 'button' onclick='f2(wyb_rekord(),czy_powi())'  tabindex="-1">Edytuj</button>
 
      <button id="usun" class = 'but4 butt hid' type='button' onclick='usun(wyb_rekord())'  tabindex="-1" >Usun</button>
 
     <button id="odnow" class = 'but4 butt hid' type='button' onclick='odnow(wyb_rekord())'  tabindex="-1" >Odnow</button>
 
-      <button class = 'but5 butt' type='button' onclick='powiazane(wyb_rekord())'  tabindex="-1">Wyświetl Szczegóły</button>
+      <button id="powiazane" class = 'but5 butt' type='button' onclick='powiazane(wyb_rekord())'  tabindex="-1">Wyświetl Szczegóły</button>
+
+    <button id="n_pojazd"class='butt' style="display: none;" type= 'button' onclick='n_pojazd(wyb_rekord())'  tabindex="-1">Dodaj Nowy Pojazd</button>
 </span>
 
     <span id="filtry">
@@ -159,7 +161,7 @@ th, td{
 
     </span>
 
-<form>
+<form id="wysz">
     <button type="submit" class="wyszukaj" onsubmit='wyszukaj()'><i >Wyszukaj</i></button> <!-- on submit czym sie różni od onclick ????? -->
     <input  class="wyszukaj" type="text" id="wyszuk"  placeholder="Wyszukaj..." name="wyszukaj">
 
@@ -246,8 +248,8 @@ th, td{
 
 </form>-->
 
-
-
+<div id = "formularz"></div> <!-- ten div jest bardzo potrzebny dodawany do niego jest formularz do modyfikacji i dodawania -->
+<!-- NIGDY NIE USUWAĆ POWYŻSZEGO diva-->
 
 
 <script type="text/javascript">
@@ -275,7 +277,20 @@ th, td{
    console.log(c)
     let son_set = new Set();
 
-  var global_dupa
+  var global_dupa;
+
+  var czy_pow = false; // globalna zmienna czy jestesmy w powiązanych.
+    var pow_global = null; // jaki rodzaj danych jest wysyłany w f3 w sendson
+    var pow_son = null; // zmienna do przkazywania modyfikowanego jsona w powiązanych
+
+    let ob_pow_id = null; // WYBRANE ID obywatela do pobranego
+    let poj_pow_id = null; //to co wyżej dla pojazdu
+    let ab_pow_id = null; // to co wyżej dla abonamentu
+
+  function czy_powi() {
+      return czy_pow;
+  }
+  let pow_id; // id encji wybrane w powiązanym
 
    if(c === null)
          c = "abonament"
@@ -704,6 +719,8 @@ th, td{
 
         iDiv.appendChild(butDiv)
 
+        iDiv.id = i.toString();
+
         iDiv.innerHTML+="</br></br>"
         iDiv.getElementsByTagName('input')[0].value = i.toString() + " "+  "selected"
 
@@ -855,6 +872,40 @@ th, td{
         return ajax('GET',url)
     }
 
+    function loadDataToPowiazane2( pow_id,k) {
+        var e;
+        console.log("pow_id w loadDataToPowiazane2")
+        console.log(pow_id)
+        if(pow_id == 1){
+            e = "obywatel/"
+        }
+
+        if(pow_id == 2){
+            e = "pojazd/"
+
+        }
+
+        if(pow_id == 3){
+            e = "abonament/"
+
+        }
+
+        var url1 = 'http://localhost:8091/'
+
+
+        var url2 = e.toString() + "get/";
+
+     //   var url3 = k.toString()
+        var url3 = ob_pow_id.toString()
+
+        var url =  url1+url2+url3
+
+
+
+        return ajax('GET',url)
+    }
+
+
 
 
     loadData()  // to jest właściwe wykonywanie programu
@@ -901,6 +952,10 @@ th, td{
         delete son.kiedy_zmodyfikowano
         delete son.kiedy_utworzono
 
+        if(c.toString() === "obywatel"){
+            son.pojazdy = []
+        }
+
         if(c.toString() === "pojazd"){
 
             delete son.marka;
@@ -945,6 +1000,7 @@ th, td{
 
 
         xhr.send(json)
+
         alert("po wysłaniu jsona:")
 
         location.reload(true)
@@ -1126,6 +1182,12 @@ th, td{
 
      //   var id = di.parentNode.iddocument.getElementById("ina1").value
 
+        if(czy_pow === true){
+             id = ob_pow_id;
+             onid = ob_pow_id;
+        }
+
+
         var on = parseInt(id,10)
 
         loadData()
@@ -1135,10 +1197,16 @@ th, td{
                     console.log(preson[0].nazwisko)
 
                     alert("onid w f3 " + onid)
+                    alert("cały son w f3")
+                    console.log(JSON.stringify(preson))
 
-                    var son = preson[onid]
+                    var son = preson[onid];
+                    if(czy_pow === true)
+                        son = pow_son // powiązanie pow_son z powiązanych
 
                     alert("id wybranego w f3 " + on.toString())
+                    console.log(JSON.stringify(son))
+                    alert("id pobrane z jsona " +  onid.toString())
 
 
                     alert(id.toString())
@@ -1337,8 +1405,15 @@ th, td{
                 template = Handlebars.compile(wybraneDane);
 
                 var dane2 = template(son);
-                if(son.id != -1){
+                if(son.id !== -1){
+
+                    alert("Zaraz przed wykonaniem sendSon")
+                    alert(son.id)
+
+
+
                       sendSon(son)
+
                       alert("Zaraz po wykonaniu sendSon")
                       alert(son.id)
                 }
@@ -1400,7 +1475,7 @@ th, td{
 
 
 
-    function f2(id) {
+    function f2(id,czy_pow) {
        // var id = e.target.parentNode.id
         if(JSON.parse(arch))
             alert("nie można modyfikować zarchiwizowanych danych")
@@ -1409,21 +1484,110 @@ th, td{
 
             var on = parseInt(id, 10)
 
-            loadData()
-                .then(function (res, preson) {
-                    preson = insertData(res, preson);
-                    console.log(preson[0].nazwisko)
+            if (czy_pow === false){
+                loadData()
+                    .then(function (res, preson) {
+                        preson = insertData(res, preson);
+                        console.log(preson[0].nazwisko)
 
-                    alert("id wybranego w f2 " + on.toString())
+                        alert("id wybranego w f2 " + on.toString())
 
-                    son = preson[on]
+                        son = preson[on]
 
 
-                    template = Handlebars.compile(formularz);
 
+
+
+                        // wybrane dane oryginalnie wybraneDane
+                        let rodzajDanych = null;
+                        let rodzajFormularza = null;
+                        if(son.pesel !== null){
+                            rodzajDanych = obywatelDane;
+                            rodzajFormularza = obywatelFormularz;
+                        }
+
+                        if(son.kolor !== null){
+                            rodzajDanych = pojazdDane;
+                            rodzajFormularza = pojazdFormularz;
+                        }
+
+                        if(son.sektor !== null){
+                            rodzajDanych = obywatelDane;
+                            rodzajFormularza = abonamentFormularz;
+                        }
+
+                        template = Handlebars.compile(rodzajFormularza);
+                        var dane = template(son);
+
+                        template = Handlebars.compile(rodzajDanych);
+
+                        var dane2 = template(son);
+
+                        // document.getElementById(id.toString()).innerHTML = ""
+
+                        //document.getElementById(id.toString()).innerHTML += dane2;
+
+                        document.getElementById("obywatel").innerHTML = ""
+
+                        document.getElementById("obywatel").innerHTML += dane2;
+
+                        document.getElementById("formularz").innerHTML += dane;
+
+                        // document.getElementById("ff").id = id + "ff" /// czemu to nie działa daje null
+
+                        alert("id 628 " + id)
+                        alert("on 629 to" + on)
+
+                        formularz.id = on.toString() + "ff"
+
+                        onid = on /// Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki
+
+                        console.log("Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki")
+
+                        console.log(onid)
+
+                        document.getElementById("ina3").value = son.sektor
+
+
+                        block_buttons()
+                    });
+
+            }
+        if(czy_pow === true){
+            loadDataToPowiazane2(pow_id, id)
+                .then(function (res) {
+
+                    var son = JSON.parse(res);
+
+                    let rodzajDanych = null;
+                    let rodzajFormularza = null;
+                    alert("pow id w load data to powiązane")
+                    alert(pow_id)
+                    if(pow_id == 1){
+                        c= "obywatel"
+                        rodzajDanych = obywatelDane;
+                        rodzajFormularza = obywatelFormularz;
+                    }
+
+                    if(pow_id == 2){
+                        c = "pojazd"
+                        rodzajDanych = pojazdDane;
+                        rodzajFormularza = pojazdFormularz;
+                    }
+
+                    if(pow_id == 3){
+                        c = "abonament"
+                        rodzajDanych = obywatelDane;
+                        rodzajFormularza = abonamentFormularz;
+                    }
+                    pow_global = pow_id;
+
+                    pow_son = son; // zapamiętanie powsona z powiązanych
+
+                    template = Handlebars.compile(rodzajFormularza);
                     var dane = template(son);
 
-                    template = Handlebars.compile(wybraneDane)
+                    template = Handlebars.compile(rodzajDanych);
 
                     var dane2 = template(son);
 
@@ -1444,17 +1608,20 @@ th, td{
 
                     formularz.id = on.toString() + "ff"
 
-                    onid = on /// Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki
+                    onid = pow_global /// Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki, w tej funkcji zastąpiona
 
                     console.log("Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki")
 
                     console.log(onid)
 
-                    document.getElementById("ina3").value = son.sektor
 
 
                     block_buttons()
-                })
+                });
+
+
+        }
+
 
 
             //document.getElementById("obywatel").innerHTML = "";
@@ -1488,6 +1655,7 @@ th, td{
        // wybrany rekord z bazy koniec
 function zaznacz(item,index) {
 
+
         console.log(rekord)
         item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = 'white' // wgłab do  i + 'ob'
 
@@ -1498,10 +1666,35 @@ function zaznacz(item,index) {
 
             item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = 'red' // wgłab do  i + 'ob'
 
+        if(czy_pow === true){
+       pow_id = item.parentElement.parentElement.parentElement.parentElement.parentElement.id // id elementu
+            console.log("tutaj jest pow_id:")
+            console.log(pow_id);
+       let id_cell =   item.parentElement.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("okol1")[0];
+       alert("id wybranego elementu")
+            alert(id_cell)
+       ob_pow_id = parseInt(id_cell.textContent)
+            alert(ob_pow_id)
+
+
+        }
+
 
     }
 
 }
+
+    function pow_sc(pow_id){
+        if(pow_id === 1)
+            return "obywatel/"
+        if(pow_id === 2)
+            return "pojazd/"
+        if(pow_id === 3)
+            return "abonament/"
+        else
+            return "błąd wyboru encji"
+
+    }
 
 
 function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz z jego samochodami i abonamentami
@@ -1906,12 +2099,25 @@ function block_buttons() {
     </thead>
 </table>`;
         // manipulacje css-em początek
-        document.getElementById("obywatel").style.top = "110px"; // experymentalnie doszedłem do tych wartosci
+        document.getElementById("obywatel").style.top = "60px"; // experymentalnie doszedłem do tych wartosci
         document.getElementById("menu").style.paddingBottom = "0px"; // experymentalnie doszedłem do tych wartosci
 
         document.getElementById("nago2.1").style.backgroundColor = "#167F92";
         document.getElementById("nagp2.1").style.backgroundColor = "#167F92";
         document.getElementById("naga2.1").style.backgroundColor = "#167F92";
+        //widoczność przycisków
+        document.getElementById("edytuj").style.display = "unset"; // edycja na unset aby wyswitlała się przy wejsciu z obywatela lub pojazdu
+        document.getElementById("edytuj").classList.remove("hid"); // usuwa edytuj z klasy hid, która ukrywa element
+        document.getElementById("encja").style.display = "none";
+        document.getElementById("dodaj").style.display = "none";
+        document.getElementById("usun").style.display = "none"; // to do zastanowienia się czy jest sensowne
+        document.getElementById("odnow").style.display = "none";
+        document.getElementById("powiazane").style.display = "none";
+        document.getElementById("filtry").style.display = "none";
+        document.getElementById("encja").style.display = "none";
+        document.getElementById("wysz").style.display = "none";
+        document.getElementById("n_pojazd").style.display = "unset";
+
         // manipulacje css-esem koniec
 
         console.log("to jest id w powiązanym")
@@ -1977,11 +2183,7 @@ function block_buttons() {
                 document.getElementById("naga2").appendChild(iDiv)
 
             });
-
-
-
-
-
+        czy_pow = true;
 
 
 
