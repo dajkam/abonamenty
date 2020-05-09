@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl-PL">
-<!--<script>
+<script>
     window.alert = function() {
         debugger;
     }
-</script>-->
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -1548,7 +1548,7 @@ th, td{
 
                         console.log(onid)
 
-                        document.getElementById("ina3").value = son.sektor
+                        document.getElementById("ina3").value = son.sektor // ustawianie sektora w formularzu
 
 
                         block_buttons()
@@ -1617,8 +1617,10 @@ th, td{
 
                     console.log("Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki")
 
-                    console.log(onid)
+                    console.log(onid);
 
+
+                    document.getElementById("ina3").value = son.sektor // ustawianie sektora w formularzu
 
 
                     block_buttons()
