@@ -264,6 +264,7 @@ th, td{
     var modele = ["puste_modele"]; // array modeli // globalny
     var marki =  ["puste_marki"];// array marek // globalny
     get_marki();
+   get_modele();
 
 
     // ajax("GET",url) to jest promise.
@@ -2368,6 +2369,31 @@ function get_marki() {
 }
 function loadMarkaData(){
         var url = "http://localhost:8091/marka/download";
+        return ajax("GET",url);
+
+
+    }
+
+    function get_modele() {
+
+        return loadModelData()
+            .then(function (res) {
+                modele.length = 0; // czyszczenie  TABLICY SO ZERA
+                let son = JSON.parse(res);
+
+                for (const model of son){
+
+                    modele.push(model.nazwa);
+
+
+
+                }
+
+            });
+
+    }
+    function loadModelData(){
+        var url = "http://localhost:8091/model/download";
         return ajax("GET",url);
 
 
