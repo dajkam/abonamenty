@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl-PL">
-<!--<script>
+<script>
     window.alert = function() {
         debugger;
     }
-</script>-->
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -261,7 +261,12 @@ th, td{
 
 
     var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
+    var modele = ["puste_modele"]; // array modeli // globalny
+    var marki =  ["puste_marki"];// array marek // globalny
+    get_marki();
 
+
+    // ajax("GET",url) to jest promise.
 
 
 
@@ -513,18 +518,19 @@ th, td{
        "    uwagi: <br>\n" +
        "    <input id =\"inp4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
            `<span id = 'inp-auto'>
-
-                Model:<br>
-                <input id='inp6' type='text' name='model' value='{{model}}'>
+                 Marka:<br>
+                <input id='inp5' type='text' name='marka' value='{{marka}}' placeholder='Marka'>
                 <br>
+                Model:<br>
+                <input id='inp6' type='text' name='model' value='{{model}}'><br>
+
                 </span>
             `+
        "    <input id='zatwierdz' class = 'zat'type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
        "\n" +
        "\n" +
-     `  Marka:<br>
-    <input id='inp5' type='text' name='marka' value='{{marka}}' placeholder='Kraj'><br>` +
-           "  <input type=\"submit\">"+
+
+
        "  </form>";
 
 
@@ -1554,9 +1560,13 @@ th, td{
 
                         alert("id 628 " + id)
                         alert("on 629 to" + on)
-                        autocomplete(document.getElementById("inp5"), countries);
+                        autocomplete(document.getElementById("inp5"), marki);
                         console.log(document.getElementById("inp5"))
-                        alert("STOP")
+                        alert("STOP");
+
+                        autocomplete(document.getElementById("inp6"), modele);
+                        console.log(document.getElementById("inp6"))
+                        alert("STOP2");
 
                         formularz.id = on.toString() + "ff"
 
@@ -1570,8 +1580,11 @@ th, td{
                         block_buttons();
 
 
-                        if(rodzajFormularza === pojazdFormularz)
-                            autocomplete(document.getElementById("inp5"), countries);
+                        if(rodzajFormularza === pojazdFormularz){
+                            autocomplete(document.getElementById("inp5"), marki);
+                            autocomplete(document.getElementById("inp6"), marki);
+                        }
+
 
                     });
 
@@ -1632,9 +1645,12 @@ th, td{
                     alert("id 628 " + id)
                     alert("on 629 to" + on)
 
-                    autocomplete(document.getElementById("inp5"), countries);
+                    autocomplete(document.getElementById("inp5"), marki);
                     console.log(document.getElementById("inp5"))
-                    alert("STOP")
+                    alert("STOP");
+                    autocomplete(document.getElementById("inp6"), modele);
+                    console.log(document.getElementById("inp6"))
+                    alert("STOP2")
 
                     formularz.id = on.toString() + "ff"
 
@@ -1649,8 +1665,11 @@ th, td{
 
 
                     block_buttons();
-                    if(rodzajFormularza === pojazdFormularz)
-                        autocomplete(document.getElementById("inp5"), countries);
+                    if(rodzajFormularza === pojazdFormularz){
+                        autocomplete(document.getElementById("inp5"), marki);
+                        autocomplete(document.getElementById("inp6"), marki);
+                    }
+
 
                 });
 
@@ -2232,8 +2251,8 @@ function block_buttons() {
         the text field element and an array of possible autocompleted values:*/
         var currentFocus;
         /*execute a function when someone writes in the text field:*/
-        var inp = document.getElementById("inp5")
-        var arr = countries;
+       // var inp = document.getElementById("inp5")
+     //   var arr = marki; // docelowo ma być bez tego hard coded
         inp.addEventListener("input", function() {
             var a, b, i, val = this.value;
             /*close any already open lists of autocompleted values*/
@@ -2329,7 +2348,30 @@ function block_buttons() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+function get_marki() {
 
+        return loadMarkaData()
+            .then(function (res) {
+                marki.length = 0; // czyszczenie  TABLICY SO ZERA
+               let son = JSON.parse(res);
+
+               for (const marka of son){
+
+                   marki.push(marka.nazwa);
+
+
+
+               }
+
+            });
+    
+}
+function loadMarkaData(){
+        var url = "http://localhost:8091/marka/download";
+        return ajax("GET",url);
+
+
+    }
 
 
 
