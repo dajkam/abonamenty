@@ -207,5 +207,26 @@ INSERT INTO user (imie,
 false,true,true,true,true,'2008-01-01 00:00:01','2008-01-01 00:00:01','fdrgrg');
 
 
+/// marka model
+
+
+
+
+
+select marka.nazwa,model.nazwa,marka.id,model.id
+from model
+join marka 
+on model.marka_id = marka.id
+
+// to samo co wyrzej tylko z poprawionymi nazwami
+
+
+select marka.nazwa as marka,model.nazwa as model,marka.id as marka_id,model.id
+as model_id
+from model
+join marka 
+on model.marka_id = marka.id
+
+
 
 
