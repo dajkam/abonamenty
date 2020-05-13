@@ -520,7 +520,7 @@ th, td{
        "    <input id =\"inp4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
            `<span id = 'inp-auto'>
                  Marka:<br>
-                <input id='inp5' type='text' name='marka' value='{{marka}}' placeholder='Marka'>
+                <input id='inp5' type='text' name='marka' value='{{marka}}' placeholder='Marka' onchange='get_modele()' >
                 <br>
                 Model:<br>
                 <input id='inp6' type='text' name='model' value='{{model}}'><br>
@@ -1565,6 +1565,7 @@ th, td{
                         console.log(document.getElementById("inp5"))
                         alert("STOP");
 
+                        get_modele(); // przy załadowaniu strony też trzeba pobrać modele
                         autocomplete(document.getElementById("inp6"), modele);
                         console.log(document.getElementById("inp6"))
                         alert("STOP2");
@@ -2352,7 +2353,7 @@ function block_buttons() {
 
             });
 
-            inp.onblur =  get_modele(inp)
+          
 
     }
     // koniec z w3c
@@ -2373,8 +2374,11 @@ function get_marki() {
 
 
                }
+              // autocomplete(document.getElementById("inp6"), modele);
+             //   get_modele(); // pobranie modeli przy załadowaniu
 
             });
+
     
 }
 function loadMarkaData(){
@@ -2384,7 +2388,9 @@ function loadMarkaData(){
 
     }
 
-    function get_modele(inp) {
+    function get_modele() {
+        var inp = document.getElementById("inp5")
+
 
         return loadModelData()
             .then(function (res) {
@@ -2393,7 +2399,9 @@ function loadMarkaData(){
 
                 for (const model of son){
 
-                    modele.push(model.nazwa);
+                    if(model.marka === inp.value){
+                        modele.push(model.nazwa)
+                    }
 
 
 
@@ -2401,9 +2409,10 @@ function loadMarkaData(){
 
             });
 
+
     }
     function loadModelData(){
-        var url = "http://localhost:8091/model/download";
+        var url = "http://localhost:8091/model/modmar";
         return ajax("GET",url);
 
 
