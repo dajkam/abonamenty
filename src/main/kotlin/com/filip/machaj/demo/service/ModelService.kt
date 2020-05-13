@@ -1,6 +1,7 @@
 package com.filip.machaj.demo.service
 
 import com.filip.machaj.demo.dto.ModelDTO
+import com.filip.machaj.demo.model.dane.ModMar
 import com.filip.machaj.demo.model.dane.Model
 import com.filip.machaj.demo.model.dane.Pojazd
 import com.filip.machaj.demo.repo.MarkaRepo
@@ -52,4 +53,5 @@ class ModelService {
     fun findLastModel():Model{
         return repo.findLast()
     }
+    fun getAllModMar():Iterable<ModMar> = repo.getAllModMar()
 }
