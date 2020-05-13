@@ -264,7 +264,7 @@ th, td{
     var modele = ["puste_modele"]; // array modeli // globalny
     var marki =  ["puste_marki"];// array marek // globalny
     get_marki();
-   get_modele();
+ //  get_modele();
 
 
     // ajax("GET",url) to jest promise.
@@ -2344,6 +2344,16 @@ function block_buttons() {
         document.addEventListener("click", function (e) {
             closeAllLists(e.target);
         });
+
+            document.addEventListener("blur",function (e) {
+                get_modele();
+                inp.style.background = 'pink';
+
+
+            });
+
+            inp.onblur =  get_modele(inp)
+
     }
     // koniec z w3c
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2374,7 +2384,7 @@ function loadMarkaData(){
 
     }
 
-    function get_modele() {
+    function get_modele(inp) {
 
         return loadModelData()
             .then(function (res) {

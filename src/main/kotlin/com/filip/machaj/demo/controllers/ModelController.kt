@@ -1,6 +1,7 @@
 package com.filip.machaj.demo.controllers
 
 import com.filip.machaj.demo.dto.ModelDTO
+import com.filip.machaj.demo.model.dane.ModMar
 import com.filip.machaj.demo.service.ModelService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -37,4 +38,12 @@ class ModelController {
             consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun updateModel(@RequestBody model: ModelDTO): ModelDTO = service.updateModel(model)
+
+    @GetMapping("/modmar",
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun getAllModMar() = service.getAllModMar()
 }
+
+
+
