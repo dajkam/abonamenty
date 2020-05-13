@@ -520,10 +520,10 @@ th, td{
        "    <input id =\"inp4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
            `<span id = 'inp-auto'>
                  Marka:<br>
-                <input id='inp5' type='text' name='marka' value='{{marka}}' placeholder='Marka' onchange='get_modele()' >
+                <input id='inp5' type='text' name='marka' value='{{marka}}' placeholder='Marka'  >
                 <br>
                 Model:<br>
-                <input id='inp6' type='text' name='model' value='{{model}}'><br>
+                <input id='inp6' type='text' name='model' value='{{model}}' placeholder='Model' onclick='get_modele()'><br>
 
                 </span>
             `+
@@ -534,6 +534,7 @@ th, td{
 
        "  </form>";
 
+   // w inp5 nie ma onchange='get_modele()' ponieważ to wtedy nie działa przy załadowaniu ale tylko i wyłącznie przy zmianie lecz  onclick='get_modele()'działa przy jednym jak i przy drugim
 
    let sel = document.getElementById("encja");
    let selval = sel.options[sel.selectedIndex].value;
@@ -2353,7 +2354,7 @@ function block_buttons() {
 
             });
 
-          
+
 
     }
     // koniec z w3c
