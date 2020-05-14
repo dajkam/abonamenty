@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl-PL">
-<script>
+<!--<script>
     window.alert = function() {
         debugger;
     }
-</script>
+</script>-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -263,6 +263,7 @@ th, td{
     var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
     var modele = ["puste_modele"]; // array modeli // globalny
     var marki =  ["puste_marki"];// array marek // globalny
+    var wsz_modele = ["puste wszystkie modele"];
     get_marki();
  //  get_modele();
 
@@ -1265,7 +1266,7 @@ th, td{
                             czy_zarchiwizowany : false,
                             kto: "pojazd",
                             model : {
-                                id: 1
+                                id: -1
 
                             },
                             obywatel : {
@@ -1411,7 +1412,28 @@ th, td{
                     else
                         alert("Rok produkcji musi sie zawierać między rokiem 1829 a rokiem obecnym")
                     son.kolor = document.getElementById("inp3").value
-                    son.uwagi = document.getElementById("inp4").value
+                    son.uwagi = document.getElementById("inp4").value;
+
+
+                    for (const model of wsz_modele){
+                        if((document.getElementById("inp5").value === model.marka)&&(document.getElementById("inp6").value === model.nazwa)){
+
+                            son.model_id = model.id // w tej linii przypisujemy model do pojazdu. -> ja to źle przypisuje?
+                            // tak nie działa son.model.id = model.id
+                            console.log(JSON.stringify(son))
+
+                            alert("Przydzielanie modelu")
+                        }
+                    }
+
+
+
+
+
+
+
+
+
 
 
                 }
@@ -2396,9 +2418,11 @@ function loadMarkaData(){
         return loadModelData()
             .then(function (res) {
                 modele.length = 0; // czyszczenie  TABLICY SO ZERA
+                wsz_modele.length = 0;
                 let son = JSON.parse(res);
 
                 for (const model of son){
+                    wsz_modele.push(model)
 
                     if(model.marka === inp.value){
                         modele.push(model.nazwa)
@@ -2418,6 +2442,8 @@ function loadMarkaData(){
 
 
     }
+
+
 
 
 
