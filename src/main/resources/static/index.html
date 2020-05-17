@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl-PL">
-<!--<script>
+<script>
     window.alert = function() {
         debugger;
     }
-</script>-->
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -1584,14 +1584,16 @@ th, td{
 
                         alert("id 628 " + id)
                         alert("on 629 to" + on)
-                        autocomplete(document.getElementById("inp5"), marki);
-                        console.log(document.getElementById("inp5"))
-                        alert("STOP");
+                        if(rodzajFormularza === pojazdFormularz) {
+                            autocomplete(document.getElementById("inp5"), marki);
+                            console.log(document.getElementById("inp5"))
+                            alert("STOP");
 
-                        get_modele(); // przy załadowaniu strony też trzeba pobrać modele
-                        autocomplete(document.getElementById("inp6"), modele);
-                        console.log(document.getElementById("inp6"))
-                        alert("STOP2");
+                            get_modele(); // przy załadowaniu strony też trzeba pobrać modele
+                            autocomplete(document.getElementById("inp6"), modele);
+                            console.log(document.getElementById("inp6"))
+                            alert("STOP2");
+                        }
 
                         formularz.id = on.toString() + "ff"
 
@@ -1670,12 +1672,14 @@ th, td{
                     alert("id 628 " + id)
                     alert("on 629 to" + on)
 
-                    autocomplete(document.getElementById("inp5"), marki);
-                    console.log(document.getElementById("inp5"))
-                    alert("STOP");
-                    autocomplete(document.getElementById("inp6"), modele);
-                    console.log(document.getElementById("inp6"))
-                    alert("STOP2")
+                    if(rodzajFormularza === pojazdFormularz) {
+                        autocomplete(document.getElementById("inp5"), marki);
+                        console.log(document.getElementById("inp5"))
+                        alert("STOP");
+                        autocomplete(document.getElementById("inp6"), modele);
+                        console.log(document.getElementById("inp6"))
+                        alert("STOP2")
+                    }
 
                     formularz.id = on.toString() + "ff"
 
