@@ -265,6 +265,7 @@ th, td{
     var marki =  ["puste_marki"];// array marek // globalny
     var wsz_modele = ["puste wszystkie modele"];
     get_marki();
+    var glob_add_model = null; // zmienna która zapamietuje model w przypadku dodawania noewgo pojazdu
  //  get_modele();
 
 
@@ -289,7 +290,7 @@ th, td{
    console.log(c)
     let son_set = new Set();
 
-  var global_dupa;
+  var global_last_id;
 
   var czy_pow = false; // globalna zmienna czy jestesmy w powiązanych.
     var pow_global = null; // jaki rodzaj danych jest wysyłany w f3 w sendson
@@ -1420,6 +1421,7 @@ th, td{
 
                             son.model_id = model.id // w tej linii przypisujemy model do pojazdu. -> ja to źle przypisuje?
                             // tak nie działa son.model.id = model.id
+                            glob_add_model = model.id
                             console.log(JSON.stringify(son))
 
                             alert("Przydzielanie modelu")
@@ -1609,7 +1611,7 @@ th, td{
 
                         if(rodzajFormularza === pojazdFormularz){
                             autocomplete(document.getElementById("inp5"), marki);
-                            autocomplete(document.getElementById("inp6"), marki);
+                            autocomplete(document.getElementById("inp6"), modele);
                         }
 
 
@@ -1696,7 +1698,7 @@ th, td{
                     block_buttons();
                     if(rodzajFormularza === pojazdFormularz){
                         autocomplete(document.getElementById("inp5"), marki);
-                        autocomplete(document.getElementById("inp6"), marki);
+                        autocomplete(document.getElementById("inp6"), modele);
                     }
 
 
@@ -1917,14 +1919,23 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
         var dane = null
         template = Handlebars.compile(formularz);
         rekord = -1
-        if (formularz === abonamentFormularz)
-             dane = get_empty_abonament_form(template)
-        else
-             dane = template(null)
+        if (formularz === abonamentFormularz) {
+            dane = get_empty_abonament_form(template);
+        }
+
+        else {
+
+            dane = template(null)
+        }
 
         document.getElementById("obywatel").innerHTML = ""
         document.getElementById("formularz").innerHTML += dane;
-        block_buttons()
+        block_buttons();
+// poniżej auto matyczne wypełnianie listy modeli i marek przy dodawaniu
+        if(formularz === pojazdFormularz){
+            autocomplete(document.getElementById("inp5"), marki);
+            autocomplete(document.getElementById("inp6"), modele);
+        }
 
 
     }
@@ -1941,15 +1952,16 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
                 if (item.kto === "obywatel") {
                     insertSon(item)
                     last('http://localhost:8091/obywatel/last')
-                    obywatel_id = global_dupa
+                    obywatel_id = global_last_id
                     alert("id obywatela")
                     alert(obywatel_id)
                 }
                 if (item.kto === "pojazd") {
-                    item.obywatel.id = obywatel_id
+                    item.obywatel.id = obywatel_id;
+                    item.model.id = glob_add_model;
                     insertSon(item)
                     last('http://localhost:8091/pojazd/last')
-                    pojazd_id = global_dupa
+                    pojazd_id = global_last_id
 
                     alert("id pojazdu")
                     alert(pojazd_id)
@@ -1969,13 +1981,13 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
 
 
 
-    function last(url) {
+    function last(url) { // zapytanie wykonane synchronicznie
         var request = new XMLHttpRequest();
         request.open('GET', url, false);  // `false` makes the request synchronous
         request.send(null);
 
         if (request.status === 200) {
-           global_dupa = JSON.parse(request.responseText).id;
+           global_last_id = JSON.parse(request.responseText).id;
         }
 
 

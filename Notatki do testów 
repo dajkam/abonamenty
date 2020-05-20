@@ -28,3 +28,27 @@ Zauważyłem że bład występuje gdy id modelu i obywatela są takkie same
 /////////// Front end usprawnić system dat/////////////////
 
 
+Wyświetlanie szczegółow z pozycji pierwszego i drugiego obywatela wydają się zamienione -sprawdzić
+
+lub dostosować dane tak aby bląd nie wystepował
+
+
+dodawanie przestało działać poprawnie - dodawanie nowego pojazdu marki i modele nie działają nowy abonament i pojazd jest powiązany z ostatnim rekordem przed dodanie - trzeba poprawić
+
+
+////////////// Modyfikacja Abonamentu///////////////////////////
+
+Można zmienaić na wszystkie sektory oprócz wszystkich
+
+//////////////////Wyszukiwanie///////////////////////
+
+Wyszukiwanie nie jest obojetne na spacje
+
+
+//////////////////Dodawanie//////////////////////
+
+W Przypadku dodawania zwielokrotniony zostaje ostatmi abonament wraz ze wszystkimi powiązaniami
+
+
+
+
