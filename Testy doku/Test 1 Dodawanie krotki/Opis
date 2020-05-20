@@ -32,3 +32,14 @@ tutaj: dadaj(), addTuple(), f3(), last().
 last() // to zapytanie wykonywane synchronicznie ważny przykład
 
 
+
+
+
+skutek testu:
+
+Skutkiem tego testu był commit c6d9b52 dokonany 20 Maja 2020 o 13:30
+
+
+Powyższy commit spowodował poprawne wykonywanie się tego testu.
+
+
