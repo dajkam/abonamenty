@@ -146,11 +146,11 @@ th, td{
 
     <button  id="dodaj" class="add hid" type='button' onclick=" dodaj(obywatelFormularz)"  tabindex="-1">Dodaj</button>
 
-    <button id="edytuj"class='butt hid' type= 'button' onclick='f2(wyb_rekord(),czy_powi())'  tabindex="-1">Edytuj</button>
+    <button id="edytuj"class='butt hid' type= 'button' onclick='f2((wyb_rekord()-1),czy_powi())'  tabindex="-1">Edytuj</button>
 
-     <button id="usun" class = 'but4 butt hid' type='button' onclick='usun(wyb_rekord())'  tabindex="-1" >Usun</button>
+     <button id="usun" class = 'but4 butt hid' type='button' onclick='usun(wyb_rekord()-1)'  tabindex="-1" >Usun</button>
 
-    <button id="odnow" class = 'but4 butt hid' type='button' onclick='odnow(wyb_rekord())'  tabindex="-1" >Odnow</button>
+    <button id="odnow" class = 'but4 butt hid' type='button' onclick='odnow(wyb_rekord()-1)'  tabindex="-1" >Odnow</button>
 
       <button id="powiazane" class = 'but5 butt' type='button' onclick='powiazane(wyb_rekord())'  tabindex="-1">Wyświetl Szczegóły</button>
 
@@ -276,7 +276,7 @@ th, td{
 
     // END
 
-    let rekord = null // wybrany rekord z bazy
+    let rekord = null // wybrany rekord z bazy // numerowane od 1 jak w bazie
     let arch = new URL(window.location).searchParams.get('arch')
     let szuk = new URL(window.location).searchParams.get('wyszukaj')
    let url_string =  window.location.href;
@@ -1619,6 +1619,7 @@ th, td{
 
             }
         if(czy_pow === true){
+            id = id+1; // powięsone ze zgledu na pomniejszenie spowodowane poprzedznim ifem
             loadDataToPowiazane2(pow_id, id)
                 .then(function (res) {
 
@@ -1748,7 +1749,10 @@ function zaznacz(item,index) {
 
     if (item.checked) {
         alert(item.value)
-        rekord = parseInt(item.value.substr(0,item.value.indexOf(' '))); // rekord zmienna globalna
+     //   rekord = parseInt(item.value.substr(0,item.value.indexOf(' '))); // rekord zmienna globalna // nie kumam jak to działa do końca
+        rekord =  item.parentElement.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("okol1")[0]; // pobranie zawartości komórki w postaci obiektu html
+        rekord = parseInt(rekord.textContent) // konwersja na int
+        //rekord = rekord -1; // dopasowanie id do numerowania od zera
         alert(rekord)
 
             item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = 'red' // wgłab do  i + 'ob'
@@ -2121,25 +2125,9 @@ function block_buttons() {
 
     function powiazane(id) {
         const ob_div = document.getElementById("obywatel") // const jest lepszy w przypadku obiektów jak ten bo zawsze ma pokazywać ten obiekt i obiekty w js zawsze sa przekazywane przez referencje
-        ob_div.textContent = ""; // można też użyć .innerHTML ale podobno to podejscie jest lepsze bo nie wywołuje parsera html przeglądarki
-        /*
-        *
-        *
-        * With const, though, you're explicitly telling the engine that the value cannot change¹. So it's free to do any optimization it wants, including emitting a literal instead of a variable reference to code using it, knowing that the values cannot be changed.
+        ob_div.textContent = "";
 
-¹ Remember that with objects, the value is a reference to the object, not the object itself. So with const o = {}, you could change the state of the object (o.answer = 42), but you can't make o point to a new object (because that would require changing the object reference it contains).
-        *
-        *  zródło: https://stackoverflow.com/questions/40070631/v8-javascript-performance-implications-of-const-let-and-var
-        *  najwyżej oceniany post zaznaczony jako rozwiązanie
-        *
-        *
-        *
-        *
-        *
-        *
-        * */
-
-
+        id = get_real_abonament_id(id);
 
         ob_div.innerHTML = `<table id = "obywatel">
     <thead class="nagl2 row" id="nago2">
@@ -2222,7 +2210,7 @@ function block_buttons() {
         var ason = null
         var pson = null
         var oson = null
-        id = id + 1 ; // ponieważ liczy od zera
+      //  id = id + 1 ; // ponieważ liczy od zera
         loadDataToPowiazane("abonament/full/",id)
             .then(function (res) {
 
@@ -2455,6 +2443,39 @@ function loadMarkaData(){
     function loadModelData(){
         var url = "http://localhost:8091/model/modmar";
         return ajax("GET",url);
+
+
+    }
+
+    function get_real_abonament_id(id){
+        var request = new XMLHttpRequest();
+        var url = "http://localhost:8091/abonament/full";
+        request.open('GET', url, false);  // `false` makes the request synchronous
+        request.send(null);
+        var preson = null;
+        var new_id = -7;
+        console.log(id);
+
+        if (request.status === 200) {
+             preson = JSON.parse(request.responseText);
+             for (const item of preson){
+
+                 if(c === "obywatel"){
+                     if(item.obywatel_id == id)
+                         new_id = item.id;
+                 }
+                 if(c === "pojazd"){
+                     if(item.pojazd_id == id)
+                         new_id = item.id;
+                 }
+                 if(c === "abonament"){
+                     if(item.id == id)
+                         new_id = id;
+                 }
+
+             }
+        }
+        return new_id;
 
 
     }

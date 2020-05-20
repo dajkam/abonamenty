@@ -27,7 +27,7 @@ Wniosek:
 
 Dokładniesze przyjżenie się funkcjom odpowiedzialnym za dodawanie po stronie front-endu
 
-tutaj: dadaj(), addTuple(), f3(), last().
+Rozwarzane funkcje do przeanalizowania i wprowadzenia ewentualnych w nich zmian: dadaj(), addTuple(), f3(), last().
 
 last() // to zapytanie wykonywane synchronicznie ważny przykład
 
