@@ -34,8 +34,8 @@ curl -u user:du -X PUT -d @filip.json http://localhost:8091/obywatel/insert -H "
 curl -u user:du -X PUT -d @jarek.json http://localhost:8091/obywatel/insert -H "Content-Type: application/json"
 curl -u user:du -X PUT -d @jurek.json http://localhost:8091/obywatel/insert -H "Content-Type: application/json"
 curl -u user:du -X PUT -d @marek.json http://localhost:8091/obywatel/insert -H "Content-Type: application/json"
-curl -u user:du -X PUT -d @irek.json http://localhost:8091/obywatel/insert -H "Content-Type: application/json"
-curl -u user:du -X PUT -d @agata.json http://localhost:8091/obywatel/insert -H "Content-Type: application/json"
+# curl -u user:du -X PUT -d @irek.json http://localhost:8091/obywatel/insert -H "Content-Type: application/json" # nie ma pojazdów i abonamentu przez co zaburza porządek bazy
+# curl -u user:du -X PUT -d @agata.json http://localhost:8091/obywatel/insert -H "Content-Type: application/json" # jak wyżej i ponad to jest jeszcz zarchiwizowana # przywrócimy ten jak i rekord powyżej jak będą gotowe pojazdy i #         abonamenty dla nich
 
 
 

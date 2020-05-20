@@ -1,0 +1,30 @@
+Cel: 
+
+Zachodzący wynik nie porządany:Po wybraniu obywatela i naciśnięciu przycisku wyświetl powiązane Wiświetlenie nie powiązanego ze sobą abonamentu i pojazdu wyniki dla obywatela o id 1 i 2 są ze sobązamienione 
+
+
+
+
+Wynik porządany: Po wybraniu obywatela i naciśnięciu przycisku 'wyświetl powiązane' Wiświetlenie  powiązanego ze sobą abonamentu i pojazdu
+
+
+
+Winik testu: nie przechodzi
+
+
+
+Wniosek: Analiza funkcji odpowiedzialnych za zaznaczanie rekordu oraz wyświetlanie powiązanych
+
+
+Rozwarzane funkcje lub pliki do przeanalizowania i wprowadzenia ewentualnych w nich zmian: zaznacz(), wyświetl_powiazane()
+
+
+
+
+skutek testu: 
+
+Poprawiono funkcję zaznacz() zmieniono sposób pobierania id obiektu, poprawiono też metode powiazane() i poprawiono argumenty wywołan metod przycisków związane ze zmianą pobierania id obiektu
+
+
+
+// jakimi zmianami skutkował ten test podaj np nr commita w którym te zmiany zostały wprowadzone np
