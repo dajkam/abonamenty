@@ -1,0 +1,34 @@
+
+Cel: Dodanie nowej krotki do bazy danych składającej się z abonamentu pojazdu i obywatela 
+
+Zachodzący wynik nie porządany: 
+
+1. Nowy obywatel jest dodawany poprawnie.
+
+2. Nowy pojazd nie jest dodawany
+
+3. Nowy abonament jest duplikatem ostatniego abonamentu w tabeli przed dodaniem
+
+
+Wynik porządany:
+
+1. Nowy obywatel jest dodawany poprawnie.
+
+2. Nowy pojazd jest dodawany poprawnie.
+
+3. Nowy pojazd jest dodawany poprawnie.
+
+
+Winik testu: nie przechodzi
+
+
+
+Wniosek:
+
+Dokładniesze przyjżenie się funkcjom odpowiedzialnym za dodawanie po stronie front-endu
+
+tutaj: dadaj(), addTuple(), f3(), last().
+
+last() // to zapytanie wykonywane synchronicznie ważny przykład
+
+

@@ -27,7 +27,7 @@ open class User (
         @Column(unique = true, nullable = false)
         @NotNull
         @Email
-        var email: String,
+      open  var email: String,
         @NotNull
         @NotBlank
         open  var haslo:String,
