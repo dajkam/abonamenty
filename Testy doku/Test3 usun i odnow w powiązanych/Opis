@@ -1,0 +1,30 @@
+
+Pełna krotka zestaw danych: Abonament-Obywatel-Pojazd powiązane ze sąba kluczami obcymi 
+
+Cel: usuniecie i nastepnie odnowienie pełnnej krotki abonament-pojazd obywatel wchodząc przez powiązane
+
+Zachodzący wynik nie porządany: w przypadku wejscia do powiązanych przez obywatela lub pojazd usuwany jest tylko i wyłącznie dany pojazd lub obywatel bez reszty pełnej krotki
+
+
+
+
+Wynik porządany: usuwana i następnie odnawiana jest cała pełna krotka
+
+
+
+Winik testu: nie przechodzi
+
+
+
+Wniosek: weryfikacja funkcji odpowiedzialnych za usuwanie i odnawianie funkcji
+
+
+Rozwarzane funkcje lub pliki do przeanalizowania i wprowadzenia ewentualnych w nich zmian: odnow(), usun()
+
+
+
+
+skutek testu:
+
+
+// jakimi zmianami skutkował ten test podaj np nr commita w którym te zmiany zostały wprowadzone np

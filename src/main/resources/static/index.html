@@ -154,7 +154,7 @@ th, td{
 
       <button id="powiazane" class = 'but5 butt' type='button' onclick='powiazane(wyb_rekord())'  tabindex="-1">Wyświetl Szczegóły</button>
 
-    <button id="n_pojazd"class='butt' style="display: none;" type= 'button' onclick='n_pojazd(wyb_rekord())'  tabindex="-1">Dodaj Nowy Pojazd</button>
+    <button id="usun_pow"class='butt' style="display: none;" type= 'button' onclick='usun_pow(wyb_rekord())'  tabindex="-1">Usun</button>
 </span>
 
     <span id="filtry">
@@ -1796,7 +1796,6 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
             // najlepiej zrobić to za pomocą jakiegoś zapytania SQL myślę
 
             var on = parseInt(id, 10)
-            if (c === 'abonament') {
                 loadDataToUsun('abonament')
                     .then(function (res, preson) {
                         preson = insertData(res, preson)
@@ -1818,21 +1817,9 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
                     });
 
 
-            } else {
-                loadData()
-                    .then(function (res, preson) {
-                        preson = insertData(res, preson)
-                        let son = preson[on]
-                        son.czy_zarchiwizowany = true;
-                        sendSon(son)
 
-
-                    })
-            }
 
             location.reload(true)
-        } else {
-
         }
     }
 
@@ -2201,7 +2188,7 @@ function block_buttons() {
         document.getElementById("filtry").style.display = "none";
         document.getElementById("encja").style.display = "none";
         document.getElementById("wysz").style.display = "none";
-        document.getElementById("n_pojazd").style.display = "unset";
+        document.getElementById("usun_pow").style.display = "unset";
 
         // manipulacje css-esem koniec
 
@@ -2476,6 +2463,16 @@ function loadMarkaData(){
              }
         }
         return new_id;
+
+
+    }
+
+    function usun_pow(id) { // id musi byc bo funkcja je zwracająca koloruje rekordy
+
+        let abo = document.getElementById("3");// pobranie abonamentu w powiązanych
+        let abo_id =  parseInt(abo.getElementsByClassName("okol1")[0].textContent); // pobranie abonamentu krotki w powiązanych.
+        usun(abo_id-1); // przejscie na numerowanie od 0
+
 
 
     }
