@@ -158,15 +158,15 @@ th, td{
 
     <button id="edytuj"class='butt hid' type= 'button' onclick='f2((wyb_rekord()-1),czy_powi())'  tabindex="-1">Edytuj</button>
 
-     <button id="usun" class = 'but4 butt hid' type='button' onclick='usun(wyb_rekord()-1)'  tabindex="-1" >Usun</button>
+     <button id="usun" class = 'but4 butt hid' type='button' onclick='usun(wyb_rekord()-1)'  tabindex="-1" >Usuń</button>
 
-    <button id="odnow" class = 'but4 butt hid' type='button' onclick='odnow(wyb_rekord()-1)'  tabindex="-1" >Odnow</button>
+    <button id="odnow" class = 'but4 butt hid' type='button' onclick='odnow(wyb_rekord()-1)'  tabindex="-1" >Odnów</button>
 
       <button id="powiazane" class = 'but5 butt' type='button' onclick='powiazane(wyb_rekord())'  tabindex="-1">Wyświetl Szczegóły</button>
 
-    <button id="usun_pow"class='' style="display: none;" type= 'button' onclick='usun_pow(wyb_rekord())'  tabindex="-1">Usun</button>
+    <button id="usun_pow"class='' style="display: none;" type= 'button' onclick='usun_pow(wyb_rekord())'  tabindex="-1">Usuń</button>
 
-     <button id="odnow_pow"class='' style="display: none;" type= 'button' onclick='odnow_pow(wyb_rekord())'  tabindex="-1">Odnow</button>
+     <button id="odnow_pow"class='' style="display: none;" type= 'button' onclick='odnow_pow(wyb_rekord())'  tabindex="-1">Odnów</button>
 </span>
 
     <span id="filtry">
@@ -197,9 +197,9 @@ th, td{
     <tr >
 
         <th  class=' kol okol1'>id</th>
-        <th  class=' kol '>pesel</th>
+        <th  class=' kol '>PESEL</th>
         <th  class=' kol'>numer dowodu</th>
-        <th  class=' kol'>imie</th>
+        <th  class=' kol'>imię</th>
         <th class=' kol'>nazwisko</th>
         <th  class=' kol'>data urodzenia</th>
         <th  class=' kol'>adres</th>
@@ -235,9 +235,9 @@ th, td{
         <th  class='okol2 kol' onclick="orderBy('abo_nr_rejstracyjny')" id="abo_nr_rejstracyjny">nr rejstracyjny</th>
         <th class='okol3 kol' onclick="orderBy('abo_marka')" id="abo_marka">marka</th>
         <th  class='okol4 kol' onclick="orderBy('abo_model')" id="abo_model">model </th>
-        <th  class=' kol' onclick="orderBy('abo_imie')" id="abo_imie">imie</th>
+        <th  class=' kol' onclick="orderBy('abo_imie')" id="abo_imie">imię</th>
         <th class=' kol'onclick="orderBy('abo_nazwisko')" id="abo_nazwisko">nazwisko</th>
-        <th  class='kol' onclick="orderBy('abo_pesel')" id="abo_pesel">pesel</th>
+        <th  class='kol' onclick="orderBy('abo_pesel')" id="abo_pesel">PESEL</th>
 
 
 
@@ -272,7 +272,6 @@ th, td{
 
 
 
-    var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
     var modele = ["puste_modele"]; // array modeli // globalny
     var marki =  ["puste_marki"];// array marek // globalny
     var wsz_modele = ["puste wszystkie modele"];
@@ -482,7 +481,7 @@ th, td{
    var obywatelFormularz = "<form id = 'ffa' >\n" +
        "    nr dowodu: <br>\n" +
        "    <input id =\"in1\" type = 'text' name = \"nr_dowodu\" value =  {{nr_dowodu}} ><br>\n" +
-       "    imie: <br>\n" +
+       "    imię: <br>\n" +
        "    <input id =\"in2\" type = 'text' name = \"imie\"  value={{imie}}><br>\n" +
        "    nazwisko: <br>\n" +
        "    <input id =\"in3\" type = 'text' name = \"nazwisko\" value={{nazwisko}} ><br>\n" +
@@ -490,7 +489,7 @@ th, td{
        "    <input id =\"in4\" type = 'text' name = \"adres\" value = '{{adres}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
        "    data urodzenia: <br>\n" +
        "    <input id =\"in5\" type = 'date' name = \"data_urodzenia\" value = {{data_urodzenia}}  ><br>\n" +
-       "    pesel:<br>\n" +
+       "    PESEL:<br>\n" +
        "    <input id =\"in6\"type = 'text' name = \"pesel\" value = {{pesel}}><br><br>\n" +
 
        "    <input id='zatwierdz' class = 'zat'type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
@@ -499,9 +498,9 @@ th, td{
 // stare wybie ranie sektora  "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
     // nowe rozwiązanie  w select nie ma atrybutu value={{sektor}}
    var abonamentFormularz = "<form id = 'ffc' >\n" +
-       "    data_rozpoczecia: <br>\n" +
+       "    data rozpoczecia: <br>\n" +
        "    <input id =\"ina1\" type = 'date' name = \"data_rozpoczecia\" value =  {{data_rozpoczecia}} ><br>\n" +
-       "    data_zakonczenia: <br>\n" +
+       "    data zakonczenia: <br>\n" +
        "    <input id =\"ina2\" type = 'date' name = \"data_zakonczenia\"  value= {{data_zakonczenia}} ><br>\n" +
        "    sektor: <br>\n" +
       ` <select id ="ina3" >
@@ -1512,8 +1511,23 @@ th, td{
     function f2(id,czy_pow) {
        // var id = e.target.parentNode.id
 
+         document.getElementById("usun_pow").classList.add("butt");
+        document.getElementById("odnow_pow").classList.add("butt");
+
+        document.getElementById('bstyle').innerHTML =
+            `
+           .butt{
+
+        pointer-events: none;
+
+         background-color: gray;
+        cursor: not-allowed;
+        color: black;
+    }
+           `;
+
         if(JSON.parse(arch))
-            alert("nie można modyfikować zarchiwizowanych danych")
+             alert("nie można modyfikować zarchiwizowanych danych")
         else {
 
 
@@ -2184,6 +2198,8 @@ function block_buttons() {
 
             document.getElementById("usun_pow").style.display = "none";
             document.getElementById("odnow_pow").style.display = "unset";
+            document.getElementById("edytuj").style.display = "none";
+
 
         }
         document.getElementById('bstyle').innerHTML =
