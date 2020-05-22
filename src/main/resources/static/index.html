@@ -5,6 +5,16 @@
         debugger;
     }
 </script>
+<!--<input type="hidden" id="refreshed" value="no" onload="back_ref()">
+<script type="text/javascript">
+    function back_ref(){ //zastąpiecie back_page refresh_page ale nie działa
+        var e=document.getElementById("refreshed");
+        if(e.value=="no")e.value="yes";
+        else{e.value="no";location.reload();}
+    }
+    </script>-->
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -1534,6 +1544,10 @@ th, td{
 
     function f2(id,czy_pow) {
        // var id = e.target.parentNode.id
+
+        document.getElementById("usun_pow").style.display = "none";
+        document.getElementById("odnow_pow").style.display = "none";
+        document.getElementById("edytuj").style.display = "none"; // to i dwa powyzsze znikanie przycisków których  i tak nie należło by wciskać w tej sytuacji
         if(JSON.parse(arch))
             alert("nie można modyfikować zarchiwizowanych danych")
         else {
