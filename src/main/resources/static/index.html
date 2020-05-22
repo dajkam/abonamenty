@@ -164,9 +164,9 @@ th, td{
 
       <button id="powiazane" class = 'but5 butt' type='button' onclick='powiazane(wyb_rekord())'  tabindex="-1">Wyświetl Szczegóły</button>
 
-    <button id="usun_pow"class='butt' style="display: none;" type= 'button' onclick='usun_pow(wyb_rekord())'  tabindex="-1">Usun</button>
+    <button id="usun_pow"class='' style="display: none;" type= 'button' onclick='usun_pow(wyb_rekord())'  tabindex="-1">Usun</button>
 
-     <button id="odnow_pow"class='butt' style="display: none;" type= 'button' onclick='odnow_pow(wyb_rekord())'  tabindex="-1">Odnow</button>
+     <button id="odnow_pow"class='' style="display: none;" type= 'button' onclick='odnow_pow(wyb_rekord())'  tabindex="-1">Odnow</button>
 </span>
 
     <span id="filtry">
@@ -1364,43 +1364,10 @@ th, td{
                     if(  (/^[A-J]{1}$/.test(document.getElementById("ina3").value)) || document.getElementById("ina3").value === "WSZYSTKIE"){ // coś nie działa z wymogiem wpisania uwagi przy wybraniu obcji wszystkie
 
 
-
-
-                        if((document.getElementById("ina3").value !== "WSZYSTKIE")){
-
                             son.uwagi = document.getElementById("ina4").value // uwagi jeśli mają
 
                             son.sektor = document.getElementById("ina3").value // Sektory to jest tylko pojedyńcza litera od A do J lub słowo WSZYSTKIE
 
-                        }
-
-                        else{
-                            //  if((son.sektor === "WSZYSTKIE") &&  ((document.getElementById("ina4").value === null) || (document.getElementById("ina4").value) === "" )){
-
-                            //   if((son.sektor === "WSZYSTKIE") && (/\S/.test(document.getElementById("ina4").value))){
-
-                            if((document.getElementById("ina3").value=== "WSZYSTKIE") && ((document.getElementById("ina4").value===null) || (document.getElementById("ina4").value===''))){
-
-
-
-                                alert("Napisz w uwagach dlaczego ten obywatel ma dostęp do wszystkich sektorów")
-
-
-                            }
-
-
-
-
-
-                            //}
-                            else{
-
-                                son.uwagi = document.getElementById("ina4").value // uwagi jeśli mają
-
-
-
-                            }
-                        }
                     }
 
                     else{
@@ -1545,9 +1512,6 @@ th, td{
     function f2(id,czy_pow) {
        // var id = e.target.parentNode.id
 
-        document.getElementById("usun_pow").style.display = "none";
-        document.getElementById("odnow_pow").style.display = "none";
-        document.getElementById("edytuj").style.display = "none"; // to i dwa powyzsze znikanie przycisków których  i tak nie należło by wciskać w tej sytuacji
         if(JSON.parse(arch))
             alert("nie można modyfikować zarchiwizowanych danych")
         else {
@@ -2222,6 +2186,17 @@ function block_buttons() {
             document.getElementById("odnow_pow").style.display = "unset";
 
         }
+        document.getElementById('bstyle').innerHTML =
+            `
+           .butt{
+
+        pointer-events: none;
+
+         background-color: gray;
+        cursor: not-allowed;
+        color: black;
+    }
+           `;
 
         // manipulacje css-esem koniec
 
