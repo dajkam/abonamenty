@@ -19,7 +19,7 @@ Winik testu: nie przechodzi
 Wniosek: weryfikacja funkcji odpowiedzialnych za usuwanie i odnawianie funkcji
 
 
-Rozwarzane funkcje lub pliki do przeanalizowania i wprowadzenia ewentualnych w nich zmian: odnow(), usun()
+Rozwarzane funkcje lub pliki do przeanalizowania i wprowadzenia ewentualnych w nich zmian: odnow(), usun(), sendSon
 
 
 
@@ -27,4 +27,20 @@ Rozwarzane funkcje lub pliki do przeanalizowania i wprowadzenia ewentualnych w n
 skutek testu:
 
 
-// jakimi zmianami skutkował ten test podaj np nr commita w którym te zmiany zostały wprowadzone np
+Test skutkował commitami 
+
+67b5879
+
+i
+
+
+4a9c658
+
+w nich zawarte sa modyfikacje funkcji sendSon() // częściowe uniezależnienie jej działania od zmiennej c.
+Dodanie nowych metod odpowiedzialnych za usuwanie i odnawianie w powiazanych 
+
+usun_pow()
+
+i
+
+odnow_pow()
