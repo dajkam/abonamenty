@@ -481,7 +481,7 @@ th, td{
 
    var obywatelFormularz = "<form id = 'ffa' >\n" +
        "    nr dowodu: <br>\n" +
-       "    <input id =\"in1\" type = 'text' name = \"nr_dowodu\" value =  {{nr_dowodu}} ><br>\n" +
+       "    <input id =\"in1\" type = 'text' name = \"nr_dowodu\" value =  {{nr_dowodu}}   ><br>\n" +
        "    imię: <br>\n" +
        "    <input id =\"in2\" type = 'text' name = \"imie\"  value={{imie}}><br>\n" +
        "    nazwisko: <br>\n" +
@@ -493,7 +493,7 @@ th, td{
        "    PESEL:<br>\n" +
        "    <input id =\"in6\"type = 'text' name = \"pesel\" value = {{pesel}}><br><br>\n" +
 
-       "    <input id='zatwierdz' class = 'zat'type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
+       "    <input id='zatwierdz' class = 'zat'type = 'submit' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
 
        "  </form>";
 // stare wybie ranie sektora  "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
@@ -520,14 +520,14 @@ th, td{
         </select> <br>`+
        "    uwagi: <br>\n" +
        "    <input id =\"ina4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    <input id='zatwierdz' class='zat' type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
+       "    <input id='zatwierdz' class='zat' type = 'submit' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
        "\n" +
        "\n" +
        "  </form>";
 
-   var pojazdFormularz =  "<form id = 'ffb' autocomplete=\"off\" action=\"/action_page.php\" >\n" +
+   var pojazdFormularz =  "<form id = 'ffb' autocomplete=\"off\" action='#' onsubmit='f3(wyb_rekord()); return false'> \n" +
        "    nr rejstracyjny pojazdu: <br>\n" +
-       "    <input id =\"inp1\" type = 'text' name = \"nr_rejestracyjny_pojazdu\" value =  '{{nr_rejstracyjny_pojazdu}}'><br>\n" +
+       "    <input id =\"inp1\" type = 'text'  name = \"nr_rejestracyjny_pojazdu\" value =  '{{nr_rejstracyjny_pojazdu}}'   required = 'true'/><br>\n" +
        "    rok produkcji: <br>\n" +
        "    <input id =\"inp2\" type = 'number' name = \"rok_produkcji\"  value={{rok_produkcji}}><br>\n" +
        "    kolor: <br>\n" +
@@ -543,7 +543,7 @@ th, td{
 
                 </span>
             `+
-       "    <input id='zatwierdz' class = 'zat'type = 'button' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
+       "    <input id='zatwierdz' class = 'zat'type = 'submit' value = \"Zatwierdź\" >\n" +
        "\n" +
        "\n" +
 
