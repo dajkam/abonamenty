@@ -498,6 +498,8 @@ th, td{
        "  </form>";
 // stare wybie ranie sektora  "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
     // nowe rozwiązanie  w select nie ma atrybutu value={{sektor}}
+
+    <!--  w select Value w tej opcji która niczego nie wybiera musi bić puste żeby zadziałało rquired-->
    var abonamentFormularz = "<form id = 'ffc' action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
        "    data rozpoczęcia: <br>\n" +
        "    <input id =\"ina1\" type = 'date' name = \"data_rozpoczecia\" value =  '{{data_rozpoczecia}}' required = 'true'/><br>\n" +
@@ -529,7 +531,7 @@ th, td{
        "    nr rejstracyjny pojazdu: <br>\n" +
        "    <input id =\"inp1\" type = 'text'  name = \"nr_rejestracyjny_pojazdu\" value =  '{{nr_rejstracyjny_pojazdu}}'   required = 'true'/><br>\n" +
        "    rok produkcji: <br>\n" +
-       "    <input id =\"inp2\" type = 'number' name = \"rok_produkcji\"  value='{{rok_produkcji}}' required = 'true'/><br>\n" +
+       "    <input id =\"inp2\" type = 'number' name = \"rok_produkcji\"  value='{{rok_produkcji}}' required = 'true' min = '1829' max='2020' /><br>\n" +
        "    kolor: <br>\n" +
        "    <input id =\"inp3\" type = 'text' name = \"kolor\" value={{kolor}} ><br>\n" +
        "    uwagi: <br>\n" +
@@ -1605,6 +1607,7 @@ th, td{
                             autocomplete(document.getElementById("inp6"), modele);
                             console.log(document.getElementById("inp6"))
                             alert("STOP2");
+                            document.getElementById("inp2").max = parseInt( Date().getFullYear());
                         }
 
                         formularz.id = on.toString() + "ff"
@@ -1622,6 +1625,7 @@ th, td{
                         if(rodzajFormularza === pojazdFormularz){
                             autocomplete(document.getElementById("inp5"), marki);
                             autocomplete(document.getElementById("inp6"), modele);
+                            document.getElementById("inp2").max = new Date().getFullYear();
                         }
 
 
@@ -1691,6 +1695,8 @@ th, td{
 
                     document.getElementById("obywatel").getElementsByTagName("tr")[0].style.backgroundColor = "#167F92";
 
+
+
                     alert("id 628 " + id)
                     alert("on 629 to" + on)
 
@@ -1701,6 +1707,7 @@ th, td{
                         autocomplete(document.getElementById("inp6"), modele);
                         console.log(document.getElementById("inp6"))
                         alert("STOP2")
+                        document.getElementById("inp2").max = new Date().getFullYear();
                     }
 
                     formularz.id = on.toString() + "ff"
@@ -1719,10 +1726,13 @@ th, td{
                     if(rodzajFormularza === pojazdFormularz){
                         autocomplete(document.getElementById("inp5"), marki);
                         autocomplete(document.getElementById("inp6"), modele);
+                        document.getElementById("inp2").max = new Date().getFullYear();
                     }
 
 
                 });
+
+
 
 
 
@@ -2527,6 +2537,29 @@ function loadMarkaData(){
         odnow(abo_id-1); // przejscie na numerowanie od 0
 
 
+
+    }
+
+    function data_dzis(){
+        let today = new Date();
+        let month = today.getMonth() + 1 // bo liczy miesiące od zera
+        let day = today.getDate()
+        if(month < 10)
+            month = "0" + month;
+        if(day < 10)
+            day = "0" + day;
+        return today.getFullYear() +"-" + month + "-" + day;
+
+    }
+    function data_za_rok(){
+        let today = new Date();
+        let month = today.getMonth() + 1 // bo liczy miesiące od zera
+        let day = today.getDate()
+        if(month < 10)
+            month = "0" + month;
+        if(day < 10)
+            day = "0" + day;
+        return   (today.getFullYear()+1) +"-" + month + "-" + day;
 
     }
 
