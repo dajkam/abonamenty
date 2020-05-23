@@ -479,33 +479,33 @@ th, td{
 
     var formularz = ""
 
-   var obywatelFormularz = "<form id = 'ffa' >\n" +
+   var obywatelFormularz = "<form id = 'ffa'  action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
        "    nr dowodu: <br>\n" +
-       "    <input id =\"in1\" type = 'text' name = \"nr_dowodu\" value =  {{nr_dowodu}}   ><br>\n" +
+       "    <input id =\"in1\" type = 'text' name = \"nr_dowodu\" value =  '{{nr_dowodu}}'   required = 'true'/><br>\n" +
        "    imię: <br>\n" +
-       "    <input id =\"in2\" type = 'text' name = \"imie\"  value={{imie}}><br>\n" +
+       "    <input id =\"in2\" type = 'text' name = \"imie\"  value= '{{imie}}' required = 'true'/><br>\n" +
        "    nazwisko: <br>\n" +
-       "    <input id =\"in3\" type = 'text' name = \"nazwisko\" value={{nazwisko}} ><br>\n" +
+       "    <input id =\"in3\" type = 'text' name = \"nazwisko\" value='{{nazwisko}}'   required = 'true'/><br>\n" +
        "    adres: <br>\n" +
-       "    <input id =\"in4\" type = 'text' name = \"adres\" value = '{{adres}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
+       "    <input id =\"in4\" type = 'text' name = \"adres\" value = '{{adres}}'   required = 'true'/><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
        "    data urodzenia: <br>\n" +
-       "    <input id =\"in5\" type = 'date' name = \"data_urodzenia\" value = {{data_urodzenia}}  ><br>\n" +
+       "    <input id =\"in5\" type = 'date' name = \"data_urodzenia\" value = '{{data_urodzenia}}' required = 'true'/><br>\n" +
        "    PESEL:<br>\n" +
-       "    <input id =\"in6\"type = 'text' name = \"pesel\" value = {{pesel}}><br><br>\n" +
+       "    <input id =\"in6\"type = 'text' name = \"pesel\" value = '{{pesel}}' required = 'true'/><br><br>\n" +
 
-       "    <input id='zatwierdz' class = 'zat'type = 'submit' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
+       "    <input id='zatwierdz' class = 'zat'type = 'submit' value = \"Zatwierdź\" >\n" +
 
        "  </form>";
 // stare wybie ranie sektora  "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
     // nowe rozwiązanie  w select nie ma atrybutu value={{sektor}}
-   var abonamentFormularz = "<form id = 'ffc' >\n" +
+   var abonamentFormularz = "<form id = 'ffc' action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
        "    data rozpoczęcia: <br>\n" +
-       "    <input id =\"ina1\" type = 'date' name = \"data_rozpoczecia\" value =  {{data_rozpoczecia}} ><br>\n" +
+       "    <input id =\"ina1\" type = 'date' name = \"data_rozpoczecia\" value =  '{{data_rozpoczecia}}' required = 'true'/><br>\n" +
        "    data zakończenia: <br>\n" +
-       "    <input id =\"ina2\" type = 'date' name = \"data_zakonczenia\"  value= {{data_zakonczenia}} ><br>\n" +
+       "    <input id =\"ina2\" type = 'date' name = \"data_zakonczenia\"  value= '{{data_zakonczenia}}' required = 'true'/><br>\n" +
        "    sektor: <br>\n" +
-      ` <select id ="ina3" >
-        <option value="Wybierz" selected disabled hidden>Wybierz</option>
+      ` <select id ="ina3" required = 'true'/>
+        <option value="" selected disabled hidden>Wybierz</option>
         <option value="A">A</option>
         <option value="B">B</option>
         <option value="C">C</option>
@@ -520,7 +520,7 @@ th, td{
         </select> <br>`+
        "    uwagi: <br>\n" +
        "    <input id =\"ina4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    <input id='zatwierdz' class='zat' type = 'submit' value = \"Zatwierdź\" onclick='f3(wyb_rekord())'>\n" +
+       "    <input id='zatwierdz' class='zat' type = 'submit' value = \"Zatwierdź\" >\n" +
        "\n" +
        "\n" +
        "  </form>";
@@ -529,17 +529,17 @@ th, td{
        "    nr rejstracyjny pojazdu: <br>\n" +
        "    <input id =\"inp1\" type = 'text'  name = \"nr_rejestracyjny_pojazdu\" value =  '{{nr_rejstracyjny_pojazdu}}'   required = 'true'/><br>\n" +
        "    rok produkcji: <br>\n" +
-       "    <input id =\"inp2\" type = 'number' name = \"rok_produkcji\"  value={{rok_produkcji}}><br>\n" +
+       "    <input id =\"inp2\" type = 'number' name = \"rok_produkcji\"  value='{{rok_produkcji}}' required = 'true'/><br>\n" +
        "    kolor: <br>\n" +
        "    <input id =\"inp3\" type = 'text' name = \"kolor\" value={{kolor}} ><br>\n" +
        "    uwagi: <br>\n" +
        "    <input id =\"inp4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
            `<span id = 'inp-auto'>
                  Marka:<br>
-                <input id='inp5' type='text' name='marka' value='{{marka}}' placeholder='Marka'  >
+                <input id='inp5' type='text' name='marka' value='{{marka}}' placeholder='Marka'  required = 'true'/>
                 <br>
                 Model:<br>
-                <input id='inp6' type='text' name='model' value='{{model}}' placeholder='Model' onclick='get_modele()'><br>
+                <input id='inp6' type='text' required = 'true' name='model' value='{{model}}' placeholder='Model' onclick='get_modele()' /><br>
 
                 </span>
             `+
