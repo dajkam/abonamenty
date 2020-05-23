@@ -229,8 +229,8 @@ th, td{
     <tr >
 
         <th  class='okol1 kol id' onclick="orderBy('abo_id')" id="abo_id">id</th>
-        <th  class='okol2 kol' onclick="orderBy('abo_data_rozpoczecia')" id="abo_data_rozpoczecia">data rozpoczecia</th>
-        <th  class='okol3 kol'  onclick="orderBy('abo_data_zakonczenia')" id="abo_data_zakonczenia">data zakonczenia</th>
+        <th  class='okol2 kol' onclick="orderBy('abo_data_rozpoczecia')" id="abo_data_rozpoczecia">data rozpoczęcia</th>
+        <th  class='okol3 kol'  onclick="orderBy('abo_data_zakonczenia')" id="abo_data_zakonczenia">data zakończenia</th>
         <th  class='okol4 kol' onclick="orderBy('abo_sektor')" id="abo_sektor">sektor</th>
         <th  class='okol2 kol' onclick="orderBy('abo_nr_rejstracyjny')" id="abo_nr_rejstracyjny">nr rejstracyjny</th>
         <th class='okol3 kol' onclick="orderBy('abo_marka')" id="abo_marka">marka</th>
@@ -498,9 +498,9 @@ th, td{
 // stare wybie ranie sektora  "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
     // nowe rozwiązanie  w select nie ma atrybutu value={{sektor}}
    var abonamentFormularz = "<form id = 'ffc' >\n" +
-       "    data rozpoczecia: <br>\n" +
+       "    data rozpoczęcia: <br>\n" +
        "    <input id =\"ina1\" type = 'date' name = \"data_rozpoczecia\" value =  {{data_rozpoczecia}} ><br>\n" +
-       "    data zakonczenia: <br>\n" +
+       "    data zakończenia: <br>\n" +
        "    <input id =\"ina2\" type = 'date' name = \"data_zakonczenia\"  value= {{data_zakonczenia}} ><br>\n" +
        "    sektor: <br>\n" +
       ` <select id ="ina3" >
@@ -1550,19 +1550,22 @@ th, td{
                         // wybrane dane oryginalnie wybraneDane
                         let rodzajDanych = null;
                         let rodzajFormularza = null;
-                        if(son.pesel !== null){
+                        if(son.adres !== null){
                             rodzajDanych = obywatelDane;
                             rodzajFormularza = obywatelFormularz;
+                            var nagl = document.getElementById("nago");
                         }
 
                         if(son.kolor !== null){
                             rodzajDanych = pojazdDane;
                             rodzajFormularza = pojazdFormularz;
+                             var nagl = document.getElementById("nagp");
                         }
 
                         if(son.sektor !== null){
-                            rodzajDanych = obywatelDane;
+                            rodzajDanych = abonamentDane;
                             rodzajFormularza = abonamentFormularz;
+                            var nagl = document.getElementById("naga");
                         }
 
                         template = Handlebars.compile(rodzajFormularza);
@@ -1576,13 +1579,19 @@ th, td{
 
                         //document.getElementById(id.toString()).innerHTML += dane2;
 
-                        document.getElementById("obywatel").innerHTML = ""
+                        nagl.style.backgroundColor = "#167F92";
+
+                        document.getElementById("obywatel").innerHTML = "";
+
+                        document.getElementById("obywatel").innerHTML += nagl.innerHTML;
 
                         document.getElementById("obywatel").innerHTML += dane2;
 
                         document.getElementById("formularz").innerHTML += dane;
 
                         // document.getElementById("ff").id = id + "ff" /// czemu to nie działa daje null
+
+                        document.getElementById("obywatel").getElementsByTagName("tr")[0].style.backgroundColor = "#167F92";
 
                         alert("id 628 " + id)
                         alert("on 629 to" + on)
@@ -1633,21 +1642,25 @@ th, td{
                         c= "obywatel"
                         rodzajDanych = obywatelDane;
                         rodzajFormularza = obywatelFormularz;
+                        var nagl = document.getElementById("nago2.1");
                     }
 
                     if(pow_id == 2){
                         c = "pojazd"
                         rodzajDanych = pojazdDane;
                         rodzajFormularza = pojazdFormularz;
+                        var nagl = document.getElementById("nagp2.1");
                     }
 
                     if(pow_id == 3){
                         c = "abonament"
                         rodzajDanych = obywatelDane;
                         rodzajFormularza = abonamentFormularz;
+                        var nagl = document.getElementById("naga2.1");
                         console.log(son.sektor)
                         console.log(son.uwagi)
                         alert("sektor i uwagi w konsoli w f2")
+
                     }
                     pow_global = pow_id;
 
@@ -1664,13 +1677,18 @@ th, td{
 
                     //document.getElementById(id.toString()).innerHTML += dane2;
 
+
                     document.getElementById("obywatel").innerHTML = ""
+
+                    document.getElementById("obywatel").innerHTML += nagl.innerHTML;
 
                     document.getElementById("obywatel").innerHTML += dane2;
 
                     document.getElementById("formularz").innerHTML += dane;
 
                     // document.getElementById("ff").id = id + "ff" /// czemu to nie działa daje null
+
+                    document.getElementById("obywatel").getElementsByTagName("tr")[0].style.backgroundColor = "#167F92";
 
                     alert("id 628 " + id)
                     alert("on 629 to" + on)
@@ -2125,9 +2143,9 @@ function block_buttons() {
     <tr id="nago2.1" >
 
         <th  class=' kol okol1'>id</th>
-        <th  class=' kol '>pesel</th>
+        <th  class=' kol '>PESEL</th>
         <th  class=' kol'>numer dowodu</th>
-        <th  class=' kol'>imie</th>
+        <th  class=' kol'>imię</th>
         <th class=' kol'>nazwisko</th>
         <th  class=' kol'>data urodzenia</th>
         <th  class=' kol'>adres</th>
@@ -2159,15 +2177,15 @@ function block_buttons() {
     <tr id="naga2.1">
 
         <th  class='okol1 kol id' id="abo_id">id</th>
-        <th  class='okol2 kol'  id="abo_data_rozpoczecia">data rozpoczecia</th>
-        <th  class='okol3 kol'   id="abo_data_zakonczenia">data zakonczenia</th>
+        <th  class='okol2 kol'  id="abo_data_rozpoczecia">data rozpoczęcia</th>
+        <th  class='okol3 kol'   id="abo_data_zakonczenia">data zakończenia</th>
         <th  class='okol4 kol'  id="abo_sektor">sektor</th>
         <th  class='okol2 kol'  id="abo_nr_rejstracyjny">nr rejstracyjny</th>
         <th class='okol3 kol'  id="abo_marka">marka</th>
         <th  class='okol4 kol'id="abo_model">model </th>
-        <th  class=' kol' id="abo_imie">imie</th>
+        <th  class=' kol' id="abo_imie">imię</th>
         <th class=' kol' id="abo_nazwisko">nazwisko</th>
-        <th  class='kol' id="abo_pesel">pesel</th>
+        <th  class='kol' id="abo_pesel">PESEL</th>
 
 
 
