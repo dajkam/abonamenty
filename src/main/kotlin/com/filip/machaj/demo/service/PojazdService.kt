@@ -38,7 +38,7 @@ class PojazdService {
                             pojazd.id,
                             pojazd.kolor,
                             pojazd.uwagi,
-                            pojazd.nr_rejstracyjny_pojazdu,
+                            pojazd.nr_rejstracyjny_pojazdu.trim(),
                             pojazd.rok_produkcji,
                             pojazd.czy_zarchiwizowany,
                             //repoM.findById(1).get(),
@@ -64,7 +64,7 @@ class PojazdService {
         var pojazd_old: Pojazd = repo.findById(pojazdDTO.id).get()
         pojazd.kolor = pojazdDTO.kolor
         pojazd.uwagi = pojazdDTO.uwagi
-        pojazd.nr_rejstracyjny_pojazdu = pojazdDTO.nr_rejstracyjny_pojazdu
+        pojazd.nr_rejstracyjny_pojazdu = pojazdDTO.nr_rejstracyjny_pojazdu.trim()
         pojazd.rok_produkcji = pojazdDTO.rok_produkcji
         pojazd.czy_zarchiwizowany = pojazdDTO.czy_zarchiwizowany
         pojazd.kiedy_zmodyfikowano = Date() // zrobić żeby to pole sie zmieniało tylko gdy żeczywiście coś zmieniono
