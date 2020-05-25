@@ -38,7 +38,7 @@ class PojazdService {
                             pojazd.id,
                             pojazd.kolor,
                             pojazd.uwagi,
-                            pojazd.nr_rejstracyjny_pojazdu,
+                            pojazd.nr_rejstracyjny_pojazdu.trim(),
                             pojazd.rok_produkcji,
                             pojazd.czy_zarchiwizowany,
                             //repoM.findById(1).get(),
@@ -64,7 +64,7 @@ class PojazdService {
         var pojazd_old: Pojazd = repo.findById(pojazdDTO.id).get()
         pojazd.kolor = pojazdDTO.kolor
         pojazd.uwagi = pojazdDTO.uwagi
-        pojazd.nr_rejstracyjny_pojazdu = pojazdDTO.nr_rejstracyjny_pojazdu
+        pojazd.nr_rejstracyjny_pojazdu = pojazdDTO.nr_rejstracyjny_pojazdu.trim()
         pojazd.rok_produkcji = pojazdDTO.rok_produkcji
         pojazd.czy_zarchiwizowany = pojazdDTO.czy_zarchiwizowany
         pojazd.kiedy_zmodyfikowano = Date() // zrobić żeby to pole sie zmieniało tylko gdy żeczywiście coś zmieniono
@@ -103,4 +103,13 @@ class PojazdService {
     fun szukaj(fraza:String):Iterable<PojModMar> = repo.szukaj(fraza.toLowerCase())
 
     fun getPojazdById(id: Long): PojModMar = repo.getPojazdById(id)
+
+    fun czy_istnieje_nr_rejstracyjny(nr_rejstarcyjny_pojazdu:String):Int{
+        try {
+            return repo.czy_istnieje_nr_rejstracyjny(nr_rejstarcyjny_pojazdu)
+        }
+        catch(e:Exception){
+            return 0
+        }
+    }
 }

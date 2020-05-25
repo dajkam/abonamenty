@@ -17,6 +17,7 @@ data class Pojazd (
         @Column(columnDefinition = "varchar(36)")
         var kolor : String?,
         var uwagi : String?,
+        @Column(columnDefinition = "varchar(36)", unique = true)
         var nr_rejstracyjny_pojazdu : String,
         @Column(columnDefinition = "int")
          var rok_produkcji: Int, // Zmienić na LocalDate tylko rok

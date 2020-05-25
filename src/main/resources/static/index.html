@@ -36,6 +36,15 @@
 
 
 <style>
+    #nr_rej_err{
+        display: none;
+    }
+    #pesel_err2{
+        display: none;
+    }
+    #nr_dow_err2{
+        display: none;
+    }
     #dat_zak_err{
         display: none;
     }
@@ -520,8 +529,9 @@ th, td{
 
    var obywatelFormularz = "<form id = 'ffa'  action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
        "    nr dowodu: <br>\n" +
-       "    <input id =\"in1\" type = 'text' name = \"nr_dowodu\" value =  '{{nr_dowodu}}'  minlength='9' maxlength='9'   required = 'true' onchange='check_nr_dowodu()'/><br>\n" +
+       "    <input id =\"in1\" type = 'text' name = \"nr_dowodu\" value =  '{{nr_dowodu}}'  minlength='9' maxlength='9'   required = 'true' onchange=' check_all_ob()'/><br>\n" +
            "<div class='error' id='nr_dow_err'>Wpisz poprawny numer dowodu</div>\n" +
+            "<div class='error' id='nr_dow_err2'>Ten numer dowodu już widnieje w bazie</div>\n" +
        "    imię: <br>\n" +
        "    <input id =\"in2\" type = 'text' name = \"imie\"  value= '{{imie}}' required = 'true'/><br>\n" +
        "    nazwisko: <br>\n" +
@@ -529,11 +539,12 @@ th, td{
        "    adres: <br>\n" +
        "    <input id =\"in4\" type = 'text' name = \"adres\" value = '{{adres}}'   required = 'true'/><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
        "    data urodzenia: <br>\n" +
-       "    <input id =\"in5\" type = 'date' name = \"data_urodzenia\" value = '{{data_urodzenia}}' required = 'true' onchange=' check_DatUrIPesel()'/><br>\n" +
+       "    <input id =\"in5\" type = 'date' name = \"data_urodzenia\" value = '{{data_urodzenia}}' required = 'true' onchange=' check_all_ob()'/><br>\n" +
        "    PESEL:<br>\n" +
-       "    <input id =\"in6\"type = 'text' name = \"pesel\" value = '{{pesel}}' minlength='11' maxlength='11' required = 'true' onchange=' check_pesel()'/>\n" +
+       "    <input id =\"in6\"type = 'text' name = \"pesel\" value = '{{pesel}}' minlength='11' maxlength='11' required = 'true' onchange=' check_all_ob()'/>\n" +
            "<div class='error' id='pesel_err'>Wpisz poprawny PESEL</div>\n" +
            "<div class='error' id='data_ur_err'> PESEL nie jest zgodny z datą urodzenia</div>\n" +
+            "<div class='error' id='pesel_err2'>Ten PESEL już widnieje w bazie</div>\n" +
 
        "  <br><br>  <input id='zatwierdz' class = 'zat 'type = 'submit' value = \"Zatwierdź\" >\n" +
 
@@ -572,7 +583,8 @@ th, td{
 
    var pojazdFormularz =  "<form id = 'ffb' autocomplete=\"off\" action='#' onsubmit='f3(wyb_rekord()); return false'> \n" +
        "    nr rejstracyjny pojazdu: <br>\n" +
-       "    <input id =\"inp1\" type = 'text'  name = \"nr_rejestracyjny_pojazdu\" value =  '{{nr_rejstracyjny_pojazdu}}'   required = 'true'/><br>\n" +
+       "    <input id =\"inp1\" type = 'text'  name = \"nr_rejestracyjny_pojazdu\" value =  '{{nr_rejstracyjny_pojazdu}}'   required = 'true' onchange='czy_nr_rej()'/><br>\n" +
+       "    <div class='error' id='nr_rej_err'>Ten numer rejstracyjny pojazdu już widnieje w bazie</div>\n" +
        "    rok produkcji: <br>\n" +
        "    <input id =\"inp2\" type = 'number' name = \"rok_produkcji\"  value='{{rok_produkcji}}' required = 'true' min = '1829' max='2020' /><br>\n" +
        "    kolor: <br>\n" +
@@ -1515,7 +1527,8 @@ th, td{
                     if(son.kto === "abonament"){
                         document.getElementById("formularz").innerHTML = "";
                         alert("przed insert tuple")
-                        insertTuple(son_set)
+                        insertTuple(son_set);
+                        location.reload(true);
 
                     }
 
@@ -2033,7 +2046,20 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
             for (let item of son_set) {
                 alert("W for tuple")
                 if (item.kto === "obywatel") {
-                    insertSon(item)
+                    try{
+                        let status =  insertSon(item);
+                        if(status === 500){
+                            console.log(status);
+                           // location.reload(true)
+                            return;
+                    }
+                    }
+                    catch (err) {
+                        console.log(err.message);
+                        //location.reload(true)
+                        return;
+                    }
+
                     last('http://localhost:8091/obywatel/last')
                     obywatel_id = global_last_id
                     alert("id obywatela")
@@ -2042,7 +2068,19 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
                 if (item.kto === "pojazd") {
                     item.obywatel.id = obywatel_id;
                     item.model.id = glob_add_model;
-                    insertSon(item)
+                    try{
+                        let status =  insertSon(item);
+                        if(status === 500){
+                            console.log(status);
+                           // location.reload(true)
+                            return;
+                        }
+                    }
+                    catch (err) {
+                        console.log(err.message);
+                        //location.reload(true)
+                        return;
+                    }
                     last('http://localhost:8091/pojazd/last')
                     pojazd_id = global_last_id
 
@@ -2053,7 +2091,21 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
                 if (item.kto === "abonament") {
                     alert("insert abonament")
                     item.pojazd.id = pojazd_id;
-                    insertSon(item)
+                    try{
+                      let status =  insertSon(item);
+                      if(status === 500){
+                          console.log(status);
+                          //location.reload(true)
+                          return;
+                      }
+
+
+                    }
+                    catch (err) {
+                        console.log(err.message);
+                       // location.reload(true)
+                        return;
+                    }
                     location.reload(true)
 
                 }
@@ -2083,7 +2135,9 @@ function insertSon(son) {
          xhr.setRequestHeader("Content-Type", "application/json");
          var json = JSON.stringify(son)
 
-        xhr.send(json)
+        xhr.send(json);
+         return xhr.status;
+
 
 
 
@@ -2661,6 +2715,28 @@ function loadMarkaData(){
             error.style.display = "block";
 
         }
+        // unikatowosc poniżej
+        if(id === "in1.1"){
+
+            error = document.getElementById('nr_dow_err2');
+            error.style.display = "block";
+
+
+        }
+        if(id === "in6.1"){
+
+            error = document.getElementById('pesel_err2');
+            error.style.display = "block";
+
+
+        }
+        if(id === "inp1.1"){
+
+            error = document.getElementById('nr_rej_err');
+            error.style.display = "block";
+
+
+        }
 
         
     }
@@ -2705,6 +2781,27 @@ function loadMarkaData(){
             error.style.display = "none";
 
         }
+        if(id === "in1.1"){
+
+            error = document.getElementById('nr_dow_err2');
+            error.style.display = "none";
+
+
+        }
+        if(id === "in6.1"){
+
+            error = document.getElementById('pesel_err2');
+            error.style.display = "none";
+
+
+        }
+        if(id === "inp1.1"){
+
+            error = document.getElementById('nr_rej_err');
+            error.style.display = "none";
+
+
+        }
 
 
 
@@ -2719,11 +2816,13 @@ function loadMarkaData(){
         if(!wal){
             show_error("in1");
             block_zat();
+            return false;
         }
 
         else{
             hide_error("in1");
             un_block_zat();
+            return true;
         }
 
 
@@ -2734,11 +2833,13 @@ function loadMarkaData(){
         if(!wal){
             show_error("in6");
             block_zat();
+            return false;
         }
 
         else{
             hide_error("in6");
             un_block_zat();
+            return true;
         }
 
 
@@ -2749,11 +2850,13 @@ function loadMarkaData(){
         if(!wal){
             show_error("in5");
             block_zat();
+            return false;
         }
 
         else{
             hide_error("in5");
             un_block_zat();
+            return true;
         }
 
 
@@ -2766,14 +2869,101 @@ function loadMarkaData(){
 
             hide_error("ina2");
             un_block_zat();
+            return true;
 
         }
         else{
 
             show_error("ina2");
             block_zat();
+            return false;
 
 
+        }
+
+    }
+    function czy_nr_dowodu() {
+        let val = document.getElementById("in1").value;
+
+        var request = new XMLHttpRequest();
+        let url = "http://localhost:8091/obywatel/czy/dow/" + val;
+        request.open('GET', url, false);  // `false` makes the request synchronous
+        request.send(null);
+        let res = parseInt(request.response);
+
+        if(res === 1){
+            show_error("in1.1");
+            block_zat();
+            return false;
+
+        }
+        if(res === 0){
+            hide_error("in1.1");
+            un_block_zat();
+            return true;
+
+        }
+
+
+    }
+    function czy_pesel() {
+        let val = document.getElementById("in6").value;
+
+        var request = new XMLHttpRequest();
+        let url = "http://localhost:8091/obywatel/czy/ps/" + val;
+        request.open('GET', url, false);  // `false` makes the request synchronous
+        request.send(null);
+        let res = parseInt(request.response);
+
+        if(res === 1){
+            show_error("in6.1");
+            block_zat();
+            return false;
+
+        }
+        if(res === 0){
+            hide_error("in6.1");
+            un_block_zat();
+            return true;
+
+        }
+
+    }
+    function czy_nr_rej() {
+        let val = document.getElementById("in6").value;
+
+        var request = new XMLHttpRequest();
+        let url = "http://localhost:8091/pojazd/czy/nr/" + val;
+        request.open('GET', url, false);  // `false` makes the request synchronous
+        request.send(null);
+        let res = parseInt(request.response);
+
+        if(res === 1){
+            show_error("inp1.1");
+            block_zat();
+
+        }
+        if(res === 0){
+            hide_error("inp1.1");
+            un_block_zat();
+
+        }
+
+    }
+    function check_all_ob() {
+
+        check_pesel();
+        czy_pesel();
+        check_nr_dowodu();
+        czy_nr_dowodu();
+        check_DatUrIPesel();
+
+        if(check_pesel()&&czy_pesel()&&check_nr_dowodu()&&czy_nr_dowodu()&&check_DatUrIPesel()){
+
+            un_block_zat();
+        }
+        else{
+            block_zat();
         }
 
     }
@@ -2781,6 +2971,7 @@ function loadMarkaData(){
 
     function block_zat() {
         form_ok.a = false;
+        var zat = document.getElementById('zatwierdz');
         zat.classList.add("butt");
         zat.style.pointerEvents = "none";
         zat.style.backgroundColor = "gray";
@@ -2790,6 +2981,7 @@ function loadMarkaData(){
     }
     function un_block_zat() {
         form_ok.a = true;
+        var zat = document.getElementById('zatwierdz');
         zat.classList.remove("butt");
         zat.style.pointerEvents = "unset";
         zat.style.backgroundColor = "green";

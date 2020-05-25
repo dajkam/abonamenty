@@ -16,9 +16,11 @@ import kotlin.jvm.Transient
 data class Obywatel(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id : Long,
-        @Column(columnDefinition = "varchar(36)")
+        @Column(columnDefinition = "varchar(36)", unique = true)
         var pesel:String,
+        @Column(columnDefinition = "varchar(36)", unique = true)
         var nr_dowodu:String,
+        @Column(columnDefinition = "varchar(36)")
         var imie:String,
         var nazwisko:String,
         var adres : String,

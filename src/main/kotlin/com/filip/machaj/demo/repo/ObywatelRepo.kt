@@ -53,4 +53,10 @@ interface ObywatelRepo : CrudRepository<Obywatel, Long>  {
     @JsonIdentityReference(alwaysAsId = true)
     fun getObywatelById(@Param("id")id:Long):Obywatel
 
+    @Query("select 1 from obywatel where nr_dowodu = ?1",nativeQuery = true)
+    fun czy_istnieje_nr_dowodu(@Param("nr_dowodu")nr_dowodu:String):Int
+
+    @Query("select 1 from obywatel where pesel = ?1",nativeQuery = true)
+    fun czy_istnieje_pesel(@Param("pesel")pesel:String):Int
+
 }

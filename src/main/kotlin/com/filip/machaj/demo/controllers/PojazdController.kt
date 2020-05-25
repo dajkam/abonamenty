@@ -88,4 +88,10 @@ class PojazdController {
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun getPojazdById(@PathVariable(name = "id")id:Long) = service.getPojazdById(id)
+
+    @GetMapping(
+            value = ["/czy/nr/{nr_rejstarcyjny_pojazdu}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun czy_istnieje_nr_rejstracyjny(@PathVariable(name = "nr_rejstarcyjny_pojazdu")nr_rejstarcyjny_pojazdu:String) = service.czy_istnieje_nr_rejstracyjny(nr_rejstarcyjny_pojazdu)
 }

@@ -32,8 +32,8 @@ class ObywatelService {
 
         var obywatel =  Obywatel(
                 obywatel.id,
-                obywatel.pesel,
-                obywatel.nr_dowodu,
+                obywatel.pesel.trim(),
+                obywatel.nr_dowodu.trim(),
                 obywatel.imie,
                 obywatel.nazwisko,
                 obywatel.adres,
@@ -64,8 +64,8 @@ class ObywatelService {
 
         val obywatel_old : Obywatel = repo.findById(obywatelDTO.id).get()
 
-        obywatel.pesel = obywatelDTO.pesel
-        obywatel.nr_dowodu = obywatelDTO.nr_dowodu
+        obywatel.pesel = obywatelDTO.pesel.trim()
+        obywatel.nr_dowodu = obywatelDTO.nr_dowodu.trim()
         obywatel.imie = obywatelDTO.imie
         obywatel.nazwisko = obywatelDTO.nazwisko
         obywatel.adres = obywatelDTO.adres
@@ -113,6 +113,24 @@ class ObywatelService {
 
 
     fun getObywatelById(id:Long):Obywatel = repo.getObywatelById(id)
+
+    fun czy_istnieje_nr_dowodu(nr_dowodu:String):Int {
+        try {
+            return  repo.czy_istnieje_nr_dowodu(nr_dowodu)
+        }
+        catch (e: Exception){
+            return 0
+        }
+    }
+
+    fun czy_istnieje_pesel(pesel:String):Int {
+        try {
+            return  repo.czy_istnieje_pesel(pesel)
+        }
+        catch (e: Exception){
+            return 0
+        }
+    }
 
 
 
