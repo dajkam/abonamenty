@@ -36,8 +36,18 @@
 
 
 <style>
+    #data_ur_err{
+        display: none;
+    }
     #nr_dow_err{
         display: none;
+    }
+    #pesel_err{
+        display: none;
+    }
+    .error{
+        color:red;
+        font-size: 13px;
     }
     .hid{
         display: none;
@@ -290,6 +300,29 @@ th, td{
 
 
     // END
+  var  form_ok = { // odblokowuje przycisk zatwierdz jeżeli wszystkie pola są ok
+        aInternal: false,
+        aListener: function(val) {},
+        set a(val) {
+            this.aInternal = val;
+            this.aListener(val);
+        },
+        get a() {
+            return this.aInternal;
+        },
+        registerListener: function(listener) {
+            this.aListener = listener;
+        }
+    }
+
+    form_ok.registerListener(function(val) {
+        var zat = document.getElementById("zatwierdz")
+        if(val === true)
+            zat.classList.remove("butt")
+        else
+            zat.classList.add("butt")
+
+    });
 
     let rekord = null // wybrany rekord z bazy // numerowane od 1 jak w bazie
     let arch = new URL(window.location).searchParams.get('arch')
@@ -482,7 +515,7 @@ th, td{
 
     var formularz = ""
 
-   var obywatelFormularz = "<form id = 'ffa'  action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
+   var obywatelFormularz = "<form id = 'ffa'  action='#' onsubmit='check_nr_dowodu();check_pesel();check_DatUrIPesel();f3(wyb_rekord()); return false'>\n" +
        "    nr dowodu: <br>\n" +
        "    <input id =\"in1\" type = 'text' name = \"nr_dowodu\" value =  '{{nr_dowodu}}'  minlength='9' maxlength='9'   required = 'true' onchange='check_nr_dowodu()'/><br>\n" +
            "<div class='error' id='nr_dow_err'>Wpisz poprawny numer dowodu</div>\n" +
@@ -493,11 +526,13 @@ th, td{
        "    adres: <br>\n" +
        "    <input id =\"in4\" type = 'text' name = \"adres\" value = '{{adres}}'   required = 'true'/><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
        "    data urodzenia: <br>\n" +
-       "    <input id =\"in5\" type = 'date' name = \"data_urodzenia\" value = '{{data_urodzenia}}' required = 'true'/><br>\n" +
+       "    <input id =\"in5\" type = 'date' name = \"data_urodzenia\" value = '{{data_urodzenia}}' required = 'true' onchange=' check_DatUrIPesel()'/><br>\n" +
        "    PESEL:<br>\n" +
-       "    <input id =\"in6\"type = 'text' name = \"pesel\" value = '{{pesel}}' minlength='11' maxlength='11' required = 'true'/><br><br>\n" +
+       "    <input id =\"in6\"type = 'text' name = \"pesel\" value = '{{pesel}}' minlength='11' maxlength='11' required = 'true' onchange=' check_pesel()'/>\n" +
+           "<div class='error' id='pesel_err'>Wpisz poprawny PESEL</div>\n" +
+           "<div class='error' id='data_ur_err'> PESEL nie jest zgodny z datą urodzenia</div>\n" +
 
-       "    <input id='zatwierdz' class = 'zat'type = 'submit' value = \"Zatwierdź\" >\n" +
+       "  <br><br>  <input id='zatwierdz' class = 'zat 'type = 'submit' value = \"Zatwierdź\" >\n" +
 
        "  </form>";
 // stare wybie ranie sektora  "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
@@ -1636,7 +1671,10 @@ th, td{
                         if(rodzajFormularza === obywatelFormularz){
                             document.getElementById('nr_dow_err').style.display = "none";
                             let pole_nr_dow = document.getElementById('in1');
-                         //   pole_nr_dow.addEventListener("input", check_nr_dowodu())
+                         //   pole_nr_dow.addEventListener("input", check_nr_dowodu());
+                            check_nr_dowodu();
+                            check_pesel();
+                            check_DatUrIPesel();
                         }
 
 
@@ -1740,7 +1778,10 @@ th, td{
                     if(rodzajFormularza === pojazdFormularz){
                         autocomplete(document.getElementById("inp5"), marki);
                         autocomplete(document.getElementById("inp6"), modele);
-                        document.getElementById("inp2").max = new Date().getFullYear();
+                      //  document.getElementById("inp2").max = new Date().getFullYear();
+                        check_nr_dowodu();
+                        check_pesel();
+                        check_DatUrIPesel();
                     }
 
 
@@ -2585,6 +2626,24 @@ function loadMarkaData(){
             error = document.getElementById('nr_dow_err');
             error.style.display = "block";
 
+
+        }
+
+        if(id === "in5"){
+
+            error = document.getElementById('data_ur_err');
+            error.style.display = "block";
+
+
+
+        }
+        if(id === "in6"){
+
+            error = document.getElementById('pesel_err');
+            error.style.display = "block";
+
+
+
         }
 
         
@@ -2598,7 +2657,27 @@ function loadMarkaData(){
             error = document.getElementById('nr_dow_err');
             error.style.display = "none";
 
+
+
         }
+
+        if(id === "in5"){
+
+            error = document.getElementById('data_ur_err');
+            error.style.display = "none";
+
+
+
+        }
+        if(id === "in6"){
+
+            error = document.getElementById('pesel_err');
+            error.style.display = "none";
+
+
+
+        }
+
 
 
     }
@@ -2608,10 +2687,68 @@ function loadMarkaData(){
 
     function check_nr_dowodu(){
         var wal = walidacjaNumeruDowodu(document.getElementById("in1").value);
-        if(!wal)
-            show_error("in1")
-        else
-            hide_error("in1")
+        var zat = document.getElementById('zatwierdz')
+        if(!wal){
+            show_error("in1");
+            block_zat();
+        }
+
+        else{
+            hide_error("in1");
+            un_block_zat();
+        }
+
+
+    }
+    function check_pesel(){
+        var wal = walidacjaPesela(document.getElementById("in6").value);
+        var zat = document.getElementById('zatwierdz')
+        if(!wal){
+            show_error("in6");
+            block_zat();
+        }
+
+        else{
+            hide_error("in6");
+            un_block_zat();
+        }
+
+
+    }
+    function check_DatUrIPesel(){
+        var wal = zgodnoscDatyUrodzeniaZPeselem(document.getElementById("in6").value,document.getElementById("in5").value);
+        var zat = document.getElementById('zatwierdz')
+        if(!wal){
+            show_error("in5");
+            block_zat();
+        }
+
+        else{
+            hide_error("in5");
+            un_block_zat();
+        }
+
+
+    } //tu skonczyłem na zaimplementowaniu funkcji do pesela
+
+  //  if(zgodnoscDatyUrodzeniaZPeselem(document.getElementById("in6").value,document.getElementById("in5").value)){
+
+    function block_zat() {
+        form_ok.a = false;
+        zat.classList.add("butt");
+        zat.style.pointerEvents = "none";
+        zat.style.backgroundColor = "gray";
+        zat.style.cursor = "not-allowed";
+        zat.color = "black";
+
+    }
+    function un_block_zat() {
+        form_ok.a = true;
+        zat.classList.remove("butt");
+        zat.style.pointerEvents = "unset";
+        zat.style.backgroundColor = "green";
+        zat.style.cursor = "unset";
+        zat.color = "unset";
 
     }
 
