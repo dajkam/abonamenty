@@ -36,6 +36,9 @@
 
 
 <style>
+    #dat_zak_err{
+        display: none;
+    }
     #data_ur_err{
         display: none;
     }
@@ -541,9 +544,10 @@ th, td{
     <!--  w select Value w tej opcji która niczego nie wybiera musi bić puste żeby zadziałało rquired-->
    var abonamentFormularz = "<form id = 'ffc' action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
        "    data rozpoczęcia: <br>\n" +
-       "    <input id =\"ina1\" type = 'date' name = \"data_rozpoczecia\" value =  '{{data_rozpoczecia}}' required = 'true'/><br>\n" +
+       "    <input id =\"ina1\" type = 'date' name = \"data_rozpoczecia\" value =  '{{data_rozpoczecia}}' required = 'true' onchange='check_dat_roz_zak()'/><br>\n" +
        "    data zakończenia: <br>\n" +
-       "    <input id =\"ina2\" type = 'date' name = \"data_zakonczenia\"  value= '{{data_zakonczenia}}' required = 'true'/><br>\n" +
+       "    <input id =\"ina2\" type = 'date' name = \"data_zakonczenia\"  value= '{{data_zakonczenia}}' required = 'true' onchange='check_dat_roz_zak()'/><br>\n" +
+       "    <div class='error' id='dat_zak_err'>Data rozpoczęcia musi być przed datą zakończenia</div>\n" +
        "    sektor: <br>\n" +
       ` <select id ="ina3" required = 'true'/>
         <option value="" selected disabled hidden>Wybierz</option>
@@ -2645,6 +2649,18 @@ function loadMarkaData(){
 
 
         }
+        if(id === "ina1"){
+
+            error = document.getElementById('dat_zak_err');
+            error.style.display = "block";
+
+        }
+        if(id === "ina2"){
+
+            error = document.getElementById('dat_zak_err');
+            error.style.display = "block";
+
+        }
 
         
     }
@@ -2675,6 +2691,18 @@ function loadMarkaData(){
             error.style.display = "none";
 
 
+
+        }
+        if(id === "ina1"){
+
+            error = document.getElementById('dat_zak_err');
+            error.style.display = "none";
+
+        }
+        if(id === "ina2"){
+
+            error = document.getElementById('dat_zak_err');
+            error.style.display = "none";
 
         }
 
@@ -2731,7 +2759,25 @@ function loadMarkaData(){
 
     } //tu skonczyłem na zaimplementowaniu funkcji do pesela
 
-  //  if(zgodnoscDatyUrodzeniaZPeselem(document.getElementById("in6").value,document.getElementById("in5").value)){
+    function check_dat_roz_zak() {
+        if( document.getElementById("ina1").value < document.getElementById("ina2").value) { // uwaga tu warunek z else są zamienione
+
+
+
+            hide_error("ina2");
+            un_block_zat();
+
+        }
+        else{
+
+            show_error("ina2");
+            block_zat();
+
+
+        }
+
+    }
+
 
     function block_zat() {
         form_ok.a = false;
