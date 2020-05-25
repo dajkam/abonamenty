@@ -515,7 +515,7 @@ th, td{
 
     var formularz = ""
 
-   var obywatelFormularz = "<form id = 'ffa'  action='#' onsubmit='check_nr_dowodu();check_pesel();check_DatUrIPesel();f3(wyb_rekord()); return false'>\n" +
+   var obywatelFormularz = "<form id = 'ffa'  action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
        "    nr dowodu: <br>\n" +
        "    <input id =\"in1\" type = 'text' name = \"nr_dowodu\" value =  '{{nr_dowodu}}'  minlength='9' maxlength='9'   required = 'true' onchange='check_nr_dowodu()'/><br>\n" +
            "<div class='error' id='nr_dow_err'>Wpisz poprawny numer dowodu</div>\n" +
