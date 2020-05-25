@@ -1515,7 +1515,8 @@ th, td{
                     if(son.kto === "abonament"){
                         document.getElementById("formularz").innerHTML = "";
                         alert("przed insert tuple")
-                        insertTuple(son_set)
+                        insertTuple(son_set);
+                        location.reload(true);
 
                     }
 
@@ -2033,7 +2034,20 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
             for (let item of son_set) {
                 alert("W for tuple")
                 if (item.kto === "obywatel") {
-                    insertSon(item)
+                    try{
+                        let status =  insertSon(item);
+                        if(status === 500){
+                            console.log(status);
+                           // location.reload(true)
+                            return;
+                    }
+                    }
+                    catch (err) {
+                        console.log(err.message);
+                        //location.reload(true)
+                        return;
+                    }
+
                     last('http://localhost:8091/obywatel/last')
                     obywatel_id = global_last_id
                     alert("id obywatela")
@@ -2042,7 +2056,19 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
                 if (item.kto === "pojazd") {
                     item.obywatel.id = obywatel_id;
                     item.model.id = glob_add_model;
-                    insertSon(item)
+                    try{
+                        let status =  insertSon(item);
+                        if(status === 500){
+                            console.log(status);
+                           // location.reload(true)
+                            return;
+                        }
+                    }
+                    catch (err) {
+                        console.log(err.message);
+                        //location.reload(true)
+                        return;
+                    }
                     last('http://localhost:8091/pojazd/last')
                     pojazd_id = global_last_id
 
@@ -2053,7 +2079,21 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
                 if (item.kto === "abonament") {
                     alert("insert abonament")
                     item.pojazd.id = pojazd_id;
-                    insertSon(item)
+                    try{
+                      let status =  insertSon(item);
+                      if(status === 500){
+                          console.log(status);
+                          //location.reload(true)
+                          return;
+                      }
+
+
+                    }
+                    catch (err) {
+                        console.log(err.message);
+                       // location.reload(true)
+                        return;
+                    }
                     location.reload(true)
 
                 }
@@ -2083,7 +2123,9 @@ function insertSon(son) {
          xhr.setRequestHeader("Content-Type", "application/json");
          var json = JSON.stringify(son)
 
-        xhr.send(json)
+        xhr.send(json);
+         return xhr.status;
+
 
 
 
@@ -2781,6 +2823,7 @@ function loadMarkaData(){
 
     function block_zat() {
         form_ok.a = false;
+        var zat = document.getElementById('zatwierdz');
         zat.classList.add("butt");
         zat.style.pointerEvents = "none";
         zat.style.backgroundColor = "gray";
@@ -2790,6 +2833,7 @@ function loadMarkaData(){
     }
     function un_block_zat() {
         form_ok.a = true;
+        var zat = document.getElementById('zatwierdz');
         zat.classList.remove("butt");
         zat.style.pointerEvents = "unset";
         zat.style.backgroundColor = "green";
