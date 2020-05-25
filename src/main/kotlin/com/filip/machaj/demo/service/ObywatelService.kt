@@ -114,6 +114,24 @@ class ObywatelService {
 
     fun getObywatelById(id:Long):Obywatel = repo.getObywatelById(id)
 
+    fun czy_istnieje_nr_dowodu(nr_dowodu:String):Int {
+        try {
+            return  repo.czy_istnieje_nr_dowodu(nr_dowodu)
+        }
+        catch (e: Exception){
+            return 0
+        }
+    }
+
+    fun czy_istnieje_pesel(pesel:String):Int {
+        try {
+            return  repo.czy_istnieje_pesel(pesel)
+        }
+        catch (e: Exception){
+            return 0
+        }
+    }
+
 
 
 }

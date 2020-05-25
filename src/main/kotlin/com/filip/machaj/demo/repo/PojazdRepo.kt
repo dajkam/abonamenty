@@ -76,4 +76,7 @@ where pojazd.id = ?1
     @JsonIdentityReference(alwaysAsId = true)
     fun getPojazdById(id:Long): PojModMar
 
+    @Query("select 1 from pojazd where  nr_rejstracyjny_pojazdu =?1", nativeQuery = true)
+    fun czy_istnieje_nr_rejstracyjny(@Param("nr_rejstracyjny_pojazdu")nr_rejstarcyjny_pojazdu:String):Int
+
 }

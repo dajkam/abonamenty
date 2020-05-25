@@ -102,4 +102,16 @@ class ObywatelController {
     )
     fun getObywatelById(@PathVariable(name = "id")id:Long) = service.getObywatelById(id)
 
+    @GetMapping(
+            value = ["/czy/dow/{nr_dowodu}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun czy_istnieje_nr_dowodu(@PathVariable(name = "nr_dowodu")nr_dowodu:String) = service.czy_istnieje_nr_dowodu(nr_dowodu)
+
+    @GetMapping(
+            value = ["/czy/ps/{pesel}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun czy_istnieje_pesel(@PathVariable(name = "pesel")pesel:String) = service.czy_istnieje_pesel(pesel)
+
 }

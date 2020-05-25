@@ -103,4 +103,13 @@ class PojazdService {
     fun szukaj(fraza:String):Iterable<PojModMar> = repo.szukaj(fraza.toLowerCase())
 
     fun getPojazdById(id: Long): PojModMar = repo.getPojazdById(id)
+
+    fun czy_istnieje_nr_rejstracyjny(nr_rejstarcyjny_pojazdu:String):Int{
+        try {
+            return repo.czy_istnieje_nr_rejstracyjny(nr_rejstarcyjny_pojazdu)
+        }
+        catch(e:Exception){
+            return 0
+        }
+    }
 }
