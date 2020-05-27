@@ -6,6 +6,8 @@ import com.filip.machaj.demo.service.AbonamentService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
+import java.time.format.DateTimeFormatter
+import java.time.LocalDateTime
 
 
 @RestController
@@ -81,4 +83,12 @@ fun szukaj(@PathVariable(name = "fraza")fraza:String) = service.szukaj(("%"+fraz
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun getAbonamentInfoById(@PathVariable(name = "id")id:Long) = service.getAbonamentInfoById(id)
+    @GetMapping(
+            value = ["/data"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun getCurrentData(): String? {
+        val currentDateTime : LocalDateTime = LocalDateTime.now()
+        return currentDateTime.format(DateTimeFormatter.ISO_DATE)
+    }
 }

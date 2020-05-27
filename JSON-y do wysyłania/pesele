@@ -1,1 +1,14 @@
 99041434718
+61020129425
+
+
+for(let i = 0; i < res.length; i=i+1){
+            let item = res[i];
+            alert("usun item w console log")
+            console.log(item)
+            alert(dzisiejsza_data)
+            alert(item.data_zakonczenia)
+            let data_zak_mili = new Date(item.data_zakonczenia).getTime()
+            if(data_mili >= data_zak_mili){
+                usun(i,true)
+            }
