@@ -184,7 +184,7 @@ th, td{
 
     <button id="edytuj"class='butt hid' type= 'button' onclick='f2((wyb_rekord()-1),czy_powi())'  tabindex="-1">Edytuj</button>
 
-     <button id="usun" class = 'but4 butt hid' type='button' onclick='usun(wyb_rekord()-1)'  tabindex="-1" >Usuń</button>
+     <button id="usun" class = 'but4 butt hid' type='button' onclick='usun((wyb_rekord()-1),false)'  tabindex="-1" >Usuń</button>
 
     <button id="odnow" class = 'but4 butt hid' type='button' onclick='odnow(wyb_rekord()-1)'  tabindex="-1" >Odnów</button>
 
@@ -295,6 +295,36 @@ th, td{
 <script type="text/javascript">
 
     // moment date format
+    function usun_nieaktualne_abonamenty() {
+
+        var url = "http://localhost:8091/abonament/data"
+        var request = new XMLHttpRequest();
+        request.open('GET', url, false);  // `false` makes the request synchronous
+        request.send(null);
+        var dzisiejsza_data = request.response;
+        var data_mili = new Date(dzisiejsza_data).getTime();
+
+        var url2 = "http://localhost:8091/abonament/full"
+        var request2 = new XMLHttpRequest();
+        request2.open('GET', url2, false);  // `false` makes the request synchronous
+        request2.send(null);
+
+        var res = JSON.parse(request2.response)
+        for(item of res){
+            alert("usun item w console log")
+            console.log(item)
+            alert(dzisiejsza_data)
+            alert(item.data_zakonczenia)
+            let data_zak_mili = new Date(item.data_zakonczenia).getTime()
+            if(data_mili >= data_zak_mili){
+                usun(item.id,true)
+            }
+        }
+
+
+
+    }
+
 
 
 
@@ -400,6 +430,8 @@ th, td{
            }
        }
    }
+
+    usun_nieaktualne_abonamenty(); // wykonanie usunięcia nie aktualnych abonamentów
 
 
 
@@ -1684,6 +1716,12 @@ th, td{
                             document.getElementById("inp2").max = new Date().getFullYear();
                         }
 
+                        if(rodzajFormularza === abonamentFormularz){
+
+                            document.getElementById("ina1").disabled = true; // niepowinno się edytować daty rozpoczęcia abonamentu
+
+                        }
+
                         //errory
                         if(rodzajFormularza === obywatelFormularz){
                             document.getElementById('nr_dow_err').style.display = "none";
@@ -1889,7 +1927,14 @@ function zaznacz(item,index) {
     }
 
 
-function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz z jego samochodami i abonamentami
+function usun(id,auto) { // rozbudować porobić trigery dla usuwania obywatela wraz z jego samochodami i abonamentami
+    if(auto === true){
+        var realConfirm=window.confirm;
+        window.confirm=function(){
+            window.confirm=realConfirm;
+            return true;
+        };
+    }
     if(JSON.parse(arch))
         alert("nie można usuwać usuniętych danych")
     else {
@@ -1919,8 +1964,8 @@ function usun(id) { // rozbudować porobić trigery dla usuwania obywatela wraz 
 
 
 
-
-            location.reload(true)
+            if(auto === false)
+                 location.reload(true)
         }
     }
 
