@@ -1,11 +1,13 @@
 Cel: 
 
-Zachodzący wynik nie porządany: 
+Zachodzący wynik nie porządany: Automatyczne usuwanie wygasłych abonamentów usuwa przystkie abonamenty wraz z opisującymi je obywatelem i pojazdem poza abonamentem pierwszym.
+
+Abonamenty wygasłe to takie, których data zakonczenia jest wcześmiejsza lub równa dacie dzisiejszej
 
 
 
 
-Wynik porządany:
+Wynik porządany: Wszystkie wygasłe abonamenty zostaną poprawnie usunięte
 
 
 
@@ -13,15 +15,14 @@ Winik testu: nie przechodzi
 
 
 
-Wniosek:
+Wniosek: Modyfikacja funkcji odpowiedzialnych za to automatyczne usuwanie wygasłych abonamentów
 
 
-Rozwarzane funkcje lub pliki do przeanalizowania i wprowadzenia ewentualnych w nich zmian:
-
+Rozwarzane funkcje lub pliki do przeanalizowania i wprowadzenia ewentualnych w nich zmian: funkcja usun_nieaktualne_abonamenty() została zmodyfikowana
 
 
 
 skutek testu:
 
 
-// jakimi zmianami skutkował ten test podaj np nr commita w którym te zmiany zostały wprowadzone np
+commit 035a7b9 zawierający modyfikacje funkcji usun_nieaktualne_abonamenty()
