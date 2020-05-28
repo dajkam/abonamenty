@@ -3,6 +3,7 @@ package com.filip.machaj.demo.service
 import com.filip.machaj.demo.dto.UserDTO
 import com.filip.machaj.demo.dto.UserDetailsDTO
 import com.filip.machaj.demo.model.user.*
+import com.filip.machaj.demo.model.user.security.WebSecurityConfiguration
 import com.filip.machaj.demo.repo.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails
@@ -10,18 +11,26 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 
 @Service("User service")
  class UserService: UserDetailsService {
+
+   // @Autowired
+ //  lateinit var security: WebSecurityConfiguration
+
+
+    @Autowired
+    lateinit var repo: UserRepository
+
+    @Transactional(readOnly = true)
     override fun loadUserByUsername(email: String): UserDetails {
         return repo.findUserByEmail(email) ?:
         throw RuntimeException("Konto o emailu $email nie istnieje lub zostało usunięte.")
     }
 
-
-    @Autowired
-    lateinit var repo: UserRepository
 
     fun getUser(): Iterable<User> = repo.findAll().map { it -> User() }
 
@@ -38,7 +47,11 @@ import java.util.*
         admin.email = user.email
         admin.haslo = user.haslo
         admin.role =  Role.ADMIN.poziom
-        return repo.save(admin)
+        repo.save(admin)
+       //  var auth: AuthenticationManagerBuilder = AuthenticationManagerBuilder(null)
+      //  security.configureGlobal( auth)
+
+        return admin
 
 
     }

@@ -24,16 +24,18 @@ open class User (
         @NotNull
         @NotBlank
         open  var nazwisko:String,
-        @Column(unique = true, nullable = false)
+        @Column(unique = true, nullable = false) // , name = "username"
         @NotNull
         @Email
       open  var email: String,
         @NotNull
         @NotBlank
+      //  @Column(name = "password")
         open  var haslo:String,
        open   var role:String,
         @Column(columnDefinition = "boolean")
        open   var czy_zarchiwizowany: Boolean = false,
+        //@Column(name = "enabled")
         open  var aktywne:Boolean = true,
        open   var nie_wygasniete:Boolean = true,
        open   var nie_zablokowane:Boolean = true,
