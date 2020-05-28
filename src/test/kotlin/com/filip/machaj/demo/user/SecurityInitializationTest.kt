@@ -1,9 +1,7 @@
 package com.filip.machaj.demo.user
 
 import com.filip.machaj.demo.dto.UserDTO
-import com.filip.machaj.demo.model.user.Admin
-import com.filip.machaj.demo.model.user.Straznik
-import com.filip.machaj.demo.model.user.User
+import com.filip.machaj.demo.model.user.*
 import com.filip.machaj.demo.service.UserService
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,10 +17,12 @@ class SecurityInitializationTest {
     @Autowired
     private lateinit var service:UserService
 
-    private val admin_haslo = "123fil"
-    private val straznik_haslo = "123tom"
-    private val admin_email = "machajfil@gmail.com"
-    private val straznik_email = "helix@interia.pl"
+    private val admin_email = "lemmy"
+    private val admin_haslo = "motorhead"
+    private val straznik_email = "user"
+    private val straznik_haslo = "du"
+    private val uliczny_email = "user1"
+    private val uliczny_hasło = "du1"
 
     @Test
     fun initAdmin(){
@@ -39,7 +39,8 @@ class SecurityInitializationTest {
                   "Filip",
                     "Machaj",
                     admin_email,
-                    admin_haslo
+                    admin_haslo,
+                    Role.ADMIN.poziom
 
             )
             val saved = service.saveAdmin(toSave)
@@ -60,10 +61,34 @@ class SecurityInitializationTest {
             "Tomasz",
             "Dusza",
             straznik_email,
-            straznik_haslo
+            straznik_haslo,
+            Role.STRAZNIK.poziom
             )
             val saved = service.saveStraznik(toSave)
             println("Utworzono konto strażnika o id : ${saved.id}")
+
+        }
+    }
+
+    @Test
+    fun initUliczny(){
+        try{
+            val uliczny = service.findUserByUserName(uliczny_email)
+            if(uliczny is Uliczny) {
+                println("Konto użytkownika o  id: ${uliczny.id} już istnieje")
+            }else{
+                Assert.fail("To nie jest konto ulicznego")
+            }
+        }catch (e:RuntimeException){
+            val toSave = UserDTO(
+                    "Maciej",
+                    "Jarosz",
+                    uliczny_email,
+                    uliczny_hasło,
+                    Role.ULICZNY.poziom
+            )
+            val saved = service.saveUliczny(toSave)
+            println("Utworzono konto ulicznego o id : ${saved.id}")
 
         }
     }

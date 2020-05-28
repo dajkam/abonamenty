@@ -1,7 +1,9 @@
 package com.filip.machaj.demo.model.user.security
 
 import com.filip.machaj.demo.model.user.Role
+import com.filip.machaj.demo.model.user.User
 import com.filip.machaj.demo.service.UserService
+import com.github.mvysny.karibudsl.v8.autoViewProvider
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -15,6 +17,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -27,14 +30,45 @@ import java.util.*
 import org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 
+
+
 @Configuration
 @EnableWebSecurity
+
 class WebSecurityConfiguration: WebSecurityConfigurerAdapter() {
 
     @Autowired
     lateinit var authenticationEntryPoint: WebSecurityEntryPoint
+    @Autowired
+    lateinit var service:UserService
 
     @Autowired
+    @Throws(Exception::class)
+    fun configureGlobal(auth: AuthenticationManagerBuilder) {
+
+        val users: Iterable<User> = service.downLoadUsers()
+
+       /* if(users.count() == 0){
+
+           val junit:JUnitCore  =  JUnitCore()
+           val result:Result = junit.run( SecurityInitializationTest)
+            val users: Iterable<User> = service.downLoadUsers()
+        }*/
+
+        for (user in users){
+
+            auth.inMemoryAuthentication()
+                    .withUser(user.email).password(passwordEncoder().encode(user.haslo))
+                    .authorities(user.role)
+        }
+
+
+
+
+
+
+    }
+  /*  @Autowired
     @Throws(Exception::class)
     fun configureGlobal(auth: AuthenticationManagerBuilder) {
         auth.inMemoryAuthentication()
@@ -43,6 +77,15 @@ class WebSecurityConfiguration: WebSecurityConfigurerAdapter() {
         auth.inMemoryAuthentication()
                 .withUser("user1").password(passwordEncoder().encode("du1"))
                 .authorities(Role.ULICZNY.poziom)
+
+
+        //   auth.authenticationProvider(DaoAuthenticationProvider())
+    }*/
+    fun configureLocal(auth: AuthenticationManagerBuilder, rola: String, nik: String, pass: String) {
+        auth.inMemoryAuthentication()
+                .withUser(nik).password(passwordEncoder().encode(pass))
+                .authorities(rola)
+
     }
 
     @Throws(Exception::class)
@@ -71,6 +114,10 @@ class WebSecurityConfiguration: WebSecurityConfigurerAdapter() {
 
 
 }
+
+
+
+
 
 
 

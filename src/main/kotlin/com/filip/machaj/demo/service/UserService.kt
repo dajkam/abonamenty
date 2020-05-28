@@ -9,9 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Repository
+import org.springframework.stereotype.Service
 import java.util.*
 
-@Repository
+@Service("User service")
  class UserService: UserDetailsService {
     override fun loadUserByUsername(email: String): UserDetails {
         return repo.findUserByEmail(email) ?:
@@ -21,6 +22,8 @@ import java.util.*
 
     @Autowired
     lateinit var repo: UserRepository
+
+    fun getUser(): Iterable<User> = repo.findAll().map { it -> User() }
 
     val encoder = BCryptPasswordEncoder(11)
 
@@ -34,7 +37,7 @@ import java.util.*
         admin.nazwisko = user.nazwisko
         admin.email = user.email
         admin.haslo = user.haslo
-        admin.role = Role.ULICZNY.poziom + Role.STRAZNIK.poziom + Role.ADMIN.poziom
+        admin.role =  Role.ADMIN.poziom
         return repo.save(admin)
 
 
@@ -45,7 +48,7 @@ import java.util.*
        straznik.nazwisko = user.nazwisko
        straznik.email = user.email
        straznik.haslo = user.haslo
-       straznik.role = Role.ULICZNY.poziom + Role.STRAZNIK.poziom + Role.ADMIN.poziom
+       straznik.role =  Role.STRAZNIK.poziom
         return repo.save(straznik)
 
 
@@ -57,7 +60,7 @@ import java.util.*
        uliczny.nazwisko = user.nazwisko
        uliczny.email = user.email
        uliczny.haslo = user.haslo
-       uliczny.role = Role.ULICZNY.poziom + Role.STRAZNIK.poziom + Role.ADMIN.poziom
+       uliczny.role = Role.ULICZNY.poziom
         return repo.save(uliczny)
 
 
@@ -100,6 +103,9 @@ import java.util.*
         )
     }
     fun deleteUser(id: Long) = repo.deleteById(id)
+
+    fun downLoadUsers(): Iterable<User> = repo.downloadUsers()
+
 
 
 
