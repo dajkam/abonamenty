@@ -12,10 +12,17 @@ import org.springframework.web.bind.annotation.*
 class UserController {
     @Autowired
     lateinit var service:UserService
-    @GetMapping(
+
+
+
+
+
+
+
+    @GetMapping(value = ["/download"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
-    fun getUsers() = service.getUsers()
+    fun getUser() = service.getUser()
     @PutMapping(
             value = ["/admin"],
              produces = arrayOf(MediaType.APPLICATION_JSON_VALUE),
@@ -54,10 +61,16 @@ class UserController {
 
     @PostMapping(
             // dlaczego tu nie ma ścieszki ? może datego że jest to jasne z JSONA o którego usera chodzi? i jeśli to jest jedyna metoda z post to dlatego też nie potzeba ścieżki
+            value = ["/update"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE),
             consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun updateUser(
             @RequestBody user: User
     ): User? = service.updateUser(user)
+
+    @GetMapping(value = ["/get"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun getUsers() = service.downLoadUsers()
 }

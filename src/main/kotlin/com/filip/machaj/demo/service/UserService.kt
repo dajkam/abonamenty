@@ -3,26 +3,44 @@ package com.filip.machaj.demo.service
 import com.filip.machaj.demo.dto.UserDTO
 import com.filip.machaj.demo.dto.UserDetailsDTO
 import com.filip.machaj.demo.model.user.*
+import com.filip.machaj.demo.model.user.security.WebSecurityConfiguration
 import com.filip.machaj.demo.repo.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Repository
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 
-@Repository
+@Service("User service")
  class UserService: UserDetailsService {
+    @Transactional(readOnly = true)
     override fun loadUserByUsername(email: String): UserDetails {
         return repo.findUserByEmail(email) ?:
         throw RuntimeException("Konto o emailu $email nie istnieje lub zostało usunięte.")
+
+
     }
 
+    val encoder = BCryptPasswordEncoder(12)
 
     @Autowired
     lateinit var repo: UserRepository
 
-    val encoder = BCryptPasswordEncoder(11)
+
+
+
+   // @Autowired
+ //  lateinit var security: WebSecurityConfiguration
+
+
+
+    fun getUser(): Iterable<User> = repo.findAll().map { it -> User() }
+
+
 
     fun findUserByUserName(email:String): User? {
         return repo.findUserByEmail(email) ?:
@@ -33,9 +51,13 @@ import java.util.*
         admin.imie = user.imie
         admin.nazwisko = user.nazwisko
         admin.email = user.email
-        admin.haslo = user.haslo
-        admin.role = Role.ULICZNY.poziom + Role.STRAZNIK.poziom + Role.ADMIN.poziom
-        return repo.save(admin)
+        admin.haslo = encoder.encode(user.haslo)
+        admin.role =  Role.ADMIN.poziom
+        repo.save(admin)
+       //  var auth: AuthenticationManagerBuilder = AuthenticationManagerBuilder(null)
+      //  security.configureGlobal( auth)
+
+        return admin
 
 
     }
@@ -44,8 +66,8 @@ import java.util.*
        straznik.imie = user.imie
        straznik.nazwisko = user.nazwisko
        straznik.email = user.email
-       straznik.haslo = user.haslo
-       straznik.role = Role.ULICZNY.poziom + Role.STRAZNIK.poziom + Role.ADMIN.poziom
+       straznik.haslo = encoder.encode(user.haslo)
+       straznik.role =  Role.STRAZNIK.poziom
         return repo.save(straznik)
 
 
@@ -56,8 +78,8 @@ import java.util.*
        uliczny.imie = user.imie
        uliczny.nazwisko = user.nazwisko
        uliczny.email = user.email
-       uliczny.haslo = user.haslo
-       uliczny.role = Role.ULICZNY.poziom + Role.STRAZNIK.poziom + Role.ADMIN.poziom
+       uliczny.haslo = encoder.encode(user.haslo)
+       uliczny.role = Role.ULICZNY.poziom
         return repo.save(uliczny)
 
 
@@ -100,6 +122,9 @@ import java.util.*
         )
     }
     fun deleteUser(id: Long) = repo.deleteById(id)
+
+    fun downLoadUsers(): Iterable<User> = repo.downloadUsers()
+
 
 
 
