@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.DataSourceBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Lazy
 import org.springframework.jdbc.datasource.DriverManagerDataSource
 import org.springframework.security.access.AccessDecisionManager
 import org.springframework.security.access.vote.AuthenticatedVoter
@@ -41,13 +42,14 @@ class WebSecurityConfiguration: WebSecurityConfigurerAdapter() {
 
     @Autowired
     lateinit var authenticationEntryPoint: WebSecurityEntryPoint
-   // @Autowired
-   // lateinit var service:UserService
+    @Autowired
+    @Lazy
+    lateinit var service:UserService
 
     @Autowired
     @Throws(Exception::class)
     fun configureGlobal( auth: AuthenticationManagerBuilder) {
-
+        auth.authenticationProvider(authenticationProvider())
 
        // auth.eraseCredentials(true)
 
@@ -73,9 +75,10 @@ class WebSecurityConfiguration: WebSecurityConfigurerAdapter() {
 
 
 
-        auth.jdbcAuthentication().dataSource(dataSource())
+       /*auth.jdbcAuthentication().dataSource(dataSource())
                 .usersByUsernameQuery("select * from user where email = ?")
-                .authoritiesByUsernameQuery("")
+                .authoritiesByUsernameQuery("select email, role from user where email = ?")
+                .passwordEncoder(encoder())*/
 
 
     }
@@ -133,6 +136,13 @@ val  dataSource:DriverManagerDataSource =  DriverManagerDataSource();
        //val   dataSourceBuilder = DataSourceBuilder.create();
        // return dataSourceBuilder.build()
 }
+    @Bean
+    fun authenticationProvider(): DaoAuthenticationProvider{
+        val authProvider = DaoAuthenticationProvider()
+        authProvider.setUserDetailsService(service)
+        authProvider.setPasswordEncoder(encoder())
+        return authProvider
+    }
 
 
 

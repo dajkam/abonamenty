@@ -17,24 +17,30 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 
 @Service("User service")
  class UserService: UserDetailsService {
+    @Transactional(readOnly = true)
+    override fun loadUserByUsername(email: String): UserDetails {
+        return repo.findUserByEmail(email) ?:
+        throw RuntimeException("Konto o emailu $email nie istnieje lub zostało usunięte.")
+
+
+    }
+
+    val encoder = BCryptPasswordEncoder(12)
+
+    @Autowired
+    lateinit var repo: UserRepository
+
+
+
 
    // @Autowired
  //  lateinit var security: WebSecurityConfiguration
 
 
-    @Autowired
-    lateinit var repo: UserRepository
-
-    @Transactional(readOnly = true)
-    override fun loadUserByUsername(email: String): UserDetails {
-        return repo.findUserByEmail(email) ?:
-        throw RuntimeException("Konto o emailu $email nie istnieje lub zostało usunięte.")
-    }
-
 
     fun getUser(): Iterable<User> = repo.findAll().map { it -> User() }
 
-    val encoder = BCryptPasswordEncoder(11)
+
 
     fun findUserByUserName(email:String): User? {
         return repo.findUserByEmail(email) ?:
@@ -45,7 +51,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
         admin.imie = user.imie
         admin.nazwisko = user.nazwisko
         admin.email = user.email
-        admin.haslo = user.haslo
+        admin.haslo = encoder.encode(user.haslo)
         admin.role =  Role.ADMIN.poziom
         repo.save(admin)
        //  var auth: AuthenticationManagerBuilder = AuthenticationManagerBuilder(null)
@@ -60,7 +66,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
        straznik.imie = user.imie
        straznik.nazwisko = user.nazwisko
        straznik.email = user.email
-       straznik.haslo = user.haslo
+       straznik.haslo = encoder.encode(user.haslo)
        straznik.role =  Role.STRAZNIK.poziom
         return repo.save(straznik)
 
@@ -72,7 +78,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
        uliczny.imie = user.imie
        uliczny.nazwisko = user.nazwisko
        uliczny.email = user.email
-       uliczny.haslo = user.haslo
+       uliczny.haslo = encoder.encode(user.haslo)
        uliczny.role = Role.ULICZNY.poziom
         return repo.save(uliczny)
 

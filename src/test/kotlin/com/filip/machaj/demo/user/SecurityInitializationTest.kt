@@ -19,10 +19,14 @@ class SecurityInitializationTest {
 
     private val admin_email = "lemmy"
     private val admin_haslo = "motorhead"
+    private val admin_haslo_crypted = "\$2y\$12\$4hP0qqKdtAACJwjbzJHl2OB6iBUZKC.aOoiHYbJP0KuYV.EAV4lE6"
+
     private val straznik_email = "user"
     private val straznik_haslo = "du"
+
     private val uliczny_email = "user1"
     private val uliczny_hasło = "du1"
+
 
     @Test
     fun initAdmin(){
