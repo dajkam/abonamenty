@@ -43,8 +43,7 @@ class SecurityInitializationTest {
                   "Filip",
                     "Machaj",
                     admin_email,
-                    admin_haslo,
-                    Role.ADMIN.poziom
+                    admin_haslo
 
             )
             val saved = service.saveAdmin(toSave)
@@ -65,8 +64,7 @@ class SecurityInitializationTest {
             "Tomasz",
             "Dusza",
             straznik_email,
-            straznik_haslo,
-            Role.STRAZNIK.poziom
+            straznik_haslo
             )
             val saved = service.saveStraznik(toSave)
             println("Utworzono konto strażnika o id : ${saved.id}")
@@ -88,8 +86,7 @@ class SecurityInitializationTest {
                     "Maciej",
                     "Jarosz",
                     uliczny_email,
-                    uliczny_hasło,
-                    Role.ULICZNY.poziom
+                    uliczny_hasło
             )
             val saved = service.saveUliczny(toSave)
             println("Utworzono konto ulicznego o id : ${saved.id}")

@@ -36,6 +36,10 @@
 
 
 <style>
+    #wyloguj{
+        float: right;
+        color: red;
+    }
     #nr_rej_err{
         display: none;
     }
@@ -198,6 +202,8 @@ th, td{
     <span id="filtry">
         <input type="checkbox" id="arch" name="pokaż wygasłe" value="true" onChange='wyswietl_zarchiwizowane(this.checked)'>
     <label for="arch">Pokaż Wygasłe</label>
+        
+        <a id="wyloguj" href="http://localhost:8091/logout">Wyloguj</a>
 
     </span>
 

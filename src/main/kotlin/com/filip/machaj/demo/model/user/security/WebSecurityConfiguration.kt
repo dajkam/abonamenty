@@ -114,6 +114,10 @@ class WebSecurityConfiguration: WebSecurityConfigurerAdapter() {
                 .and()
                 .formLogin()
                 .successHandler(WebSecurityAuthSuccessHandler())
+                .and()
+                .logout()
+                .logoutSuccessUrl("http://localhost:8091/login")
+
 
 
 
