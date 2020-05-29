@@ -19,8 +19,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-   <link rel="stylesheet" href="css/data_table.scss" type="text/css">
-    <title>Zmień</title>
+    <link rel="stylesheet" href="css/data_table.scss" type="text/css">
+    <title>Admin</title>
 
     <script src="js/handlebars-v4.1.2.js" ></script>
     <script src="js/jquery-3.4.1.js"></script>
@@ -36,6 +36,16 @@
 
 
 <style>
+    .segment{
+        display: block;
+    }
+    #powiazane{
+        display: none;
+    }
+    .linki{
+        margin-left: 20px;
+        color: red;
+    }
     #wyloguj{
         float: right;
         color: red;
@@ -91,16 +101,16 @@
         position: fixed;
         padding: 20px;
 
-       }
+    }
 
 
-th, td{
-    width: 12vw;
-    text-align: center;
-}
+    th, td{
+        width: 12vw;
+        text-align: center;
+    }
 
     .row{
-       /* display: table-row;*/
+        /* display: table-row;*/
         display: table-row;
         table-layout: fixed;
         width: 100%;
@@ -192,6 +202,8 @@ th, td{
 
     <button id="odnow" class = 'but4 butt hid' type='button' onclick='odnow(wyb_rekord()-1)'  tabindex="-1" >Odnów</button>
 
+    <button id="new_pass" class = 'but5 butt' type='button' onclick='new_pass(wyb_rekord())'  tabindex="-1">Nowe Hasło</button>
+
       <button id="powiazane" class = 'but5 butt' type='button' onclick='powiazane(wyb_rekord())'  tabindex="-1">Wyświetl Szczegóły</button>
 
     <button id="usun_pow"class='' style="display: none;" type= 'button' onclick='usun_pow(wyb_rekord())'  tabindex="-1">Usuń</button>
@@ -202,16 +214,20 @@ th, td{
     <span id="filtry">
         <input type="checkbox" id="arch" name="pokaż wygasłe" value="true" onChange='wyswietl_zarchiwizowane(this.checked)'>
             <label for="arch">Pokaż Wygasłe</label>
-        
+        <a class="linki" id="do_index" href="index.html">Do interfejsu strażnika</a>
+        <a class="linki" id="do_uliczny" href="uliczny.html">Do interfejsu ulicznego</a>
+
+
+
         <a id="wyloguj" href="http://localhost:8091/logout">Wyloguj</a>
 
     </span>
 
-<form id="wysz">
-    <button type="submit" class="wyszukaj" onsubmit='wyszukaj()'><i >Wyszukaj</i></button> <!-- on submit czym sie różni od onclick ????? -->
-    <input  class="wyszukaj" type="text" id="wyszuk"  placeholder="Wyszukaj..." name="wyszukaj">
+    <form id="wysz">
+        <button type="submit" class="wyszukaj" onsubmit='wyszukaj()'><i >Wyszukaj</i></button> <!-- on submit czym sie różni od onclick ????? -->
+        <input  class="wyszukaj" type="text" id="wyszuk"  placeholder="Wyszukaj..." name="wyszukaj">
 
-</form>
+    </form>
 </div>
 
 
@@ -260,16 +276,10 @@ th, td{
 
     <tr >
 
-        <th  class='okol1 kol id' onclick="orderBy('abo_id')" id="abo_id">id</th>
-        <th  class='okol2 kol' onclick="orderBy('abo_data_rozpoczecia')" id="abo_data_rozpoczecia">data rozpoczęcia</th>
-        <th  class='okol3 kol'  onclick="orderBy('abo_data_zakonczenia')" id="abo_data_zakonczenia">data zakończenia</th>
-        <th  class='okol4 kol' onclick="orderBy('abo_sektor')" id="abo_sektor">sektor</th>
-        <th  class='okol2 kol' onclick="orderBy('abo_nr_rejstracyjny')" id="abo_nr_rejstracyjny">nr rejstracyjny</th>
-        <th class='okol3 kol' onclick="orderBy('abo_marka')" id="abo_marka">marka</th>
-        <th  class='okol4 kol' onclick="orderBy('abo_model')" id="abo_model">model </th>
-        <th  class=' kol' onclick="orderBy('abo_imie')" id="abo_imie">imię</th>
-        <th class=' kol'onclick="orderBy('abo_nazwisko')" id="abo_nazwisko">nazwisko</th>
-        <th  class='kol' onclick="orderBy('abo_pesel')" id="abo_pesel">PESEL</th>
+        <th  class='okol2 kol' onclick="orderBy('email')" id="email">Login</th>
+        <th  class='okol3 kol'  onclick="orderBy('role')" id="role">Role</th>
+        <th  class='okol4 kol' onclick="orderBy('czy_zar')" id="czy_zar">Status</th>
+
 
 
 
@@ -338,9 +348,9 @@ th, td{
     var modele = ["puste_modele"]; // array modeli // globalny
     var marki =  ["puste_marki"];// array marek // globalny
     var wsz_modele = ["puste wszystkie modele"];
-    get_marki();
+   // get_marki();
     var glob_add_model = null; // zmienna która zapamietuje model w przypadku dodawania noewgo pojazdu
- //  get_modele();
+    //  get_modele();
 
 
     // ajax("GET",url) to jest promise.
@@ -349,7 +359,7 @@ th, td{
 
 
     // END
-  var  form_ok = { // odblokowuje przycisk zatwierdz jeżeli wszystkie pola są ok
+    var  form_ok = { // odblokowuje przycisk zatwierdz jeżeli wszystkie pola są ok
         aInternal: false,
         aListener: function(val) {},
         set a(val) {
@@ -376,20 +386,20 @@ th, td{
     let rekord = null // wybrany rekord z bazy // numerowane od 1 jak w bazie
     let arch = new URL(window.location).searchParams.get('arch')
     let szuk = new URL(window.location).searchParams.get('wyszukaj')
-   let url_string =  window.location.href;
-   let url = new URL(url_string);
-   let c = url.searchParams.get("value");
-   let czy_dodawany = false;
-   let pojazd_size = -4
+    let url_string =  window.location.href;
+    let url = new URL(url_string);
+    let c = url.searchParams.get("value");
+    let czy_dodawany = false;
+    let pojazd_size = -4
     let obywatel_size = -5
     let jij = 0; // do określania czy sortowanie ma być malejące czy rosnące
-  let  id_old_sort = -1; // zmienna globalna do przechowywania ostatniego id.
-   console.log(c)
+    let  id_old_sort = -1; // zmienna globalna do przechowywania ostatniego id.
+    console.log(c)
     let son_set = new Set();
 
-  var global_last_id;
+    var global_last_id;
 
-  var czy_pow = false; // globalna zmienna czy jestesmy w powiązanych.
+    var czy_pow = false; // globalna zmienna czy jestesmy w powiązanych.
     var pow_global = null; // jaki rodzaj danych jest wysyłany w f3 w sendson
     var pow_son = null; // zmienna do przkazywania modyfikowanego jsona w powiązanych
 
@@ -399,13 +409,13 @@ th, td{
 
     let czy_pow_new_abo = false; // czy był w funkcji wyslij abonament
 
-  function czy_powi() {
-      return czy_pow;
-  }
-  let pow_id; // id encji wybrane w powiązanym
+    function czy_powi() {
+        return czy_pow;
+    }
+    let pow_id; // id encji wybrane w powiązanym
 
-   if(c === null)
-         c = "abonament"
+    if(c === null)
+        c = "abonament"
     if(arch === null)
         arch = false
 
@@ -419,31 +429,31 @@ th, td{
 
 
     document.getElementById("arch").checked = JSON.parse(arch);
-   {
+    {
 
-       console.log(c);
-       //$("#encja option[value='" + result_of_gup + "']").attr("selected","selected") ;
+        console.log(c);
+        //$("#encja option[value='" + result_of_gup + "']").attr("selected","selected") ;
 
-       let list = document.getElementById("encja");
-       for(let i = 0; i < list.length; i++){
-           console.log(c)
-           console.log(list[i])
-          // console.log(list[i].outerHTML)
-           //console.log(list[i].toString().includes(c.toString()))
-           //console.log(list[i].includes(c))
-           if( list[i].outerHTML.includes(c)){
-              // document.getElementById("encja")[i].selected = true;
-               document.getElementById("encja").selectedIndex = i;
-           }
-       }
-   }
+        let list = document.getElementById("encja");
+        for(let i = 0; i < list.length; i++){
+            console.log(c)
+            console.log(list[i])
+            // console.log(list[i].outerHTML)
+            //console.log(list[i].toString().includes(c.toString()))
+            //console.log(list[i].includes(c))
+            if( list[i].outerHTML.includes(c)){
+                // document.getElementById("encja")[i].selected = true;
+                document.getElementById("encja").selectedIndex = i;
+            }
+        }
+    }
 
     usun_nieaktualne_abonamenty(); // wykonanie usunięcia nie aktualnych abonamentów
 
 
 
 
-   let wybraneDane = ""
+    let wybraneDane = ""
 
     var obywatelDane = "<label class='l' >identyfikator to: {{id}}   data utworzenia to:   {{kiedy_utworzono}}   " +
         "data ostatniej modyfikacji to   {{kiedy_zmodyfikowano}}   numer dowodu    {{nr_dowodu}}   imie to   {{imie}}   " +
@@ -457,8 +467,8 @@ th, td{
     };
     function dataFormat(datetime, format) {
 
-            alert("w dattime")
-            return moment(datetime).format(format);
+        alert("w dattime")
+        return moment(datetime).format(format);
     }
 
     // Deprecated since version 0.8.0
@@ -466,50 +476,50 @@ th, td{
 
 // Use UI.registerHelper..
 
-            if (moment) {
-                // can use other formats like 'lll' too
-                format = DateFormats[format] || format;
-                return moment(datetime).format(format);
-            }
-            else {
-                return datetime;
-            }
-        });
+        if (moment) {
+            // can use other formats like 'lll' too
+            format = DateFormats[format] || format;
+            return moment(datetime).format(format);
+        }
+        else {
+            return datetime;
+        }
+    });
 
-   var obywatelDane =
-           "<table>" +
-       "<tr class='row'>" +
-           "<td  class=' hid '><input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '></td>" +
-           "<td   class='  kol okol1'>{{id}}</td>"+
-           "<td  class='  kol'>{{pesel}}</td>"+
-           "<td   class='  kol'>{{nr_dowodu}}</td>"+
-           "<td   class='  kol'>{{imie}}</td> "+
-           "<td  class='  kol'>{{nazwisko}}</td>"+
-           "<td  class='   kol'>{{formatDate data_urodzenia  'short'}}</td>"+
-           "<td   class='  kol'>{{adres}} </td>"+
+    var obywatelDane =
+        "<table>" +
+        "<tr class='row'>" +
+        "<td  class=' hid '><input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '></td>" +
+        "<td   class='  kol okol1'>{{id}}</td>"+
+        "<td  class='  kol'>{{pesel}}</td>"+
+        "<td   class='  kol'>{{nr_dowodu}}</td>"+
+        "<td   class='  kol'>{{imie}}</td> "+
+        "<td  class='  kol'>{{nazwisko}}</td>"+
+        "<td  class='   kol'>{{formatDate data_urodzenia  'short'}}</td>"+
+        "<td   class='  kol'>{{adres}} </td>"+
 
 
-       "</tr>" +
-       " </table>";
+        "</tr>" +
+        " </table>";
 
     var abonamentDane = "<label class='l'  >identyfikator to: {{id}} data utworzenia to:   {{kiedy_utworzono}}" +
         " data ostatniej modyfikacji to   {{kiedy_zmodyfikowano}}  data rozpoczecia to: {{data_rozpoczecia}}" +
         " data zakonczenia to: {{data_zakonczenia}} sektor to {{sektor}} uwagi to: {{uwagi}}" +
         " czy aktualny to: {{czy_zarchiwizowany}}</label></br></br>"
 
- /*  var abonamentDane =   "<table  >" +
+    /*  var abonamentDane =   "<table  >" +
 
-       "<tr class='row'>" +
-       "<th class=' hid '> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
-       "<td   class='okol1  kol id'>{{id}} </td>"+
-       "<td   class='okol2  kol'>{{formatDate  data_rozpoczecia 'short'}}</td>"+
-       "<td   class='okol3  kol'>{{formatDate data_zakonczenia 'short'}}</td>"+
-       "<td   class='okol4  kol'>{{sektor}}</td> "+
-       "<td  class='okol6   kol'> {{uwagi}}</td>"+
+          "<tr class='row'>" +
+          "<th class=' hid '> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
+          "<td   class='okol1  kol id'>{{id}} </td>"+
+          "<td   class='okol2  kol'>{{formatDate  data_rozpoczecia 'short'}}</td>"+
+          "<td   class='okol3  kol'>{{formatDate data_zakonczenia 'short'}}</td>"+
+          "<td   class='okol4  kol'>{{sektor}}</td> "+
+          "<td  class='okol6   kol'> {{uwagi}}</td>"+
 
 
-       "</tr>" +
-       " </table>"; */ // stara krotka abonamentu
+          "</tr>" +
+          " </table>"; */ // stara krotka abonamentu
     /*
     *
     * let abo_head_id = ["abo_id", "abo_data_rozpoczecia", "abo_data_zakonczenia", "abo_sektor",
@@ -523,16 +533,37 @@ th, td{
 
         "<tr class='row'>" +
         "<th class=' hid '> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
-        "<td   class='okol1  kol id abo_id' >{{id}} </td>"+
-        "<td   class='okol2  kol abo_data_rozpoczecia' title='{{data_rozpoczecia}}'>{{formatDate  data_rozpoczecia 'short'}}</td>"+
-        "<td   class='okol3  kol abo_data_zakonczenia' title='{{data_zakonczenia}}'>{{formatDate data_zakonczenia 'short'}}</td>"+
-        "<td   class='okol4  kol abo_sektor'>{{sektor}}</td> "+
-        "<td   class='okol2  kol abo_nr_rejstracyjny'>{{nr_rejstracyjny_pojazdu}} </td>"+
-        "<td   class='okol3  kol abo_marka'>{{marka}}</td>"+
-        "<td   class='okol4  kol abo_model'>{{model}}</td> "+
-        "<td   class='  kol abo_imie'>{{imie}}</td> "+
-        "<td  class='  kol abo_nazwisko'>{{nazwisko}}</td>"+
-        "<td  class='  kol abo_pesel'>{{pesel}}</td>"+
+        "<td   class='okol1  kol id abo_id hid' >{{id}} </td>"+
+        "<td   class='okol4  kol abo_sektor'>{{email}}</td> "+
+        "<td   class='okol3  kol abo_marka'>{{role}}</td>"+
+        "<td   class='  kol abo_imie'>{{czy_zarchiwizowany}}</td> "+
+
+
+
+        "</tr>" +
+
+        " </table>"+
+       "<br>" ;
+
+
+
+
+    var pojazdDane = "<label class='l'  > identyfikator to:{{id}}  nr rejstracyjny pojazdu to: {{nr_rejstracyjny_pojazdu}}" +
+        " marka to: {{marka}} model to {{model}} rok produkcji: {{rok_produkcji}} kolor to: {{kolor}}" +
+        "  uwagi to: {{uwagi}} czy zarchiwizowany to: {{czy_zarchiwizowany}} " +
+        "kiedy utworzono to: {{kiedy_utworzono}} kiedy zmodyfikowano to: {{kiedy_zmodyfikowano}}</label></br></br>"
+
+    var pojazdDane = "<table class=\"responstable tab\" >" +
+
+        "<tr class='row'>" +
+        "<th class='hid'> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
+        "<td   class='okol1  kol id'>{{id}}</td>"+
+        "<td   class='okol2  kol'>{{nr_rejstracyjny_pojazdu}} </td>"+
+        "<td   class='okol3  kol'>{{marka}}</td>"+
+        "<td   class='okol4  kol'>{{model}}</td> "+
+        "<td   class='okol5  kol'> {{rok_produkcji}}</td>"+
+        "<td  class='okol6   kol'>{{kolor}}</td>"+
+        "<td   class='okol7  kol'>{{uwagi}}</td>"+
 
 
         "</tr>" +
@@ -540,66 +571,42 @@ th, td{
 
 
 
-
-   var pojazdDane = "<label class='l'  > identyfikator to:{{id}}  nr rejstracyjny pojazdu to: {{nr_rejstracyjny_pojazdu}}" +
-       " marka to: {{marka}} model to {{model}} rok produkcji: {{rok_produkcji}} kolor to: {{kolor}}" +
-       "  uwagi to: {{uwagi}} czy zarchiwizowany to: {{czy_zarchiwizowany}} " +
-       "kiedy utworzono to: {{kiedy_utworzono}} kiedy zmodyfikowano to: {{kiedy_zmodyfikowano}}</label></br></br>"
-
-   var pojazdDane = "<table class=\"responstable tab\" >" +
-
-       "<tr class='row'>" +
-       "<th class='hid'> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
-       "<td   class='okol1  kol id'>{{id}}</td>"+
-       "<td   class='okol2  kol'>{{nr_rejstracyjny_pojazdu}} </td>"+
-       "<td   class='okol3  kol'>{{marka}}</td>"+
-       "<td   class='okol4  kol'>{{model}}</td> "+
-       "<td   class='okol5  kol'> {{rok_produkcji}}</td>"+
-       "<td  class='okol6   kol'>{{kolor}}</td>"+
-       "<td   class='okol7  kol'>{{uwagi}}</td>"+
-
-
-       "</tr>" +
-       " </table>";
-
-
-
     var formularz = ""
 
-   var obywatelFormularz = "<form id = 'ffa'  action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
-       "    nr dowodu: <br>\n" +
-       "    <input id =\"in1\" type = 'text' name = \"nr_dowodu\" value =  '{{nr_dowodu}}'  minlength='9' maxlength='9'   required = 'true' onchange=' check_all_ob()'/><br>\n" +
-           "<div class='error' id='nr_dow_err'>Wpisz poprawny numer dowodu</div>\n" +
-            "<div class='error' id='nr_dow_err2'>Ten numer dowodu już widnieje w bazie</div>\n" +
-       "    imię: <br>\n" +
-       "    <input id =\"in2\" type = 'text' name = \"imie\"  value= '{{imie}}' required = 'true'/><br>\n" +
-       "    nazwisko: <br>\n" +
-       "    <input id =\"in3\" type = 'text' name = \"nazwisko\" value='{{nazwisko}}'   required = 'true'/><br>\n" +
-       "    adres: <br>\n" +
-       "    <input id =\"in4\" type = 'text' name = \"adres\" value = '{{adres}}'   required = 'true'/><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    data urodzenia: <br>\n" +
-       "    <input id =\"in5\" type = 'date' name = \"data_urodzenia\" value = '{{data_urodzenia}}' required = 'true' onchange=' check_all_ob()'/><br>\n" +
-       "    PESEL:<br>\n" +
-       "    <input id =\"in6\"type = 'text' name = \"pesel\" value = '{{pesel}}' minlength='11' maxlength='11' required = 'true' onchange=' check_all_ob()'/>\n" +
-           "<div class='error' id='pesel_err'>Wpisz poprawny PESEL</div>\n" +
-           "<div class='error' id='data_ur_err'> PESEL nie jest zgodny z datą urodzenia</div>\n" +
-            "<div class='error' id='pesel_err2'>Ten PESEL już widnieje w bazie</div>\n" +
+    var obywatelFormularz = "<form id = 'ffa'  action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
+        "    nr dowodu: <br>\n" +
+        "    <input id =\"in1\" type = 'text' name = \"nr_dowodu\" value =  '{{nr_dowodu}}'  minlength='9' maxlength='9'   required = 'true' onchange=' check_all_ob()'/><br>\n" +
+        "<div class='error' id='nr_dow_err'>Wpisz poprawny numer dowodu</div>\n" +
+        "<div class='error' id='nr_dow_err2'>Ten numer dowodu już widnieje w bazie</div>\n" +
+        "    imię: <br>\n" +
+        "    <input id =\"in2\" type = 'text' name = \"imie\"  value= '{{imie}}' required = 'true'/><br>\n" +
+        "    nazwisko: <br>\n" +
+        "    <input id =\"in3\" type = 'text' name = \"nazwisko\" value='{{nazwisko}}'   required = 'true'/><br>\n" +
+        "    adres: <br>\n" +
+        "    <input id =\"in4\" type = 'text' name = \"adres\" value = '{{adres}}'   required = 'true'/><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
+        "    data urodzenia: <br>\n" +
+        "    <input id =\"in5\" type = 'date' name = \"data_urodzenia\" value = '{{data_urodzenia}}' required = 'true' onchange=' check_all_ob()'/><br>\n" +
+        "    PESEL:<br>\n" +
+        "    <input id =\"in6\"type = 'text' name = \"pesel\" value = '{{pesel}}' minlength='11' maxlength='11' required = 'true' onchange=' check_all_ob()'/>\n" +
+        "<div class='error' id='pesel_err'>Wpisz poprawny PESEL</div>\n" +
+        "<div class='error' id='data_ur_err'> PESEL nie jest zgodny z datą urodzenia</div>\n" +
+        "<div class='error' id='pesel_err2'>Ten PESEL już widnieje w bazie</div>\n" +
 
-       "  <br><br>  <input id='zatwierdz' class = 'zat 'type = 'submit' value = \"Zatwierdź\" >\n" +
+        "  <br><br>  <input id='zatwierdz' class = 'zat 'type = 'submit' value = \"Zatwierdź\" >\n" +
 
-       "  </form>";
-// stare wybie ranie sektora  "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
+        "  </form>";
+    // stare wybie ranie sektora  "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
     // nowe rozwiązanie  w select nie ma atrybutu value={{sektor}}
 
     <!--  w select Value w tej opcji która niczego nie wybiera musi bić puste żeby zadziałało rquired-->
-   var abonamentFormularz = "<form id = 'ffc' action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
-       "    data rozpoczęcia: <br>\n" +
-       "    <input id =\"ina1\" type = 'date' name = \"data_rozpoczecia\" value =  '{{data_rozpoczecia}}' required = 'true' onchange='check_dat_roz_zak()'/><br>\n" +
-       "    data zakończenia: <br>\n" +
-       "    <input id =\"ina2\" type = 'date' name = \"data_zakonczenia\"  value= '{{data_zakonczenia}}' required = 'true' onchange='check_dat_roz_zak()'/><br>\n" +
-       "    <div class='error' id='dat_zak_err'>Data rozpoczęcia musi być przed datą zakończenia</div>\n" +
-       "    sektor: <br>\n" +
-      ` <select id ="ina3" required = 'true'/>
+    var abonamentFormularz = "<form id = 'ffc' action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
+        "    data rozpoczęcia: <br>\n" +
+        "    <input id =\"ina1\" type = 'date' name = \"data_rozpoczecia\" value =  '{{data_rozpoczecia}}' required = 'true' onchange='check_dat_roz_zak()'/><br>\n" +
+        "    data zakończenia: <br>\n" +
+        "    <input id =\"ina2\" type = 'date' name = \"data_zakonczenia\"  value= '{{data_zakonczenia}}' required = 'true' onchange='check_dat_roz_zak()'/><br>\n" +
+        "    <div class='error' id='dat_zak_err'>Data rozpoczęcia musi być przed datą zakończenia</div>\n" +
+        "    sektor: <br>\n" +
+        ` <select id ="ina3" required = 'true'/>
         <option value="" selected disabled hidden>Wybierz</option>
         <option value="A">A</option>
         <option value="B">B</option>
@@ -613,24 +620,24 @@ th, td{
         <option value="J">J</option>
         <option value="WSZYSTKIE">WSZYSTKIE</option>
         </select> <br>`+
-       "    uwagi: <br>\n" +
-       "    <input id =\"ina4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-       "    <input id='zatwierdz' class='zat' type = 'submit' value = \"Zatwierdź\" >\n" +
-       "\n" +
-       "\n" +
-       "  </form>";
+        "    uwagi: <br>\n" +
+        "    <input id =\"ina4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
+        "    <input id='zatwierdz' class='zat' type = 'submit' value = \"Zatwierdź\" >\n" +
+        "\n" +
+        "\n" +
+        "  </form>";
 
-   var pojazdFormularz =  "<form id = 'ffb' autocomplete=\"off\" action='#' onsubmit='f3(wyb_rekord()); return false'> \n" +
-       "    nr rejstracyjny pojazdu: <br>\n" +
-       "    <input id =\"inp1\" type = 'text'  name = \"nr_rejestracyjny_pojazdu\" value =  '{{nr_rejstracyjny_pojazdu}}'   required = 'true' onchange='czy_nr_rej()'/><br>\n" +
-       "    <div class='error' id='nr_rej_err'>Ten numer rejstracyjny pojazdu już widnieje w bazie</div>\n" +
-       "    rok produkcji: <br>\n" +
-       "    <input id =\"inp2\" type = 'number' name = \"rok_produkcji\"  value='{{rok_produkcji}}' required = 'true' min = '1829' max='2020' /><br>\n" +
-       "    kolor: <br>\n" +
-       "    <input id =\"inp3\" type = 'text' name = \"kolor\" value={{kolor}} ><br>\n" +
-       "    uwagi: <br>\n" +
-       "    <input id =\"inp4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-           `<span id = 'inp-auto'>
+    var pojazdFormularz =  "<form id = 'ffb' autocomplete=\"off\" action='#' onsubmit='f3(wyb_rekord()); return false'> \n" +
+        "    nr rejstracyjny pojazdu: <br>\n" +
+        "    <input id =\"inp1\" type = 'text'  name = \"nr_rejestracyjny_pojazdu\" value =  '{{nr_rejstracyjny_pojazdu}}'   required = 'true' onchange='czy_nr_rej()'/><br>\n" +
+        "    <div class='error' id='nr_rej_err'>Ten numer rejstracyjny pojazdu już widnieje w bazie</div>\n" +
+        "    rok produkcji: <br>\n" +
+        "    <input id =\"inp2\" type = 'number' name = \"rok_produkcji\"  value='{{rok_produkcji}}' required = 'true' min = '1829' max='2020' /><br>\n" +
+        "    kolor: <br>\n" +
+        "    <input id =\"inp3\" type = 'text' name = \"kolor\" value={{kolor}} ><br>\n" +
+        "    uwagi: <br>\n" +
+        "    <input id =\"inp4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
+        `<span id = 'inp-auto'>
                  Marka:<br>
                 <input id='inp5' type='text' name='marka' value='{{marka}}' placeholder='Marka'  required = 'true'/>
                 <br>
@@ -639,17 +646,17 @@ th, td{
 
                 </span>
             `+
-       "    <input id='zatwierdz' class = 'zat'type = 'submit' value = \"Zatwierdź\" >\n" +
-       "\n" +
-       "\n" +
+        "    <input id='zatwierdz' class = 'zat'type = 'submit' value = \"Zatwierdź\" >\n" +
+        "\n" +
+        "\n" +
 
 
-       "  </form>";
+        "  </form>";
 
-   // w inp5 nie ma onchange='get_modele()' ponieważ to wtedy nie działa przy załadowaniu ale tylko i wyłącznie przy zmianie lecz  onclick='get_modele()'działa przy jednym jak i przy drugim
+    // w inp5 nie ma onchange='get_modele()' ponieważ to wtedy nie działa przy załadowaniu ale tylko i wyłącznie przy zmianie lecz  onclick='get_modele()'działa przy jednym jak i przy drugim
 
-   let sel = document.getElementById("encja");
-   let selval = sel.options[sel.selectedIndex].value;
+    let sel = document.getElementById("encja");
+    let selval = sel.options[sel.selectedIndex].value;
 
     switch (selval) {
         case "obywatel":
@@ -701,16 +708,16 @@ th, td{
 
 
 
-   /* var but3  ="    <button class='butt' type=\"button\" onclick=\" f2(wyb_rekord())\">Edytuj</button>"
+    /* var but3  ="    <button class='butt' type=\"button\" onclick=\" f2(wyb_rekord())\">Edytuj</button>"
 
-   var but4  ="    <button class = 'but4 butt' type=\"button\" onclick=\" usun()\">Usun</button>"
+    var but4  ="    <button class = 'but4 butt' type=\"button\" onclick=\" usun()\">Usun</button>"
 
-   var but5  = "   <button class = 'but5 butt' type='button' onclick='pwiazane()'>Wyświetl Powiązane</button>"
-*/
-   var but3 =""
-   var but4 = ""
-   var but5 = ""
-  // var radio = "<input id = 'krotka' type=\"radio\" name=\"gender\" value=\"male\"> "
+    var but5  = "   <button class = 'but5 butt' type='button' onclick='pwiazane()'>Wyświetl Powiązane</button>"
+ */
+    var but3 =""
+    var but4 = ""
+    var but5 = ""
+    // var radio = "<input id = 'krotka' type=\"radio\" name=\"gender\" value=\"male\"> "
 
     function main(preson) {
 
@@ -719,14 +726,14 @@ th, td{
                 pojazd_size = preson.length
             }
             if(c === "obywatel"){
-               obywatel_size = preson.length
+                obywatel_size = preson.length
             }
 
             var son = preson[i];
             console.log(arch)
-         //   confirm("zobacz wartosc arch:")
+            //   confirm("zobacz wartosc arch:")
             console.log(isBoolean(arch))
-           // confirm("czy arch jest logiczny")
+            // confirm("czy arch jest logiczny")
             let barch = JSON.parse(arch)
             if ((barch === true)&&(selval ==="abonament")){
                 document.getElementById("usun").classList.add("hid")
@@ -741,7 +748,9 @@ th, td{
                 document.getElementById("odnow").classList.add("hid")
             }
             if(son.czy_zarchiwizowany === barch){ // warunek do wyświetlania zarchiwizowanych lub nie zarchiwizowanych
-                var iDiv = document.createElement('label')
+                var iDiv = document.createElement('label');
+
+                iDiv.innerHTML = iDiv.innerHTML
 
                 iDiv.id =  i.toString() + "ob"
 
@@ -755,7 +764,10 @@ th, td{
 
 
 
-                div.appendChild(iDiv)
+                div.appendChild(iDiv);
+               // div.innerHTML = div.innerHTML + "<br>";
+
+
             }
 
 
@@ -805,13 +817,13 @@ th, td{
 
 
 
-      //  document.getElementById('ob' + i.toString()).innerHTML += bancz;
+        //  document.getElementById('ob' + i.toString()).innerHTML += bancz;
 
         iDiv.innerHTML += bancz;
 
         iDiv.appendChild(butDiv)
 
-        iDiv.innerHTML+="</br></br>"
+     //   iDiv.innerHTML+="</br></br>" poszerza tylko wiersz
         iDiv.getElementsByTagName('input')[0].value = i.toString() + " "+  "selected"
 
     }
@@ -874,18 +886,18 @@ th, td{
 
 
 
-   /*var son = {
-        id: 1,
-        kiedy_utworzono: "2019-08-09T16:19:41.571+0000",
-        kiedy_zmodyfikowano: "2019-08-09T16:19:41.571+0000",
-        nr_dowodu: "CCH864397",
-        imie: "Janusz",
-        nazwisko: "Korwin-Mikke",
-        adres: "Woronicza 16 Warszawa ",
-        czy_zarchiwizowany: false,
-        data_urodzenia: "1933-02-25",
-        pesel: "95101303798"
-    };*/
+    /*var son = {
+         id: 1,
+         kiedy_utworzono: "2019-08-09T16:19:41.571+0000",
+         kiedy_zmodyfikowano: "2019-08-09T16:19:41.571+0000",
+         nr_dowodu: "CCH864397",
+         imie: "Janusz",
+         nazwisko: "Korwin-Mikke",
+         adres: "Woronicza 16 Warszawa ",
+         czy_zarchiwizowany: false,
+         data_urodzenia: "1933-02-25",
+         pesel: "95101303798"
+     };*/
 
 
 
@@ -921,7 +933,7 @@ th, td{
         return new Promise(function(resolve, reject) {
             const xhr = new XMLHttpRequest();
             if(async === null)
-                 xhr.open(method, url,true);
+                xhr.open(method, url,true);
             else
                 xhr.open(method, url,false);
 
@@ -953,10 +965,10 @@ th, td{
         var e = document.getElementById("encja");
         var url2 = e.options[e.selectedIndex].value;
 
-         if(szuk !== null){ // wyszukiwanie
-             let url3 = "/szukaj/"
+        if(szuk !== null){ // wyszukiwanie
+            let url3 = "/szukaj/"
             let url =  url1+url2+url3+szuk
-             return ajax('GET',url)
+            return ajax('GET',url)
         } // koniec wyszukiwania
 
         var url3 = '/download'
@@ -966,10 +978,11 @@ th, td{
         if(url === "http://localhost:8091/pojazd/download")
         { url = "http://localhost:8091/pojazd/marka/model";}
         if(url === "http://localhost:8091/abonament/download")
-             {url = "http://localhost:8091/abonament/full";} ///////////////////////////////////////////////////////////////////////////////// tytaj wybieranie widoku
+     //   {url = "http://localhost:8091/abonament/full";} ///////////////////////////////////////////////////////////////////////////////// tytaj wybieranie widoku
+        {url = "http://localhost:8091/user/get";} // ze względu na usera !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Bardzo ważne
 
 
-       // return ajax('GET', 'http://localhost:8091/obywatel/download');
+        // return ajax('GET', 'http://localhost:8091/obywatel/download');
 
         return ajax('GET',url)
     }
@@ -986,7 +999,7 @@ th, td{
         var url =  url1+url2+url3
 
         if(url === "http://localhost:8091/abonament/download")
-            {url = "http://localhost:8091/abonament/full";}
+        {url = "http://localhost:8091/abonament/full";}
 
         return ajax('GET',url)
     }
@@ -1032,7 +1045,7 @@ th, td{
         else
             var url2 = e.toString() + "get/";
 
-     //   var url3 = k.toString()
+        //   var url3 = k.toString()
         var url3 = ob_pow_id.toString()
 
         var url =  url1+url2+url3
@@ -1047,7 +1060,7 @@ th, td{
 
     loadData()  // to jest właściwe wykonywanie programu
         .then(function(res) {
-          // preson = insertData(res, preson);
+            // preson = insertData(res, preson);
             var preson = []
             var preson = JSON.parse(res)
             console.log(preson)
@@ -1099,13 +1112,13 @@ th, td{
 
             delete son.marka;
             delete son.marka_id;
-             son.model = {
-                 id : son.model_id
-             }
-             son.obywatel = {
-                 id : son.obywatel_id
-             }
-             son.abonamenty = []
+            son.model = {
+                id : son.model_id
+            }
+            son.obywatel = {
+                id : son.obywatel_id
+            }
+            son.abonamenty = []
 
             delete son.model_id
             delete son.obywatel_id
@@ -1256,9 +1269,9 @@ th, td{
 
 
     }
-   String.prototype.replaceAt=function(index, replacement) {
-       return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
-   }
+    String.prototype.replaceAt=function(index, replacement) {
+        return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
+    }
 
     function zgodnoscDatyUrodzeniaZPeselem(pesel, data_urodzenia) { // ta metoda jest błędna
 
@@ -1319,13 +1332,13 @@ th, td{
 
     function f3(id){
 
-       // var id = e.target.parentNode.id
+        // var id = e.target.parentNode.id
 
-     //   var id = di.parentNode.iddocument.getElementById("ina1").value
+        //   var id = di.parentNode.iddocument.getElementById("ina1").value
 
         if(czy_pow === true){
-             id = ob_pow_id;
-             onid = ob_pow_id;
+            id = ob_pow_id;
+            onid = ob_pow_id;
         }
 
 
@@ -1352,7 +1365,7 @@ th, td{
 
                     alert(id.toString())
                 }
-            //    var $$$$$_$q = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}; // przykład obiektów w javascript
+                //    var $$$$$_$q = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}; // przykład obiektów w javascript
                 else{
                     console.log(document.getElementById('zatwierdz').parentElement.id); // czysty java script
                     console.log($("#zatwierdz")[0].parentElement.id); // to samo co powyzej tylko z uzyciej jquery
@@ -1460,9 +1473,9 @@ th, td{
                     if(  (/^[A-J]{1}$/.test(document.getElementById("ina3").value)) || document.getElementById("ina3").value === "WSZYSTKIE"){ // coś nie działa z wymogiem wpisania uwagi przy wybraniu obcji wszystkie
 
 
-                            son.uwagi = document.getElementById("ina4").value // uwagi jeśli mają
+                        son.uwagi = document.getElementById("ina4").value // uwagi jeśli mają
 
-                            son.sektor = document.getElementById("ina3").value // Sektory to jest tylko pojedyńcza litera od A do J lub słowo WSZYSTKIE
+                        son.sektor = document.getElementById("ina3").value // Sektory to jest tylko pojedyńcza litera od A do J lub słowo WSZYSTKIE
 
                     }
 
@@ -1542,10 +1555,10 @@ th, td{
 
 
 
-                      sendSon(son)
+                    sendSon(son)
 
-                      alert("Zaraz po wykonaniu sendSon")
-                      alert(son.id)
+                    alert("Zaraz po wykonaniu sendSon")
+                    alert(son.id)
                 }
 
 
@@ -1579,7 +1592,7 @@ th, td{
 
 
 
-               // document.getElementById(id).innerHTML = "";
+                // document.getElementById(id).innerHTML = "";
                 //sleep(10000);
                 document.getElementById(id).innerHTML += dane2 + window.but3;
 
@@ -1607,9 +1620,9 @@ th, td{
 
 
     function f2(id,czy_pow) {
-       // var id = e.target.parentNode.id
+        // var id = e.target.parentNode.id
 
-         document.getElementById("usun_pow").classList.add("butt");
+        document.getElementById("usun_pow").classList.add("butt");
         document.getElementById("odnow_pow").classList.add("butt");
 
         document.getElementById('bstyle').innerHTML =
@@ -1625,7 +1638,7 @@ th, td{
            `;
 
         if(JSON.parse(arch))
-             alert("nie można modyfikować zarchiwizowanych danych")
+            alert("nie można modyfikować zarchiwizowanych danych")
         else {
 
 
@@ -1657,7 +1670,7 @@ th, td{
                         if(son.kolor !== null){
                             rodzajDanych = pojazdDane;
                             rodzajFormularza = pojazdFormularz;
-                             var nagl = document.getElementById("nagp");
+                            var nagl = document.getElementById("nagp");
                         }
 
                         if(son.sektor !== null){
@@ -1733,7 +1746,7 @@ th, td{
                         if(rodzajFormularza === obywatelFormularz){
                             document.getElementById('nr_dow_err').style.display = "none";
                             let pole_nr_dow = document.getElementById('in1');
-                         //   pole_nr_dow.addEventListener("input", check_nr_dowodu());
+                            //   pole_nr_dow.addEventListener("input", check_nr_dowodu());
                             check_nr_dowodu();
                             check_pesel();
                             check_DatUrIPesel();
@@ -1746,114 +1759,114 @@ th, td{
 
 
             }
-        if(czy_pow === true){
-            id = id+1; // powięsone ze zgledu na pomniejszenie spowodowane poprzedznim ifem
-            loadDataToPowiazane2(pow_id, id)
-                .then(function (res) {
+            if(czy_pow === true){
+                id = id+1; // powięsone ze zgledu na pomniejszenie spowodowane poprzedznim ifem
+                loadDataToPowiazane2(pow_id, id)
+                    .then(function (res) {
 
-                    var son = JSON.parse(res);
+                        var son = JSON.parse(res);
 
-                    let rodzajDanych = null;
-                    let rodzajFormularza = null;
-                    alert("pow id w load data to powiązane")
-                    alert(pow_id)
-                    if(pow_id == 1){
-                        c= "obywatel"
-                        rodzajDanych = obywatelDane;
-                        rodzajFormularza = obywatelFormularz;
-                        var nagl = document.getElementById("nago2.1");
-                    }
+                        let rodzajDanych = null;
+                        let rodzajFormularza = null;
+                        alert("pow id w load data to powiązane")
+                        alert(pow_id)
+                        if(pow_id == 1){
+                            c= "obywatel"
+                            rodzajDanych = obywatelDane;
+                            rodzajFormularza = obywatelFormularz;
+                            var nagl = document.getElementById("nago2.1");
+                        }
 
-                    if(pow_id == 2){
-                        c = "pojazd"
-                        rodzajDanych = pojazdDane;
-                        rodzajFormularza = pojazdFormularz;
-                        var nagl = document.getElementById("nagp2.1");
-                    }
+                        if(pow_id == 2){
+                            c = "pojazd"
+                            rodzajDanych = pojazdDane;
+                            rodzajFormularza = pojazdFormularz;
+                            var nagl = document.getElementById("nagp2.1");
+                        }
 
-                    if(pow_id == 3){
-                        c = "abonament"
-                        rodzajDanych = obywatelDane;
-                        rodzajFormularza = abonamentFormularz;
-                        var nagl = document.getElementById("naga2.1");
-                        console.log(son.sektor)
-                        console.log(son.uwagi)
-                        alert("sektor i uwagi w konsoli w f2")
+                        if(pow_id == 3){
+                            c = "abonament"
+                            rodzajDanych = obywatelDane;
+                            rodzajFormularza = abonamentFormularz;
+                            var nagl = document.getElementById("naga2.1");
+                            console.log(son.sektor)
+                            console.log(son.uwagi)
+                            alert("sektor i uwagi w konsoli w f2")
 
-                    }
-                    pow_global = pow_id;
+                        }
+                        pow_global = pow_id;
 
-                    pow_son = son; // zapamiętanie powsona z powiązanych
+                        pow_son = son; // zapamiętanie powsona z powiązanych
 
-                    template = Handlebars.compile(rodzajFormularza);
-                    var dane = template(son);
+                        template = Handlebars.compile(rodzajFormularza);
+                        var dane = template(son);
 
-                    template = Handlebars.compile(rodzajDanych);
+                        template = Handlebars.compile(rodzajDanych);
 
-                    var dane2 = template(son);
+                        var dane2 = template(son);
 
-                    // document.getElementById(id.toString()).innerHTML = ""
+                        // document.getElementById(id.toString()).innerHTML = ""
 
-                    //document.getElementById(id.toString()).innerHTML += dane2;
-
-
-                    document.getElementById("obywatel").innerHTML = ""
-
-                    document.getElementById("obywatel").innerHTML += nagl.innerHTML;
-
-                    document.getElementById("obywatel").innerHTML += dane2;
-
-                    document.getElementById("formularz").innerHTML += dane;
-
-                    // document.getElementById("ff").id = id + "ff" /// czemu to nie działa daje null
-
-                    document.getElementById("obywatel").getElementsByTagName("tr")[0].style.backgroundColor = "#167F92";
+                        //document.getElementById(id.toString()).innerHTML += dane2;
 
 
+                        document.getElementById("obywatel").innerHTML = ""
 
-                    alert("id 628 " + id)
-                    alert("on 629 to" + on)
+                        document.getElementById("obywatel").innerHTML += nagl.innerHTML;
 
-                    if(rodzajFormularza === pojazdFormularz) {
-                        autocomplete(document.getElementById("inp5"), marki);
-                        console.log(document.getElementById("inp5"))
-                        alert("STOP");
-                        autocomplete(document.getElementById("inp6"), modele);
-                        console.log(document.getElementById("inp6"))
-                        alert("STOP2")
-                        document.getElementById("inp2").max = new Date().getFullYear();
-                    }
+                        document.getElementById("obywatel").innerHTML += dane2;
 
-                    formularz.id = on.toString() + "ff"
+                        document.getElementById("formularz").innerHTML += dane;
 
-                    onid = pow_global /// Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki, w tej funkcji zastąpiona
+                        // document.getElementById("ff").id = id + "ff" /// czemu to nie działa daje null
 
-                    console.log("Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki")
-
-                    console.log(onid);
-
-
-                    document.getElementById("ina3").value = son.sektor // ustawianie sektora w formularzu
-
-
-                    block_buttons();
-                    if(rodzajFormularza === pojazdFormularz){
-                        autocomplete(document.getElementById("inp5"), marki);
-                        autocomplete(document.getElementById("inp6"), modele);
-                      //  document.getElementById("inp2").max = new Date().getFullYear();
-                        check_nr_dowodu();
-                        check_pesel();
-                        check_DatUrIPesel();
-                    }
-
-
-                });
+                        document.getElementById("obywatel").getElementsByTagName("tr")[0].style.backgroundColor = "#167F92";
 
 
 
+                        alert("id 628 " + id)
+                        alert("on 629 to" + on)
+
+                        if(rodzajFormularza === pojazdFormularz) {
+                            autocomplete(document.getElementById("inp5"), marki);
+                            console.log(document.getElementById("inp5"))
+                            alert("STOP");
+                            autocomplete(document.getElementById("inp6"), modele);
+                            console.log(document.getElementById("inp6"))
+                            alert("STOP2")
+                            document.getElementById("inp2").max = new Date().getFullYear();
+                        }
+
+                        formularz.id = on.toString() + "ff"
+
+                        onid = pow_global /// Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki, w tej funkcji zastąpiona
+
+                        console.log("Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki")
+
+                        console.log(onid);
 
 
-        }
+                        document.getElementById("ina3").value = son.sektor // ustawianie sektora w formularzu
+
+
+                        block_buttons();
+                        if(rodzajFormularza === pojazdFormularz){
+                            autocomplete(document.getElementById("inp5"), marki);
+                            autocomplete(document.getElementById("inp6"), modele);
+                            //  document.getElementById("inp2").max = new Date().getFullYear();
+                            check_nr_dowodu();
+                            check_pesel();
+                            check_DatUrIPesel();
+                        }
+
+
+                    });
+
+
+
+
+
+            }
 
 
 
@@ -1868,58 +1881,58 @@ th, td{
     }
 
 
-   function wyb_rekord() {
+    function wyb_rekord() {
         if(rekord === -1)
             return -1
-       // wybrany rekord z bazy
-       var ele = document.getElementsByName('rad');
+        // wybrany rekord z bazy
+        var ele = document.getElementsByName('rad');
 
-       ele.forEach(zaznacz)
+        ele.forEach(zaznacz)
 
-       document.getElementById('bstyle').innerHTML =
-           `
+        document.getElementById('bstyle').innerHTML =
+            `
            .butt{
 
         pointer-events: auto;
     }
            `;
 
-       return rekord
-   }
-       // wybrany rekord z bazy koniec
-function zaznacz(item,index) {
+        return rekord
+    }
+    // wybrany rekord z bazy koniec
+    function zaznacz(item,index) {
 
 
         console.log(rekord)
         item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = 'white' // wgłab do  i + 'ob'
 
-    if (item.checked) {
-        alert(item.value)
-     //   rekord = parseInt(item.value.substr(0,item.value.indexOf(' '))); // rekord zmienna globalna // nie kumam jak to działa do końca
-        rekord =  item.parentElement.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("okol1")[0]; // pobranie zawartości komórki w postaci obiektu html
-        rekord = parseInt(rekord.textContent) // konwersja na int
-        //rekord = rekord -1; // dopasowanie id do numerowania od zera
-        alert(rekord)
+        if (item.checked) {
+            alert(item.value)
+            //   rekord = parseInt(item.value.substr(0,item.value.indexOf(' '))); // rekord zmienna globalna // nie kumam jak to działa do końca
+            rekord =  item.parentElement.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("okol1")[0]; // pobranie zawartości komórki w postaci obiektu html
+            rekord = parseInt(rekord.textContent) // konwersja na int
+            //rekord = rekord -1; // dopasowanie id do numerowania od zera
+            alert(rekord)
 
             item.parentElement.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = 'red' // wgłab do  i + 'ob'
 
-        if(czy_pow === true){
-       pow_id = item.parentElement.parentElement.parentElement.parentElement.parentElement.id // id elementu
-            console.log("tutaj jest pow_id:")
-            console.log(pow_id);
-       let id_cell =   item.parentElement.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("okol1")[0];
-       alert("id wybranego elementu")
-            alert(id_cell)
-       ob_pow_id = parseInt(id_cell.textContent)
-            alert(ob_pow_id)
+            if(czy_pow === true){
+                pow_id = item.parentElement.parentElement.parentElement.parentElement.parentElement.id // id elementu
+                console.log("tutaj jest pow_id:")
+                console.log(pow_id);
+                let id_cell =   item.parentElement.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("okol1")[0];
+                alert("id wybranego elementu")
+                alert(id_cell)
+                ob_pow_id = parseInt(id_cell.textContent)
+                alert(ob_pow_id)
+
+
+            }
 
 
         }
 
-
     }
-
-}
 
     function pow_sc(pow_id){
         if(pow_id === 1)
@@ -1934,21 +1947,21 @@ function zaznacz(item,index) {
     }
 
 
-function usun(id,auto) { // rozbudować porobić trigery dla usuwania obywatela wraz z jego samochodami i abonamentami
-    if(auto === true){
-        var realConfirm=window.confirm;
-        window.confirm=function(){
-            window.confirm=realConfirm;
-            return true;
-        };
-    }
-    if(JSON.parse(arch))
-        alert("nie można usuwać usuniętych danych")
-    else {
-        if (confirm("Czy napeno chcesz usunąć ten element")) { // czy trigger w backendzie to dobry pomysł?
-            // najlepiej zrobić to za pomocą jakiegoś zapytania SQL myślę
+    function usun(id,auto) { // rozbudować porobić trigery dla usuwania obywatela wraz z jego samochodami i abonamentami
+        if(auto === true){
+            var realConfirm=window.confirm;
+            window.confirm=function(){
+                window.confirm=realConfirm;
+                return true;
+            };
+        }
+        if(JSON.parse(arch))
+            alert("nie można usuwać usuniętych danych")
+        else {
+            if (confirm("Czy napeno chcesz usunąć ten element")) { // czy trigger w backendzie to dobry pomysł?
+                // najlepiej zrobić to za pomocą jakiegoś zapytania SQL myślę
 
-            var on = parseInt(id, 10)
+                var on = parseInt(id, 10)
                 loadDataToUsun('abonament')
                     .then(function (res, preson) {
                         preson = insertData(res, preson)
@@ -1971,12 +1984,12 @@ function usun(id,auto) { // rozbudować porobić trigery dla usuwania obywatela 
 
 
 
-            if(auto === false)
-                 location.reload(true)
+                if(auto === false)
+                    location.reload(true)
+            }
         }
-    }
 
-}
+    }
 
     function odnow(id) { // rozbudować porobić trigery dla usuwania obywatela wraz z jego samochodami i abonamentami
         if(!JSON.parse(arch))
@@ -1987,43 +2000,43 @@ function usun(id,auto) { // rozbudować porobić trigery dla usuwania obywatela 
 
                 var on = parseInt(id, 10)
 
-                    loadDataToUsun('abonament')
-                        .then(function (res, preson) {
-                            preson = insertData(res, preson)
-                            let son = preson[on]
+                loadDataToUsun('abonament')
+                    .then(function (res, preson) {
+                        preson = insertData(res, preson)
+                        let son = preson[on]
 
 
-                            let obywatel_id = son.obywatel_id
-                            let pojazd_id = son.pojazd_id
-
-
-
-
-                         let   url = "http://localhost:8091/obywatel/odnow/" + obywatel_id.toString()
-                            ajax("POST", url, false)
-                            url = "http://localhost:8091/pojazd/odnow/" + pojazd_id.toString()
-                            ajax("POST", url, false);
-
-                            odnow_abonament(son)
+                        let obywatel_id = son.obywatel_id
+                        let pojazd_id = son.pojazd_id
 
 
 
 
+                        let   url = "http://localhost:8091/obywatel/odnow/" + obywatel_id.toString()
+                        ajax("POST", url, false)
+                        url = "http://localhost:8091/pojazd/odnow/" + pojazd_id.toString()
+                        ajax("POST", url, false);
 
-                        });
-
-
-                 /*else {
-                    loadData()
-                        .then(function (res, preson) {
-                            preson = insertData(res, preson) // najprostrze odnawianie lub po małej modyfikacji usuwanie jest najprostrzym wariantem nie głębokim
-                            let son = preson[on]
-                            son.czy_zarchiwizowany = false;
-                            sendSon(son)
+                        odnow_abonament(son)
 
 
-                        })
-                }*/
+
+
+
+                    });
+
+
+                /*else {
+                   loadData()
+                       .then(function (res, preson) {
+                           preson = insertData(res, preson) // najprostrze odnawianie lub po małej modyfikacji usuwanie jest najprostrzym wariantem nie głębokim
+                           let son = preson[on]
+                           son.czy_zarchiwizowany = false;
+                           sendSon(son)
+
+
+                       })
+               }*/
 
                 location.reload(true)
             }
@@ -2052,15 +2065,15 @@ function usun(id,auto) { // rozbudować porobić trigery dla usuwania obywatela 
 
     }
 
-/*function dodaj() {
-      templates = Handlebars.compile(formularz);
-      rekord = -1
-      let dane = templates(null)
+    /*function dodaj() {
+          templates = Handlebars.compile(formularz);
+          rekord = -1
+          let dane = templates(null)
 
-    document.getElementById("obywatel").innerHTML = ""
-    document.getElementById("formularz").innerHTML += dane;
-      block_buttons()
-}*/ // stare dodaj
+        document.getElementById("obywatel").innerHTML = ""
+        document.getElementById("formularz").innerHTML += dane;
+          block_buttons()
+    }*/ // stare dodaj
 
     function dodaj(formularz) {
         czy_dodawany = true;
@@ -2094,76 +2107,76 @@ function usun(id,auto) { // rozbudować porobić trigery dla usuwania obywatela 
         let obywatel_id = -3;
         let pojazd_id = -3;
         alert(son_set.size)
-            alert("w if tuple")
-            for (let item of son_set) {
-                alert("W for tuple")
-                if (item.kto === "obywatel") {
-                    try{
-                        let status =  insertSon(item);
-                        if(status === 500){
-                            console.log(status);
-                           // location.reload(true)
-                            return;
-                    }
-                    }
-                    catch (err) {
-                        console.log(err.message);
-                        //location.reload(true)
+        alert("w if tuple")
+        for (let item of son_set) {
+            alert("W for tuple")
+            if (item.kto === "obywatel") {
+                try{
+                    let status =  insertSon(item);
+                    if(status === 500){
+                        console.log(status);
+                        // location.reload(true)
                         return;
                     }
-
-                    last('http://localhost:8091/obywatel/last')
-                    obywatel_id = global_last_id
-                    alert("id obywatela")
-                    alert(obywatel_id)
                 }
-                if (item.kto === "pojazd") {
-                    item.obywatel.id = obywatel_id;
-                    item.model.id = glob_add_model;
-                    try{
-                        let status =  insertSon(item);
-                        if(status === 500){
-                            console.log(status);
-                           // location.reload(true)
-                            return;
-                        }
-                    }
-                    catch (err) {
-                        console.log(err.message);
-                        //location.reload(true)
+                catch (err) {
+                    console.log(err.message);
+                    //location.reload(true)
+                    return;
+                }
+
+                last('http://localhost:8091/obywatel/last')
+                obywatel_id = global_last_id
+                alert("id obywatela")
+                alert(obywatel_id)
+            }
+            if (item.kto === "pojazd") {
+                item.obywatel.id = obywatel_id;
+                item.model.id = glob_add_model;
+                try{
+                    let status =  insertSon(item);
+                    if(status === 500){
+                        console.log(status);
+                        // location.reload(true)
                         return;
                     }
-                    last('http://localhost:8091/pojazd/last')
-                    pojazd_id = global_last_id
-
-                    alert("id pojazdu")
-                    alert(pojazd_id)
-
                 }
-                if (item.kto === "abonament") {
-                    alert("insert abonament")
-                    item.pojazd.id = pojazd_id;
-                    try{
-                      let status =  insertSon(item);
-                      if(status === 500){
-                          console.log(status);
-                          //location.reload(true)
-                          return;
-                      }
-
-
-                    }
-                    catch (err) {
-                        console.log(err.message);
-                       // location.reload(true)
-                        return;
-                    }
-                    location.reload(true)
-
+                catch (err) {
+                    console.log(err.message);
+                    //location.reload(true)
+                    return;
                 }
+                last('http://localhost:8091/pojazd/last')
+                pojazd_id = global_last_id
+
+                alert("id pojazdu")
+                alert(pojazd_id)
 
             }
+            if (item.kto === "abonament") {
+                alert("insert abonament")
+                item.pojazd.id = pojazd_id;
+                try{
+                    let status =  insertSon(item);
+                    if(status === 500){
+                        console.log(status);
+                        //location.reload(true)
+                        return;
+                    }
+
+
+                }
+                catch (err) {
+                    console.log(err.message);
+                    // location.reload(true)
+                    return;
+                }
+                location.reload(true)
+
+            }
+
         }
+    }
 
 
 
@@ -2174,29 +2187,29 @@ function usun(id,auto) { // rozbudować porobić trigery dla usuwania obywatela 
         request.send(null);
 
         if (request.status === 200) {
-           global_last_id = JSON.parse(request.responseText).id;
+            global_last_id = JSON.parse(request.responseText).id;
         }
 
 
     }
 
-function insertSon(son) {
+    function insertSon(son) {
         var xhr = new XMLHttpRequest();
         var url = "http://localhost:8091/"+ son.kto.toString() +"/insert";
-         xhr.open("PUT", url, false); // `false` makes the request synchronous
-         xhr.setRequestHeader("Content-Type", "application/json");
-         var json = JSON.stringify(son)
+        xhr.open("PUT", url, false); // `false` makes the request synchronous
+        xhr.setRequestHeader("Content-Type", "application/json");
+        var json = JSON.stringify(son)
 
         xhr.send(json);
-         return xhr.status;
+        return xhr.status;
 
 
 
 
 
-}
-function block_buttons() {
-    document.getElementById('addstyle').innerHTML = `
+    }
+    function block_buttons() {
+        document.getElementById('addstyle').innerHTML = `
 
      .add{
 
@@ -2210,7 +2223,7 @@ function block_buttons() {
 
     }
     `;
-    document.getElementById("bstyle").innerHTML = `
+        document.getElementById("bstyle").innerHTML = `
        .butt{
 
         pointer-events: none;
@@ -2224,54 +2237,54 @@ function block_buttons() {
     }
       `;
 
-}
- function orderBy(id){
+    }
+    function orderBy(id){
 
         let abo_head_id = ["abo_id", "abo_data_rozpoczecia", "abo_data_zakonczenia", "abo_sektor",
             "abo_nr_rejstracyjny", "abo_marka", "abo_model", "abo_imie", "abo_nazwisko", "abo_pesel"]
 
-      abo_head_id.forEach(function (_id) {
-           document.getElementById(_id).style.backgroundColor = "#167F92";
-       });
-     document.getElementById(id).style.backgroundColor = "green"
+        abo_head_id.forEach(function (_id) {
+            document.getElementById(_id).style.backgroundColor = "#167F92";
+        });
+        document.getElementById(id).style.backgroundColor = "green"
 
-   //  var list = document.querySelector("ul");
-     var list = document.getElementById("obywatel")
-     var items = list.querySelectorAll("label");
-    var pola = document.getElementsByClassName(id)
+        //  var list = document.querySelector("ul");
+        var list = document.getElementById("obywatel")
+        var items = list.querySelectorAll("label");
+        var pola = document.getElementsByClassName(id)
 
 
-    for(let i = 0; i < items.length; i=i+1){
-        if((id =="abo_data_rozpoczecia") || id == "abo_data_zakonczenia")
-          items[i].title = pola[i].title
-        else
-             items[i].title = pola[i].textContent
-        console.log(pola[i].textContent)
-        console.log("uwaga uwaga")
-        console.log(items[i].title)
-    }
+        for(let i = 0; i < items.length; i=i+1){
+            if((id =="abo_data_rozpoczecia") || id == "abo_data_zakonczenia")
+                items[i].title = pola[i].title
+            else
+                items[i].title = pola[i].textContent
+            console.log(pola[i].textContent)
+            console.log("uwaga uwaga")
+            console.log(items[i].title)
+        }
 
-   var itemsy = Array.from(items).sort(  function(a, b) {
-       return a.title.toString().localeCompare(b.title.toString());
-   });
-    if(id !== id_old_sort)
-        jij = 0;
-    if(jij % 2 !== 0){
-        document.getElementById(id).style.backgroundColor = "yellow"
-        itemsy.reverse();
-    }
-     for (var i = 0; i < itemsy.length; i++) {
-         itemsy[i].parentNode.appendChild(itemsy[i]);
-     }
+        var itemsy = Array.from(items).sort(  function(a, b) {
+            return a.title.toString().localeCompare(b.title.toString());
+        });
+        if(id !== id_old_sort)
+            jij = 0;
+        if(jij % 2 !== 0){
+            document.getElementById(id).style.backgroundColor = "yellow"
+            itemsy.reverse();
+        }
+        for (var i = 0; i < itemsy.length; i++) {
+            itemsy[i].parentNode.appendChild(itemsy[i]);
+        }
 
-    jij = jij +1; // do określania czy ma sortować malejąco czy rosnąco zmienna globalna jij
-     id_old_sort = id; // zmienna globalna do przechowywania ostatniego id.
+        jij = jij +1; // do określania czy ma sortować malejąco czy rosnąco zmienna globalna jij
+        id_old_sort = id; // zmienna globalna do przechowywania ostatniego id.
     }
     function wyswietl_zarchiwizowane(czy_arch) {
         let url =  new URL(window.location)
         url.searchParams.set('arch',czy_arch)
         window.location = url.toString()
-       // location.reload(true)
+        // location.reload(true)
 
     }
     function isBoolean (value) {
@@ -2287,7 +2300,7 @@ function block_buttons() {
         if(day < 10)
             day = "0" + day;
 
-       let son = {
+        let son = {
             id : -1,
             data_rozpoczecia : "",
             data_zakonczenia : "",
@@ -2415,7 +2428,7 @@ function block_buttons() {
         var ason = null
         var pson = null
         var oson = null
-      //  id = id + 1 ; // ponieważ liczy od zera
+        //  id = id + 1 ; // ponieważ liczy od zera
         loadDataToPowiazane("abonament/full/",id)
             .then(function (res) {
 
@@ -2448,13 +2461,13 @@ function block_buttons() {
                         pson = JSON.parse(res);
                         console.log(res)
                         // ponizsza linijka przekształca string w html node
-                      //  let doc = new DOMParser().parseFromString(nagp, "text/xml"); // jest text/xml a nie a nie text/html bo przy tym drugim tworzą sie domyslini rodzicie typu body i html a w tym pierwszym przekształacane są tylko zdane tagi
+                        //  let doc = new DOMParser().parseFromString(nagp, "text/xml"); // jest text/xml a nie a nie text/html bo przy tym drugim tworzą sie domyslini rodzicie typu body i html a w tym pierwszym przekształacane są tylko zdane tagi
                         let iDiv = document.createElement("label")
                         console.log("Tutaj jest pson")
                         console.log(pson)
-                       wyswietl2(pson,2,iDiv,pojazdDane)
+                        wyswietl2(pson,2,iDiv,pojazdDane)
                         iDiv.style.backgroundColor = "white";
-                       document.getElementById("nagp2").appendChild(iDiv)
+                        document.getElementById("nagp2").appendChild(iDiv)
 
 
 
@@ -2485,8 +2498,8 @@ function block_buttons() {
         the text field element and an array of possible autocompleted values:*/
         var currentFocus;
         /*execute a function when someone writes in the text field:*/
-       // var inp = document.getElementById("inp5")
-     //   var arr = marki; // docelowo ma być bez tego hard coded
+        // var inp = document.getElementById("inp5")
+        //   var arr = marki; // docelowo ma być bez tego hard coded
         inp.addEventListener("input", function() {
             var a, b, i, val = this.value;
             /*close any already open lists of autocompleted values*/
@@ -2578,12 +2591,12 @@ function block_buttons() {
             closeAllLists(e.target);
         });
 
-            document.addEventListener("blur",function (e) {
-                get_modele();
-                inp.style.background = 'pink';
+        document.addEventListener("blur",function (e) {
+            get_modele();
+            inp.style.background = 'pink';
 
 
-            });
+        });
 
 
 
@@ -2592,28 +2605,28 @@ function block_buttons() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-function get_marki() {
+    function get_marki() {
 
         return loadMarkaData()
             .then(function (res) {
                 marki.length = 0; // czyszczenie  TABLICY SO ZERA
-               let son = JSON.parse(res);
+                let son = JSON.parse(res);
 
-               for (const marka of son){
+                for (const marka of son){
 
-                   marki.push(marka.nazwa);
+                    marki.push(marka.nazwa);
 
 
 
-               }
-              // autocomplete(document.getElementById("inp6"), modele);
-             //   get_modele(); // pobranie modeli przy załadowaniu
+                }
+                // autocomplete(document.getElementById("inp6"), modele);
+                //   get_modele(); // pobranie modeli przy załadowaniu
 
             });
 
-    
-}
-function loadMarkaData(){
+
+    }
+    function loadMarkaData(){
         var url = "http://localhost:8091/marka/download";
         return ajax("GET",url);
 
@@ -2662,23 +2675,23 @@ function loadMarkaData(){
         console.log(id);
 
         if (request.status === 200) {
-             preson = JSON.parse(request.responseText);
-             for (const item of preson){
+            preson = JSON.parse(request.responseText);
+            for (const item of preson){
 
-                 if(c === "obywatel"){
-                     if(item.obywatel_id == id)
-                         new_id = item.id;
-                 }
-                 if(c === "pojazd"){
-                     if(item.pojazd_id == id)
-                         new_id = item.id;
-                 }
-                 if(c === "abonament"){
-                     if(item.id == id)
-                         new_id = id;
-                 }
+                if(c === "obywatel"){
+                    if(item.obywatel_id == id)
+                        new_id = item.id;
+                }
+                if(c === "pojazd"){
+                    if(item.pojazd_id == id)
+                        new_id = item.id;
+                }
+                if(c === "abonament"){
+                    if(item.id == id)
+                        new_id = id;
+                }
 
-             }
+            }
         }
         return new_id;
 
@@ -2790,7 +2803,7 @@ function loadMarkaData(){
 
         }
 
-        
+
     }
 
     function hide_error(id) {

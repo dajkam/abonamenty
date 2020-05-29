@@ -23,7 +23,7 @@ class UserController {
     @GetMapping(value = ["/download"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
-    fun getUser() = service.getUser() /////////// ta metoda nie działa nie wiadomo dlaczego ale ostatnia metoda na samym dole szczególnie jązastępuje
+    fun getUser() = service.getUser() /////////// ta metoda nie działa nie wiadomo dlaczego ale ostatnia metoda na samym dole szczególnie jązastępuje mówi że metoda get nie jest wspierana
     @PutMapping(
             value = ["/admin"],
              produces = arrayOf(MediaType.APPLICATION_JSON_VALUE),

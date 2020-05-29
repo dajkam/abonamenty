@@ -21,10 +21,14 @@ class WebSecurityAuthSuccessHandler: SimpleUrlAuthenticationSuccessHandler() {
 
         val roles = AuthorityUtils.authorityListToSet(authentication?.getAuthorities()) /// to pobiera prawdopodobnie role dostępne w projekcie => zrozumieć co to tak naprawde robi
 
-        if (roles.contains(Role.ADMIN.poziom) || roles.contains(Role.STRAZNIK.poziom)) {
+        if ( roles.contains(Role.STRAZNIK.poziom)) {
             response?.sendRedirect("/index.html")
-        } else {
+        }
+        if(roles.contains(Role.ULICZNY.poziom) ) {
             response?.sendRedirect("/uliczny.html")
+        }
+        if (roles.contains(Role.ADMIN.poziom) ){
+            response?.sendRedirect("/admin.html")
         }
 
     }
