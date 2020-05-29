@@ -1,6 +1,7 @@
 package com.filip.machaj.demo.controllers
 
 import com.filip.machaj.demo.dto.UserDTO
+import com.filip.machaj.demo.dto.UserUpdateDTO
 import com.filip.machaj.demo.model.user.User
 import com.filip.machaj.demo.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,7 +23,7 @@ class UserController {
     @GetMapping(value = ["/download"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
-    fun getUser() = service.getUser()
+    fun getUser() = service.getUser() /////////// ta metoda nie działa nie wiadomo dlaczego ale ostatnia metoda na samym dole szczególnie jązastępuje
     @PutMapping(
             value = ["/admin"],
              produces = arrayOf(MediaType.APPLICATION_JSON_VALUE),
@@ -66,11 +67,11 @@ class UserController {
             consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun updateUser(
-            @RequestBody user: User
+            @RequestBody user: UserUpdateDTO
     ): User? = service.updateUser(user)
 
     @GetMapping(value = ["/get"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
-    fun getUsers() = service.downLoadUsers()
+    fun getUsers() = service.downLoadUsers() /////////////////// najważniejsza netoda///////////////////////////////
 }
