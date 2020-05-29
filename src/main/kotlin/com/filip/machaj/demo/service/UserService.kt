@@ -2,6 +2,7 @@ package com.filip.machaj.demo.service
 
 import com.filip.machaj.demo.dto.UserDTO
 import com.filip.machaj.demo.dto.UserDetailsDTO
+import com.filip.machaj.demo.dto.UserUpdateDTO
 import com.filip.machaj.demo.model.user.*
 import com.filip.machaj.demo.model.user.security.WebSecurityConfiguration
 import com.filip.machaj.demo.repo.UserRepository
@@ -85,18 +86,20 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 
     }
 
-    fun updateUser(toSave:User): User? {
+    fun updateUser(toSave:UserUpdateDTO): User? {
         val user = repo.findUserByEmail(toSave.email)
         user?.let{
             if(!toSave.haslo.isEmpty()){
                 it.haslo = encoder.encode(toSave.haslo)
             }
+            it.email = toSave.new_email
             it.imie = toSave.imie
             it.nazwisko = toSave.nazwisko
+            it.role = toSave.role
             it.czy_zarchiwizowany = toSave.czy_zarchiwizowany
-            it.aktywne = toSave.aktywne
+          /*  it.aktywne = toSave.aktywne                                          // to jest zakomentowane bo funkcja przyjmuje UserDTO jako argument a on nie ma tych pól zaimplementowanych
             it.nie_wygasniete = toSave.nie_wygasniete
-            it.nie_wygasniete_id_i_haslo = toSave.nie_wygasniete_id_i_haslo
+            it.nie_wygasniete_id_i_haslo = toSave.nie_wygasniete_id_i_haslo*/
             if (!toSave.equals(it))
                 user.kiedy_zmodyfikowano = Date()
             return repo.save(user)
@@ -123,7 +126,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
     }
     fun deleteUser(id: Long) = repo.deleteById(id)
 
-    fun downLoadUsers(): Iterable<User> = repo.downloadUsers()
+    fun downLoadUsers(): Iterable<User> = repo.downloadUsers() ////////// najważniejsza metoda z userController
 
 
 
