@@ -74,4 +74,11 @@ class UserController {
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun getUsers() = service.downLoadUsers() /////////////////// najważniejsza netoda///////////////////////////////
+
+    @GetMapping(value = ["/get/{email}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun getUserByEmail(@PathVariable(name = "email") email:String): User? = service.findUserByUserName(email)
 }
+
+

@@ -184,7 +184,7 @@
 
 <div id = "menu">
 <span>
-    <select id = "encja" onChange='window.location="http://localhost:8091/index.html?value=" + this.value;'>
+    <select id = "encja" class="hid" onChange='window.location="http://localhost:8091/index.html?value=" + this.value;'>
         <option value = "obywatel">Obywatel</option>
         <option value = "pojazd">Pojazd</option>
         <option value = "abonament">Abonament</option>
@@ -194,13 +194,13 @@
     </select>
 
 
-    <button  id="dodaj" class="add hid" type='button' onclick=" dodaj(obywatelFormularz)"  tabindex="-1">Dodaj</button>
+    <button  id="dodaj" class="add hid" type='button' onclick=" dodaj(UserFormularzIn)"  tabindex="-1">Dodaj</button>
 
-    <button id="edytuj"class='butt hid' type= 'button' onclick='f2((wyb_rekord()-1),czy_powi())'  tabindex="-1">Edytuj</button>
+    <button id="edytuj"class='butt hid' type= 'button' onclick='f2(rekord)'  tabindex="-1">Edytuj</button>
 
-     <button id="usun" class = 'but4 butt hid' type='button' onclick='usun((wyb_rekord()-1),false)'  tabindex="-1" >Usuń</button>
+     <button id="usun" class = 'but4 butt hid' type='button' onclick='usun(wyb_rekord(),false)'  tabindex="-1" >Usuń</button>
 
-    <button id="odnow" class = 'but4 butt hid' type='button' onclick='odnow(wyb_rekord()-1)'  tabindex="-1" >Odnów</button>
+    <button id="odnow" class = 'but4 butt hid' type='button' onclick='odnow(wyb_rekord())'  tabindex="-1" >Odnów</button>
 
     <button id="new_pass" class = 'but5 butt' type='button' onclick='new_pass(wyb_rekord())'  tabindex="-1">Nowe Hasło</button>
 
@@ -309,6 +309,12 @@
 
 
 <script type="text/javascript">
+
+    const ROLE = {
+        uliczny: "ULICZNY",
+        straznik: "STRAZNIK",
+        admin: "ADMIN"
+    }
 
     // moment date format
     function usun_nieaktualne_abonamenty() {
@@ -529,14 +535,14 @@
     *
     * */
 
-    var abonamentDane =   "<table  >" +
+    var UserDane =   "<table  >" +
 
         "<tr class='row'>" +
         "<th class=' hid '> <input   type='radio' name='rad' value='nie_wybrany' onclick='wyb_rekord() '> </th>"+
-        "<td   class='okol1  kol id abo_id hid' >{{id}} </td>"+
-        "<td   class='okol4  kol abo_sektor'>{{email}}</td> "+
-        "<td   class='okol3  kol abo_marka'>{{role}}</td>"+
-        "<td   class='  kol abo_imie'>{{czy_zarchiwizowany}}</td> "+
+        "<td   class='okol1  kol id  hid' >{{id}} </td>"+
+        "<td   class='okol4  kol '>{{email}}</td> "+
+        "<td   class='okol3  kol '>{{role}}</td>"+
+        "<td   class='  kol '>{{formatZarchiwizowany czy_zarchiwizowany}}</td> "+
 
 
 
@@ -573,85 +579,45 @@
 
     var formularz = ""
 
-    var obywatelFormularz = "<form id = 'ffa'  action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
-        "    nr dowodu: <br>\n" +
-        "    <input id =\"in1\" type = 'text' name = \"nr_dowodu\" value =  '{{nr_dowodu}}'  minlength='9' maxlength='9'   required = 'true' onchange=' check_all_ob()'/><br>\n" +
-        "<div class='error' id='nr_dow_err'>Wpisz poprawny numer dowodu</div>\n" +
-        "<div class='error' id='nr_dow_err2'>Ten numer dowodu już widnieje w bazie</div>\n" +
-        "    imię: <br>\n" +
-        "    <input id =\"in2\" type = 'text' name = \"imie\"  value= '{{imie}}' required = 'true'/><br>\n" +
-        "    nazwisko: <br>\n" +
-        "    <input id =\"in3\" type = 'text' name = \"nazwisko\" value='{{nazwisko}}'   required = 'true'/><br>\n" +
-        "    adres: <br>\n" +
-        "    <input id =\"in4\" type = 'text' name = \"adres\" value = '{{adres}}'   required = 'true'/><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-        "    data urodzenia: <br>\n" +
-        "    <input id =\"in5\" type = 'date' name = \"data_urodzenia\" value = '{{data_urodzenia}}' required = 'true' onchange=' check_all_ob()'/><br>\n" +
-        "    PESEL:<br>\n" +
-        "    <input id =\"in6\"type = 'text' name = \"pesel\" value = '{{pesel}}' minlength='11' maxlength='11' required = 'true' onchange=' check_all_ob()'/>\n" +
-        "<div class='error' id='pesel_err'>Wpisz poprawny PESEL</div>\n" +
-        "<div class='error' id='data_ur_err'> PESEL nie jest zgodny z datą urodzenia</div>\n" +
-        "<div class='error' id='pesel_err2'>Ten PESEL już widnieje w bazie</div>\n" +
 
-        "  <br><br>  <input id='zatwierdz' class = 'zat 'type = 'submit' value = \"Zatwierdź\" >\n" +
-
-        "  </form>";
-    // stare wybie ranie sektora  "    <input id =\"ina3\" type = 'text' name = \"sektor\" value={{sektor}} ><br>\n" +
-    // nowe rozwiązanie  w select nie ma atrybutu value={{sektor}}
-
-    <!--  w select Value w tej opcji która niczego nie wybiera musi bić puste żeby zadziałało rquired-->
-    var abonamentFormularz = "<form id = 'ffc' action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
-        "    data rozpoczęcia: <br>\n" +
-        "    <input id =\"ina1\" type = 'date' name = \"data_rozpoczecia\" value =  '{{data_rozpoczecia}}' required = 'true' onchange='check_dat_roz_zak()'/><br>\n" +
-        "    data zakończenia: <br>\n" +
-        "    <input id =\"ina2\" type = 'date' name = \"data_zakonczenia\"  value= '{{data_zakonczenia}}' required = 'true' onchange='check_dat_roz_zak()'/><br>\n" +
-        "    <div class='error' id='dat_zak_err'>Data rozpoczęcia musi być przed datą zakończenia</div>\n" +
-        "    sektor: <br>\n" +
-        ` <select id ="ina3" required = 'true'/>
+    var UserFormularzIn = "<form id = 'ffd' action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
+        "    Login: <br>\n" +
+        "    <input id = 'inlogin' type = 'text'  value =  '{{email}}' required = 'true'  onchange='check_login()'/><br>\n" +
+        "    <div class='error' id='login_err'>Ten login jest już zajęty</div>\n" +
+        "    Hasło: <br>\n" +
+        "    <input id = 'inpass' type = 'text'  value= '{{haslo}}' required = 'true'/><br>\n" +
+        "    Rola: <br>\n" +
+        ` <select id ="inrole" required = 'true'/>
         <option value="" selected disabled hidden>Wybierz</option>
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-        <option value="D">D</option>
-        <option value="E">E</option>
-        <option value="F">F</option>
-        <option value="G">G</option>
-        <option value="H">H</option>
-        <option value="I">I</option>
-        <option value="J">J</option>
-        <option value="WSZYSTKIE">WSZYSTKIE</option>
+        <option value="ULICZNY">ULICZNY</option>
+        <option value="STRAZNIK">STRAŻNIK</option>
+        <option value="ADMIN">ADMIN</option>
         </select> <br>`+
-        "    uwagi: <br>\n" +
-        "    <input id =\"ina4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
         "    <input id='zatwierdz' class='zat' type = 'submit' value = \"Zatwierdź\" >\n" +
         "\n" +
         "\n" +
         "  </form>";
 
-    var pojazdFormularz =  "<form id = 'ffb' autocomplete=\"off\" action='#' onsubmit='f3(wyb_rekord()); return false'> \n" +
-        "    nr rejstracyjny pojazdu: <br>\n" +
-        "    <input id =\"inp1\" type = 'text'  name = \"nr_rejestracyjny_pojazdu\" value =  '{{nr_rejstracyjny_pojazdu}}'   required = 'true' onchange='czy_nr_rej()'/><br>\n" +
-        "    <div class='error' id='nr_rej_err'>Ten numer rejstracyjny pojazdu już widnieje w bazie</div>\n" +
-        "    rok produkcji: <br>\n" +
-        "    <input id =\"inp2\" type = 'number' name = \"rok_produkcji\"  value='{{rok_produkcji}}' required = 'true' min = '1829' max='2020' /><br>\n" +
-        "    kolor: <br>\n" +
-        "    <input id =\"inp3\" type = 'text' name = \"kolor\" value={{kolor}} ><br>\n" +
-        "    uwagi: <br>\n" +
-        "    <input id =\"inp4\" type = 'text' name = \"uwagi\" value = '{{uwagi}}' ><br>\n" + // dzieki ' ' birze całą linijkę na nie pirwsze słowo
-        `<span id = 'inp-auto'>
-                 Marka:<br>
-                <input id='inp5' type='text' name='marka' value='{{marka}}' placeholder='Marka'  required = 'true'/>
-                <br>
-                Model:<br>
-                <input id='inp6' type='text' required = 'true' name='model' value='{{model}}' placeholder='Model' onclick='get_modele()' /><br>
-
-                </span>
-            `+
-        "    <input id='zatwierdz' class = 'zat'type = 'submit' value = \"Zatwierdź\" >\n" +
+    var UserFormularzUp = "<form id = 'ffe' action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
+        "    Login: <br>\n" +
+        "    <input id = 'inlogin' type = 'text'  value =  '{{email}}' required = 'true'  onchange='check_login()'/><br>\n" +
+        "    <div class='error' id='login_err'>Ten login jest już zajęty</div>\n" +
+        "    Rola: <br>\n" +
+        ` <select id ="inrole" required = 'true'/>
+        <option value="" selected disabled hidden>Wybierz</option>
+        <option value="ULICZNY">ULICZNY</option>
+        <option value="STRAZNIK">STRAŻNIK</option>
+        <option value="ADMIN">ADMIN</option>
+        </select> <br>`+
+        "    <input id='zatwierdz' class='zat' type = 'submit' value = \"Zatwierdź\" >\n" +
         "\n" +
         "\n" +
-
-
         "  </form>";
+
+
+
+
+
 
     // w inp5 nie ma onchange='get_modele()' ponieważ to wtedy nie działa przy załadowaniu ale tylko i wyłącznie przy zmianie lecz  onclick='get_modele()'działa przy jednym jak i przy drugim
 
@@ -674,9 +640,9 @@
             break;
         case "abonament":
             // document.getElementById('ffb').id =  "ff" /// czemu to daje bląd że jest null
-            abonamentFormularz.id = "ff"
-            wybraneDane = abonamentDane
-            formularz = abonamentFormularz
+            UserFormularzIn.id = "ff"
+            wybraneDane = UserDane
+            formularz = UserFormularzIn
             document.getElementById("nago").remove()
             document.getElementById("nagp").remove()
 
@@ -1083,79 +1049,17 @@
     function sendSon(son) {
 
         var xhr = new XMLHttpRequest();
-        if(czy_pow_new_abo) // czy nie był w funkcji odnowienie_abonamentu jeśli tak to przypisz abonament do c
-            c = "abonament";
-        var url = "http://localhost:8091/"+ c.toString() +"/update";
 
-        console.log(url)
+        var url = "http://localhost:8091/user/update";
 
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
 
 
-
-        console.log("//////////////////////////////////////////////////////////////////////////")
-
-        console.log(JSON.stringify(son))
-
-
-        //son.kiedy_zmodyfikowano = getModificationTime();// żeby data modyfikacji była zapisywana tylko wtedy kiedy żeczywiście są jakies zmiany
-
-        delete son.kiedy_zmodyfikowano
-        delete son.kiedy_utworzono
-
-        if((c.toString() === "obywatel") && !czy_pow_new_abo){ // czy nie był w funkcji odnowienie_abonamentu
-            son.pojazdy = []
-        }
-
-        if((c.toString() === "pojazd") && !czy_pow_new_abo){ // czy nie był w funkcji odnowienie_abonamentu
-
-            delete son.marka;
-            delete son.marka_id;
-            son.model = {
-                id : son.model_id
-            }
-            son.obywatel = {
-                id : son.obywatel_id
-            }
-            son.abonamenty = []
-
-            delete son.model_id
-            delete son.obywatel_id
-
-
-        }
-
-        if((c.toString() === "abonament") || czy_pow_new_abo){ // czy  był w funkcji odnowienie
-            delete son.nr_rejstracyjny_pojazdu;
-            delete son.marka;
-            delete son.model;
-            delete son.imie;
-            delete son.nazwisko;
-            delete son.pesel;
-            son.pojazd = {
-                id : son.pojazd_id
-            }
-            delete son.pojazd_id;
-            delete son.obywatel_id;
-            delete son.marka_id;
-            delete son.model_id;
-
-        }
-
         var json = JSON.stringify(son)
-
-        console.log("//////////////////////////////////////////////////////////////////////////")
-
-        console.log(json)
-        alert("json wysyłany w sendSon")
 
 
         xhr.send(json)
-
-        console.log(json)
-
-        alert("po wysłaniu jsona:")
 
         location.reload(true)
 
@@ -1332,281 +1236,53 @@
 
     function f3(id){
 
-        // var id = e.target.parentNode.id
-
-        //   var id = di.parentNode.iddocument.getElementById("ina1").value
-
-        if(czy_pow === true){
-            id = ob_pow_id;
-            onid = ob_pow_id;
-        }
 
 
-        var on = parseInt(id,10)
-
-        loadData()
-            .then(function(res, preson) {
-                if(id !== -1) {
-                    preson = insertData(res, preson);
-                    console.log(preson[0].nazwisko)
-
-                    alert("onid w f3 " + onid)
-                    alert("cały son w f3")
-                    console.log(JSON.stringify(preson))
-
-                    var son = preson[onid];
-                    if(czy_pow === true)
-                        son = pow_son // powiązanie pow_son z powiązanych
-
-                    alert("id wybranego w f3 " + on.toString())
-                    console.log(JSON.stringify(son))
-                    alert("id pobrane z jsona " +  onid.toString())
 
 
-                    alert(id.toString())
-                }
-                //    var $$$$$_$q = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}; // przykład obiektów w javascript
-                else{
-                    console.log(document.getElementById('zatwierdz').parentElement.id); // czysty java script
-                    console.log($("#zatwierdz")[0].parentElement.id); // to samo co powyzej tylko z uzyciej jquery
+                    if(document.getElementById('zatwierdz').parentElement.id === "ffd"){
 
-                    if(document.getElementById('zatwierdz').parentElement.id === "ffa"){
-                        son = {
-                            id : -1,
-                            pesel : "",
-                            nr_dowodu : "",
-                            imie : "",
-                            nazwisko : "",
-                            adres : "",
-                            czy_zarchiwizowany : false,
-                            data_urodzenia : "",
-                            kto : "obywatel",
-                            pojazdy : [ ]
-                        }
-                    }
-                    if(document.getElementById('zatwierdz').parentElement.id === "ffb"){
-                        son = {
-                            id : -1,
-                            kolor : "",
-                            uwagi : "",
-                            nr_rejstracyjny_pojazdu : "",
-                            rok_produkcji : -2,
-                            czy_zarchiwizowany : false,
-                            kto: "pojazd",
-                            model : {
-                                id: -1
-
-                            },
-                            obywatel : {
-                                id: -1
-
-                            },
-                            abonamenty : [ ]
-                        }
-                    }
-                    if(document.getElementById('zatwierdz').parentElement.id === "ffc"){
-                        let today =  new Date()
-                        let month = today.getMonth() + 1 // bo liczy miesiące od zera
-                        let day = today.getDate()
-                        if(month < 10)
-                            month = "0" + month;
-                        if(day < 10)
-                            day = "0" + day;
 
                         son = {
-                            id : -1,
-                            data_rozpoczecia : "",
-                            data_zakonczenia : "",
-                            sektor : "",
-                            uwagi : "",
-                            czy_zarchiwizowany : false,
-                            kto : "abonament",
-                            pojazd : {id:-1}
-                        }
-                        son.data_rozpoczecia = today.getFullYear() +"-" + month + "-" + day;
-                        son.data_zakonczenia = (today.getFullYear()+1) +"-" + month + "-" + day;
-                        console.log(JSON.stringify(son))
-                        alert("dodawanie abonamentu tuż po ustawieniu dat w sonie:")
-                    }
-                }
-
-
-
-
-
-                if(document.getElementById('zatwierdz').parentElement.id === "ffa"){
-                    if (walidacjaNumeruDowodu(document.getElementById("in1").value)) {
-                        son.nr_dowodu = document.getElementById("in1").value; // przetestować walidację dla numeru dowodu
-                    }
-
-                    son.imie = document.getElementById("in2").value;
-                    son.nazwisko = document.getElementById("in3").value;
-                    son.adres = document.getElementById("in4").value;
-
-                    if (walidacjaPesela(document.getElementById("in6").value)){
-                        if(zgodnoscDatyUrodzeniaZPeselem(document.getElementById("in6").value,document.getElementById("in5").value)){
-
-                            son.data_urodzenia = document.getElementById("in5").value;
-                            son.pesel = document.getElementById("in6").value;
+                            id: -1,
+                           imie: "NoName",
+                            nazwisko: "NoName",
+                            email: "",
+                            haslo: "",
+                            role: ""
                         }
 
 
-                    }
 
+                    son.email = document.getElementById("inlogin").value;
+                    son.haslo = document.getElementById("inpass").value;
+                    son.role = document.getElementById("inrole").value;
+
+
+                    insertSon(son)
                 }
 
-                if(document.getElementById('zatwierdz').parentElement.id === "ffc"){
-                    if(document.getElementById("ina1").value < document.getElementById("ina2").value){
+                 if(document.getElementById('zatwierdz').parentElement.id === "ffe"){
 
-                        son.data_rozpoczecia = dataFormat(document.getElementById("ina1").value , DateFormats.standard)
-                        alert( dataFormat(document.getElementById("ina1").value , DateFormats.standard))
-                        alert(document.getElementById("ina1").value)
-                        alert(typeof document.getElementById("ina1").value)
+                     var son = {
+                         email: "",
+                         new_email: "",
+                         role: ""
+                     }
 
-                        son.data_zakonczenia = dataFormat( document.getElementById("ina2").value, DateFormats.standard)
 
-                    }
-                    else{
-                        alert("Data rozpoczęcia nie może być po dacie zakończenia")
-                    }
+                     son.email = id;
+                     son.new_email = document.getElementById("inlogin").value;
+                     son.role = document.getElementById("inrole").value;
 
-                    if(  (/^[A-J]{1}$/.test(document.getElementById("ina3").value)) || document.getElementById("ina3").value === "WSZYSTKIE"){ // coś nie działa z wymogiem wpisania uwagi przy wybraniu obcji wszystkie
 
 
-                        son.uwagi = document.getElementById("ina4").value // uwagi jeśli mają
 
-                        son.sektor = document.getElementById("ina3").value // Sektory to jest tylko pojedyńcza litera od A do J lub słowo WSZYSTKIE
+                     sendSon(son)
+                 }
 
-                    }
 
-                    else{
-                        alert("Sektorami mogą być tylko litery od A do J lub słowo Wszystkie")
-                    }
 
-                    // kontrola uwag
-
-
-
-
-
-
-                    // koniec kontroli uwag
-
-
-
-
-                }
-
-                if( document.getElementById('zatwierdz').parentElement.id === "ffb"){
-                    let y = new Date()
-                    y = y.getFullYear()
-
-                    son.nr_rejstracyjny_pojazdu = document.getElementById("inp1").value
-                    if((document.getElementById("inp2").value <= y)&&(document.getElementById("inp2").value >= 1829))
-                        son.rok_produkcji = document.getElementById("inp2").value
-                    else
-                        alert("Rok produkcji musi sie zawierać między rokiem 1829 a rokiem obecnym")
-                    son.kolor = document.getElementById("inp3").value
-                    son.uwagi = document.getElementById("inp4").value;
-
-
-                    for (const model of wsz_modele){
-                        if((document.getElementById("inp5").value === model.marka)&&(document.getElementById("inp6").value === model.nazwa)){
-
-                            son.model_id = model.id // w tej linii przypisujemy model do pojazdu. -> ja to źle przypisuje?
-                            // tak nie działa son.model.id = model.id
-                            glob_add_model = model.id
-                            console.log(JSON.stringify(son))
-
-                            alert("Przydzielanie modelu")
-                        }
-                    }
-
-
-
-
-
-
-
-
-
-
-
-                }
-
-
-
-
-
-
-
-
-
-
-
-
-                template = Handlebars.compile(wybraneDane);
-
-                var dane2 = template(son);
-                if(son.id !== -1){
-
-                    alert("Zaraz przed wykonaniem sendSon")
-                    alert(son.id)
-
-
-
-                    sendSon(son)
-
-                    alert("Zaraz po wykonaniu sendSon")
-                    alert(son.id)
-                }
-
-
-                if(son.id == -1){
-                    // insertSon(son)
-                    son_set.add(son);
-                    alert("Zaraz po dodaniu do sonset")
-                    if(son.kto === "obywatel"){
-                        document.getElementById("formularz").innerHTML = "";
-                        dodaj(pojazdFormularz)
-
-                    }
-                    if(son.kto === "pojazd"){
-                        document.getElementById("formularz").innerHTML = "";
-                        dodaj(abonamentFormularz)
-
-                    }
-                    if(son.kto === "abonament"){
-                        document.getElementById("formularz").innerHTML = "";
-                        alert("przed insert tuple")
-                        insertTuple(son_set);
-                        location.reload(true);
-
-                    }
-
-
-
-
-                }
-
-
-
-
-                // document.getElementById(id).innerHTML = "";
-                //sleep(10000);
-                document.getElementById(id).innerHTML += dane2 + window.but3;
-
-                document.getElementById("formularz").innerHTML = "";
-
-
-
-
-
-
-
-
-
-            })
 
 
 
@@ -1619,248 +1295,33 @@
 
 
 
-    function f2(id,czy_pow) {
-        // var id = e.target.parentNode.id
+    function f2(id) {
 
-        document.getElementById("usun_pow").classList.add("butt");
-        document.getElementById("odnow_pow").classList.add("butt");
+        var request = new XMLHttpRequest();
+        var url = "http://localhost:8091/user/get/" + id
+        request.open('GET', url, false);  // `false` makes the request synchronous
+        request.send(null);
+        var son = JSON.parse(request.response);
 
-        document.getElementById('bstyle').innerHTML =
-            `
-           .butt{
+        template = Handlebars.compile(UserDane);
+        var dane = template(son);
 
-        pointer-events: none;
+        document.getElementById("obywatel").innerHTML = dane;
 
-         background-color: gray;
-        cursor: not-allowed;
-        color: black;
-    }
-           `;
+        template = Handlebars.compile(UserFormularzUp);
+       var daneForm = template(son)
 
-        if(JSON.parse(arch))
-            alert("nie można modyfikować zarchiwizowanych danych")
-        else {
+        document.getElementById("formularz").innerHTML += daneForm;
 
+       document.getElementById("inrole").value = son.role;
 
-            var on = parseInt(id, 10)
+       document.getElementById("login_err").style.display = "none"
 
-            if (czy_pow === false){
-                loadData()
-                    .then(function (res, preson) {
-                        preson = insertData(res, preson);
-                        console.log(preson[0].nazwisko)
+       console.log(id)
 
-                        alert("id wybranego w f2 " + on.toString())
 
-                        son = preson[on]
 
 
-
-
-
-                        // wybrane dane oryginalnie wybraneDane
-                        let rodzajDanych = null;
-                        let rodzajFormularza = null;
-                        if(son.adres !== null){
-                            rodzajDanych = obywatelDane;
-                            rodzajFormularza = obywatelFormularz;
-                            var nagl = document.getElementById("nago");
-                        }
-
-                        if(son.kolor !== null){
-                            rodzajDanych = pojazdDane;
-                            rodzajFormularza = pojazdFormularz;
-                            var nagl = document.getElementById("nagp");
-                        }
-
-                        if(son.sektor !== null){
-                            rodzajDanych = abonamentDane;
-                            rodzajFormularza = abonamentFormularz;
-                            var nagl = document.getElementById("naga");
-                        }
-
-                        template = Handlebars.compile(rodzajFormularza);
-                        var dane = template(son);
-
-                        template = Handlebars.compile(rodzajDanych);
-
-                        var dane2 = template(son);
-
-                        // document.getElementById(id.toString()).innerHTML = ""
-
-                        //document.getElementById(id.toString()).innerHTML += dane2;
-
-                        nagl.style.backgroundColor = "#167F92";
-
-                        document.getElementById("obywatel").innerHTML = "";
-
-                        document.getElementById("obywatel").innerHTML += nagl.innerHTML;
-
-                        document.getElementById("obywatel").innerHTML += dane2;
-
-                        document.getElementById("formularz").innerHTML += dane;
-
-                        // document.getElementById("ff").id = id + "ff" /// czemu to nie działa daje null
-
-                        document.getElementById("obywatel").getElementsByTagName("tr")[0].style.backgroundColor = "#167F92";
-
-                        alert("id 628 " + id)
-                        alert("on 629 to" + on)
-                        if(rodzajFormularza === pojazdFormularz) {
-                            autocomplete(document.getElementById("inp5"), marki);
-                            console.log(document.getElementById("inp5"))
-                            alert("STOP");
-
-                            get_modele(); // przy załadowaniu strony też trzeba pobrać modele
-                            autocomplete(document.getElementById("inp6"), modele);
-                            console.log(document.getElementById("inp6"))
-                            alert("STOP2");
-                            document.getElementById("inp2").max = parseInt( Date().getFullYear());
-                        }
-
-                        formularz.id = on.toString() + "ff"
-
-                        onid = on /// Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki
-
-                        console.log("Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki")
-
-                        console.log(onid)
-
-                        document.getElementById("ina3").value = son.sektor // ustawianie sektora w formularzu
-                        block_buttons();
-
-
-                        if(rodzajFormularza === pojazdFormularz){
-                            autocomplete(document.getElementById("inp5"), marki);
-                            autocomplete(document.getElementById("inp6"), modele);
-                            document.getElementById("inp2").max = new Date().getFullYear();
-                        }
-
-                        if(rodzajFormularza === abonamentFormularz){
-
-                            document.getElementById("ina1").disabled = true; // niepowinno się edytować daty rozpoczęcia abonamentu
-
-                        }
-
-                        //errory
-                        if(rodzajFormularza === obywatelFormularz){
-                            document.getElementById('nr_dow_err').style.display = "none";
-                            let pole_nr_dow = document.getElementById('in1');
-                            //   pole_nr_dow.addEventListener("input", check_nr_dowodu());
-                            check_nr_dowodu();
-                            check_pesel();
-                            check_DatUrIPesel();
-                        }
-
-
-                    });
-
-
-
-
-            }
-            if(czy_pow === true){
-                id = id+1; // powięsone ze zgledu na pomniejszenie spowodowane poprzedznim ifem
-                loadDataToPowiazane2(pow_id, id)
-                    .then(function (res) {
-
-                        var son = JSON.parse(res);
-
-                        let rodzajDanych = null;
-                        let rodzajFormularza = null;
-                        alert("pow id w load data to powiązane")
-                        alert(pow_id)
-                        if(pow_id == 1){
-                            c= "obywatel"
-                            rodzajDanych = obywatelDane;
-                            rodzajFormularza = obywatelFormularz;
-                            var nagl = document.getElementById("nago2.1");
-                        }
-
-                        if(pow_id == 2){
-                            c = "pojazd"
-                            rodzajDanych = pojazdDane;
-                            rodzajFormularza = pojazdFormularz;
-                            var nagl = document.getElementById("nagp2.1");
-                        }
-
-                        if(pow_id == 3){
-                            c = "abonament"
-                            rodzajDanych = obywatelDane;
-                            rodzajFormularza = abonamentFormularz;
-                            var nagl = document.getElementById("naga2.1");
-                            console.log(son.sektor)
-                            console.log(son.uwagi)
-                            alert("sektor i uwagi w konsoli w f2")
-
-                        }
-                        pow_global = pow_id;
-
-                        pow_son = son; // zapamiętanie powsona z powiązanych
-
-                        template = Handlebars.compile(rodzajFormularza);
-                        var dane = template(son);
-
-                        template = Handlebars.compile(rodzajDanych);
-
-                        var dane2 = template(son);
-
-                        // document.getElementById(id.toString()).innerHTML = ""
-
-                        //document.getElementById(id.toString()).innerHTML += dane2;
-
-
-                        document.getElementById("obywatel").innerHTML = ""
-
-                        document.getElementById("obywatel").innerHTML += nagl.innerHTML;
-
-                        document.getElementById("obywatel").innerHTML += dane2;
-
-                        document.getElementById("formularz").innerHTML += dane;
-
-                        // document.getElementById("ff").id = id + "ff" /// czemu to nie działa daje null
-
-                        document.getElementById("obywatel").getElementsByTagName("tr")[0].style.backgroundColor = "#167F92";
-
-
-
-                        alert("id 628 " + id)
-                        alert("on 629 to" + on)
-
-                        if(rodzajFormularza === pojazdFormularz) {
-                            autocomplete(document.getElementById("inp5"), marki);
-                            console.log(document.getElementById("inp5"))
-                            alert("STOP");
-                            autocomplete(document.getElementById("inp6"), modele);
-                            console.log(document.getElementById("inp6"))
-                            alert("STOP2")
-                            document.getElementById("inp2").max = new Date().getFullYear();
-                        }
-
-                        formularz.id = on.toString() + "ff"
-
-                        onid = pow_global /// Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki, w tej funkcji zastąpiona
-
-                        console.log("Uwaga nowa zmienna globalna do przekazywania id modyfikowanej krotki")
-
-                        console.log(onid);
-
-
-                        document.getElementById("ina3").value = son.sektor // ustawianie sektora w formularzu
-
-
-                        block_buttons();
-                        if(rodzajFormularza === pojazdFormularz){
-                            autocomplete(document.getElementById("inp5"), marki);
-                            autocomplete(document.getElementById("inp6"), modele);
-                            //  document.getElementById("inp2").max = new Date().getFullYear();
-                            check_nr_dowodu();
-                            check_pesel();
-                            check_DatUrIPesel();
-                        }
-
-
-                    });
 
 
 
@@ -1870,15 +1331,13 @@
 
 
 
-            //document.getElementById("obywatel").innerHTML = "";
-
-            /// f3(wybraneDane,son)
 
 
-        }
 
 
-    }
+
+
+
 
 
     function wyb_rekord() {
@@ -1909,8 +1368,8 @@
         if (item.checked) {
             alert(item.value)
             //   rekord = parseInt(item.value.substr(0,item.value.indexOf(' '))); // rekord zmienna globalna // nie kumam jak to działa do końca
-            rekord =  item.parentElement.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("okol1")[0]; // pobranie zawartości komórki w postaci obiektu html
-            rekord = parseInt(rekord.textContent) // konwersja na int
+            rekord =  item.parentElement.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("okol4")[0]; // pobranie zawartości komórki w postaci obiektu html
+            rekord = rekord.textContent // zapisanie emaila
             //rekord = rekord -1; // dopasowanie id do numerowania od zera
             alert(rekord)
 
@@ -2080,24 +1539,11 @@
         var dane = null
         template = Handlebars.compile(formularz);
         rekord = -1
-        if (formularz === abonamentFormularz) {
-            dane = get_empty_abonament_form(template);
-        }
-
-        else {
-
-            dane = template(null)
-        }
+        dane = template(null)
 
         document.getElementById("obywatel").innerHTML = ""
         document.getElementById("formularz").innerHTML += dane;
         block_buttons();
-// poniżej auto matyczne wypełnianie listy modeli i marek przy dodawaniu
-        if(formularz === pojazdFormularz){
-            autocomplete(document.getElementById("inp5"), marki);
-            autocomplete(document.getElementById("inp6"), modele);
-        }
-
 
     }
 
@@ -2195,13 +1641,13 @@
 
     function insertSon(son) {
         var xhr = new XMLHttpRequest();
-        var url = "http://localhost:8091/"+ son.kto.toString() +"/insert";
+        var url = "http://localhost:8091/user/"+ son.role.toLocaleLowerCase() ;
         xhr.open("PUT", url, false); // `false` makes the request synchronous
         xhr.setRequestHeader("Content-Type", "application/json");
         var json = JSON.stringify(son)
 
         xhr.send(json);
-        return xhr.status;
+        window.location.reload(true)
 
 
 
@@ -2481,7 +1927,7 @@
                 let iDiv = document.createElement("label")
                 console.log("Tutaj jest pson")
                 console.log(ason)
-                wyswietl2(ason,3,iDiv,abonamentDane)
+                wyswietl2(ason,3,iDiv,UserDane)
                 iDiv.style.backgroundColor = "white";
                 document.getElementById("naga2").appendChild(iDiv)
 
@@ -3054,6 +2500,24 @@
         zat.color = "unset";
 
     }
+
+
+    Handlebars.registerHelper( "formatZarchiwizowany", function (czy_zarchiwizowany) {
+
+
+
+            if(czy_zarchiwizowany == true){ // jest == zamiast === bo nie wiem co dokładnie trafia do helpera. // == tez daje w tym przypadku pożądany efekt
+                return "ZABLOKOWANY";
+            }
+
+            else{
+                return "AKTYWNY";
+            }
+
+
+        }
+
+    );
 
 
 

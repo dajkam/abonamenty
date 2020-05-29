@@ -9,6 +9,10 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 
 interface UserRepository:CrudRepository<User,Long> {
+
+ /*  @Query("select * from user where email = ?1", nativeQuery = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id") /////////// czemu poniższa funkcja działa bez tej części, która jest tutaj zakomentowana?
+    @JsonIdentityReference(alwaysAsId = true)*/
     fun findUserByEmail(email:String): User?
 
     @Query("select * from user", nativeQuery = true)
