@@ -2554,7 +2554,34 @@
 
     function check_login() {
 
-        var login = document.getElementById("inlogin")
+        var login = document.getElementById("inlogin").value
+
+        var request = new XMLHttpRequest();
+        let url = "http://localhost:8091/user/czy/" + login;
+        request.open('GET', url, false);  // `false` makes the request synchronous
+        request.send(null);
+        let res = parseInt(request.response);
+
+        if(res === 1){
+
+            document.getElementById("login_err").style.display = "block";
+            document.getElementById("zatwierdz").disabled = true;
+
+            if(login === ed_login){
+
+                document.getElementById("login_err").style.display = "none";
+                document.getElementById("zatwierdz").disabled = false;
+
+            }
+
+
+        }
+        if(res === 0){
+
+            document.getElementById("login_err").style.display = "none";
+            document.getElementById("zatwierdz").disabled = false;
+
+        }
 
     }
 
