@@ -41,4 +41,9 @@ interface UserRepository:CrudRepository<User,Long> {
         where email = :email""", nativeQuery = true)
    fun odnowUser(@Param("email") email:String) // tego typu funkcje muszą być typu void.
 
+   @Query("select * from user where email like ?1", nativeQuery = true)
+   @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
+   @JsonIdentityReference(alwaysAsId = true)
+   fun szukaj(fraza: String): Iterable<User>
+
 }

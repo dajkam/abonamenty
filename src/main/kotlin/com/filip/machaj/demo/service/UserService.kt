@@ -131,6 +131,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 
     fun odnowUser(email: String) = repo.odnowUser(email)
 
+    fun szukaj(fraza:String):Iterable<User> = repo.szukaj(fraza.toLowerCase())
+
 
 
 

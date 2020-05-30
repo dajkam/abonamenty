@@ -91,6 +91,12 @@ class UserController {
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun odnowUser(@PathVariable(name = "email")email: String) = service.odnowUser(email)
+
+    @GetMapping(
+            value = ["/szukaj/{fraza}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun szukaj(@PathVariable(name = "fraza")fraza:String) = service.szukaj(("%"+fraza.toLowerCase()+"%"))
 }
 
 
