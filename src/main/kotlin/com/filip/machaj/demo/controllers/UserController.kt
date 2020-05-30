@@ -79,6 +79,18 @@ class UserController {
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun getUserByEmail(@PathVariable(name = "email") email:String): User? = service.findUserByUserName(email)
+
+    @PostMapping(
+            value = ["archiwizuj/{email}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun archwizujUser(@PathVariable(name = "email")email:String) = service.archiwizujUser(email)
+
+    @PostMapping(
+            value = ["odnow/{email}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun odnowUser(@PathVariable(name = "email")email: String) = service.odnowUser(email)
 }
 
 

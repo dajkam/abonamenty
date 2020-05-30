@@ -127,6 +127,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 
     fun downLoadUsers(): Iterable<User> = repo.downloadUsers() ////////// najważniejsza metoda z userController
 
+    fun archiwizujUser(email: String) = repo.archwizujUser(email)
+
+    fun odnowUser(email: String) = repo.odnowUser(email)
+
 
 
 
