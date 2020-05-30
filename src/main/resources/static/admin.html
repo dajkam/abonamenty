@@ -616,9 +616,9 @@
 
     var UserFormularzUpHas = "<form id = 'ffh' action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
         "    Nowe Hasło: <br>\n" +
-        "    <input id = 'new_pass' type = 'password'  required = 'true' /><br>\n" +
+        "    <input id = 'new_pass' type = 'password'  required = 'true' onchange='check_pass()' /><br>\n" +
         "    Powtórz nowe Hasło: <br>\n" +
-        "    <input id = 'new_pass_control' type = 'password'  required = 'true' /><br>\n" +
+        "    <input id = 'new_pass_control' type = 'password'  required = 'true' onchange='check_pass()' /><br>\n" +
         "    <div class='error' id='haslo_err'>Hasła nie są jednakowe</div>\n" +
         "    <input id='zatwierdz' class='zat' type = 'submit' value = \"Zatwierdź\" >\n" +
         "\n" +
@@ -2526,6 +2526,21 @@
         document.getElementById("formularz").innerHTML += daneForm;
 
         document.getElementById("haslo_err").style.display = "none";
+
+    }
+
+    function check_pass() {
+        if(document.getElementById("new_pass").value !== document.getElementById("new_pass_control").value){
+
+             document.getElementById("haslo_err").style.display = "block";
+
+             document.getElementById("zatwierdz").disabled = true;
+        }
+        else{
+             document.getElementById("haslo_err").style.display = "none";
+
+            document.getElementById("zatwierdz").disabled = false;
+        }
 
     }
 
