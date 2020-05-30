@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl-PL">
-<!--<script>
+<script>
     window.alert = function() {
         debugger;
     }
-</script>-->
+</script>
 <!--<input type="hidden" id="refreshed" value="no" onload="back_ref()">
 <script type="text/javascript">
     function back_ref(){ //zastąpiecie back_page refresh_page ale nie działa
@@ -616,9 +616,9 @@
 
     var UserFormularzUpHas = "<form id = 'ffh' action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
         "    Nowe Hasło: <br>\n" +
-        "    <input id = 'new_pass' type = 'text'  required = 'true' /><br>\n" +
+        "    <input id = 'new_pass' type = 'password'  required = 'true' /><br>\n" +
         "    Powtórz nowe Hasło: <br>\n" +
-        "    <input id = 'new_pass_control' type = 'text'  required = 'true' /><br>\n" +
+        "    <input id = 'new_pass_control' type = 'password'  required = 'true' /><br>\n" +
         "    <div class='error' id='haslo_err'>Hasła nie są jednakowe</div>\n" +
         "    <input id='zatwierdz' class='zat' type = 'submit' value = \"Zatwierdź\" >\n" +
         "\n" +
@@ -1307,27 +1307,24 @@
                      }
 
                      son.email = id;
-                     alert("chuj");
+
+                     if(document.getElementById("new_pass").value === document.getElementById("new_pass_control").value){
 
 
                          son.new_pass = document.getElementById("new_pass").value;
                          son.new_pass_control = document.getElementById("new_pass_control").value;
                          console.log(son)
 
-                        alert("dupa")
+                         alert("user son z nowym hasłem i hasłem kontrolnym w konsoli")
 
                          sendSonPass(son);
 
-                     if (confirm("chuj1.5")){
-                         console.log(document.getElementById("new_pass").value )
-                         console.log(document.getElementById("new_pass_control").value)
-
                      }
-                     if (confirm("chuj2")){ // confirm jakoś czyści konsole dziwnie
-                         console.log(document.getElementById("new_pass").value )
-                         console.log(document.getElementById("new_pass_control").value)
 
-                     }
+
+
+
+
 
                      location.reload(true);
 
