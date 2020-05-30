@@ -46,4 +46,7 @@ interface UserRepository:CrudRepository<User,Long> {
    @JsonIdentityReference(alwaysAsId = true)
    fun szukaj(fraza: String): Iterable<User>
 
+    @Query("select 1 from user where email = ?1", nativeQuery = true)
+    fun czy_istnieje_email(@Param("email")email:String):Int
+
 }

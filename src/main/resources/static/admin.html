@@ -36,6 +36,10 @@
 
 
 <style>
+    #login_err{
+
+        display: none;
+    }
     .segment{
         display: block;
     }
@@ -196,13 +200,13 @@
 
     <button  id="dodaj" class="add hid" type='button' onclick=" dodaj(UserFormularzIn)"  tabindex="-1">Dodaj</button>
 
-    <button id="edytuj"class='butt hid' type= 'button' onclick='f2(rekord)'  tabindex="-1">Edytuj</button>
+    <button id="edytuj"class='butt hid' type= 'button' onclick='f2(rekord)'  tabindex="-1">Edytuj</button>  <!-- rekord to To samo co wyb_rekord() w wartości ale wyb_rekord() ma jeszcze swąje działania zaznaczania rekordu i kolorwania -->
 
      <button id="usun" class = 'but4 butt hid' type='button' onclick='usun(wyb_rekord(),false)'  tabindex="-1" >Usuń</button>
 
     <button id="odnow" class = 'but4 butt hid' type='button' onclick='odnow(wyb_rekord())'  tabindex="-1" >Odnów</button>
 
-    <button id="new_pass" class = 'but5 butt' type='button' onclick='new_pass(wyb_rekord())'  tabindex="-1">Nowe Hasło</button>
+    <button id="new_pass_button" class = 'but5 butt' type='button' onclick='new_pass(wyb_rekord())'  tabindex="-1">Nowe Hasło</button>
 
       <button id="powiazane" class = 'but5 butt' type='button' onclick='powiazane(wyb_rekord())'  tabindex="-1">Wyświetl Szczegóły</button>
 
@@ -388,7 +392,7 @@
             zat.classList.add("butt")
 
     });
-
+    var ed_login = null; // zapamiętuje edytowany login. Służy do obsługiwania błędów zmiany loginu ważne!!!!!!!!!!!
     let rekord = null // wybrany rekord z bazy // numerowane od 1 jak w bazie
     let arch = new URL(window.location).searchParams.get('arch')
     let szuk = new URL(window.location).searchParams.get('wyszukaj')
@@ -454,7 +458,7 @@
         }
     }
 
-    usun_nieaktualne_abonamenty(); // wykonanie usunięcia nie aktualnych abonamentów
+    //usun_nieaktualne_abonamenty(); // wykonanie usunięcia nie aktualnych abonamentów
 
 
 
@@ -580,12 +584,12 @@
     var formularz = ""
 
 
-    var UserFormularzIn = "<form id = 'ffd' action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
+    var UserFormularzIn = "<form id = 'ffd' action='#' onsubmit='f3(wyb_rekord()); return false'autocomplete='off' >\n" +
         "    Login: <br>\n" +
-        "    <input id = 'inlogin' type = 'text'  value =  '{{email}}' required = 'true'  onchange='check_login()'/><br>\n" +
+        "    <input id = 'inlogin' type = 'text' name='kk2'  value =  '{{email}}' required = 'true'  onchange='check_login()' autocomplete='off'/><br>\n" +
         "    <div class='error' id='login_err'>Ten login jest już zajęty</div>\n" +
         "    Hasło: <br>\n" +
-        "    <input id = 'inpass' type = 'text'  value= '{{haslo}}' required = 'true'/><br>\n" +
+        "    <input id = 'inpass' type = 'password' name='kk' value= '{{haslo}}' required = 'true' autocomplete='off'/><br>\n" +
         "    Rola: <br>\n" +
         ` <select id ="inrole" required = 'true'/>
         <option value="" selected disabled hidden>Wybierz</option>
@@ -609,6 +613,17 @@
         <option value="STRAZNIK">STRAŻNIK</option>
         <option value="ADMIN">ADMIN</option>
         </select> <br>`+
+        "    <input id='zatwierdz' class='zat' type = 'submit' value = \"Zatwierdź\" >\n" +
+        "\n" +
+        "\n" +
+        "  </form>";
+
+    var UserFormularzUpHas = "<form id = 'ffh' action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
+        "    Nowe Hasło: <br>\n" +
+        "    <input id = 'new_pass' type = 'password'  required = 'true' onchange='check_pass()' /><br>\n" +
+        "    Powtórz nowe Hasło: <br>\n" +
+        "    <input id = 'new_pass_control' type = 'password'  required = 'true' onchange='check_pass()' /><br>\n" +
+        "    <div class='error' id='haslo_err'>Hasła nie są jednakowe</div>\n" +
         "    <input id='zatwierdz' class='zat' type = 'submit' value = \"Zatwierdź\" >\n" +
         "\n" +
         "\n" +
@@ -926,30 +941,14 @@
 
     function loadData() {
 
-        var url1 = 'http://localhost:8091/'
-
-        var e = document.getElementById("encja");
-        var url2 = e.options[e.selectedIndex].value;
 
         if(szuk !== null){ // wyszukiwanie
             let url3 = "/szukaj/"
-            let url =  url1+url2+url3+szuk
+            let url =  "http://localhost:8091/user/szukaj/"+szuk
             return ajax('GET',url)
         } // koniec wyszukiwania
 
-        var url3 = '/download'
-
-        var url =  url1+url2+url3
-
-        if(url === "http://localhost:8091/pojazd/download")
-        { url = "http://localhost:8091/pojazd/marka/model";}
-        if(url === "http://localhost:8091/abonament/download")
-     //   {url = "http://localhost:8091/abonament/full";} ///////////////////////////////////////////////////////////////////////////////// tytaj wybieranie widoku
-        {url = "http://localhost:8091/user/get";} // ze względu na usera !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Bardzo ważne
-
-
-        // return ajax('GET', 'http://localhost:8091/obywatel/download');
-
+       var url = "http://localhost:8091/user/get"; // ze względu na usera !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Bardzo ważne
         return ajax('GET',url)
     }
 
@@ -1051,6 +1050,28 @@
         var xhr = new XMLHttpRequest();
 
         var url = "http://localhost:8091/user/update";
+
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+
+        var json = JSON.stringify(son)
+
+
+        xhr.send(json)
+
+        location.reload(true)
+
+
+
+
+    }
+
+    function sendSonPass(son) {
+
+        var xhr = new XMLHttpRequest();
+
+        var url = "http://localhost:8091/user/update/pass";
 
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -1243,7 +1264,7 @@
                     if(document.getElementById('zatwierdz').parentElement.id === "ffd"){
 
 
-                        son = {
+                     var   son = {
                             id: -1,
                            imie: "NoName",
                             nazwisko: "NoName",
@@ -1280,6 +1301,38 @@
 
                      sendSon(son)
                  }
+                 if(document.getElementById('zatwierdz').parentElement.id === "ffh"){
+
+                     var son = {
+                         email:  "",
+                         new_pass: "",
+                        new_pass_control: ""
+
+                     }
+
+                     son.email = id;
+
+                     if(document.getElementById("new_pass").value === document.getElementById("new_pass_control").value){
+
+
+                         son.new_pass = document.getElementById("new_pass").value;
+                         son.new_pass_control = document.getElementById("new_pass_control").value;
+                         console.log(son)
+
+                         alert("user son z nowym hasłem i hasłem kontrolnym w konsoli")
+
+                         sendSonPass(son);
+
+                     }
+
+
+
+
+
+
+                     location.reload(true);
+
+                 }
 
 
 
@@ -1312,6 +1365,8 @@
        var daneForm = template(son)
 
         document.getElementById("formularz").innerHTML += daneForm;
+
+       ed_login = document.getElementById("inlogin").value; // zmienna globalna zapamietyje zmieniany login
 
        document.getElementById("inrole").value = son.role;
 
@@ -1480,6 +1535,8 @@
         document.getElementById("obywatel").innerHTML = ""
         document.getElementById("formularz").innerHTML += dane;
         block_buttons();
+      //  document.getElementById("inlogin").value = "";
+        //document.getElementById("inpass").value = "";
 
     }
 
@@ -2454,6 +2511,79 @@
         }
 
     );
+
+    function new_pass(id) {
+
+
+        var formularz =  UserFormularzUpHas;
+
+        var request = new XMLHttpRequest();
+        var url = "http://localhost:8091/user/get/" + id
+        request.open('GET', url, false);  // `false` makes the request synchronous
+        request.send(null);
+        var son = JSON.parse(request.response);
+
+        template = Handlebars.compile(UserDane);
+        var dane = template(son);
+
+        document.getElementById("obywatel").innerHTML = dane;
+
+        template = Handlebars.compile(UserFormularzUpHas);
+        var daneForm = template(son)
+
+        document.getElementById("formularz").innerHTML += daneForm;
+
+        document.getElementById("haslo_err").style.display = "none";
+
+    }
+
+    function check_pass() {
+        if(document.getElementById("new_pass").value !== document.getElementById("new_pass_control").value){
+
+             document.getElementById("haslo_err").style.display = "block";
+
+             document.getElementById("zatwierdz").disabled = true;
+        }
+        else{
+             document.getElementById("haslo_err").style.display = "none";
+
+            document.getElementById("zatwierdz").disabled = false;
+        }
+
+    }
+
+    function check_login() {
+
+        var login = document.getElementById("inlogin").value
+
+        var request = new XMLHttpRequest();
+        let url = "http://localhost:8091/user/czy/" + login;
+        request.open('GET', url, false);  // `false` makes the request synchronous
+        request.send(null);
+        let res = parseInt(request.response);
+
+        if(res === 1){
+
+            document.getElementById("login_err").style.display = "block";
+            document.getElementById("zatwierdz").disabled = true;
+
+            if(login === ed_login){
+
+                document.getElementById("login_err").style.display = "none";
+                document.getElementById("zatwierdz").disabled = false;
+
+            }
+
+
+        }
+        if(res === 0){
+
+            document.getElementById("login_err").style.display = "none";
+            document.getElementById("zatwierdz").disabled = false;
+
+        }
+
+    }
 
 
 
