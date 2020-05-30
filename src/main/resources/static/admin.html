@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl-PL">
-<script>
+<!--<script>
     window.alert = function() {
         debugger;
     }
-</script>
+</script>-->
 <!--<input type="hidden" id="refreshed" value="no" onload="back_ref()">
 <script type="text/javascript">
     function back_ref(){ //zastąpiecie back_page refresh_page ale nie działa
@@ -202,7 +202,7 @@
 
     <button id="odnow" class = 'but4 butt hid' type='button' onclick='odnow(wyb_rekord())'  tabindex="-1" >Odnów</button>
 
-    <button id="new_pass" class = 'but5 butt' type='button' onclick='new_pass(wyb_rekord())'  tabindex="-1">Nowe Hasło</button>
+    <button id="new_pass_button" class = 'but5 butt' type='button' onclick='new_pass(wyb_rekord())'  tabindex="-1">Nowe Hasło</button>
 
       <button id="powiazane" class = 'but5 butt' type='button' onclick='powiazane(wyb_rekord())'  tabindex="-1">Wyświetl Szczegóły</button>
 
@@ -454,7 +454,7 @@
         }
     }
 
-    usun_nieaktualne_abonamenty(); // wykonanie usunięcia nie aktualnych abonamentów
+    //usun_nieaktualne_abonamenty(); // wykonanie usunięcia nie aktualnych abonamentów
 
 
 
@@ -609,6 +609,17 @@
         <option value="STRAZNIK">STRAŻNIK</option>
         <option value="ADMIN">ADMIN</option>
         </select> <br>`+
+        "    <input id='zatwierdz' class='zat' type = 'submit' value = \"Zatwierdź\" >\n" +
+        "\n" +
+        "\n" +
+        "  </form>";
+
+    var UserFormularzUpHas = "<form id = 'ffh' action='#' onsubmit='f3(wyb_rekord()); return false'>\n" +
+        "    Nowe Hasło: <br>\n" +
+        "    <input id = 'new_pass' type = 'text'  required = 'true' /><br>\n" +
+        "    Powtórz nowe Hasło: <br>\n" +
+        "    <input id = 'new_pass_control' type = 'text'  required = 'true' /><br>\n" +
+        "    <div class='error' id='haslo_err'>Hasła nie są jednakowe</div>\n" +
         "    <input id='zatwierdz' class='zat' type = 'submit' value = \"Zatwierdź\" >\n" +
         "\n" +
         "\n" +
@@ -1052,6 +1063,28 @@
 
     }
 
+    function sendSonPass(son) {
+
+        var xhr = new XMLHttpRequest();
+
+        var url = "http://localhost:8091/user/update/pass";
+
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+
+        var json = JSON.stringify(son)
+
+
+        xhr.send(json)
+
+        location.reload(true)
+
+
+
+
+    }
+
 
 
 
@@ -1227,7 +1260,7 @@
                     if(document.getElementById('zatwierdz').parentElement.id === "ffd"){
 
 
-                        son = {
+                     var   son = {
                             id: -1,
                            imie: "NoName",
                             nazwisko: "NoName",
@@ -1263,6 +1296,41 @@
 
 
                      sendSon(son)
+                 }
+                 if(document.getElementById('zatwierdz').parentElement.id === "ffh"){
+
+                     var son = {
+                         email:  "",
+                         new_pass: "",
+                        new_pass_control: ""
+
+                     }
+
+                     son.email = id;
+                     alert("chuj");
+
+
+                         son.new_pass = document.getElementById("new_pass").value;
+                         son.new_pass_control = document.getElementById("new_pass_control").value;
+                         console.log(son)
+
+                        alert("dupa")
+
+                         sendSonPass(son);
+
+                     if (confirm("chuj1.5")){
+                         console.log(document.getElementById("new_pass").value )
+                         console.log(document.getElementById("new_pass_control").value)
+
+                     }
+                     if (confirm("chuj2")){ // confirm jakoś czyści konsole dziwnie
+                         console.log(document.getElementById("new_pass").value )
+                         console.log(document.getElementById("new_pass_control").value)
+
+                     }
+
+                     location.reload(true);
+
                  }
 
 
@@ -2440,6 +2508,27 @@
     );
 
     function new_pass(id) {
+
+
+        var formularz =  UserFormularzUpHas;
+
+        var request = new XMLHttpRequest();
+        var url = "http://localhost:8091/user/get/" + id
+        request.open('GET', url, false);  // `false` makes the request synchronous
+        request.send(null);
+        var son = JSON.parse(request.response);
+
+        template = Handlebars.compile(UserDane);
+        var dane = template(son);
+
+        document.getElementById("obywatel").innerHTML = dane;
+
+        template = Handlebars.compile(UserFormularzUpHas);
+        var daneForm = template(son)
+
+        document.getElementById("formularz").innerHTML += daneForm;
+
+        document.getElementById("haslo_err").style.display = "none";
 
     }
 
