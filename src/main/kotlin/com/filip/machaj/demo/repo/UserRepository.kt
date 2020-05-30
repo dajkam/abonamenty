@@ -27,7 +27,8 @@ interface UserRepository:CrudRepository<User,Long> {
    @Transactional
    @Query("""
         update user
-        set czy_zarchiwizowany = true 
+        set czy_zarchiwizowany = true, 
+         aktywne = false
         where email = :email""", nativeQuery = true)
    fun archwizujUser(@Param("email") email:String) // tego typu funkcje muszą być typu void.
 
@@ -35,7 +36,8 @@ interface UserRepository:CrudRepository<User,Long> {
    @Transactional
    @Query("""
         update user
-        set czy_zarchiwizowany = false
+        set czy_zarchiwizowany = false,
+         aktywne = true
         where email = :email""", nativeQuery = true)
    fun odnowUser(@Param("email") email:String) // tego typu funkcje muszą być typu void.
 

@@ -1406,98 +1406,34 @@
     }
 
 
-    function usun(id,auto) { // rozbudować porobić trigery dla usuwania obywatela wraz z jego samochodami i abonamentami
-        if(auto === true){
-            var realConfirm=window.confirm;
-            window.confirm=function(){
-                window.confirm=realConfirm;
-                return true;
-            };
-        }
+    function usun(id) {
         if(JSON.parse(arch))
             alert("nie można usuwać usuniętych danych")
         else {
-            if (confirm("Czy napeno chcesz usunąć ten element")) { // czy trigger w backendzie to dobry pomysł?
-                // najlepiej zrobić to za pomocą jakiegoś zapytania SQL myślę
-
-                var on = parseInt(id, 10)
-                loadDataToUsun('abonament')
-                    .then(function (res, preson) {
-                        preson = insertData(res, preson)
-                        let son = preson[on]
+            if (confirm("Czy napeno chcesz usunąć ten element")) {
 
 
-                        let obywatel_id = son.obywatel_id
-                        let pojazd_id = son.pojazd_id
-
-
-                        let url = "http://localhost:8091/abonament/archiwizuj/" + son.id.toString()
-                        ajax("POST", url, false)
-                        url = "http://localhost:8091/pojazd/archiwizuj/" + pojazd_id.toString()
-                        ajax("POST", url, false)
-                        url = "http://localhost:8091/obywatel/archiwizuj/" + obywatel_id.toString()
+                        let url = "http://localhost:8091/user/archiwizuj/" + id
                         ajax("POST", url, false)
 
-
-                    });
-
-
-
-                if(auto === false)
-                    location.reload(true)
+                       location.reload(true)
             }
         }
 
     }
 
-    function odnow(id) { // rozbudować porobić trigery dla usuwania obywatela wraz z jego samochodami i abonamentami
+    function odnow(id) {
         if(!JSON.parse(arch))
             alert("nie można odnawiać nie usuniętych danych")
         else {
-            if (confirm("Czy napeno chcesz odnowić ten element")) { // czy trigger w backendzie to dobry pomysł?
-                // najlepiej zrobić to za pomocą jakiegoś zapytania SQL myślę
-
-                var on = parseInt(id, 10)
-
-                loadDataToUsun('abonament')
-                    .then(function (res, preson) {
-                        preson = insertData(res, preson)
-                        let son = preson[on]
+            if (confirm("Czy napeno chcesz odnowić ten element")) {
 
 
-                        let obywatel_id = son.obywatel_id
-                        let pojazd_id = son.pojazd_id
-
-
-
-
-                        let   url = "http://localhost:8091/obywatel/odnow/" + obywatel_id.toString()
-                        ajax("POST", url, false)
-                        url = "http://localhost:8091/pojazd/odnow/" + pojazd_id.toString()
-                        ajax("POST", url, false);
-
-                        odnow_abonament(son)
-
-
-
-
-
-                    });
-
-
-                /*else {
-                   loadData()
-                       .then(function (res, preson) {
-                           preson = insertData(res, preson) // najprostrze odnawianie lub po małej modyfikacji usuwanie jest najprostrzym wariantem nie głębokim
-                           let son = preson[on]
-                           son.czy_zarchiwizowany = false;
-                           sendSon(son)
-
-
-                       })
-               }*/
+                let url = "http://localhost:8091/user/odnow/" + id
+                ajax("POST", url, false)
 
                 location.reload(true)
+
             }
         }
 
