@@ -925,31 +925,15 @@
     }
 
     function loadData() {
-
-        var url1 = 'http://localhost:8091/'
-
-        var e = document.getElementById("encja");
-        var url2 = e.options[e.selectedIndex].value;
+        
 
         if(szuk !== null){ // wyszukiwanie
             let url3 = "/szukaj/"
-            let url =  url1+url2+url3+szuk
+            let url =  "http://localhost:8091/user/szukaj/"+szuk
             return ajax('GET',url)
         } // koniec wyszukiwania
 
-        var url3 = '/download'
-
-        var url =  url1+url2+url3
-
-        if(url === "http://localhost:8091/pojazd/download")
-        { url = "http://localhost:8091/pojazd/marka/model";}
-        if(url === "http://localhost:8091/abonament/download")
-     //   {url = "http://localhost:8091/abonament/full";} ///////////////////////////////////////////////////////////////////////////////// tytaj wybieranie widoku
-        {url = "http://localhost:8091/user/get";} // ze względu na usera !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Bardzo ważne
-
-
-        // return ajax('GET', 'http://localhost:8091/obywatel/download');
-
+       var url = "http://localhost:8091/user/get"; // ze względu na usera !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Bardzo ważne
         return ajax('GET',url)
     }
 
