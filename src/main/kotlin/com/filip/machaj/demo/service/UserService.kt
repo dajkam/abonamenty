@@ -89,14 +89,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
     fun updateUser(toSave:UserUpdateDTO): User? {
         val user = repo.findUserByEmail(toSave.email)
         user?.let{
-            if(!toSave.haslo.isEmpty()){
-                it.haslo = encoder.encode(toSave.haslo)
-            }
+           /* if(!toSave.haslo.isEmpty()){
+                it.haslo = encoder.encode(toSave.haslo) // zrobię osbna metode do zmieniania hasła
+            }*/
             it.email = toSave.new_email
-            it.imie = toSave.imie
-            it.nazwisko = toSave.nazwisko
             it.role = toSave.role
-            it.czy_zarchiwizowany = toSave.czy_zarchiwizowany
+
+
           /*  it.aktywne = toSave.aktywne                                          // to jest zakomentowane bo funkcja przyjmuje UserDTO jako argument a on nie ma tych pól zaimplementowanych
             it.nie_wygasniete = toSave.nie_wygasniete
             it.nie_wygasniete_id_i_haslo = toSave.nie_wygasniete_id_i_haslo*/
@@ -127,6 +126,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
     fun deleteUser(id: Long) = repo.deleteById(id)
 
     fun downLoadUsers(): Iterable<User> = repo.downloadUsers() ////////// najważniejsza metoda z userController
+
+    fun archiwizujUser(email: String) = repo.archwizujUser(email)
+
+    fun odnowUser(email: String) = repo.odnowUser(email)
+
+    fun szukaj(fraza:String):Iterable<User> = repo.szukaj(fraza.toLowerCase())
 
 
 

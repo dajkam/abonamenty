@@ -23,7 +23,7 @@ class UserController {
     @GetMapping(value = ["/download"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
-    fun getUser() = service.getUser() /////////// ta metoda nie działa nie wiadomo dlaczego ale ostatnia metoda na samym dole szczególnie jązastępuje
+    fun getUser() = service.getUser() /////////// ta metoda nie działa nie wiadomo dlaczego ale ostatnia metoda na samym dole szczególnie jązastępuje mówi że metoda get nie jest wspierana
     @PutMapping(
             value = ["/admin"],
              produces = arrayOf(MediaType.APPLICATION_JSON_VALUE),
@@ -74,4 +74,29 @@ class UserController {
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun getUsers() = service.downLoadUsers() /////////////////// najważniejsza netoda///////////////////////////////
+
+    @GetMapping(value = ["/get/{email}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun getUserByEmail(@PathVariable(name = "email") email:String): User? = service.findUserByUserName(email)
+
+    @PostMapping(
+            value = ["archiwizuj/{email}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun archwizujUser(@PathVariable(name = "email")email:String) = service.archiwizujUser(email)
+
+    @PostMapping(
+            value = ["odnow/{email}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun odnowUser(@PathVariable(name = "email")email: String) = service.odnowUser(email)
+
+    @GetMapping(
+            value = ["/szukaj/{fraza}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun szukaj(@PathVariable(name = "fraza")fraza:String) = service.szukaj(("%"+fraza.toLowerCase()+"%"))
 }
+
+
