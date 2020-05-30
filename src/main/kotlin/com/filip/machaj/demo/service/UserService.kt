@@ -156,6 +156,16 @@ import org.springframework.security.config.annotation.authentication.builders.Au
         return null
     }
 
+    fun czy_istnieje_email(email: String):Int{
+
+        try{
+            return repo.czy_istnieje_email(email)
+        }
+        catch (e: Exception){
+            return 0
+        }
+    }
+
 
 
 

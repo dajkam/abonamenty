@@ -108,6 +108,12 @@ class UserController {
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
     )
     fun szukaj(@PathVariable(name = "fraza")fraza:String) = service.szukaj(("%"+fraza.toLowerCase()+"%"))
+
+     @GetMapping(
+            value = ["/czy/{email}"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+     fun czy_istnieje_email(@PathVariable(name = "email")email: String) = service.czy_istnieje_email(email)
 }
 
 
