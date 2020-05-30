@@ -2,6 +2,7 @@ package com.filip.machaj.demo.controllers
 
 import com.filip.machaj.demo.dto.UserDTO
 import com.filip.machaj.demo.dto.UserUpdateDTO
+import com.filip.machaj.demo.dto.UserUpdatePassDTO
 import com.filip.machaj.demo.model.user.User
 import com.filip.machaj.demo.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -69,6 +70,16 @@ class UserController {
     fun updateUser(
             @RequestBody user: UserUpdateDTO
     ): User? = service.updateUser(user)
+
+    @PostMapping(
+
+            value = ["/update/pass"],
+            produces = arrayOf(MediaType.APPLICATION_JSON_VALUE),
+            consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE)
+    )
+    fun updateUserPass(
+            @RequestBody user: UserUpdatePassDTO
+    ): User? = service.updateUserPass(user)
 
     @GetMapping(value = ["/get"],
             produces = arrayOf(MediaType.APPLICATION_JSON_VALUE)

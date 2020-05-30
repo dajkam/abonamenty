@@ -3,6 +3,7 @@ package com.filip.machaj.demo.service
 import com.filip.machaj.demo.dto.UserDTO
 import com.filip.machaj.demo.dto.UserDetailsDTO
 import com.filip.machaj.demo.dto.UserUpdateDTO
+import com.filip.machaj.demo.dto.UserUpdatePassDTO
 import com.filip.machaj.demo.model.user.*
 import com.filip.machaj.demo.model.user.security.WebSecurityConfiguration
 import com.filip.machaj.demo.repo.UserRepository
@@ -132,6 +133,26 @@ import org.springframework.security.config.annotation.authentication.builders.Au
     fun odnowUser(email: String) = repo.odnowUser(email)
 
     fun szukaj(fraza:String):Iterable<User> = repo.szukaj(fraza.toLowerCase())
+
+    fun updateUserPass(toSave:UserUpdatePassDTO): User? {
+        val user = repo.findUserByEmail(toSave.email)
+        user?.let{
+           // it.email = toSave.email // nie modyfikujemy email tutaj tylko i wyłącznie hasło
+            if(toSave.new_pass == toSave.new_pass_control )
+                it.haslo = encoder.encode(toSave.new_pass)
+
+
+
+
+
+            if (!toSave.equals(it))
+                user.kiedy_zmodyfikowano = Date()
+            return repo.save(user)
+
+
+        }
+        return null
+    }
 
 
 

@@ -196,7 +196,7 @@
 
     <button  id="dodaj" class="add hid" type='button' onclick=" dodaj(UserFormularzIn)"  tabindex="-1">Dodaj</button>
 
-    <button id="edytuj"class='butt hid' type= 'button' onclick='f2(rekord)'  tabindex="-1">Edytuj</button>
+    <button id="edytuj"class='butt hid' type= 'button' onclick='f2(rekord)'  tabindex="-1">Edytuj</button>  <!-- rekord to To samo co wyb_rekord() w wartości ale wyb_rekord() ma jeszcze swąje działania zaznaczania rekordu i kolorwania -->
 
      <button id="usun" class = 'but4 butt hid' type='button' onclick='usun(wyb_rekord(),false)'  tabindex="-1" >Usuń</button>
 
@@ -925,7 +925,7 @@
     }
 
     function loadData() {
-        
+
 
         if(szuk !== null){ // wyszukiwanie
             let url3 = "/szukaj/"
@@ -2438,6 +2438,10 @@
         }
 
     );
+
+    function new_pass(id) {
+
+    }
 
 
 
