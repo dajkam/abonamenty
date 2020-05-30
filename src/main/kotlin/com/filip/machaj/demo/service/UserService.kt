@@ -140,6 +140,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
            // it.email = toSave.email // nie modyfikujemy email tutaj tylko i wyłącznie hasło
             if(toSave.new_pass == toSave.new_pass_control )
                 it.haslo = encoder.encode(toSave.new_pass)
+            else
+                return null
 
 
 
