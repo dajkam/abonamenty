@@ -5,3 +5,5 @@ We wszystkich widokach zrobić przyciski do wylogowywania --zrobione
 W widoku admina zrobić przyciski do przechodzenia do widoków innych użytkowników --zrobione
 
 Zrobić auto wylogowanie po modyfikacji użytkownika
+
+Poprawić mechanizmy tranzakcyjności w przypadku nie dodania się całej krotki przy dodawaniu
