@@ -1,0 +1,11 @@
+{
+  "id" : -1,
+  "pesel" : "59040388111",
+  "nr_dowodu" : "MYL829251",
+  "imie" : "Adam",
+  "nazwisko" : "Ochowiak",
+  "adres" : "Krótka 50 Sopot ",
+  "czy_zarchiwizowany" : false,
+  "data_urodzenia" : "1959-04-03",
+  "pojazdy" : [ ]
+}

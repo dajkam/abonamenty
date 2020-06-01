@@ -1,0 +1,15 @@
+{
+  "id" : -1,
+  "kolor" : "biały",
+  "uwagi" : "wlasny",
+  "nr_rejstracyjny_pojazdu" : "GSP 7665",
+  "rok_produkcji" : 2010,
+  "czy_zarchiwizowany" : false,
+  "model" : {
+    "id" : 10
+  },
+  "obywatel" : {
+    "id" : 7
+  },
+  "abonamenty" : [ ]
+}

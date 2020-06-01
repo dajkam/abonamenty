@@ -5,7 +5,7 @@
   "imie" : "Agata",
   "nazwisko" : "Kieca",
   "adres" : "Wybickiego 5 Sopot ",
-  "czy_zarchiwizowany" : true,
+  "czy_zarchiwizowany" : false,
   "data_urodzenia" : "1995-12-24",
   "pojazdy" : [ ]
 }

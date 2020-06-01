@@ -1,0 +1,15 @@
+{
+  "id" : -1,
+  "kolor" : "czerwony",
+  "uwagi" : "wlasny",
+  "nr_rejstracyjny_pojazdu" : "GSP 1122",
+  "rok_produkcji" : 1998,
+  "czy_zarchiwizowany" : false,
+  "model" : {
+    "id" : 11
+  },
+  "obywatel" : {
+    "id" : 8
+  },
+  "abonamenty" : [ ]
+}

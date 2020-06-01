@@ -1,0 +1,15 @@
+{
+  "id" : -1,
+  "kolor" : "czarny",
+  "uwagi" : "wlasny",
+  "nr_rejstracyjny_pojazdu" : "GSP 7654",
+  "rok_produkcji" : 2014,
+  "czy_zarchiwizowany" : false,
+  "model" : {
+    "id" : 7
+  },
+  "obywatel" : {
+    "id" : 6
+  },
+  "abonamenty" : [ ]
+}
