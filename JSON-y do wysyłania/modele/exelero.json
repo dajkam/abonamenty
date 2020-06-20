@@ -1,0 +1,8 @@
+{
+  "id" : -1,
+  "nazwa" : "Exelero",
+  "pojazdy" : [ ],
+  "marka" : {
+    "id" : 4
+  }
+}

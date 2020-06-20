@@ -1,0 +1,15 @@
+{
+  "id" : -1,
+  "kolor" : "biały",
+  "uwagi" : "wlasny",
+  "nr_rejstracyjny_pojazdu" : "GSP 9988",
+  "rok_produkcji" : 1996,
+  "czy_zarchiwizowany" : false,
+  "model" : {
+    "id" : 6
+  },
+  "obywatel" : {
+    "id" : 10
+  },
+  "abonamenty" : [ ]
+}

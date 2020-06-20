@@ -1,0 +1,15 @@
+{
+  "id" : -1,
+  "kolor" : "biały",
+  "uwagi" : "wlasny",
+  "nr_rejstracyjny_pojazdu" : "GSP 4567",
+  "rok_produkcji" : 2009,
+  "czy_zarchiwizowany" : false,
+  "model" : {
+    "id" : 9
+  },
+  "obywatel" : {
+    "id" : 9
+  },
+  "abonamenty" : [ ]
+}

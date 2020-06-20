@@ -1,0 +1,11 @@
+{
+  "id" : -1,
+  "pesel" : "83081397937",
+  "nr_dowodu" : "JBJ096226",
+  "imie" : "Bogusz",
+  "nazwisko" : "Woliński",
+  "adres" : "Armi krajowej 62 Sopot ",
+  "czy_zarchiwizowany" : false,
+  "data_urodzenia" : "1983-08-13",
+  "pojazdy" : [ ]
+}

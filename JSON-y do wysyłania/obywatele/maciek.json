@@ -1,0 +1,11 @@
+{
+  "id" : -1,
+  "pesel" : "76051191998",
+  "nr_dowodu" : "MBU170887",
+  "imie" : "Maciej",
+  "nazwisko" : "Jankowski",
+  "adres" : "Wybickiego 12 Sopot ",
+  "czy_zarchiwizowany" : false,
+  "data_urodzenia" : "1976-05-11",
+  "pojazdy" : [ ]
+}

@@ -1,0 +1,9 @@
+{
+  "id" : -1,
+  "data_rozpoczecia" : "2020-06-06",
+  "data_zakonczenia" : "2021-06-06",
+  "sektor" : "E",
+  "uwagi" : "",
+  "czy_zarchiwizowany" : false,
+  "pojazd" : {"id":5}
+}

@@ -1,0 +1,11 @@
+{
+  "id" : -1,
+  "pesel" : "95110745495",
+  "nr_dowodu" : "CPZ750280",
+  "imie" : "Bartosz",
+  "nazwisko" : "Dybek",
+  "adres" : "Długa 50 Sopot ",
+  "czy_zarchiwizowany" : false,
+  "data_urodzenia" : "1995-11-07",
+  "pojazdy" : [ ]
+}

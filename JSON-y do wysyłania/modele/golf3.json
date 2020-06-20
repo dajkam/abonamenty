@@ -1,0 +1,8 @@
+{
+  "id" : -1,
+  "nazwa" : "Golf 3",
+  "pojazdy" : [ ],
+  "marka" : {
+    "id" : 2
+  }
+}
